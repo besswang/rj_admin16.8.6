@@ -39,9 +39,9 @@ export const deleteRole = subreddit => {
       const data = await api.deleteRoleApi(subreddit)
       if (data.success) {
         dispatch(pageRole())
-        dispatch(btnReceivePosts())
+        dispatch(btnReceivePosts(data.msg))
       } else {
-        dispatch(btnFailurePosts())
+        dispatch(btnFailurePosts(data.msg))
       }
     }).catch(() => {
       Message.info('已取消删除')

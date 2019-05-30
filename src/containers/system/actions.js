@@ -18,9 +18,13 @@ export const pageBackup = () => {
 // 备份
 export const backup = obj => {
   return async dispatch => {
+    dispatch(btnRequestPosts())
     const data = await api.backupApi(obj)
     if (data.success) {
       Message.success(data.msg)
+      dispatch(btnReceivePosts(data.msg))
+    }else{
+      dispatch(btnFailurePosts(data.msg))
     }
   }
 }

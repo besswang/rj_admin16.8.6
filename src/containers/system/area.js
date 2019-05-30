@@ -132,7 +132,8 @@ class Backup extends Component {
 					provinceId: null,
 					cityId: null,
 					areaId: null,
-					countryId: null
+					countryId: null,
+					id: null
 				})
 			}else{
 				Message.error(res.msg)

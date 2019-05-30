@@ -14,7 +14,8 @@ class Backup extends Component {
     currentChange: PropTypes.func.isRequired,
     initSearch: PropTypes.func.isRequired,
 		pageBackup: PropTypes.func.isRequired,
-		backup: PropTypes.func.isRequired
+		backup: PropTypes.func.isRequired,
+		btnLoading: PropTypes.bool.isRequired
   }
 	constructor(props) {
 		super(props)
@@ -57,10 +58,10 @@ class Backup extends Component {
 		this.props.backup()
 	}
 	render() {
-		const { list } = this.props
+		const { list, btnLoading } = this.props
 		return (
 			<div>
-        <Button className="margin-bottom15" type="primary" onClick={ e => this.backupBtn(e) }>{'备份'}</Button>
+        <Button className="margin-bottom15" type="primary" onClick={ e => this.backupBtn(e) } loading={ btnLoading }>{'备份'}</Button>
 				<Loading loading={ list.loading }>
 					<Table
 						style={ { width: '100%' } }
@@ -80,8 +81,8 @@ class Backup extends Component {
 }
 
 const mapStateToProps = state => {
-	const { list } = state
-	return { list }
+	const { list, btnLoading } = state
+	return { list, btnLoading }
 }
 const mapDispatchToProps = dispatch => {
 	return {

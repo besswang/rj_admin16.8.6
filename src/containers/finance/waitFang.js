@@ -1,17 +1,18 @@
 // 催收管理-个人对账
 import React, { Component } from 'react'
-import { Button, Loading, Table } from 'element-react'
+import { Button, Loading, Table, Dialog, Radio, Form } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { selectPendingLoan, updateStateLoan } from './actions'
+import { selectPendingLoan, updateStateLoan, toLoanBank, toLoan } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
 import filter from '@global/filter'
 import { FALSE } from '@meta/state'
 import DetailBtn from '@components/DetailBtn'
 import { dwaitFang } from '@meta/details'
+import timeDate from '@global/timeDate'
 class WaitFang extends Component {
 	static propTypes = {
     list: PropTypes.object.isRequired,
@@ -20,10 +21,16 @@ class WaitFang extends Component {
     initSearch: PropTypes.func.isRequired,
 		selectPendingLoan: PropTypes.func.isRequired,
 		updateStateLoan: PropTypes.func.isRequired,
+		btnLoading: PropTypes.bool.isRequired,
+		toLoanBank: PropTypes.func.isRequired,
+		toLoan: PropTypes.func.isRequired
   }
 	constructor(props) {
 		super(props)
 		this.state = {
+			obj:{},
+			loanType: 0,
+			dialogVisible: false,
 			columns: [{
 					type: 'index',
 					fixed: 'left'
@@ -66,7 +73,11 @@ class WaitFang extends Component {
 					prop: 'loanTerm'
 				}, {
 					label: '申请时间',
-					prop: 'nextApplyTime'
+					prop: 'gmt',
+					render: row => {
+						const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
+						return date
+					}
 				}, {
 					label: '审核客服',
 					prop: 'examineCustomer'
@@ -96,9 +107,9 @@ class WaitFang extends Component {
 					render: row => {
 							return (
 								<div className="flex flex-direction_row">
-									{/* <Button className="margin_right10" type="success" size="mini">
-										{'通过'}
-									</Button> */}
+									<Button className="margin_right10" type="success" size="mini" onClick={ this.openDialog.bind(this,row) }>
+										{'放款'}
+									</Button>
 									<Button className="margin_right10" type="danger" size="mini" onClick={ this.props.updateStateLoan.bind(this,{orderId:row.id,phone:row.phone,realName:row.realName,state:FALSE}) }>
 										{'拒绝'}
 									</Button>
@@ -127,8 +138,33 @@ class WaitFang extends Component {
     this.props.currentChange(e)
     this.props.selectPendingLoan()
 	}
+	openDialog = r => {
+		this.setState({
+			dialogVisible: true,
+			loanType: 0,
+			obj:r
+		})
+	}
+	onChange = v => {
+		this.setState({
+			loanType: v
+		})
+	}
+	saveContent = e => {
+		e.preventDefault()
+		const id = this.state.obj.id
+		if(this.state.loanType === 0) { // 银行卡
+			this.props.toLoanBank(id)
+		}else{
+			this.props.toLoan(id)
+		}
+		this.setState({
+			dialogVisible: false
+		})
+	}
 	render() {
-		const { list } = this.props
+		const { list, btnLoading } = this.props
+		const { loanType, dialogVisible, obj } = this.state
 		return (
 			<div>
 				<Search showSelect2>
@@ -147,18 +183,63 @@ class WaitFang extends Component {
           onSizeChange={ this.sizeChange }
           onCurrentChange={ this.onCurrentChange }
         />
+				<Dialog
+					title="放款方式"
+					visible={ dialogVisible }
+					onCancel={ () => this.setState({ dialogVisible: false }) }
+				>
+					<Dialog.Body>
+						<ul className="flex flex-direction_column info-ul">
+							<li className="flex flex-direction_row info-li">
+								<p>{'真实姓名：'}{ obj.realName }</p>
+							</li>
+							<li className="flex flex-direction_row info-li">
+								<p>{'手机号码：'}{ obj.phone }</p>
+								<p>{'身份证号：'}{ obj.idcardNumber }</p>
+							</li>
+							<li className="flex flex-direction_row info-li">
+								<p>{'申请期限：'}{ obj.applyTerm }</p>
+								<p>{'申请时间：'}{ timeDate.time(obj.gmt, 'yyyy-MM-dd hh:mm:ss') }</p>
+							</li>
+							<li className="flex flex-direction_row info-li">
+								<p>{'借款金额：'}{ obj.applyMoney }</p>
+								<p>{'应放金额：'}{ obj.loanMoney }</p>
+							</li>
+							<li className="flex flex-direction_row info-li">
+								<p>{'息费：'}</p>
+								<p>{'服务费：'}{ obj.serviceMoney }</p>
+							</li>
+							<li className="flex flex-direction_row info-li">
+								<p>{'到期应还：'}{ obj.repaymentMoney }</p>
+								<p>{'约定还款时间：'}{ obj.repaymentDate }</p>
+							</li>
+						</ul>
+						<Form labelWidth="80">
+							<Form.Item label="放款方式:">
+								<Radio.Group value={ loanType } onChange={ this.onChange.bind(this) }>
+									<Radio value={ 0 }>{'银行卡'}</Radio>
+									<Radio value={ 1 }>{'线下放款'}</Radio>
+								</Radio.Group>
+							</Form.Item>
+						</Form>
+					</Dialog.Body>
+					<Dialog.Footer className="dialog-footer">
+						<Button onClick={ () => this.setState({ dialogVisible: false }) }>{'取 消'}</Button>
+						<Button type="primary" onClick={ this.saveContent } loading={ btnLoading }>{'确 定'}</Button>
+					</Dialog.Footer>
+				</Dialog>
 			</div>
 		)
 	}
 }
 
 const mapStateToProps = state => {
-	const { list } = state
-	return { list }
+	const { list, btnLoading } = state
+	return { list, btnLoading }
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, selectPendingLoan, updateStateLoan }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, selectPendingLoan, updateStateLoan, toLoanBank, toLoan }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(WaitFang)

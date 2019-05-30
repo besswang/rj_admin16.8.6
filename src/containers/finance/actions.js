@@ -15,7 +15,36 @@ export const selectPendingLoan = () => {
     console.log(data)
   }
 }
-
+// 待放款-放款-银行卡
+export const toLoanBank = id => {
+  return async dispatch => {
+    dispatch(btnRequestPosts())
+    const data = await api.toLoanBankApi({
+      id: id
+    })
+    if (data.success) {
+      dispatch(btnReceivePosts(data.msg))
+      dispatch(selectPendingLoan())
+    } else {
+      dispatch(btnFailurePosts(data.msg))
+    }
+  }
+}
+//待放款-放款-线下放款
+export const toLoan = id => {
+  return async dispatch => {
+    dispatch(btnRequestPosts())
+    const data = await api.toLoanApi({
+      id: id
+    })
+    if (data.success) {
+      dispatch(btnReceivePosts(data.msg))
+      dispatch(selectPendingLoan())
+    } else {
+      dispatch(btnFailurePosts(data.msg))
+    }
+  }
+}
 // 待放款-拒绝
 export const updateStateLoan = subreddit => {
   return dispatch => {
@@ -144,7 +173,7 @@ export const distributionsCuiShou = obj => {
       dispatch(btnReceivePosts(data.msg))
       dispatch(selectTheDayLoan())
     } else {
-      dispatch(btnFailurePosts())
+      dispatch(btnFailurePosts(data.msg))
     }
   }
 }

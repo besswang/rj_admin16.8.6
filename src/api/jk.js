@@ -43,6 +43,8 @@ export default {
   // 财务管理
   'selectPendingLoan': 'api/order/selectPendingLoan', // 待放款
   'updateStateLoan': 'api/order/updateStateLoan', // 拒绝放款
+  'toLoanBank': 'api/order/toLoanBank', // 待放款-放款-银行卡
+  'toLoan': 'api/order/toLoan', // 待放款-放款-线下放款
   'selectPendingRepay': 'api/order/selectPendingRepay', // 待还款
   'updateStateComplete': 'api/order/updateStateComplete', // 待还款-还款-全款
   'updateStateDelay': 'api/order/updateStateDelay', // 待还款-还款-延期
