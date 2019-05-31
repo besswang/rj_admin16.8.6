@@ -41,7 +41,8 @@ export const initSearch = () => ({
     channelName:'',
     loanType: 0,
     neiCuiId: 0,
-    isTheDay: null
+    isTheDay: null,
+    payTypeId: null
   }
 })
 // menu选中状态
@@ -149,6 +150,9 @@ export const shouldFetchPosts = (state) => {
     if (params['isTheDay'] === 0) {
       pam['isTheDay'] = params['isTheDay']
     }
+    if (params['payTypeId'] === 0) {
+      pam['payTypeId'] = params['payTypeId']
+    }
   }
   return pam
 }
@@ -233,5 +237,9 @@ export const selectAllAdmin = id => {
 }
 export const changeAllot = data => ({
   type: type.SELECT_ALLOT_TYPE,
+  data
+})
+export const changePayTypeId = data => ({
+  type: type.SELECT_LOAN_MODE,
   data
 })

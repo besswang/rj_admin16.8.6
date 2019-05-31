@@ -41,7 +41,7 @@ const typeName = (state = '', action) => {
   }
 }
 // 新老客户
-const selectClient = (state = 0, action) => {
+const newClient = (state = 0, action) => {
   switch (action.type) {
     case type.SELECT_CLIENT:{
       if ( action.id !== ''){
@@ -143,10 +143,13 @@ const search = {
   realName: '',
   loanType: 0,
   neiCuiId: 0,
-  isTheDay: null
+  isTheDay: null,
+  payTypeId:null
 }
 const searchAll = (state = search, action) => {
   switch (action.type) {
+    case type.SELECT_LOAN_MODE:
+      return { ...state, payTypeId: action.data, pageNum:1}
     case type.SELECT_ALLOT_TYPE:
       return { ...state, isTheDay: action.data, pageNum:1}
     case type.SELECT_COLL_TYPE:
@@ -171,13 +174,13 @@ const searchAll = (state = search, action) => {
       return {...state, typeId: id, typeName: '', pageNum:1}
     }
     case type.SELECT_CLIENT: {
-      let newClient = ''
+      let client = ''
       if (action.id !== ''){
-        newClient = action.id
+        client = action.id
       } else {
-        newClient = 0
+        client = 0
       }
-      return { ...state, newClient: newClient, pageNum:1 }
+      return { ...state, newClient: client, pageNum:1 }
     }
     case type.SELECT_TIME_TYPE: {
       let timeType = ''
@@ -296,7 +299,7 @@ const adminName = (state = '', action) => {
       return state
   }
 }
-// 借款类型
+// 借款类型 延期/逾期
 const loanType = (state = 0, action) => {
   switch (action.type) {
     case type.SELECT_LOAN_TYPE:{
@@ -346,7 +349,26 @@ const neiCuiId = (state = 0, action) => {
 const isTheDay = (state = null, action) => {
   switch (action.type) {
     case type.SELECT_ALLOT_TYPE:
-      return action.data
+      if(action.data !== ''){
+        return action.data
+      }else{
+        return null
+      }
+    case type.CLEAR_SEARCH_ALL:
+      return null
+    default:
+      return state
+  }
+}
+// 支付类型
+const payTypeId = (state = null, action) => {
+  switch (action.type) {
+    case type.SELECT_LOAN_MODE:
+      if(action.data !== ''){
+        return action.data
+      } else {
+        return null
+      }
     case type.CLEAR_SEARCH_ALL:
       return null
     default:
@@ -354,5 +376,5 @@ const isTheDay = (state = null, action) => {
   }
 }
 export default combineReducers({
-  user, typeId, typeName, searchAll, time, regTime, payTime, list, listInfo, idCardInfo, selectClient, selectTime, router, btnLoading, realName, treeData, channelList, channelName, roleList, roleId, adminName, loanType, mobileData, collList, neiCuiId, isTheDay
+  user, typeId, typeName, searchAll, time, regTime, payTime, list, listInfo, idCardInfo, newClient, selectTime, router, btnLoading, realName, treeData, channelList, channelName, roleList, roleId, adminName, loanType, mobileData, collList, neiCuiId, isTheDay, payTypeId
 })

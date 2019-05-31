@@ -42,3 +42,4 @@ export const SAVE_MOBILE_DATA = 'SAVE_MOBILE_DATA' // 手机报表查询数据
 export const SAVE_COLL_LIST = 'SAVE_COLL_LIST' // 催收员
 export const SELECT_COLL_TYPE = 'SELECT_COLL_TYPE' // 催收员id
 export const SELECT_ALLOT_TYPE = 'SELECT_ALLOT_TYPE' // 分配状态
+export const SELECT_LOAN_MODE = 'SELECT_LOAN_MODE' // 支付类型 meta/select/-LOAN_MODE

@@ -21,7 +21,8 @@ export const managelogin = (form, fn) => {
     if (data.success) {
       dispatch(saveUser(form, data))
       dispatch(btnReceivePosts(data.msg))
-      fn.push('/home')
+      // fn.push('/home')
+      fn.push('/welcome')
     } else {
       dispatch(btnFailurePosts(data.msg))
     }

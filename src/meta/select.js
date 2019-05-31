@@ -75,23 +75,20 @@ export const LOAN_TYPE = [{
 }]
 
 export const LOAN_MODE = [{
-  value: 1,
+  value: 0,
   label: '支付宝'
 }, {
-  value: 2,
+  value: 1,
   label: '微信支付'
 }, {
-  value: 3,
+  value: 2,
   label: '银联支付'
 }, {
-  value: 4,
+  value: 3,
   label: '线下支付宝'
 }, {
-  value: 5,
+  value: 4,
   label: '线下微信支付'
-}, {
-  value: 6,
-  label: '线下银联支付'
 }]
 
 export const ALLOT_TYPE = [{

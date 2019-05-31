@@ -3,7 +3,7 @@ import { Form, Input } from 'element-react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
-import { selectSubreddit, selectSearchText,saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType, selectAllChannel,selectChannel, allRoles, changeRole, changeAdminName, changeLoanType, changeColl, changeAllot } from '@redux/actions'
+import { selectSubreddit, selectSearchText,saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType, selectAllChannel,selectChannel, allRoles, changeRole, changeAdminName, changeLoanType, changeColl, changeAllot, changePayTypeId } from '@redux/actions'
 import SelectPicker from '@components/SelectPicker'
 import Time from '@components/Settime'
 import { MLIST_SELECT, AUDIT_SELECT, AUDIT_SELECT_LESS, CUSTOMER_SELECT, TIME_SELECT, TIME_SELECT_LESS, LOAN_TYPE, LOAN_MODE,ALLOT_TYPE } from '@meta/select'
@@ -22,7 +22,7 @@ class Search extends Component {
     showLoanMode: PropTypes.bool,
     showAllotType: PropTypes.bool,
     typeId: PropTypes.number,
-    selectClient: PropTypes.number,
+    newClient: PropTypes.number,
     selectTime: PropTypes.number,
     typeName: PropTypes.string,
     realName: PropTypes.string,
@@ -57,7 +57,9 @@ class Search extends Component {
     changeColl: PropTypes.func.isRequired,
     collList: PropTypes.array,
     changeAllot: PropTypes.func.isRequired,
-    isTheDay:PropTypes.number
+    isTheDay:PropTypes.number,
+    payTypeId: PropTypes.number,
+    changePayTypeId: PropTypes.func.isRequired
   }
   componentWillMount() {
     // 查询表单的初始化
@@ -73,7 +75,7 @@ class Search extends Component {
     }
   }
   render() {
-    const { typeId, typeName, realName, time, regTime, selectClient, selectTime, showSelectClient, showSelectTime, showSelectTime2, showTime, showSelect1, showSelect2, showSelect3, showLoanType, showLoanMode, showBeginTime,showAllotType, showRealName, showChannel, channelList,channelName, roleList, showRole, roleId, showAdminName, adminName, loanType,showColl, neiCuiId, collList, isTheDay } = this.props
+    const { typeId, typeName, realName, time, regTime, newClient, selectTime, showSelectClient, showSelectTime, showSelectTime2, showTime, showSelect1, showSelect2, showSelect3, showLoanType, showLoanMode, showBeginTime,showAllotType, showRealName, showChannel, channelList,channelName, roleList, showRole, roleId, showAdminName, adminName, loanType,showColl, neiCuiId, collList, isTheDay, payTypeId } = this.props
     return (
       <Form inline>
         {
@@ -114,8 +116,8 @@ class Search extends Component {
           showLoanMode &&
           <Form.Item>
             <SelectPicker
-              value={ selectClient }
-              onChange={ e => this.props.changeClient(e) }
+              value={ payTypeId }
+              onChange={ e => this.props.changePayTypeId(e) }
               options={ LOAN_MODE }
               placeholder={ '选择支付方式' }
             />
@@ -198,7 +200,7 @@ class Search extends Component {
         { showSelectClient &&
           <Form.Item>
             <SelectPicker
-              value={ selectClient }
+              value={ newClient }
               onChange={ e => this.props.changeClient(e) }
               options={ CUSTOMER_SELECT }
               placeholder={ '选择客户类型' }
@@ -265,15 +267,15 @@ class Search extends Component {
 }
 const mapStateToProps = state => {
 	const {
-		typeId, typeName, time, regTime, selectClient, selectTime, realName, channelList, channelName, roleList, roleId, adminName
-	,loanType, neiCuiId, collList, isTheDay} = state
+		typeId, typeName, time, regTime, newClient, selectTime, realName, channelList, channelName, roleList, roleId, adminName
+	,loanType, neiCuiId, collList, isTheDay, payTypeId} = state
 	return {
-		typeId, typeName, time, regTime, selectClient, selectTime, realName, channelList, channelName, roleList, roleId, adminName, loanType, neiCuiId, collList, isTheDay
+		typeId, typeName, time, regTime, newClient, selectTime, realName, channelList, channelName, roleList, roleId, adminName, loanType, neiCuiId, collList, isTheDay, payTypeId
 	}
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({ selectSubreddit, selectSearchText, saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType,selectAllChannel ,selectChannel, allRoles, changeRole, changeAdminName, changeLoanType, changeColl, changeAllot }, dispatch)
+		...bindActionCreators({ selectSubreddit, selectSearchText, saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType,selectAllChannel ,selectChannel, allRoles, changeRole, changeAdminName, changeLoanType, changeColl, changeAllot, changePayTypeId }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Search)

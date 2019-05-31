@@ -19,6 +19,9 @@ class App extends Component {
       loginSuccess:false
     }
   }
+  componentWillMount() {
+    console.log(this.props)
+  }
 	componentDidMount() {
 	  this.setDefault()
 	}
@@ -40,7 +43,7 @@ class App extends Component {
   render() {
     const { loginSuccess } = this.state
     const { router } = this.props
-    // console.log(loginSuccess)
+    console.log(loginSuccess)
     // console.log(this.props)
     return(
         <Router>
@@ -48,19 +51,29 @@ class App extends Component {
             <Route exact path="/"
               render={ () => {
                   if(loginSuccess){ //判断是否已经登陆
-                    return <Redirect to="/home" />
+                    return <Redirect to="/welcome" />
                   }else{
                     return <Redirect to="/login" />
                   }
                 }
               }
             />
+
+            {/* { router.singleRouter.map((item) => (
+							<Route exact key={ item.path } path={ item.path } component={ item.component } />
+						)) } */}
+
             <Route exact path="/login" component={ Login } />
+            {/* <Login /> */}
             <Home>
+              {/* { router.singleRouter.map((item) => (
+                <Route exact key={ item.path } path={ item.path } component={ item.component } />
+              )) } */}
               { router.defaultRouter.map(item => {
                 return <Route key={ item.name } path={ item.path } component={ item.component } />
               }) }
             </Home>
+
             {/* { router.defaultRouter.map((item) => (
               <Route exact key={ item.path } path={ item.path } component={ item.component } />
             )) } */}

@@ -23,11 +23,22 @@ const distributeRouter = () => {
   })
   return defaultRouter
 }
+const singleRouterFn = () => {
+  const singleRouter = []
+  recursion(CHILD_ROUTES).map(item => {
+    if(item.single){
+      return singleRouter.push(item)
+    }
+    return singleRouter
+  })
+  return singleRouter
+}
 const router = (state = {
     routerArr: CHILD_ROUTES,
     defaultActive: '',
     routerName: [],
-    defaultRouter: distributeRouter()
+    defaultRouter: distributeRouter(),
+    singleRouter: singleRouterFn()
   }, action) => {
     switch (action.type) {
       case type.MENU_ACTIVE:

@@ -62,23 +62,30 @@ import Versions from '@containers/system/versions'
 import ChannelManage from '@containers/generalize/channelManage'
 import Statistics from '@containers/generalize/statistics'
 import ChannelMember from '@containers/generalize/channelMember'
-// import Login from '@containers/user/login'
-// import Home from '@containers/home'
+import Login from '@containers/user/login'
 export const CHILD_ROUTES = [
   {
-    name: '首页',
-    path: '/home',
+    name: '登陆',
+    path: '/login',
     exact: true,
     hideInMenu: true,
-    component: Welcome
+    single:true,
+    component: Login
   },
   // {
-  //   name: '欢迎页',
-  //   path: '/welcome',
+  //   name: '首页',
+  //   path: '/home',
   //   exact: true,
   //   hideInMenu: true,
   //   component: Welcome
   // },
+  {
+    name: '欢迎页',
+    path: '/welcome',
+    exact: true,
+    hideInMenu: true,
+    component: Welcome
+  },
   {
     id: 1,
     name: '会员管理',

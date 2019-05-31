@@ -90,7 +90,7 @@ class AlreadyHuan extends Component {
   componentDidMount() {
     this.props.selectBill()
   }
-  search = e => {
+	handleSearch = e => {
     e.preventDefault()
     this.props.selectBill()
   }
@@ -106,7 +106,7 @@ class AlreadyHuan extends Component {
 		const { list } = this.props
 		return (
 			<div>
-				<Search showLoanMode showSelect3 showBeginTime>
+				<Search showLoanMode showSelect3 showTime>
 					<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
 				</Search>
 				<Loading loading={ list.loading }>

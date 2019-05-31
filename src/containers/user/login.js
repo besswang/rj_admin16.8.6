@@ -40,7 +40,8 @@ class Login extends Component {
       },
       channelForm: {
         user: '',
-        password: ''
+        password: '',
+        rember: false, // 记住密码
       },
       channelRules: {
         user: [
@@ -56,7 +57,19 @@ class Login extends Component {
     console.log(this.props)
 	}
 	componentDidMount() {
-
+    console.log(this.getCookie('adminName'))
+    console.log(this.getCookie('password'))
+    const a = this.getCookie('adminName')
+    const p = this.getCookie('password')
+    if(a && p){
+      this.setState({
+        channelForm: {
+          user: a,
+          password: p,
+          rember: true, // 记住密码
+        }
+      })
+    }
   }
   fetchLogin = async () => {
     const res = await api.manageloginApi({
@@ -66,7 +79,8 @@ class Login extends Component {
     if(res.success){
       Message.success(res.msg)
       setTimeout(() => {
-        this.props.history.push('/home')
+        // this.props.history.push('/home')
+        this.props.history.push('welcome')
       }, 2000)
     } else {
       Message.error(res.msg)
@@ -121,11 +135,48 @@ class Login extends Component {
       this.fetchCode()
     }
   }
+   // 获取cookie
+  getCookie(key) {
+    const name = key + '='
+    const ca = document.cookie.split(';')
+    for (let i = 0; i < ca.length; i++) {
+        const c = ca[i].trim()
+        if (c.indexOf(name) === 0) {
+            return c.substring(name.length, c.length)
+        }
+    }
+    return ''
+  }
+  // 设置cookie,默认是30天
+  setCookie(key, value) {
+      const d = new Date()
+      d.setTime(d.getTime() + (30 * 24 * 60 * 60 * 1000))
+      const expires = 'expires=' + d.toGMTString()
+      document.cookie = `${ key }=${ value };${ expires }`
+  }
+  removeCookie(key) {
+    const exp = new Date()
+    exp.setTime(exp.getTime() - 1)
+    const expires = 'expires=' + exp.toGMTString()
+    const accountInfo = document.cookie
+    var pos = accountInfo.indexOf(key)
+    if (pos !== -1) {
+      document.cookie = `${ key }='';${ expires }`
+    }
+  }
   // 用户名-密码登陆
   channelLogin = e => {
     e.preventDefault()
     this.channelForm.validate((valid) => {
       if (valid) {
+        const { channelForm } = this.state
+        if (channelForm.rember){// 记住密码
+          this.setCookie('adminName', channelForm.user)
+          this.setCookie('password', channelForm.password)
+        }else{
+          this.removeCookie('adminName')
+          this.removeCookie('password')
+        }
         const trans = {
           adminName: this.state.channelForm.user,
           password: this.state.channelForm.password
@@ -193,22 +244,23 @@ class Login extends Component {
         </Form>
       )
     }else{
+      const { channelForm, channelRules } = this.state
       return (
-        <Form className="form-con" ref={ e => { this.channelForm = e } } model={ this.state.channelForm } rules={ this.state.channelRules }>
+        <Form className="form-con" ref={ e => { this.channelForm = e } } model={ channelForm } rules={ channelRules }>
           <Form.Item prop="user">
-            <Input value={ this.state.channelForm.user } onChange={ this.channelOnChange.bind(this, 'user') } placeholder="请输入您的手机号/用户名" prepend={
+            <Input value={ channelForm.user } onChange={ this.channelOnChange.bind(this, 'user') } placeholder="请输入您的手机号/用户名" prepend={
                 <img src={ user } alt="" />
               }
             />
           </Form.Item>
           <Form.Item prop="password">
-            <Input value={ this.state.channelForm.password } onChange={ this.channelOnChange.bind(this, 'password') } placeholder="请输入您的密码" prepend={
+            <Input value={ channelForm.password } onChange={ this.channelOnChange.bind(this, 'password') } placeholder="请输入您的密码" prepend={
                 <img src={ code } alt="" />
               }
             />
           </Form.Item>
           <Form.Item className="lastitem">
-            <Checkbox label="记住用户名和密码" />
+            <Checkbox checked={ channelForm.rember } onChange={ this.channelOnChange.bind(this, 'rember') } label="记住用户名和密码" />
             <Button className="login-btn" type="primary" onClick={ this.channelLogin } loading={ btnLoading }>{'登陆'}</Button>
           </Form.Item>
         </Form>

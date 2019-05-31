@@ -66,7 +66,7 @@ class Login extends Component {
       Message.success(res.msg)
       setTimeout(() => {
         console.log(this.context)
-        this.props.history.push('/home')
+        // this.props.history.push('/home')
         // this.context.router.history.push('/home')
       }, 2000)
     } else {
@@ -87,7 +87,7 @@ class Login extends Component {
     if(res.success){
       Message.success(res.msg)
       setTimeout(() => {
-        this.props.history.push('/home')
+        // this.props.history.push('/home')
       }, 2000)
     } else {
       Message.error(res.msg)

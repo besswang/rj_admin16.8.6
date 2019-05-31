@@ -7,10 +7,15 @@ import { withRouter } from 'react-router-dom'
 class Home extends Component {
 	static propTypes = {
     history: PropTypes.object.isRequired
-  }
+	}
+	constructor(props) {
+		super(props)
+		this.state = {
+
+		}
+	}
 	componentDidMount() {
-		// console.log('home')
-		// console.log(this.props)
+		console.log(this.props)
 	}
 	render() {
 		const time = new Date()
