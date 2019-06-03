@@ -23,6 +23,7 @@ export const managelogin = (form, fn) => {
       dispatch(btnReceivePosts(data.msg))
       // fn.push('/home')
       fn.push('/welcome')
+      dispatch(selectRolemenus())
     } else {
       dispatch(btnFailurePosts(data.msg))
     }
@@ -46,5 +47,19 @@ export const logout = (fn) => {
     }).catch(() => {
       Message.info('已取消退出')
     })
+  }
+}
+const saveDefaultRouter = data => ({
+  type: type.SAVE_DEFAULT_ROUTER,
+  data
+})
+export const selectRolemenus = () => {
+  return async dispatch => {
+    const data = await api.selectRolemenusApi()
+    if (data.success) {
+      dispatch(saveDefaultRouter(data.data))
+    } else {
+      Message.error(data.msg)
+    }
   }
 }
