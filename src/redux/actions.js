@@ -153,6 +153,12 @@ export const shouldFetchPosts = (state) => {
     if (params['payTypeId'] === 0) {
       pam['payTypeId'] = params['payTypeId']
     }
+    if (i === 'startTime') {
+      pam[i] = timeDate.time(params[i], 'yyyy-MM-dd hh:mm:ss')
+    }
+    if (i === 'endTime') {
+      pam[i] = timeDate.time(params[i], 'yyyy-MM-dd hh:mm:ss')
+    }
   }
   return pam
 }

@@ -3,8 +3,13 @@ import { Button } from 'element-react'
 import Echart from '@components/echarts'
 import Time from '@components/setime'
 import api from '@api/index'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import '@styles/welcome.less'
 class Welcome extends React.Component{
+	static propTypes = {
+		router: PropTypes.object.isRequired
+	}
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -27,7 +32,6 @@ class Welcome extends React.Component{
 	}
 	initData = async () => {
 		const res = await api.selectTotalLogByTimeApi(this.state.time)
-		console.log(res)
 		if(res.success){
 			this.setState({
 				overdueCount:res.overdueCount,
@@ -39,42 +43,52 @@ class Welcome extends React.Component{
 		}
 	}
 	render(){
-		return(
-			<div>
-				<div className="section">
-					<Time handleTime={ data => this.setState({ time: data }) }/>
-					<Button type="primary" className="margin_left15" onClick={ this.search }>{'查询'}</Button>
+		const { router } = this.props
+		const wel = router.defaultRouter.filter( item => item.text === '欢迎页')
+		if (wel[0].hideInMenu) {
+			return ''
+		}else{
+			return(
+				<div>
+					<div className="section">
+						<Time handleTime={ data => this.setState({ time: data }) }/>
+						<Button type="primary" className="margin_left15" onClick={ this.search }>{'查询'}</Button>
+					</div>
+					<div className="section">
+							<h1 className="title">{'统计'}</h1>
+							<ul className="flex flex-direction_row justify-content_flex-center wel-ul">
+								<li>
+									<p>{'逾期数'}</p>
+									<span>{ this.state.overdueCount }</span>
+								</li>
+								<li>
+									<p>{'申请贷款数'}</p>
+									<span>{ this.state.loanCount }</span>
+								</li>
+								<li>
+									<p>{'审核失败数'}</p>
+									<span>{ this.state.auditFailureCount }</span>
+								</li>
+								<li>
+									<p>{'注册app数'}</p>
+									<span>{ this.state.register }</span>
+								</li>
+								<li>
+									<p>{'认证信息数'}</p>
+									<span>{ this.state.authenticationCount }</span>
+								</li>
+							</ul>
+					</div>
+					<div className="section">
+						<Echart/>
+					</div>
 				</div>
-				 <div className="section">
-						<h1 className="title">{'统计'}</h1>
-						<ul className="flex flex-direction_row justify-content_flex-center wel-ul">
-							<li>
-								<p>{'逾期数'}</p>
-								<span>{ this.state.overdueCount }</span>
-							</li>
-							<li>
-								<p>{'申请贷款数'}</p>
-								<span>{ this.state.loanCount }</span>
-							</li>
-							<li>
-								<p>{'审核失败数'}</p>
-								<span>{ this.state.auditFailureCount }</span>
-							</li>
-							<li>
-								<p>{'注册app数'}</p>
-								<span>{ this.state.register }</span>
-							</li>
-							<li>
-								<p>{'认证信息数'}</p>
-								<span>{ this.state.authenticationCount }</span>
-							</li>
-						</ul>
-				 </div>
-				 <div className="section">
-					<Echart/>
-				 </div>
-			</div>
-		)
+			)
+		}
 	}
 }
-export default Welcome
+const mapStateToProps = state => {
+	const { router } = state
+	return { router }
+}
+export default connect(mapStateToProps)(Welcome)

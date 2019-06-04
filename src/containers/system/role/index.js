@@ -112,7 +112,8 @@ class BlackUser extends Component {
 	}
 	getCheckedKeys = e => {
 		e.preventDefault()
-		const brr = this.tree.getCheckedKeys(true)
+		// const brr = this.tree.getCheckedKeys(true)
+		const brr = this.tree.getCheckedKeys()
 		if(brr.length >0){
 			const arr = []
 			for (let i = 0; i < brr.length; i++) {

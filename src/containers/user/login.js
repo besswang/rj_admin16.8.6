@@ -57,8 +57,11 @@ class Login extends Component {
     console.log(this.props)
 	}
 	componentDidMount() {
-    console.log(this.getCookie('adminName'))
-    console.log(this.getCookie('password'))
+    window.sessionStorage.clear()
+    // window.sessionStorage.removeItem('defaultRouter')
+    // window.sessionStorage.removeItem('routerArr')
+    // console.log(this.getCookie('adminName'))
+    // console.log(this.getCookie('password'))
     const a = this.getCookie('adminName')
     const p = this.getCookie('password')
     if(a && p){

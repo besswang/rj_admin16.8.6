@@ -21,9 +21,10 @@ class Backup extends Component {
 		}
 	}
 	componentWillMount() {
-		// this.selectAreas()
+
   }
   componentDidMount() {
+		// this.selectAreas()
 		// console.log(this.state.data)
 		this.zdata(area[0].data)
 		// this.zdata(this.state.data)
@@ -54,8 +55,8 @@ class Backup extends Component {
 		this.setState({
 			loading:true
 		})
-		const data = await api.selectAreasApi()
-		console.log(data)
+		const data = await api.selectUnAllowableAreaApi()
+		console.log(data.data)
 		if(data.success){
 			this.setState({
 				loading:false
@@ -79,7 +80,7 @@ class Backup extends Component {
 			<div style={ { width: 'calc(100% - 30px)', display:'inline-block',position:'relative'} }>
 				<span>{ data.areaname }</span>
 				{/* <div style={ {display:'inline-block', width:'calc(100% - 70px)',textAlign:'center'} } className="">{ data.state === 1 ? '正常' : '禁用' }</div> */}
-				<div style={ {position:'absolute',right:'50%',top:0, zIndex: 10} } className="">{ data.state === 1 ? '正常' : '禁用' }</div>
+				<div style={ {position:'absolute',right:'50%',top:0, zIndex: 10} } className="">{ '禁用' }</div>
 				<Button style={ { position:'absolute',right:'4px',top:'7px',zIndex: 10} } size="mini" onClick={ () => this.updateAreaState(data) } type="primary">{ '启用' }</Button>
 			</div>
 		)

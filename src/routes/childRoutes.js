@@ -359,6 +359,7 @@ export const CHILD_ROUTES = [
     path: '/detail',
     exact: true,
     hideInMenu: true,
+    single: true,
     component: Detail
   }
 ]

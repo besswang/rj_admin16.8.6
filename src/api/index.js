@@ -104,6 +104,7 @@ export default {
   selectAreasByIdApi: params => Fetch(jk.selectAreasById, {method: 'get', data: params}),
   updateAreaStateApi: params => Fetch(jk.updateAreaState, {method: 'put', body: params}),
   toLoanApi: params => Fetch(jk.toLoan, {method: 'get', data: params}),
-  toLoanBankApi: params => Fetch(jk.toLoanBank, {method: 'get', data: params})
+  toLoanBankApi: params => Fetch(jk.toLoanBank, {method: 'get', data: params}),
+  selectUnAllowableAreaApi: () => Fetch(jk.selectUnAllowableArea, {method: 'get'})
 }
 

@@ -4,6 +4,7 @@ import { CHILD_ROUTES } from '../../routes/childRoutes'
 const recursion = (arr, result = []) => {
   arr.map((item) => {
     if (item.children && item.children.length && !item.hideChildren) {
+      result.push(item)
       return recursion(item.children, result)
     } else {
       if (item.children && item.children.length && item.hideChildren) {
@@ -11,6 +12,7 @@ const recursion = (arr, result = []) => {
         return recursion(item.children, result)
       } else {
         return result.push(item)
+
       }
     }
   })
@@ -33,11 +35,30 @@ const singleRouterFn = () => {
   })
   return singleRouter
 }
+const defaultRouterSession = () => {
+  if (window.sessionStorage.getItem('defaultRouter')) {
+    const r = JSON.parse(window.sessionStorage.getItem('defaultRouter'))
+    const l = distributeRouter()
+    for (const i in r) {
+      for (const j in l) {
+        if(r[i].name === l[j].name){
+          r[i].component = l[j].component
+        }
+      }
+    }
+    // console.log('defaultRouterSession有缓存')
+    return r
+  }else{
+    // console.log('defaultRouterSession为【】')
+    return []
+  }
+}
+const routerArr = window.sessionStorage.getItem('routerArr') ? JSON.parse(window.sessionStorage.getItem('routerArr')) : []
 const router = (state = {
-    routerArr: [],
+    routerArr,
     defaultActive: '',
     routerName: [],
-    defaultRouter: [],
+    defaultRouter: defaultRouterSession(),
     singleRouter: singleRouterFn()
   }, action) => {
     switch (action.type) {
@@ -51,9 +72,13 @@ const router = (state = {
               x['name'] = x.text
               x['path'] = l[i].path
               x['exact'] = true
-              if (x.state1 === '0'){
+              x['component'] = l[i].component
+              if (x.state1 === null){
                 x['hideInMenu'] = true
                 l[i]['hideInMenu'] = true
+              }else{
+                x['hideInMenu'] = false
+                l[i]['hideInMenu'] = false
               }
               arr.push(x)
             }
@@ -62,18 +87,32 @@ const router = (state = {
         for (const i in d) {
           fl(d[i])
         }
-        console.log(l)
-        console.log(arr)
-
-        // for (const i in CHILD_ROUTES) {
-        //   const child = CHILD_ROUTES[i].children
-        //   for (const j in child) {
-        //     if(child[j.name])
-        //     console.log(child[j])
-        //   }
-        // }
-        // console.log(CHILD_ROUTES)
-        return {...state,defaultRouter: action.data, routerArr:CHILD_ROUTES}
+        // console.log(action.data)
+        // console.log(arr)
+        const brr = arr.filter(item => {
+          let da = null
+          if (item.pid === 0) {
+            item['children'] = []
+            da = item
+          }
+          return da
+        })
+        for (let i = 0; i < arr.length; i++) {
+          for (let j = 0; j < brr.length; j++) {
+            if (arr[i].pid === brr[j].zid) {
+              brr[j].children.push(arr[i])
+            }
+          }
+        }
+        if (window.sessionStorage.getItem('defaultRouter')) {
+          // console.log('取缓存数据')
+          return {...state}
+        }else{
+          // console.log('为空')
+          window.sessionStorage.setItem('defaultRouter', JSON.stringify(arr))
+          window.sessionStorage.setItem('routerArr', JSON.stringify(brr))
+          return {...state,defaultRouter: arr, routerArr:brr}
+        }
       }
       case type.MENU_ACTIVE:
         return {...state, defaultActive: action.defaultActive}

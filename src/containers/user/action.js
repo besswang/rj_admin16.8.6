@@ -40,6 +40,9 @@ export const logout = (fn) => {
         dispatch(clearUser())
         Message.success(data.msg)
         fn.push('/login')
+        window.sessionStorage.clear()
+        window.sessionStorage.removeItem('defaultRouter')
+        window.sessionStorage.removeItem('routerArr')
       } else {
         Message.error(data.msg)
       }

@@ -84,6 +84,7 @@ export default {
   // 'selectAreas': 'api/area/selectAreas', // 列表
   'selectAreasById': 'api/area/selectAreasById', // 列表
   'updateAreaState': 'api/area/updateAreaState', // 启用/禁用
+  'selectUnAllowableArea': 'api/area/selectUnAllowableArea', // 所有禁用区域
   // 系统管理-数据备份
   'pageBackup': 'api/sqlCopy/pageBackup',
   'backup': 'api/sqlCopy/backup', // 备份

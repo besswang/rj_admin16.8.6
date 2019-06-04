@@ -20,7 +20,7 @@ class App extends Component {
     }
   }
   componentWillMount() {
-    console.log(this.props)
+
   }
 	componentDidMount() {
 	  this.setDefault()
@@ -30,7 +30,6 @@ class App extends Component {
   }
   //设置侧边栏选中选项
   setDefault() {
-    console.log(this.props)
     // this.props.router.routerName = this.findNameByPath(this.props.router.routerArr, this.props.location.pathname)
     // if (this.props.router.routerName[0].hideChildren) {
     //   this.props.router.defaultActive = this.props.router.routerName[0].path
@@ -43,8 +42,6 @@ class App extends Component {
   render() {
     const { loginSuccess } = this.state
     const { router } = this.props
-    console.log(loginSuccess)
-    // console.log(this.props)
     return(
         <Router>
           <Switch>

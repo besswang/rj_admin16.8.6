@@ -15,7 +15,7 @@ class Home extends Component {
 		}
 	}
 	componentDidMount() {
-		console.log(this.props)
+
 	}
 	render() {
 		const time = new Date()

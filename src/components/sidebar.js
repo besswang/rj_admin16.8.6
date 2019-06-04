@@ -15,6 +15,7 @@ class Sidebar extends Component{
   recursion = arr => {
     const time = +new Date()
     const menu = arr.map((item) => {
+      if (!item.hideInMenu){
         if (item.children && item.children.length) {
           return (
             <Menu.SubMenu
@@ -38,7 +39,8 @@ class Sidebar extends Component{
             </Link>
           )
         }
-        return true
+      }
+      return true
     })
     return menu
 	}
