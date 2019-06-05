@@ -10,6 +10,8 @@ import icon2 from '../../images/login-from-icon2.png'
 import user from '../../images/user.png'
 import code from '../../images/code.png'
 import '@styles/login.less'
+// import { get } from '../../fetch/get.js'
+// import fetch from '../../fetch/mockFetch.js'
 class Login extends Component {
   static propTypes = {
     // match: PropTypes.object.isRequired,
@@ -73,7 +75,14 @@ class Login extends Component {
         }
       })
     }
+    // this.aaa()
   }
+  // aaa = () => {
+  //   // get('https://easy-mock.com/mock/5cf7653cf8ab93502742fb84/example/api/rolemenu/selectRolemenus')
+  //   fetch('api/rolemenu/selectRolemenus', {
+  //     method: 'get'
+  //   })
+	// }
   fetchLogin = async () => {
     const res = await api.manageloginApi({
       adminName: this.state.form.tel,

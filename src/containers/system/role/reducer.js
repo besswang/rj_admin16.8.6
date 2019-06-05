@@ -30,17 +30,25 @@ const treeData = (state = initTree, action) => {
         for(let j=0;j<b.length;j++){
           if (action.posts[i].pid === b[j].zid){
             b[j].children.push(action.posts[i])
+            if (action.posts[i].state1 === '1') {
+              keys.push(action.posts[i].id)
+            }
           }
         }
-        if (action.posts[i].state1 === '1'){
-          keys.push(action.posts[i].id)
+        // 单独判断欢迎页，因为是一级目录，没有children，在内部判断会取不到状态，在这里做单独判断
+        if (action.posts[i].text === '欢迎页'){
+          if (action.posts[i].state1 === '1') {
+            keys.push(action.posts[i].id)
+          }
         }
         if(action.posts[i].state === 1){
           expandedKeys.push(action.posts[i].id)
         }
       }
+      // 去重
+      const k = new Set(keys)
       return {
-        ...state, data: b, loading: false, defaultCheckedKeys: keys, defaultExpandedKeys: expandedKeys
+        ...state, data: b, loading: false, defaultCheckedKeys: [...k], defaultExpandedKeys: expandedKeys
       }
     }
     case type.MENU_FAILURE_POSTS:{

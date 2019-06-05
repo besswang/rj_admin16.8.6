@@ -1,5 +1,7 @@
-// api文件存放接口文件夹
+// api文件存放接口文件夹,测试线
 import Fetch from '../fetch/index'
+// mock 模拟数据
+// import Fetch from '../fetch/mockFetch'
 import jk from './jk'
 export default {
   manageloginApi: params => Fetch(jk.managelogin, {method: 'post', body: params}),
@@ -13,7 +15,7 @@ export default {
   updateUserTypeApi: params => Fetch(jk.updateUserType, {method: 'get', data: params}),
   addUserBlackApi: params => Fetch(jk.addUserBlack, {method:'post', body: params}),
   removeUserBlackApi: params => Fetch(jk.removeUserBlack, {method: 'delete', data: params}),
-  selectOrderByParamApi: params => Fetch(jk.selectOrderByParam, {method: 'get', data: params}),
+  selectOrderByParamApi: params => Fetch(jk.selectOrderByParam, {method: 'post', body: params}),
   updataStateApi: params => Fetch(jk.updataState, {method: 'get', data: params}),
   selectUserNotApplyApi: params => Fetch(jk.selectUserNotApply, {method: 'post', body: params}),
   selectUserNoLoanApi: params => Fetch(jk.selectUserNoLoan, {method: 'post', body: params}),
@@ -102,9 +104,9 @@ export default {
   }}),
   distributionsCuiShouApi: params => Fetch(jk.distributionsCuiShou, {method: 'put', body: params}),
   selectAreasByIdApi: params => Fetch(jk.selectAreasById, {method: 'get', data: params}),
-  updateAreaStateApi: params => Fetch(jk.updateAreaState, {method: 'put', body: params}),
+  updateAreaStateApi: params => Fetch(jk.updateAreaState, {method: 'post', body: params}),
   toLoanApi: params => Fetch(jk.toLoan, {method: 'get', data: params}),
   toLoanBankApi: params => Fetch(jk.toLoanBank, {method: 'get', data: params}),
-  selectUnAllowableAreaApi: () => Fetch(jk.selectUnAllowableArea, {method: 'get'})
+  selectUnAllowableAreaApi: params => Fetch(jk.selectUnAllowableArea, {method: 'post', body:params})
 }
 

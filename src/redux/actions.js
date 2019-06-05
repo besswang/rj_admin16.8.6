@@ -146,18 +146,18 @@ export const shouldFetchPosts = (state) => {
   for (const i in params) {
     if (params[i]) {
       pam[i] = params[i]
+      if (i === 'startTime') {
+        pam[i] = timeDate.time(params[i], 'yyyy-MM-dd hh:mm:ss')
+      }
+      if (i === 'endTime') {
+        pam[i] = timeDate.time(params[i], 'yyyy-MM-dd hh:mm:ss')
+      }
     }
     if (params['isTheDay'] === 0) {
       pam['isTheDay'] = params['isTheDay']
     }
     if (params['payTypeId'] === 0) {
       pam['payTypeId'] = params['payTypeId']
-    }
-    if (i === 'startTime') {
-      pam[i] = timeDate.time(params[i], 'yyyy-MM-dd hh:mm:ss')
-    }
-    if (i === 'endTime') {
-      pam[i] = timeDate.time(params[i], 'yyyy-MM-dd hh:mm:ss')
     }
   }
   return pam

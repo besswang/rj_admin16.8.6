@@ -114,11 +114,24 @@ class BlackUser extends Component {
 		e.preventDefault()
 		// const brr = this.tree.getCheckedKeys(true)
 		const brr = this.tree.getCheckedKeys()
-		if(brr.length >0){
+		const crr = this.props.treeData.data
+		const drr = []
+		// 判断子元素id是否被勾选，如果是，则筛选出相应的父元素ID，
+		for(const i in crr){
+			const child = crr[i].children
+			for(const j in child){
+				if(child[j].id === brr[i]){
+					drr.push(crr[i].id)
+				}
+			}
+		}
+		const frr = brr.concat(drr)
+		// 拼装后台传参格式
+		if(frr.length >0){
 			const arr = []
-			for (let i = 0; i < brr.length; i++) {
+			for (let i = 0; i < frr.length; i++) {
 				arr.push({
-					menuId: brr[i],
+					menuId: frr[i],
 					roleId: this.state.roleId
 				})
 			}

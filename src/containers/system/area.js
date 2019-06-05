@@ -1,13 +1,20 @@
 import React, { Component } from 'react'
-import { Select, Message, Button } from 'element-react'
-// import PropTypes from 'prop-types'
+import { Select, Message, Button, Loading, Table } from 'element-react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-// import { bindActionCreators } from 'redux'
+import { bindActionCreators } from 'redux'
 import api from '@api/index'
+import { sizeChange, currentChange, initSearch } from '@redux/actions'
+import { selectUnAllowableArea } from './actions'
+import MyPagination from '@components/MyPagination'
 class Backup extends Component {
 	static propTypes = {
-
-  }
+		list: PropTypes.object.isRequired,
+		sizeChange: PropTypes.func.isRequired,
+		currentChange: PropTypes.func.isRequired,
+		initSearch: PropTypes.func.isRequired,
+		selectUnAllowableArea: PropTypes.func.isRequired,
+	}
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -20,14 +27,35 @@ class Backup extends Component {
 			cityId: null,
 			areaId: null,
 			countryId:null,
-			id:null
+			id:null,
+			columns: [{
+					type: 'index',
+					fixed: 'left'
+				}, {
+					label: '地区',
+					prop: 'areaname'
+				}, {
+					label: '状态',
+					render: () => {
+						return '禁用'
+					}
+				}, {
+					label: '操作',
+					render: row => {
+						return (
+							<Button className="margin_left15" type="primary" size="mini" onClick={ this.updateAreaState.bind(this,1,row.id) }>{ '启用' }</Button>
+						)
+					}
+				}
+			]
 		}
 	}
 	componentWillMount() {
-
-  }
+		this.props.initSearch()
+	}
   componentDidMount() {
 		this.selectProvince()
+		this.props.selectUnAllowableArea()
 	}
 	selectProvince = async () => {
 		const data = await api.selectAreasByIdApi()
@@ -119,33 +147,53 @@ class Backup extends Component {
 			countryId:e
 		})
 	}
-	updateAreaState = async () => {
+	updateAreaState = async (type,rowId) => {
 		const id = this.state.id
-		if(id){
-			this.setState({
-				btnLoading: true
-			})
-			const res = await api.updateAreaStateApi({id:id,state:0})
+		if(type === 0){ // 禁用
+			if(id){
+				this.setState({
+					btnLoading: true
+				})
+				const res = await api.updateAreaStateApi({id:id,state:type})
+				if(res.success){
+					Message.success(res.msg)
+					this.setState({
+						provinceId: null,
+						cityId: null,
+						areaId: null,
+						countryId: null,
+						id: null
+					})
+					this.props.selectUnAllowableArea()
+				}else{
+					Message.error(res.msg)
+				}
+				this.setState({
+					btnLoading: false
+				})
+			}else{
+				Message.warning('请选择禁用的地区')
+			}
+		}else{// 启用
+			const res = await api.updateAreaStateApi({id:rowId,state:type})
 			if(res.success){
 				Message.success(res.msg)
-				this.setState({
-					provinceId: null,
-					cityId: null,
-					areaId: null,
-					countryId: null,
-					id: null
-				})
+				this.props.selectUnAllowableArea()
 			}else{
 				Message.error(res.msg)
 			}
-			this.setState({
-				btnLoading: false
-			})
-		}else{
-			Message.warning('请选择禁用的地区')
 		}
 	}
+	sizeChange = e => {
+    this.props.sizeChange(e)
+    this.props.selectUnAllowableArea()
+  }
+  onCurrentChange = e => {
+    this.props.currentChange(e)
+    this.props.selectUnAllowableArea()
+	}
 	render() {
+		const { list } = this.props
 		const { province, city, area, country, provinceId, cityId , areaId, countryId, btnLoading } = this.state
 		return (
 			<div>
@@ -205,19 +253,33 @@ class Backup extends Component {
 						}
 					</Select>
 				}
-				<Button className="margin_left15" onClick={ this.updateAreaState.bind(this) } type="warning" loading={ btnLoading }>{ '禁用' }</Button>
+				<Button className="margin_left15" onClick={ this.updateAreaState.bind(this, 0) } type="warning" loading={ btnLoading }>{ '禁用' }</Button>
+
+				<Loading loading={ list.loading } className="margin_top15">
+					<Table
+						style={ { width: '100%' } }
+						columns={ this.state.columns }
+						data={ list.data }
+						border
+					/>
+				</Loading>
+        <MyPagination
+          total={ list.total }
+          onSizeChange={ this.sizeChange }
+          onCurrentChange={ this.onCurrentChange }
+        />
 			</div>
 		)
 	}
 }
 
-// const mapStateToProps = state => {
-// 	const {} = state
-// 	return {}
-// }
-// const mapDispatchToProps = dispatch => {
-// 	return {
-// 		...bindActionCreators({}, dispatch)
-// 	}
-// }
-export default connect()(Backup)
+const mapStateToProps = state => {
+	const { list } = state
+	return { list }
+}
+const mapDispatchToProps = dispatch => {
+	return {
+		...bindActionCreators({sizeChange, currentChange, initSearch, selectUnAllowableArea}, dispatch)
+	}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Backup)

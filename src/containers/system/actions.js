@@ -322,6 +322,20 @@ export const updateAppversion = obj => {
     }
   }
 }
+
+// 禁用区域-列表
+export const selectUnAllowableArea = () => {
+  return async (dispatch, getState) => {
+    dispatch(requestPosts())
+    const searchAll = shouldFetchPosts(getState())
+    const data = await api.selectUnAllowableAreaApi(searchAll)
+    if (data.success) {
+      dispatch(receivePosts(data.data))
+    } else {
+      dispatch(failurePosts(data))
+    }
+  }
+}
 // 区域管理-启用/禁用
 // export const updateAreaState = obj => {
 //   return dispatch => {

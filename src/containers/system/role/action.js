@@ -76,9 +76,8 @@ export const selectRolemenus = (obj, tree) => {
     console.log(data)
   }
 }
-
 // 角色-权限-提交
-export const updateRolemenus = (obj) => {
+export const updateRolemenus = obj => {
   return async dispatch => {
     dispatch(btnRequestPosts())
     const data = await api.updateRolemenusApi(obj)
