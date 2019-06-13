@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import api from '@api/index'
-import { sizeChange, currentChange, initSearch } from '@redux/actions'
+import { sizeChange, currentChange, initSearch, requestPosts, receivePosts, failurePosts } from '@redux/actions'
 import { selectUnAllowableArea } from './actions'
 import MyPagination from '@components/MyPagination'
 class Backup extends Component {
@@ -14,11 +14,15 @@ class Backup extends Component {
 		currentChange: PropTypes.func.isRequired,
 		initSearch: PropTypes.func.isRequired,
 		selectUnAllowableArea: PropTypes.func.isRequired,
+		requestPosts: PropTypes.func.isRequired,
+		receivePosts: PropTypes.func.isRequired,
+		failurePosts: PropTypes.func.isRequired
 	}
 	constructor(props) {
 		super(props)
 		this.state = {
 			btnLoading: false,
+			selectBtnLoading:false,
 			province: [], // 省
 			city: [], // 市
 			area: [], // 区
@@ -147,41 +151,48 @@ class Backup extends Component {
 			countryId:e
 		})
 	}
-	updateAreaState = async (type,rowId) => {
+	updateAreaState = async (type, rowId) => {
 		const id = this.state.id
-		if(type === 0){ // 禁用
-			if(id){
-				this.setState({
-					btnLoading: true
-				})
-				const res = await api.updateAreaStateApi({id:id,state:type})
-				if(res.success){
-					Message.success(res.msg)
+		let rId = null
+		if (rowId !== null && type !== 0) {
+			// 列表中的启用
+			rId = rowId
+		}else{
+			// select 中的启用/禁用
+			if(id === null){
+				Message.warning('请选择地区')
+				return false
+			}else{
+				if (type === 0){ // 禁用
 					this.setState({
-						provinceId: null,
-						cityId: null,
-						areaId: null,
-						countryId: null,
-						id: null
+						btnLoading: true
 					})
-					this.props.selectUnAllowableArea()
-				}else{
-					Message.error(res.msg)
+				}else{ // 启用
+					this.setState({
+						selectBtnLoading: true
+					})
 				}
-				this.setState({
-					btnLoading: false
-				})
-			}else{
-				Message.warning('请选择禁用的地区')
+				rId = id
 			}
-		}else{// 启用
-			const res = await api.updateAreaStateApi({id:rowId,state:type})
-			if(res.success){
-				Message.success(res.msg)
-				this.props.selectUnAllowableArea()
-			}else{
-				Message.error(res.msg)
-			}
+		}
+		this.props.currentChange(1)
+		this.props.requestPosts()
+		const res = await api.updateAreaStateApi({id:rId,state:type})
+		if(res.success){
+			Message.success(res.msg)
+			this.props.selectUnAllowableArea()
+			this.setState({
+				provinceId: null,
+				cityId: null,
+				areaId: null,
+				countryId: null,
+				id: null,
+				selectBtnLoading: false,
+				btnLoading: false
+			})
+		}else{
+			this.props.failurePosts()
+			Message.error(res.msg)
 		}
 	}
 	sizeChange = e => {
@@ -194,7 +205,7 @@ class Backup extends Component {
 	}
 	render() {
 		const { list } = this.props
-		const { province, city, area, country, provinceId, cityId , areaId, countryId, btnLoading } = this.state
+		const { province, city, area, country, provinceId, cityId , areaId, countryId, btnLoading, selectBtnLoading } = this.state
 		return (
 			<div>
 				<Select
@@ -254,6 +265,7 @@ class Backup extends Component {
 					</Select>
 				}
 				<Button className="margin_left15" onClick={ this.updateAreaState.bind(this, 0) } type="warning" loading={ btnLoading }>{ '禁用' }</Button>
+				<Button className="margin_left15" onClick={ this.updateAreaState.bind(this, 1, null) } type="primary" loading={ selectBtnLoading }>{ '启用' }</Button>
 
 				<Loading loading={ list.loading } className="margin_top15">
 					<Table
@@ -279,7 +291,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, selectUnAllowableArea}, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, selectUnAllowableArea, requestPosts, receivePosts, failurePosts}, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Backup)

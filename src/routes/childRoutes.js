@@ -355,11 +355,15 @@ export const CHILD_ROUTES = [
       component: ChannelMember
     }]
   }, {
-    name: '会员详情',
+    id: 100,
+    pid: 0,
+    state: 0,
+    state1: '1',
+    superState: 0,
+    name: '详情',
     path: '/detail',
     exact: true,
     hideInMenu: true,
-    single: true,
     component: Detail
   }
 ]

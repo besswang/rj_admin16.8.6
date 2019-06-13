@@ -132,10 +132,19 @@ class Mlist extends Component{
 	componentWillMount() {
 		this.props.initSearch()
 		this.props.menuActive(this.props.location.pathname)
+		window.sessionStorage.removeItem('locationState')
+		window.sessionStorage.removeItem('detailList')
 		console.log(process.env)
 		console.log(process.env.PUBLIC_URL)
+
 	}
 	componentDidMount() {
+		const sess = {
+			name: '用户信息',
+			title: '会员列表',
+			url: '/member/mlist'
+		}
+		window.sessionStorage.setItem('locationState', JSON.stringify(sess))
 		this.props.handelSearch()
 	}
 	handleSearch = e => {

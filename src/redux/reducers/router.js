@@ -84,6 +84,11 @@ const router = (state = {
             }
           }
         }
+        const ssss = l.find(item => item.name === '详情')
+        // const eee = Object.assign({}, ssss, {
+        //   children: []
+        // })
+        arr.push(ssss)
         for (const i in d) {
           fl(d[i])
         }

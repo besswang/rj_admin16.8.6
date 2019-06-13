@@ -11,8 +11,12 @@ import { BANK, ADDRESS, CALL_LOG } from '@meta/columns'
 import '@styles/detail.less'
 import timeDate from '@global/timeDate'
 import filter from '@global/filter'
+window.onbeforeunload = function(){
+
+}
 class Detail extends Component{
   static propTypes = {
+    history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     listInfo: PropTypes.object,
     list: PropTypes.object,
@@ -30,21 +34,39 @@ class Detail extends Component{
   constructor(props) {
       super(props)
       this.state = {
-        name: ''
+        name: '',
+        title:'',
+        linkUrl:'',
+        listInfo: {}
       }
   }
 	componentWillMount() {
     this.props.initSearch()
-    this.setState({
-      name: this.props.location.state.name
-    })
+    if (this.props.location.state !== undefined) {
+      this.setState({
+        name: this.props.location.state.name,
+        title: this.props.location.state.title,
+        linkUrl: this.props.location.state.url,
+        listInfo:this.props.listInfo
+      })
+    } else {
+      const s = JSON.parse(window.sessionStorage.getItem('locationState'))
+      const r = JSON.parse(window.sessionStorage.getItem('detailList'))
+      console.log(r)
+      this.setState({
+        name: s.name,
+        title: s.title,
+        linkUrl: s.url,
+        listInfo:r
+      })
+    }
     console.log(this.props)
 	}
 	componentDidMount() {
 
   }
   tabChange = (e) => {
-    const userId = this.props.listInfo.userId ? this.props.listInfo.userId : this.props.listInfo.id
+    const userId = this.state.listInfo.userId ? this.state.listInfo.userId : this.state.listInfo.id
     switch (e) {
       case '2':{ // 身份证信息
         return this.props.selectIdCardByUserId({userId: userId})
@@ -88,14 +110,13 @@ class Detail extends Component{
     console.log(url)
   }
 	render(){
-    const { listInfo, idCardInfo, list } = this.props
-    const { title, url } = this.props.location.state
-    const { name } = this.state
+    const { idCardInfo, list } = this.props
+    const { name, title, linkUrl, listInfo } = this.state
 		return(
 			<div>
 				<Breadcrumb separator="/" className="margin-bottom15">
 					<Breadcrumb.Item>
-						<Link to={ url }>{ title }</Link>
+						<Link to={ linkUrl }>{ title }</Link>
 					</Breadcrumb.Item>
 					<Breadcrumb.Item>{'用户详情'}</Breadcrumb.Item>
 				</Breadcrumb>

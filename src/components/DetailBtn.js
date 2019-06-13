@@ -11,6 +11,9 @@ class DetailBtn extends Component {
     saveList: PropTypes.func.isRequired,
     row: PropTypes.object.isRequired
  }
+ componentWillMount() {
+
+ }
  render() {
     const { linkTo, row } = this.props
     return (

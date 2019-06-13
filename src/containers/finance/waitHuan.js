@@ -201,10 +201,18 @@ class WaitHuan extends Component {
 		}
 	}
 	componentWillMount() {
-    this.props.initSearch()
+		this.props.initSearch()
+		window.sessionStorage.removeItem('locationState')
+		window.sessionStorage.removeItem('detailList')
   }
   componentDidMount() {
-    this.props.selectPendingRepay()
+		this.props.selectPendingRepay()
+		const sess = {
+			name: '申请信息',
+			title: '待还款',
+			url: '/finance/waitHuan'
+		}
+		window.sessionStorage.setItem('locationState', JSON.stringify(sess))
   }
   handleSearch = e => {
     e.preventDefault()

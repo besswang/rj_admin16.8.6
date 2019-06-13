@@ -233,6 +233,7 @@ const searchAll = (state = search, action) => {
 const listInfo = (state = {}, action) => {
   switch (action.type) {
     case type.SAVE_LIST_INFO:
+      window.sessionStorage.setItem('detailList', JSON.stringify(action.data))
       return action.data
     default:
       return state

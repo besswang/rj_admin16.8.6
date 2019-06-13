@@ -35,6 +35,7 @@ export default {
    // 借款管理-待审核
   'selectOrderByParam': 'api/order/selectOrderByParam', // 待审核/审核拒绝列表
   'updataState': 'api/order/updataState', // 操作-通过/拒绝
+  'updateNextApplyTime': 'api/order/updateNextApplyTime', // 审核拒绝-开放申请
   // 催收管理-逾期列表
   'selectCollectionByParam': 'api/order/selectCollectionByParam', // 催收列表
   'updateOrderCuishou': 'api/order/updateOrderCuishou', // 分配催收人员

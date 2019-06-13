@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { handelSearch } from './action'
+import { handelSearch, updateNextApplyTime } from './action'
 import MyPagination from '@components/MyPagination'
 import Search from '@components/Search'
 import DetailBtn from '@components/DetailBtn'
@@ -18,6 +18,7 @@ class AuditRefuse extends Component{
 		currentChange: PropTypes.func.isRequired,
 		initSearch: PropTypes.func.isRequired,
 		handelSearch: PropTypes.func.isRequired,
+		updateNextApplyTime: PropTypes.func.isRequired
 	}
 	constructor(props) {
 		super(props)
@@ -94,7 +95,7 @@ class AuditRefuse extends Component{
 					render: row => {
 							return (
 								<div className="flex flex-direction_row">
-									<Button className="margin_right10" type="success" size="mini">
+									<Button className="margin_right10" type="success" size="mini" onClick={ this.props.updateNextApplyTime.bind(this, row.id) }>
 										{'开放申请'}
 									</Button>
 									<DetailBtn linkTo={ dauditRefuse } row={ row } />
@@ -106,9 +107,17 @@ class AuditRefuse extends Component{
 	}
 	componentWillMount() {
 		this.props.initSearch()
+		window.sessionStorage.removeItem('locationState')
+		window.sessionStorage.removeItem('detailList')
 	}
 	componentDidMount() {
 		this.props.handelSearch()
+		const sess = {
+			name: '申请信息',
+			title: '审核拒绝',
+			url: '/borrow/auditrefuse'
+		}
+		window.sessionStorage.setItem('locationState', JSON.stringify(sess))
 	}
 	handleSearch = e => {
 		e.preventDefault()
@@ -152,7 +161,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({ sizeChange, currentChange, initSearch, handelSearch }, dispatch)
+		...bindActionCreators({ sizeChange, currentChange, initSearch, handelSearch, updateNextApplyTime }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AuditRefuse)
