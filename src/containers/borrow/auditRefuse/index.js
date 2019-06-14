@@ -28,7 +28,7 @@ class AuditRefuse extends Component{
 						fixed: 'left'
 				}, {
 					label: '订单号',
-					prop: 'gmt',
+					prop: 'orderNumber',
 					width: 100,
 					fixed: 'left'
 				},{
@@ -70,7 +70,11 @@ class AuditRefuse extends Component{
 					}
 				}, {
 					label: '申请时间',
-					prop: 'nextApplyTime'
+					prop: 'gmt',
+					render: row => {
+						const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
+						return date
+					}
 				}, {
 					label: '审核客服',
 					prop: 'examineCustomer'
@@ -83,9 +87,9 @@ class AuditRefuse extends Component{
 					}
 				}, {
 					label: '拒绝时间',
-					prop: 'gmt',
+					prop: 'examineDate',
 					render: row => {
-						const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
+						const date = timeDate.time(row.examineDate, 'yyyy-MM-dd hh:mm:ss')
 						return date
 					}
 				}, {

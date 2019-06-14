@@ -11,6 +11,7 @@ import DetailBtn from '@components/DetailBtn'
 import { daudit } from '@meta/details'
 import { FALSE, PENDING_LOAN } from '@meta/state'
 import filter from '@global/filter'
+import timeDate from '@global/timeDate'
 // import store from '@redux/store'
 class Audit extends Component{
 	static propTypes = {
@@ -74,7 +75,11 @@ class Audit extends Component{
 					}
 				}, {
 					label: '申请时间',
-					prop: 'nextApplyTime'
+					prop: 'gmt',
+					render: row => {
+						const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
+						return date
+					}
 				}, {
 					label: '审核建议',
 					prop: ''
