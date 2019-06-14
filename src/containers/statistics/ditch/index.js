@@ -84,13 +84,13 @@ class Ditch extends Component {
             return (
               <div>
                 <Link to={ {pathname:'/statistics/ditchinside',state:{date:row.date,active:'1'}} }>
-                  <Button type="primary" size="mini">{'当天'}</Button>
+                  <Button onClick={ this.ditchType.bind(this, row.date, '1') } type="primary" size="mini">{'当天'}</Button>
                 </Link>
                 <Link to={ {pathname:'/statistics/ditchinside',state:{date:row.date,active:'2'}} }>
-                  <Button style={ {margin:'0 15px'} } type="primary" size="mini">{'总转化'}</Button>
+                  <Button onClick={ this.ditchType.bind(this, row.date, '2') } style={ {margin:'0 15px'} } type="primary" size="mini">{'总转化'}</Button>
                 </Link>
                 <Link to={ {pathname:'/statistics/ditchinside',state:{date:row.date,active:'3'}} }>
-                  <Button type="primary" size="mini">{'渠道费用'}</Button>
+                  <Button onClick={ this.ditchType.bind(this, row.date, '3') } type="primary" size="mini">{'渠道费用'}</Button>
                 </Link>
               </div>
             )
@@ -102,10 +102,16 @@ class Ditch extends Component {
   componentWillMount() {
     this.props.initSearch()
     this.props.menuActive(this.props.location.pathname)
+    window.sessionStorage.removeItem('theDay')
+    window.sessionStorage.removeItem('activeName')
 	}
 	componentDidMount() {
 		this.props.handleSearch()
-	}
+  }
+  ditchType = (time, type) => {
+    window.sessionStorage.setItem('theDay', time)
+    window.sessionStorage.setItem('activeName',type)
+  }
 	handleSearch = e => {
 		e.preventDefault()
 		this.props.handleSearch()

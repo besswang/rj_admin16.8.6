@@ -84,11 +84,10 @@ const router = (state = {
             }
           }
         }
-        const ssss = l.find(item => item.name === '详情')
-        // const eee = Object.assign({}, ssss, {
-        //   children: []
-        // })
-        arr.push(ssss)
+        // 过滤内页的单独页面(详情页，当天/总转化/渠道费用)
+        const ssss = l.filter(item => item.childSingle)
+        arr.push(...ssss)
+        console.log(arr)
         for (const i in d) {
           fl(d[i])
         }

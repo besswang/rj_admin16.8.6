@@ -150,10 +150,16 @@ export const CHILD_ROUTES = [
         component: Look
       }, {
         // 报表统计-渠道统计-当天/总转化/渠道费用
+        id: 101,
+        pid: 0,
+        state: 0,
+        state1: '1',
+        superState: 0,
         name: '当天/总转化/渠道费用',
         path: '/statistics/ditchinside',
         exact: true,
         hideInMenu: true,
+        childSingle: true,
         component: Ditchinside
       }, {
         //报表统计-还款统计-查看
@@ -364,6 +370,7 @@ export const CHILD_ROUTES = [
     path: '/detail',
     exact: true,
     hideInMenu: true,
+    childSingle: true,
     component: Detail
   }
 ]

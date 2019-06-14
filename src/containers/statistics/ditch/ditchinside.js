@@ -25,32 +25,42 @@ class Ditchinside extends Component {
     super(props)
     this.state = {
       breadcrumbTitle:'',
-      activeName:''
+      activeName:'',
+      theDay:''
     }
   }
   componentWillMount() {
     this.props.initSearch()
-    this.setState({
-      activeName: this.props.location.state.active
-    })
+    if (this.props.location.state !== undefined){
+      this.setState({
+        activeName: this.props.location.state.active,
+        theDay: this.props.location.state.date
+      })
+    }else{
+      this.setState({
+        activeName: window.sessionStorage.getItem('activeName'),
+        theDay: window.sessionStorage.getItem('theDay')
+      })
+    }
+
 	}
 	componentDidMount() {
     this.allFn()
   }
   allFn = () => {
-    const { activeName } = this.state
+    const { activeName, theDay } = this.state
     if (activeName === '1') {
-      this.props.pageChannelTheDayCount({theDay:this.props.location.state.date})
+      this.props.pageChannelTheDayCount({theDay:theDay})
       this.setState({
         breadcrumbTitle:'当天'
       })
     } else if (activeName === '2'){
-      this.props.pageChannelTotalCount({theDay:this.props.location.state.date})
+      this.props.pageChannelTotalCount({theDay:theDay})
       this.setState({
         breadcrumbTitle: '总转化'
       })
     } else{
-      this.props.pageChannelCost({theDay:this.props.location.state.date})
+      this.props.pageChannelCost({theDay:theDay})
       this.setState({
         breadcrumbTitle: '渠道费用'
       })
@@ -65,6 +75,8 @@ class Ditchinside extends Component {
     this.allFn()
   }
   tabChange = v => {
+    const { theDay } = this.state
+    window.sessionStorage.setItem('activeName', v)
     switch(v){
       case '1':
         this.setState({
@@ -72,7 +84,7 @@ class Ditchinside extends Component {
           activeName:'1'
         })
         this.props.initSearch()
-        this.props.pageChannelTheDayCount({theDay:this.props.location.state.date})
+        this.props.pageChannelTheDayCount({theDay:theDay})
         break
       case '2':
         this.setState({
@@ -80,7 +92,7 @@ class Ditchinside extends Component {
           activeName: '2',
         })
         this.props.initSearch()
-        this.props.pageChannelTotalCount({theDay:this.props.location.state.date})
+        this.props.pageChannelTotalCount({theDay:theDay})
         break
       case '3':
         this.setState({
@@ -88,7 +100,7 @@ class Ditchinside extends Component {
           activeName: '3',
         })
         this.props.initSearch()
-        this.props.pageChannelCost({theDay:this.props.location.state.date})
+        this.props.pageChannelCost({theDay:theDay})
         break
       default:
         return ''
