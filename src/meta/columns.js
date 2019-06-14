@@ -338,7 +338,7 @@ export const CALL_LOG = [{
   prop: 'communicationType'
 }, {
   label: '通话时长/秒',
-  prop: 'communicationType'
+  prop: 'communicationDuration'
 }, {
   label: '通话地点',
   prop: 'communicationAddress'
