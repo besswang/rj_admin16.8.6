@@ -329,18 +329,18 @@ export const CALL_LOG = [{
   type: 'index',
 }, {
   label: '通讯号码',
-  prop: 'communicationPhone'
+  prop: 'peerNumber'
 }, {
   label: '通讯时间',
-  prop: 'communicationTime'
+  prop: 'time'
 }, {
   label: '通讯方式',
-  prop: 'communicationType'
+  prop: 'locationType'
 }, {
   label: '通话时长/秒',
-  prop: 'communicationDuration'
+  prop: 'duration'
 }, {
   label: '通话地点',
-  prop: 'communicationAddress'
+  prop: 'location'
 }]
 

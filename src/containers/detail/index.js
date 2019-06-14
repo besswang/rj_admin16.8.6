@@ -37,7 +37,8 @@ class Detail extends Component{
         name: '',
         title:'',
         linkUrl:'',
-        listInfo: {}
+        listInfo: {},
+        activeName: '1'
       }
   }
 	componentWillMount() {
@@ -47,25 +48,27 @@ class Detail extends Component{
         name: this.props.location.state.name,
         title: this.props.location.state.title,
         linkUrl: this.props.location.state.url,
-        listInfo:this.props.listInfo
+        listInfo:this.props.listInfo,
+        activeName: '1'
       })
     } else {
       const s = JSON.parse(window.sessionStorage.getItem('locationState'))
       const r = JSON.parse(window.sessionStorage.getItem('detailList'))
-      console.log(r)
       this.setState({
         name: s.name,
         title: s.title,
         linkUrl: s.url,
-        listInfo:r
+        listInfo:r,
+        activeName: window.sessionStorage.getItem('activeName')
       })
     }
-    console.log(this.props)
 	}
 	componentDidMount() {
-
+    console.log(this.state.activeName)
+    this.tabChange(this.state.activeName)
   }
   tabChange = (e) => {
+    window.sessionStorage.setItem('activeName',e)
     const userId = this.state.listInfo.userId ? this.state.listInfo.userId : this.state.listInfo.id
     switch (e) {
       case '2':{ // 身份证信息
@@ -111,7 +114,7 @@ class Detail extends Component{
   }
 	render(){
     const { idCardInfo, list } = this.props
-    const { name, title, linkUrl, listInfo } = this.state
+    const { name, title, linkUrl, listInfo, activeName } = this.state
 		return(
 			<div>
 				<Breadcrumb separator="/" className="margin-bottom15">
@@ -120,7 +123,7 @@ class Detail extends Component{
 					</Breadcrumb.Item>
 					<Breadcrumb.Item>{'用户详情'}</Breadcrumb.Item>
 				</Breadcrumb>
-        <Tabs activeName="1" onTabClick={ tab => this.tabChange(tab.props.name) }>
+        <Tabs activeName={ activeName } onTabClick={ tab => this.tabChange(tab.props.name) }>
           {
               name === '申请信息' &&
               <Tabs.Pane label={ name } name="1">
