@@ -19,7 +19,7 @@ export const managelogin = (form, fn) => {
     dispatch(btnRequestPosts())
     const data = await api.manageloginApi(form)
     if (data.success) {
-      dispatch(saveUser(form, data))
+      dispatch(saveUser(form, data.data))
       dispatch(btnReceivePosts(data.msg))
       // fn.push('/home')
       fn.push('/welcome')

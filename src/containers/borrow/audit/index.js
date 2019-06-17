@@ -114,10 +114,11 @@ class Audit extends Component{
 		this.props.handelSearch()
   }
 	handelAudit(id,state) {
+		const obj = JSON.parse(window.sessionStorage.getItem('adminInfo'))
 		const trans = {
 			id:id,
 			state:state,
-			admin:'admin'
+			admin: obj.id
 		}
 		console.log(trans)
 		this.props.handelAudit(trans)

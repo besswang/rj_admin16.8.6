@@ -71,7 +71,7 @@ export default {
   pageAdminApi: params => Fetch(jk.pageAdmin, {method: 'post', body: params}),
   allRolesApi: params => Fetch(jk.allRoles, {method: 'post', body: params}),
   addAdminApi: params => Fetch(jk.addAdmin, {method: 'post', body: params}),
-  updateAdminApi: params => Fetch(jk.updateAdmin, {method: 'put', body: params}),
+  updateAdminApi: params => Fetch(jk.updateAdmin, {method: 'post', body: params}),
   pageBackupApi: params => Fetch(jk.pageBackup, {method: 'post', body: params}),
   backupApi: params => Fetch(jk.backup, {method: 'post', body: params}),
   pageGlobalconfigApi: params => Fetch(jk.pageGlobalconfig, {method: 'post', body: params}),

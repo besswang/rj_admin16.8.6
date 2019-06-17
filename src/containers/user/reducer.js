@@ -12,13 +12,17 @@ const initUser = {
   password: '', // 密码
   type: '', // 用户类型
   msg: '', // 错误消息
+  id:null,
   isLogin: false // 是否登录
 }
 const user = (state = initUser, action) => {
   switch (action.type) {
     case type.SAVE_USER:
-      return { ...state, isLogin: true, data: action.data, adminName: action.form.adminName, password: action.form.password }
+      // return { ...state, isLogin: true, data: action.data, adminName: action.form.adminName, password: action.form.password }
+      window.sessionStorage.setItem('adminInfo', JSON.stringify(action.data))
+      return { ...state, isLogin: true, adminName: action.data.adminName, id:action.data.id }
     case type.CLEAR_USER:
+      window.sessionStorage.removeItem('adminInfo')
       return { ...state, isLogin: false }
     default:
       return state

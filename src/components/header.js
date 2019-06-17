@@ -12,12 +12,28 @@ class Header extends Component {
     logout: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired
   }
+  constructor(props) {
+    super(props)
+    this.state = {
+      adminName: ''
+    }
+  }
   componentWillMount() {
 		// console.log('header')
 		// console.log(this.props)
 	}
 	componentDidMount() {
-
+    // console.log(this.props.user)
+    // if (this.props.user.adminName !== '') {
+    //   this.setState({
+    //     adminName: this.props.user.adminName
+    //   })
+    // }else{
+      const obj = JSON.parse(window.sessionStorage.getItem('adminInfo'))
+      this.setState({
+        adminName: obj.adminName
+      })
+    // }
 	}
   handleCommand = async e => {
     if(e === '0'){
@@ -26,7 +42,10 @@ class Header extends Component {
     }
   }
   render() {
-    const { adminName } = this.props.user
+    // const { adminName } = this.props.user
+    // const obj = JSON.parse(window.sessionStorage.getItem('adminInfo'))
+    // const { adminName } = obj
+    const { adminName } = this.state
     return (
       <ul className= "header-ul flex flex-direction_row justify-content_flex-justify align-items_center" >
         <li className="flex flex-direction_row">

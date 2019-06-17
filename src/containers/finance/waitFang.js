@@ -80,7 +80,7 @@ class WaitFang extends Component {
 					}
 				}, {
 					label: '审核客服',
-					prop: 'examineCustomer'
+					prop: 'examineCustomerName'
 				}, {
 					label: '审核时间',
 					prop: 'examineDate'
