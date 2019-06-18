@@ -266,7 +266,7 @@ class Login extends Component {
             />
           </Form.Item>
           <Form.Item prop="password">
-            <Input value={ channelForm.password } onChange={ this.channelOnChange.bind(this, 'password') } placeholder="请输入您的密码" prepend={
+            <Input type="password" value={ channelForm.password } onChange={ this.channelOnChange.bind(this, 'password') } placeholder="请输入您的密码" prepend={
                 <img src={ code } alt="" />
               }
             />

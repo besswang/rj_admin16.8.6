@@ -20,10 +20,12 @@ export const managelogin = (form, fn) => {
     const data = await api.manageloginApi(form)
     if (data.success) {
       dispatch(saveUser(form, data.data))
-      dispatch(btnReceivePosts(data.msg))
       // fn.push('/home')
-      fn.push('/welcome')
-      dispatch(selectRolemenus())
+      // setTimeout(() => {
+        dispatch(btnReceivePosts(data.msg))
+        fn.push('/welcome')
+        dispatch(selectRolemenus())
+      // }, 1000)
     } else {
       dispatch(btnFailurePosts(data.msg))
     }

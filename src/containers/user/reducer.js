@@ -20,7 +20,7 @@ const user = (state = initUser, action) => {
     case type.SAVE_USER:
       // return { ...state, isLogin: true, data: action.data, adminName: action.form.adminName, password: action.form.password }
       window.sessionStorage.setItem('adminInfo', JSON.stringify(action.data))
-      return { ...state, isLogin: true, adminName: action.data.adminName, id:action.data.id }
+      return { ...state, isLogin: true, adminName: action.data.adminName, id:action.data.id}
     case type.CLEAR_USER:
       window.sessionStorage.removeItem('adminInfo')
       return { ...state, isLogin: false }
