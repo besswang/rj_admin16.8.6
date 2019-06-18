@@ -49,7 +49,8 @@ class Detail extends Component{
         title: this.props.location.state.title,
         linkUrl: this.props.location.state.url,
         listInfo:this.props.listInfo,
-        activeName: '1'
+        activeName: '1',
+        userId: null
       })
     } else {
       const s = JSON.parse(window.sessionStorage.getItem('locationState'))
@@ -69,7 +70,11 @@ class Detail extends Component{
   }
   tabChange = (e) => {
     window.sessionStorage.setItem('activeName',e)
-    const userId = this.state.listInfo.userId ? this.state.listInfo.userId : this.state.listInfo.id
+    this.setState({
+      userId: this.state.listInfo.userId ? this.state.listInfo.userId : this.state.listInfo.id
+    })
+    // const userId = this.state.listInfo.userId ? this.state.listInfo.userId : this.state.listInfo.id
+    const { userId } = this.state
     switch (e) {
       case '2':{ // 身份证信息
         return this.props.selectIdCardByUserId({userId: userId})
@@ -114,7 +119,7 @@ class Detail extends Component{
   }
 	render(){
     const { idCardInfo, list } = this.props
-    const { name, title, linkUrl, listInfo, activeName } = this.state
+    const { name, title, linkUrl, listInfo, activeName, userId } = this.state
 		return(
 			<div>
 				<Breadcrumb separator="/" className="margin-bottom15">
@@ -309,10 +314,10 @@ class Detail extends Component{
             </Loading>
           </Tabs.Pane>
           <Tabs.Pane label="通讯录" name="6">
-            <Detailtable columns={ ADDRESS } num={ 1 } userId={ listInfo.id } />
+            <Detailtable columns={ ADDRESS } num={ 1 } userId={ userId } />
           </Tabs.Pane>
           <Tabs.Pane label="通话记录" name="7">
-            <Detailtable columns={ CALL_LOG } num={ 2 } userId={ listInfo.id }/>
+            <Detailtable columns={ CALL_LOG } num={ 2 } userId={ userId }/>
           </Tabs.Pane>
         </Tabs>
 			</div>

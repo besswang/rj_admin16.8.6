@@ -1,6 +1,6 @@
 import api from '@api/index'
 import { requestPosts, receivePosts, failurePosts, shouldFetchPostsDate } from '@redux/actions'
-
+import * as type from '@redux/actionTypes'
 // 报表统计-逾期统计
 export const overSearch = () => {
   return async (dispatch, getState) => {
@@ -81,16 +81,27 @@ export const pageInoutCount = () => {
   }
 }
 
+const lookRequest = () => ({
+  type: type.LOOK_REQUEST_POSTS
+})
+// 请求成功后的存储方法
+const lookReceive = data => ({
+  type: type.LOOK_RECEIVE_POSTS,
+  data
+})
+// 请求失败后的方法
+const lookFailure = () => ({
+  type: type.LOOK_FAILURE_POSTS
+})
 // 报表统计-数据看版
 export const selectDataCheckCount = () => {
   return async (dispatch) => {
-    dispatch(requestPosts())
+    dispatch(lookRequest())
     const data = await api.selectDataCheckCountApi()
-    // if (data.success) {
-    //   dispatch(receivePosts(data.data))
-    // } else {
-    //   dispatch(failurePosts(data))
-    // }
-    console.log(data)
+    if (data.success) {
+      dispatch(lookReceive(data.data[0]))
+    } else {
+      dispatch(lookFailure())
+    }
   }
 }

@@ -15,12 +15,14 @@ export const selectPendingLoan = () => {
     console.log(data)
   }
 }
+const admin = JSON.parse(window.sessionStorage.getItem('adminInfo'))
 // 待放款-放款-银行卡
 export const toLoanBank = id => {
   return async dispatch => {
     dispatch(btnRequestPosts())
     const data = await api.toLoanBankApi({
-      id: id
+      id: id,
+      admin: admin.id
     })
     if (data.success) {
       dispatch(btnReceivePosts(data.msg))
@@ -35,7 +37,8 @@ export const toLoan = id => {
   return async dispatch => {
     dispatch(btnRequestPosts())
     const data = await api.toLoanApi({
-      id: id
+      id: id,
+      admin: admin.id
     })
     if (data.success) {
       dispatch(btnReceivePosts(data.msg))

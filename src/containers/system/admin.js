@@ -244,8 +244,13 @@ class BlackUser extends Component {
 							<Form.Item label="昵称" prop="nickName">
 								<Input value={ form.nickName } onChange={ this.onChange.bind(this, 'nickName') } />
 							</Form.Item>
-							{
+							{/* {
 								form.roleId !== rid &&
+								<Form.Item label="角色" prop="roleId">
+									<SelectPicker value={ form.roleId } options={ roleList } onChange={ this.onChange.bind(this, 'roleId') } />
+								</Form.Item>
+							} */}
+							{
 								<Form.Item label="角色" prop="roleId">
 									<SelectPicker value={ form.roleId } options={ roleList } onChange={ this.onChange.bind(this, 'roleId') } />
 								</Form.Item>
