@@ -17,7 +17,7 @@ class Welcome extends React.Component{
 			overdueCount: 0, // 逾期数
 			loanCount: 0, // 申请贷款数
 			auditFailureCount: 0, // 审核失败数
-			register: 0, // 注册app数
+			registerCount: 0, // 注册app数
 			authenticationCount: 0 // 认证信息数
 		}
 	}
@@ -34,11 +34,11 @@ class Welcome extends React.Component{
 		const res = await api.selectTotalLogByTimeApi(this.state.time)
 		if(res.success){
 			this.setState({
-				overdueCount:res.overdueCount,
-				loanCount: res.loanCount,
-				auditFailureCount: res.auditFailureCount,
-				register: res.register,
-				authenticationCount: res.authenticationCount
+				overdueCount:res.data.overdueCount,
+				loanCount: res.data.loanCount,
+				auditFailureCount: res.data.auditFailureCount,
+				registerCount: res.data.registerCount,
+				authenticationCount: res.data.authenticationCount
 			})
 		}
 	}
@@ -71,7 +71,7 @@ class Welcome extends React.Component{
 								</li>
 								<li>
 									<p>{'注册app数'}</p>
-									<span>{ this.state.register }</span>
+									<span>{ this.state.registerCount }</span>
 								</li>
 								<li>
 									<p>{'认证信息数'}</p>
