@@ -32,7 +32,9 @@ class Banner extends Component {
 					align: 'center',
 					render: row => {
 						return (
-								<img style={ { display:'block', height: 60, margin: '0 auto',padding: 10} } src={ row.advertUrl } alt="" onClick={ this.openDialog.bind(this,row.advertUrl) }/>
+							<div style={ {overflow:'hidden', paddingTop:10, paddingBottom:10} }>
+								<img style={ { display:'block', height: 60, margin: '0 auto'} } src={ row.advertUrl } alt="" onClick={ this.openDialog.bind(this,row.advertUrl) }/>
+							</div>
 						)
 					}
 				}, {
