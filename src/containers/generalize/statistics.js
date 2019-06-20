@@ -24,10 +24,13 @@ class Apply extends Component {
 					type: 'index'
 				}, {
 					label: '日期',
-					prop: 'gmt'
+					prop: 'date'
 				}, {
 					label: '注册人数',
-					prop: ''
+					prop: 'register'
+			}, {
+				label: '申请人数',
+				prop: 'apply'
 			}]
 		}
 	}
