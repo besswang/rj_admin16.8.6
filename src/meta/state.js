@@ -27,10 +27,15 @@ export const IOS = 'IOS' // 苹果
 
 // 还款方式/打款方式
 export const WX = 'WX' // ("微信"),
-export const ALI = 'ALI' // ("支付宝"),
-export const BANK = 'BANK' // ("银行卡"),
-export const UTL_ALI = 'UTL_ALI' // ("线下支付宝"),
-export const UTL_WX = 'UTL_WX' // ("线下微信")
+// export const ALI = 'ALI' // ("支付宝"),
+export const ALI = 'ALIPAY("' // ("支付宝"),
+// export const BANK = 'BANK' // ("银行卡"),
+export const BANK = 'BANK_CARD' // ("银行卡"),
+// export const UTL_ALI = 'UTL_ALI' // ("线下支付宝"),
+export const UTL_ALI = 'UNDER_THE_LINE_ALIPAY' // ("线下支付宝"),
+// export const UTL_WX = 'UTL_WX' // ("线下微信")
+export const UTL_WX = 'UNDER_THE_LINE_WX' // ("线下微信")
+export const REALITY_BANK_CARD = 'REALITY_BANK_CARD' // ("线下银行卡")
 
 // 信息认证
 export const PERSONAL_INFORMATION = 'PERSONAL_INFORMATION' // 个人信息
@@ -49,7 +54,7 @@ export const KUAIQIAN = 'KUAIQIAN' // 快线
 export const PAIXU = 'PAIXU' // ("排序"),
 export const RUIJING = 'RUIJING' // ("瑞鲸")
 
-// 金额类型
+// 金额类型 // 还款类型
 export const PART_RPM_AMOUNT = 'PART_RPM_AMOUNT' // 部分还款
 export const RPM_AMOUNT = 'RPM_AMOUNT' // 还款金额
 export const SERVER_MONEY = 'SERVER_MONEY' // 服务费

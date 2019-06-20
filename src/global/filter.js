@@ -14,18 +14,44 @@ export default {
     }
   },
   // 还款类型
-  moneyType(x) {
-    switch (x) {
-      case state.DELAY:
-        return '延期'
-      case state.PART_RPM_AMOUNT:
-        return '部分还款'
-      case state.NORMAL:
-        return '正常'
-      default:
-        return '空值'
-    }
-  },
+  // moneyType(x) {
+  //   switch (x) {
+  //     case state.DELAY:
+  //       return '延期'
+  //     case state.PART_RPM_AMOUNT:
+  //       return '部分还款'
+  //     case state.NORMAL:
+  //       return '正常'
+  //     default:
+  //       return '空值'
+  //   }
+  // },
+    moneyType(x) {
+      switch (x) {
+        case state.RPM_AMOUNT:
+          return '还款金额'
+        case state.SERVER_MONEY:
+          return '服务费'
+        case state.INTEREST:
+          return '利息'
+        case state.DELAY:
+          return '延期'
+        case state.OVERDUE:
+          return '逾期'
+        case state.MAKE_MONEY:
+          return '打款'
+        case state.REDUCTION_MONEY:
+          return '减免金额'
+        case state.UTL_RPM_AMOUNT:
+          return '线下还款金额'
+        case state.AUTOMATIC_RPM_AMOUNT:
+          return '自动还款金额'
+        case state.PART_RPM_AMOUNT:
+          return '线下部分还款'
+        default:
+          return '空值'
+      }
+    },
   // 支付方式：0 支付宝 1微信 2 银行卡 3 线下
   payType(x) {
     switch (x) {
@@ -39,6 +65,8 @@ export default {
         return '线下支付宝'
       case state.UTL_WX:
         return '线下微信'
+      case state.REALITY_BANK_CARD:
+        return '线下银行卡'
       default:
         return '空值'
     }

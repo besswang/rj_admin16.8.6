@@ -11,6 +11,7 @@ import MyPagination from '@components/MyPagination'
 import filter from '@global/filter'
 import DetailBtn from '@components/DetailBtn'
 import { dalreadyWan } from '@meta/details'
+import timeDate from '@global/timeDate'
 class AlreadyWan extends Component {
 	static propTypes = {
     list: PropTypes.object.isRequired,
@@ -63,7 +64,12 @@ class AlreadyWan extends Component {
 					prop: 'realRepaymentMoney'
 				}, {
 					label: '实际还款日',
-					prop: 'realRepaymentDate'
+					prop: 'realRepaymentDate',
+					width: 120,
+					render: row => {
+						const date = timeDate.time(row.realRepaymentDate, 'yyyy-MM-dd hh:mm:ss')
+						return date
+					}
 				}, {
 					label: '延期费用',
 					prop: 'continueMoney'
@@ -78,16 +84,31 @@ class AlreadyWan extends Component {
 					prop: 'loanCustomer'
 				}, {
 					label: '申请时间',
-					prop: 'nextApplyTime'
+					prop: 'nextApplyTime',
+					width: 120,
+					render: row => {
+						const date = timeDate.time(row.nextApplyTime, 'yyyy-MM-dd hh:mm:ss')
+						return date
+					}
 				}, {
 					label: '审核客服',
 					prop: 'examineCustomer'
 				}, {
 					label: '审核时间',
-					prop: 'examineDate'
+					prop: 'examineDate',
+					width: 120,
+					render: row => {
+						const date = timeDate.time(row.examineDate, 'yyyy-MM-dd hh:mm:ss')
+						return date
+					}
 				}, {
 					label: '放款时间',
-					prop: 'loanDate'
+					prop: 'loanDate',
+					width: 120,
+					render: row => {
+						const date = timeDate.time(row.loanDate, 'yyyy-MM-dd hh:mm:ss')
+						return date
+					}
 				}, {
 					label: '约定还款日',
 					prop: 'repaymentDate'
@@ -98,14 +119,14 @@ class AlreadyWan extends Component {
 					label: '打款方式',
 					prop: 'loanMode',
 					render: row => {
-						const data = filter.loanMode(row.loanMode)
+						const data = filter.loanModeState(row.loanMode)
 						return data
 					}
 				}, {
 					label: '还款方式',
 					prop: 'repaymentType',
 					render: row => {
-						const data = filter.loanMode(row.repaymentType)
+						const data = filter.loanModeState(row.repaymentType)
 						return data
 					}
 				}, {
