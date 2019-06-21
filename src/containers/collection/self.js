@@ -44,9 +44,9 @@ class Self extends Component {
 					prop: 'realRepaymentMoney' // 到期应还金额
 				}, {
 					label: '支付方式',
-					prop: 'loanMode', // 默认 0 支付宝 1微信 2 银行卡 3 线下
+					prop: 'payType', // 默认 0 支付宝 1微信 2 银行卡 3 线下
 					render: row => {
-						 const data = filter.loanMode(row.loanMode)
+						 const data = filter.loanModeState(row.payType)
 						 return data
 					}
 				}, {
@@ -54,7 +54,7 @@ class Self extends Component {
 					prop: 'realMoney'
 				}, {
 					label: '逾期天数',
-					prop: 'overdueNumber'
+					prop: 'continueNumber'
 				}, {
 					label: '分单时间',
 					prop: 'fendanDate',
@@ -66,13 +66,14 @@ class Self extends Component {
 				}, {
 					label: '催回时间',
 					prop: 'realRepaymentDate',
+					width: 120,
 					render: row => {
-						const data = filter.loanTyp(row.realRepaymentDate)
-						return data
+						const date = timeDate.time(row.realRepaymentDate, 'yyyy-MM-dd hh:mm:ss')
+						return date
 					}
 				}, {
 					label: '催回催收人',
-					prop: 'tracker'
+					prop: 'customerName'
 				}, {
 					label: '订单类型',
 					prop: 'loanType', // 默认  0 正常 1 延期   2逾期
