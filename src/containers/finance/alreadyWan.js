@@ -84,15 +84,15 @@ class AlreadyWan extends Component {
 					prop: 'loanCustomer'
 				}, {
 					label: '申请时间',
-					prop: 'nextApplyTime',
+					prop: 'upt',
 					width: 120,
 					render: row => {
-						const date = timeDate.time(row.nextApplyTime, 'yyyy-MM-dd hh:mm:ss')
+						const date = timeDate.time(row.upt, 'yyyy-MM-dd hh:mm:ss')
 						return date
 					}
 				}, {
 					label: '审核客服',
-					prop: 'examineCustomer'
+					prop: 'examineCustomerName'
 				}, {
 					label: '审核时间',
 					prop: 'examineDate',

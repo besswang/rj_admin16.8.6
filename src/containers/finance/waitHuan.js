@@ -150,10 +150,10 @@ class WaitHuan extends Component {
 					prop: 'loanTerm'
 				}, {
 					label: '申请时间',
-					prop: 'nextApplyTime',
+					prop: 'upt',
 					width: 120,
 					render: row => {
-						const date = timeDate.time(row.nextApplyTime, 'yyyy-MM-dd hh:mm:ss')
+						const date = timeDate.time(row.upt, 'yyyy-MM-dd hh:mm:ss')
 						return date
 					}
 				}, {

@@ -36,7 +36,7 @@ class AuditRefuse extends Component{
 					prop: 'channelName'
 				},{
 					label: '真实姓名',
-					prop: 'channelName'
+					prop: 'realName'
 				},
 				{
 					label: '风控分数',
