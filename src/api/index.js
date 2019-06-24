@@ -1,7 +1,9 @@
 // api文件存放接口文件夹,测试线
-import Fetch from '../fetch/index'
-// mock 模拟数据
-// import Fetch from '../fetch/mockFetch'
+// import Fetch from '../fetch/index'
+// easy mock 模拟数据
+// import Fetch from '../fetch/easyMock'
+// yapi mock 模拟数据
+import Fetch from '../fetch/yapiMock'
 import jk from './jk'
 export default {
   manageloginApi: params => Fetch(jk.managelogin, {method: 'post', body: params}),

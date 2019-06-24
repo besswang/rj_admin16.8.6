@@ -5,6 +5,7 @@ import 'whatwg-fetch'
 require('es6-promise').polyfill()
 // 前置拼接url,process.env.luoHost取的是config--dev.env.js--tbtHost
 // const luoHost = process.env.luoHost && process.env.luoHost.url
+// easy mock
 const luoHost = 'https://easy-mock.com/mock/5cf7653cf8ab93502742fb84/example/'
 // 自定义headers
 const headers = {

@@ -118,7 +118,7 @@ class Audit extends Component{
 		const trans = {
 			id:id,
 			state:state,
-			admin: obj.id
+			adminId: obj.id
 		}
 		console.log(trans)
 		this.props.handelAudit(trans)

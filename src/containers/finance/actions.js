@@ -22,7 +22,7 @@ export const toLoanBank = id => {
     dispatch(btnRequestPosts())
     const data = await api.toLoanBankApi({
       id: id,
-      admin: admin.id
+      adminId: admin.id
     })
     if (data.success) {
       dispatch(btnReceivePosts(data.msg))
@@ -38,7 +38,7 @@ export const toLoan = id => {
     dispatch(btnRequestPosts())
     const data = await api.toLoanApi({
       id: id,
-      admin: admin.id
+      adminId: admin.id
     })
     if (data.success) {
       dispatch(btnReceivePosts(data.msg))
