@@ -13,20 +13,8 @@ export default class AllTable extends Component {
       >
         <Table.Column label="序号" type="index" />
         <Table.Column label="渠道名称" prop="channelName" />
-        <Table.Column label="日注册量" prop="userCount"
-          render = {
-            (row) => {
-              return (row.register ? row.register : '0')
-            }
-          }
-        />
-        <Table.Column label="日申请量" prop="orderCount"
-          render = {
-            (row) => {
-              return (row.apply ? row.apply : '0')
-            }
-          }
-        />
+        <Table.Column label="日注册量" prop="userCount"/>
+        <Table.Column label="日申请量" prop="orderCount"/>
         <Table.Column label="日申请率" prop="orderRate" />
         {/* render = {
           (row) => {
@@ -62,20 +50,8 @@ export default class AllTable extends Component {
         /> */}
         <Table.Column label="放款人数" prop="orderStateCount" />
         <Table.Column label="放款率" prop="orderStateCount" />
-        <Table.Column label="总注册量" prop="userTotalCount"
-          render={
-            (row) => {
-              return (row.zregister ? row.zregister : '0')
-            }
-          }
-        />
-        <Table.Column label="总申请量" prop="orderTotalCount"
-          render={
-            (row) => {
-              return (row.zapply ? row.zapply : '0')
-            }
-          }
-        />
+        <Table.Column label="总注册量" prop="userTotalCount"/>
+        <Table.Column label="总申请量" prop="orderTotalCount"/>
         <Table.Column label="总申请率" prop="orderTotalRate" />
         {/* render={
           (row) => {

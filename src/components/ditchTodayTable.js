@@ -13,48 +13,12 @@ export default class TodayTable extends Component {
       >
         <Table.Column label="序号" type="index" />
         <Table.Column label="渠道名称" prop="channelName" />
-        <Table.Column label="注册人数" prop="userCount"
-          render = {
-            (row) => {
-              return (row.register ? row.register : '0')
-            }
-          }
-        />
-        <Table.Column label="个人信息" prop="emergencyCount"
-          render = {
-            (row) => {
-              return (row.person ? row.person : '0')
-            }
-          }
-        />
-        <Table.Column label="身份认证" prop="idCardCount"
-          render = {
-            (row) => {
-              return (row.idcard ? row.idcard : '0')
-            }
-          }
-        />
-        <Table.Column label="手机认证" prop="phoneDateCount"
-          render = {
-            (row) => {
-              return (row.phone ? row.phone : '0')
-            }
-          }
-        />
-        <Table.Column label="银行认证" prop="bankAuthenticationCount"
-          render = {
-            (row) => {
-              return (row.bank ? row.bank : '0')
-            }
-          }
-        />
-        <Table.Column label="申请单数" prop="orderCount"
-          render={
-            (row) => {
-              return (row.apply ? row.apply:'0')
-            }
-          }
-        />
+        <Table.Column label="注册人数" prop="userCount"/>
+        <Table.Column label="个人信息" prop="emergencyCount"/>
+        <Table.Column label="身份认证" prop="idCardCount"/>
+        <Table.Column label="手机认证" prop="phoneDateCount"/>
+        <Table.Column label="银行认证" prop="bankAuthenticationCount"/>
+        <Table.Column label="申请单数" prop="orderCount"/>
         <Table.Column label="申请率" prop="orderRate"/>
         {/* render = {
           (row) => {
@@ -68,13 +32,7 @@ export default class TodayTable extends Component {
             }
           }
         } */}
-        <Table.Column label="放款人数" prop="orderStateCount"
-          render={
-            (row) => {
-              return (row.loanNum ? row.loanNum:'0')
-            }
-          }
-        />
+        <Table.Column label="放款人数" prop="orderStateCount"/>
         <Table.Column label="放款率" prop="orderStateRate" />
         {/* render = {
           (row) => {
