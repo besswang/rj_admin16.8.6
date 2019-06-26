@@ -27,11 +27,18 @@ class Apply extends Component {
 					prop: 'date'
 				}, {
 					label: '注册人数',
-					prop: 'register'
-			}, {
-				label: '申请人数',
-				prop: 'apply'
-			}]
+					prop: 'register',
+					render: row => {
+						return row.register === null ? 0 : row.register
+					}
+				}, {
+					label: '申请人数',
+					prop: 'apply',
+					render: row => {
+						return row.apply === null ? 0 : row.apply
+					}
+				}
+			]
 		}
 	}
 	componentWillMount() {

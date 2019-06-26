@@ -220,11 +220,12 @@ class Overdue extends Component{
 		e.preventDefault()
 		this.form.validate((valid) => {
 			if (valid) {
-				this.setState({
-					dialogVisible: false
-				})
 				const trans = Object.assign({},{ids:this.state.ids},{adminId:this.state.form.id})
 				this.props.updateOrderCuishou(trans)
+				this.setState({
+					dialogVisible: false,
+					ids:[]
+				})
 			} else {
 				console.log('error submit!!')
 				return false

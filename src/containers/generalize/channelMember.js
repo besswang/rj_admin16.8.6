@@ -28,7 +28,10 @@ class Apply extends Component {
 					prop: 'channelName'
 				}, {
 					label: '姓名',
-					prop: 'realName'
+					prop: 'realName',
+					render: row => {
+						return row.realName === null ? '未命名' : row.realName
+					}
 				}, {
 					label: '手机号码',
 					prop: 'phone'

@@ -28,7 +28,7 @@ export const IOS = 'IOS' // 苹果
 // 还款方式/打款方式
 export const WX = 'WX' // ("微信"),
 // export const ALI = 'ALI' // ("支付宝"),
-export const ALI = 'ALIPAY("' // ("支付宝"),
+export const ALI = 'ALIPAY' // ("支付宝"),
 // export const BANK = 'BANK' // ("银行卡"),
 export const BANK = 'BANK_CARD' // ("银行卡"),
 // export const UTL_ALI = 'UTL_ALI' // ("线下支付宝"),
