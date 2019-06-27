@@ -14,6 +14,7 @@ import collList from './collList'
 import { Message } from 'element-react'
 import { Notification } from 'element-react'
 import lookInfo from './lookInfo'
+import tabObj from './tab'
 // 搜索方式
 const typeId = (state = 0, action) => {
   switch (action.type) {
@@ -378,5 +379,5 @@ const payTypeId = (state = null, action) => {
   }
 }
 export default combineReducers({
-  user, typeId, typeName, searchAll, time, regTime, payTime, list, listInfo, idCardInfo, newClient, selectTime, router, btnLoading, realName, treeData, channelList, channelName, roleList, roleId, adminName, loanType, mobileData, collList, neiCuiId, isTheDay, payTypeId,lookInfo
+  user, typeId, typeName, searchAll, time, regTime, payTime, list, listInfo, idCardInfo, newClient, selectTime, router, btnLoading, realName, treeData, channelList, channelName, roleList, roleId, adminName, loanType, mobileData, collList, neiCuiId, isTheDay, payTypeId, lookInfo, tabObj
 })

@@ -3,7 +3,7 @@ import { Button, Table, Loading } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { sizeChange, currentChange, initSearch, saveList, menuActive} from '@redux/actions'
+import { sizeChange, currentChange, initSearch, saveList, menuActive,tabAdd} from '@redux/actions'
 import { handelSearch, updateUserType, exportUser, addUserBlack, removeUserBlack } from './action'
 import DisableBtn from '@components/DisableBtn'
 import MyPagination from '@components/MyPagination'
@@ -24,7 +24,8 @@ class Mlist extends Component{
 		addUserBlack: PropTypes.func.isRequired,
 		removeUserBlack: PropTypes.func.isRequired,
 		saveList: PropTypes.func.isRequired,
-		menuActive: PropTypes.func.isRequired
+		menuActive: PropTypes.func.isRequired,
+		tabAdd: PropTypes.func.isRequired,
 	}
 	constructor(props) {
 		super(props)
@@ -146,6 +147,9 @@ class Mlist extends Component{
 		}
 		window.sessionStorage.setItem('locationState', JSON.stringify(sess))
 		this.props.handelSearch()
+		this.props.tabAdd({
+			name: '会员列表'
+		})
 	}
 	handleSearch = e => {
 		e.preventDefault()
@@ -210,7 +214,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({ sizeChange, currentChange, initSearch, handelSearch, updateUserType, exportUser, addUserBlack, removeUserBlack, saveList, menuActive}, dispatch)
+		...bindActionCreators({ sizeChange, currentChange, initSearch, handelSearch, updateUserType, exportUser, addUserBlack, removeUserBlack, saveList, menuActive, tabAdd}, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Mlist)

@@ -12,6 +12,7 @@ class App extends Component {
   static propTypes = {
     router: PropTypes.object,
     user:PropTypes.object,
+    // dispatch: PropTypes.func.isRequired,
     // location: PropTypes.object.isRequired,
 	}
   constructor(props){
@@ -24,7 +25,7 @@ class App extends Component {
 
   }
 	componentDidMount() {
-	  this.setDefault()
+    this.setDefault()
 	}
 	componentDidUpdate() {
 	  this.setDefault()
@@ -42,20 +43,20 @@ class App extends Component {
   }
   render() {
     console.log(this.props.user)
-    // const { loginSuccess } = this.state
+    const { loginSuccess } = this.state
     const { router } = this.props
     return(
         <Router>
           <Switch>
             <Route exact path="/"
               render={ () => {
-                  // if(loginSuccess){ //判断是否已经登陆
-                  //   return <Redirect to="/welcome" />
-                  // }else{
-                  //   return <Redirect to="/login" />
-                  // }
+                  if(loginSuccess){ //判断是否已经登陆
+                    return <Redirect to="/welcome" />
+                  }else{
+                    return <Redirect to="/login" />
+                  }
 
-                  return <Redirect to = "/login" / >
+                  // return <Redirect to = "/login" / >
                 }
               }
             />

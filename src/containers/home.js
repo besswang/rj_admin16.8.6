@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Header from '@components/header'
 import Sidebar from '@components/sidebar'
+import MyTabs from './myTabs'
 import '@styles/home.less'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
@@ -15,7 +16,7 @@ class Home extends Component {
 		}
 	}
 	componentDidMount() {
-
+		console.log(this.props)
 	}
 	render() {
 		const time = new Date()
@@ -30,6 +31,7 @@ class Home extends Component {
 						<Sidebar />
 					</li>
 					<li className="main">
+						<MyTabs />
 						<div className="content" key={ time }>
 							{ children }
 						</div>

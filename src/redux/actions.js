@@ -249,3 +249,7 @@ export const changePayTypeId = data => ({
   type: type.SELECT_LOAN_MODE,
   data
 })
+export const tabAdd = data => ({
+  type: type.TAB_ADD,
+  data
+})

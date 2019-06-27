@@ -1,14 +1,17 @@
 import React from 'react'
 import { Button } from 'element-react'
+import { bindActionCreators } from 'redux'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { tabAdd } from '../redux/actions'
 import Echart from '@components/echarts'
 import Time from '@components/setime'
 import api from '@api/index'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import '@styles/welcome.less'
 class Welcome extends React.Component{
 	static propTypes = {
-		router: PropTypes.object.isRequired
+		router: PropTypes.object.isRequired,
+		tabAdd: PropTypes.func.isRequired
 	}
 	constructor(props) {
 		super(props)
@@ -23,6 +26,9 @@ class Welcome extends React.Component{
 	}
 	componentWillMount() {
 		this.initData()
+		this.props.tabAdd({
+			name: '欢迎页'
+		})
 	}
 	componentDidMount() {
 
@@ -91,4 +97,9 @@ const mapStateToProps = state => {
 	const { router } = state
 	return { router }
 }
-export default connect(mapStateToProps)(Welcome)
+const mapDispatchToProps = dispatch => {
+	return {
+		...bindActionCreators({ tabAdd }, dispatch)
+	}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Welcome)
