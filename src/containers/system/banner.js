@@ -123,6 +123,7 @@ class Banner extends Component {
 						columns={ columns }
 						data={ list.data }
 						border
+						stripe
 					/>
 				</Loading>
         <MyPagination

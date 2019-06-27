@@ -10,6 +10,7 @@ export default class AllTable extends Component {
         style={ { width: '100%' } }
         data={ arrObj }
         border
+        stripe
       >
         <Table.Column label="序号" type="index" />
         <Table.Column label="渠道名称" prop="channelName" />

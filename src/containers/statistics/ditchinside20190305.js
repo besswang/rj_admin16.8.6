@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 import {
   Pagination,
   Tabs,
@@ -11,7 +11,7 @@ import {Link} from 'react-router-dom'
 import {TODAY_DITCH,ALL_DITCH,COST_DITCH} from '@meta/columns'
 class Ditchinside extends Component {
   constructor(props){
-    super(props);
+    super(props)
     this.state = {
       activeName:'1',
       columns:TODAY_DITCH,
@@ -32,7 +32,7 @@ class Ditchinside extends Component {
       pageSize:5,
       pageSizes:[5,10,15],
       currentPage:1
-    };
+    }
     this.tabChange = this.tabChange.bind(this)
   }
   tabChange(e){
@@ -53,7 +53,7 @@ class Ditchinside extends Component {
           moneynum: 475,
           money: 78
         }]
-      });
+      })
       break;
       case '2':
       this.setState({
@@ -71,7 +71,7 @@ class Ditchinside extends Component {
           zloanNum: 78,
           zloanNumcount: '12%'
         }]
-      });
+      })
       break;
       case '3':
        this.setState({
@@ -86,7 +86,7 @@ class Ditchinside extends Component {
           dayPrice: '33.00',
           addupPrice: '84574.00'
         }]
-       });
+       })
        break;
     }
   }
@@ -103,34 +103,37 @@ class Ditchinside extends Component {
         </Form> */}
         <Breadcrumb separator="/">
 					<Breadcrumb.Item>
-						<Link to='/statistics/ditch'>
+						<Link to="/statistics/ditch">
 							渠道统计
 						</Link>
 					</Breadcrumb.Item>
 					<Breadcrumb.Item>当天</Breadcrumb.Item>
-				</Breadcrumb>
-        <Tabs activeName={this.state.activeName} onTabClick={this.tabChange}>
-          <Tabs.Pane label="当天" name='1'></Tabs.Pane>
-          <Tabs.Pane label="总转化" name='2'>总转化</Tabs.Pane>
-          <Tabs.Pane label="渠道费用" name='3'>渠道费用</Tabs.Pane>
+        </Breadcrumb>
+        <Tabs activeName={ this.state.activeName } onTabClick={ this.tabChange }>
+          <Tabs.Pane label="当天" name="1"></Tabs.Pane>
+          <Tabs.Pane label="总转化" name="2">总转化</Tabs.Pane>
+          <Tabs.Pane label="渠道费用" name="3">渠道费用</Tabs.Pane>
         </Tabs>
 				<Table
-					style={{width: '100%'}}
-					columns={this.state.columns}
-					data={this.state.data}
-					border={true}>
-					</Table>
+					style={ {width: '100%'} }
+					columns={ this.state.columns }
+					data={ this.state.data }
+					border
+          stripe
+				>
+    </Table>
           {/* <Tabtable tabvalue={this.state.activeName}></Tabtable> */}
           <div className="pagination-con flex flex-direction_row justify-content_flex-center">
 						<Pagination
 						layout="total, sizes, prev, pager, next, jumper"
-						total={this.state.total}
-						pageSizes={this.state.pageSizes}
-						pageSize={this.state.pageSize}
-						currentPage={this.state.currentPage}/>
-					</div>
+						total={ this.state.total }
+						pageSizes={ this.state.pageSizes }
+						pageSize={ this.state.pageSize }
+						currentPage={ this.state.currentPage }
+						/>
+          </div>
       </div>
     )
   }
 }
-export default Ditchinside;
+export default Ditchinside

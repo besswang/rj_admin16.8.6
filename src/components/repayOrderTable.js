@@ -90,6 +90,7 @@ export default class OrderTable extends Component {
         columns={ this.state.column }
         data={ arrObj }
         border
+        stripe
         />
       </div>
     )

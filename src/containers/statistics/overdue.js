@@ -48,6 +48,7 @@ class Overdue extends Component {
           columns={ OVERDUE }
           data={ list.data }
           border
+          stripe
           />
         </Loading>
         <MyPagination

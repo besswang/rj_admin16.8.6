@@ -79,6 +79,7 @@ export default class AllTable extends Component {
         columns={ this.state.column }
         data={ arrObj }
         border
+        stripe
       />
     )
   }

@@ -48,6 +48,7 @@ class Turnover extends Component {
             columns={ TURNOVER }
             data={ list.data }
             border
+            stripe
           />
         </Loading>
         <MyPagination

@@ -50,6 +50,7 @@ class Apply extends Component {
 						columns={ APPLY_COLUMNS }
 						data={ list.data }
 						border
+						stripe
 					/>
 				</Loading>
 				<MyPagination

@@ -85,6 +85,7 @@ class Loan extends Component {
             columns={ this.state.column }
             data={ list.data }
             border
+            stripe
           />
         </Loading>
         <MyPagination

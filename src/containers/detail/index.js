@@ -310,6 +310,7 @@ class Detail extends Component{
                 columns={ BANK }
                 data={ list.data }
                 border
+                stripe
               />
             </Loading>
           </Tabs.Pane>

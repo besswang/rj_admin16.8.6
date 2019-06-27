@@ -275,6 +275,7 @@ class Overdue extends Component{
 						columns={ this.state.columns }
 						data={ list.data }
 						border
+						stripe
 						onSelectChange={ (selection) => { this.onSelectChange(selection)} }
       			onSelectAll={ (selection) => { this.onSelectAll(selection)} }
 					/>

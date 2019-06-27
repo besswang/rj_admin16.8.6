@@ -48,6 +48,7 @@ class Consume extends Component {
             columns={ CONSUME }
             data={ list.data }
             border
+            stripe
           />
         </Loading>
         <MyPagination

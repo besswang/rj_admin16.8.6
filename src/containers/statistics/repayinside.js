@@ -204,6 +204,7 @@ class RepayInside extends Component {
         columns={ this.state.columns }
         data={ this.state.data }
         border
+        stripe
         />
         <div className="pagination-con flex flex-direction_row justify-content_flex-center">
           <Pagination

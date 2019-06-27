@@ -115,6 +115,7 @@ class AlreadyHuan extends Component {
 						columns={ this.state.columns }
 						data={ list.data }
 						border
+						stripe
 					/>
 				</Loading>
         <MyPagination
