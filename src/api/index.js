@@ -111,5 +111,8 @@ export default {
   toLoanBankApi: params => Fetch(jk.toLoanBank, {method: 'put', body: params}),
   selectUnAllowableAreaApi: params => Fetch(jk.selectUnAllowableArea, {method: 'post', body:params}),
   updateNextApplyTimeApi: params => Fetch(jk.updateNextApplyTime, {method: 'get', data: params}),
+  findAllLiftingAmountApi: params => Fetch(jk.findAllLiftingAmount, {method: 'post', body:params}),
+  findMinAndCappingMoneyApi: params => Fetch(jk.findMinAndCappingMoney, {method: 'get', data: params}),
+  addLiftingAmountApi: params => Fetch(jk.addLiftingAmount, {method: 'post', body:params}),
 }
 

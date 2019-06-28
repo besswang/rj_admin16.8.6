@@ -308,33 +308,49 @@ class WaitHuan extends Component {
 						<Tabs activeName={ activeName } onTabClick={ (tab) => this.tabClick(tab.props.name) }>
 							<Tabs.Pane label="全款" name="1"></Tabs.Pane>
 							<Tabs.Pane label="延期" name="2"></Tabs.Pane>
+							<Tabs.Pane label="部分还款" name="3"></Tabs.Pane>
+							<Tabs.Pane label="减免" name="4"></Tabs.Pane>
 						</Tabs>
-						<ul className="flex flex-direction_column margin-bottom15">
-							<li className="flex flex-direction_row justify-content_flex-justify ptb5">
-								<p>{'订单号:'}{ orderNumber }</p>
-							</li>
-							<li className="flex flex-direction_row justify-content_flex-justify ptb5">
-								<p>{'应还金额:'}{ realRepaymentMoney }</p>
-								<p>{'借款金额:'}{ applyMoney }</p>
-							</li>
-							<li className="flex flex-direction_row justify-content_flex-justify ptb5">
-								<p>{'服务费:'}{ serviceMoney }</p>
+						{
+							(activeName === '1' || activeName === '2') &&
+							<ul className="flex flex-direction_column margin-bottom15">
+								<li className="flex flex-direction_row justify-content_flex-justify ptb5">
+									<p>{'订单号:'}{ orderNumber }</p>
+								</li>
+								<li className="flex flex-direction_row justify-content_flex-justify ptb5">
+									<p>{'应还金额:'}{ realRepaymentMoney }</p>
+									<p>{'借款金额:'}{ applyMoney }</p>
+								</li>
+								<li className="flex flex-direction_row justify-content_flex-justify ptb5">
+									<p>{'服务费:'}{ serviceMoney }</p>
 
-								<p>{'借款期限:'}{ timeDate.time(loanDate, 'yyyy-MM-dd hh:mm:ss') }{'-'}{ repaymentDate }</p>
-							</li>
-							<li className="flex flex-direction_row justify-content_flex-justify ptb5">
-								<p className="red">{'剩余应还:'}{ realRepaymentMoney }</p>
-							</li>
-						</ul>
-						<Form labelWidth="80" ref={ e => {this.form=e} } model={ form } rules={ rules }>
-							<Form.Item label="还款方式" prop="repaymentType">
-								<SelectPicker
-									value={ form.repaymentType }
-									onChange={ this.onChange.bind(this, 'repaymentType') }
-									options={ REPAYMENT_TYPE }
-									placeholder={ '选择还款方式' }
-								/>
-							</Form.Item>
+									<p>{'借款期限:'}{ timeDate.time(loanDate, 'yyyy-MM-dd hh:mm:ss') }{'-'}{ repaymentDate }</p>
+								</li>
+								<li className="flex flex-direction_row justify-content_flex-justify ptb5">
+									<p className="red">{'剩余应还:'}{ realRepaymentMoney }</p>
+								</li>
+							</ul>
+						}
+						{
+							(activeName === '3' || activeName === '4') &&
+							<ul className="flex flex-direction_column margin-bottom15">
+								<li className="flex flex-direction_row justify-content_flex-justify ptb5">
+									<p>{'本金:'}{ orderNumber }</p>
+									<p>{'本金结算:'}{ realRepaymentMoney }</p>
+								</li>
+							</ul>
+						}
+						<Form labelWidth="90" ref={ e => {this.form=e} } model={ form } rules={ rules }>
+							{	(activeName === '1' || activeName === '2') &&
+								<Form.Item label="还款方式" prop="repaymentType">
+									<SelectPicker
+										value={ form.repaymentType }
+										onChange={ this.onChange.bind(this, 'repaymentType') }
+										options={ REPAYMENT_TYPE }
+										placeholder={ '选择还款方式' }
+									/>
+								</Form.Item>
+							}
 							{
 								activeName === '1' &&
 								<Form.Item label="还款金额" prop="repaymentMoney">
@@ -357,10 +373,36 @@ class WaitHuan extends Component {
 									<Input type="number" value={ form.reMoney } onChange={ this.onChange.bind(this, 'reMoney') } />
 								</Form.Item>
 							}
-
-							<Form.Item label="还款单号" prop="payNumber">
-								<Input type="number" value={ form.payNumber } onChange={ this.onChange.bind(this, 'payNumber') } />
-							</Form.Item>
+							{
+								(activeName === '1' || activeName === '2') &&
+								<Form.Item label="还款单号" prop="payNumber">
+									<Input type="number" value={ form.payNumber } onChange={ this.onChange.bind(this, 'payNumber') } />
+								</Form.Item>
+							}
+							{
+								(activeName === '3' || activeName === '4') &&
+								<Form.Item label="本金减免/还款" prop="payNumber">
+									<Input type="number" value={ form.payNumber } onChange={ this.onChange.bind(this, 'payNumber') } />
+								</Form.Item>
+							}
+							{
+								(activeName === '3' || activeName === '4') &&
+								<Form.Item label="利息" prop="payNumber">
+									<Input type="number" value={ form.payNumber } onChange={ this.onChange.bind(this, 'payNumber') } />
+								</Form.Item>
+							}
+							{
+								(activeName === '3' || activeName === '4') &&
+								<Form.Item label="逾期" prop="payNumber">
+									<Input type="number" value={ form.payNumber } onChange={ this.onChange.bind(this, 'payNumber') } />
+								</Form.Item>
+							}
+							{
+								(activeName === '3' || activeName === '4') &&
+								<Form.Item label="服务费" prop="payNumber">
+									<Input type="number" value={ form.payNumber } onChange={ this.onChange.bind(this, 'payNumber') } />
+								</Form.Item>
+							}
 						</Form>
 					</Dialog.Body>
 					<Dialog.Footer className="dialog-footer">

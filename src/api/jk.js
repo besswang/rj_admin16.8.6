@@ -97,6 +97,10 @@ export default {
   // 系统管理-帮助中心
   'pageGlobalconfig': 'api/globalConfig/pageGlobalconfig', //列表
   'updateGlobalConfig': 'api/globalConfig/updateGlobalConfig', // 编辑
+  // 系统管理-提额规则设置
+  'findAllLiftingAmount': 'api/findAllLiftingAmount',
+  'findMinAndCappingMoney': 'api/globalConfig/findMinAndCappingMoney',
+  'addLiftingAmount': 'api/addLiftingAmount',
   // 轮播图管理
   'pageRotationChart': 'api/rotationChart/pageRotationChart', // 列表
   'deleteRotationChart': 'api/rotationChart/deleteRotationChart', // 删除

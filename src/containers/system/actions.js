@@ -336,6 +336,35 @@ export const selectUnAllowableArea = () => {
     }
   }
 }
+
+// 提额规则设置-列表
+export const findAllLiftingAmount = () => {
+  return async (dispatch, getState) => {
+    dispatch(requestPosts())
+    const searchAll = shouldFetchPosts(getState())
+    const data = await api.findAllLiftingAmountApi(searchAll)
+    if (data.success) {
+      dispatch(receivePosts(data.data))
+    } else {
+      dispatch(failurePosts(data))
+    }
+  }
+}
+
+// 提额规则设置-添加
+export const addLiftingAmount = obj => {
+  console.log('123')
+  return async dispatch => {
+    dispatch(btnRequestPosts())
+    const data = await api.addLiftingAmountApi(obj)
+    if (data.success) {
+      dispatch(findAllLiftingAmount())
+      dispatch(btnReceivePosts(data.msg))
+    } else {
+      dispatch(btnFailurePosts(data.msg))
+    }
+  }
+}
 // 区域管理-启用/禁用
 // export const updateAreaState = obj => {
 //   return dispatch => {

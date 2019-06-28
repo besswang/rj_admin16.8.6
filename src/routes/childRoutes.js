@@ -56,7 +56,8 @@ import Backup from '@containers/system/backup'
 import Borrowlimit from '@containers/system/borrowlimit'
 import Help from '@containers/system/help'
 import Banner from '@containers/system/banner'
-import Quota from '@containers/system/quota'
+// import Quota from '@containers/system/quota' // 提额管理
+import Quota from '@containers/system/rule' // 提额规则设置
 import Versions from '@containers/system/versions'
 // 推广管理
 import ChannelManage from '@containers/generalize/channelManage'

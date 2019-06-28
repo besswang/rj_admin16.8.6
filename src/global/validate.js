@@ -48,4 +48,11 @@ export default {
       callback()
     }
   },
+  numEmpty: (rule, value, callback) => {
+    if (value === '' || value === null) {
+      callback(new Error('金额不能为空'))
+    } else {
+      callback()
+    }
+  }
 }
