@@ -3,7 +3,7 @@ import { Button, Table, Loading } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { sizeChange, currentChange, initSearch, menuActive } from '@redux/actions'
+import { sizeChange, currentChange, initSearch, menuActive, tabAdd } from '@redux/actions'
 import { applySearch } from './actions'
 import MyPagination from '@components/MyPagination'
 import { APPLY_COLUMNS } from '@meta/columns'
@@ -16,7 +16,8 @@ class Apply extends Component {
 		currentChange: PropTypes.func.isRequired,
 		initSearch: PropTypes.func.isRequired,
 		applySearch: PropTypes.func.isRequired,
-		menuActive: PropTypes.func.isRequired
+		menuActive: PropTypes.func.isRequired,
+		tabAdd: PropTypes.func.isRequired,
 	}
 	componentWillMount() {
 		this.props.initSearch()
@@ -24,6 +25,10 @@ class Apply extends Component {
 	}
 	componentDidMount() {
 		this.props.applySearch()
+		this.props.tabAdd({
+			name: '注册未申请',
+			url: '/member/apply'
+		})
 	}
 	handleSearch = e => {
 		e.preventDefault()
@@ -68,7 +73,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, menuActive, applySearch}, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, menuActive, applySearch, tabAdd}, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Apply)

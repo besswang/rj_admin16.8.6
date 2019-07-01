@@ -1,6 +1,6 @@
 import * as type from '@redux/actionTypes'
 const initTab = {
-  tabs: [{name:'欢迎页'}],
+  tabs: [{name:'欢迎页',url:'/welcome'}],
   tabIndex: 2,
   tabActive: '欢迎页'
 }

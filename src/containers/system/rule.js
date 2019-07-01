@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Loading, Table, Input, Form, Dialog, DatePicker } from 'element-react'
+import { Button, Loading, Table, Input, Form, Dialog, TimePicker, Message } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -25,7 +25,7 @@ class BlackUser extends Component {
 		this.state = {
 			editConfit: false,
 			// kan: new Date(2000, 10, 10, 10, 10),
-			kan: new Date('2019-06-30T17:02:02.000Z'),
+			// kan: new Date('2019-06-30T17:02:02.000Z'),
 			// kan: new Date('2019-07-01 11:42:58'),
 			maxMoney:{
 				configValue: '',
@@ -72,7 +72,7 @@ class BlackUser extends Component {
 					label: '时间前',
 					prop: 'frontTime',
 					render: row => {
-						const date = timeDate.time(row.frontTime, 'yyyy-MM-dd hh:mm:ss')
+						const date = timeDate.time(row.frontTime, 'hh:mm:ss')
 						return date
 					}
 				}, {
@@ -82,7 +82,7 @@ class BlackUser extends Component {
 					label: '时间后',
 					prop: 'afterTime',
 					render: row => {
-						const date = timeDate.time(row.afterTime, 'yyyy-MM-dd hh:mm:ss')
+						const date = timeDate.time(row.afterTime, 'hh:mm:ss')
 						return date
 					}
 				}, {
@@ -159,16 +159,17 @@ class BlackUser extends Component {
 				id: null
 			})
 		} else { // 编辑
-			console.log(r)
+			const t1 = timeDate.time(r.frontTime, 'hh:mm:ss')
+			const t2 = timeDate.time(r.afterTime, 'hh:mm:ss')
 			this.setState({
 				dialogTitle: '编辑',
 				form: {
 					money: r.money,
 					advanceDayNum: parseInt(r.advanceDayNum), //提前多少天
 					advanceMoney: r.advanceMoney, //提前天数提额
-					frontTime: '', //时间前
+					frontTime: new Date('2019-07-01 '+t1), //时间前
 					frontMoney: r.frontMoney, //时间前提额
-					afterTime: '', // 时间后
+					afterTime: new Date('2019-07-01 ' + t2), // 时间后
 					afterMoney: r.afterMoney, //时间后提额
 					otherMoney: r.otherMoney //其他时间提额
 				},
@@ -203,28 +204,30 @@ class BlackUser extends Component {
 			editConfit:true
 		})
 		if(this.state.editConfit){
-			console.log('2334')
+			this.updateMinAndCappingMoney()
 		}
 	}
 	updateMinAndCappingMoney = async () => {
-		const res = await api.updateMinAndCappingMoneyApi()
-		console.log(res)
+		const res = await api.updateMinAndCappingMoneyApi(this.state.maxMoney)
 		if (res.success) {
+			Message.success(res.msg)
 			this.setState({
-				configValue: res.data.configValue
+				editConfit: false
 			})
 		}
 	}
+	// handelChange = e => {
+	// 	this.setState({
+	// 		maxMoney:{
+	// 			configValue: e.target.value
+	// 		}
+	// 	})
+	// }
 	render() {
 		const { list, btnLoading } = this.props
 		const { maxMoney, form, rules, dialogTitle, editConfit } = this.state
 		return (
 			<div>
-				{/* <DatePicker
-					value={ this.state.kan }
-					isShowTime
-					placeholder="选择日期"
-				/> */}
 				<Button type="primary" className="margin-bottom15" onClick={ this.openDialog.bind(this,'add') }>{'添加'}</Button>
 				<Form labelWidth="100" inline>
 					<Form.Item label="自动提额上限">
@@ -232,9 +235,13 @@ class BlackUser extends Component {
 							!editConfit &&
 							<p>{ maxMoney.configValue }</p>
 						}
+						{/* {
+							editConfit &&
+							<Input type="number" defaultValue={ maxMoney.configValue } onChange={ this.handelChange.bind(this) } />
+						} */}
 						{
 							editConfit &&
-							<Input type="number" value={ maxMoney.configValue } />
+							<Input type="number" defaultValue={ maxMoney.configValue } ref={ input => {this.input = input} } />
 						}
 					</Form.Item>
 					<Form.Item>
@@ -273,16 +280,10 @@ class BlackUser extends Component {
 							</Form.Item>
 							<Form.Item label="时间前" prop="frontTime">
 								{/* <Input type="frontTime" value={ form.frontTime } onChange={ this.onChange.bind(this, 'frontTime') } /> */}
-								<DatePicker
-									value={ form.frontTime }
-									isShowTime
-									placeholder="选择日期"
-									// onChange={ date=>{
-									// 	console.debug('DatePicker1 changed: ', date)
-									// 	this.setState({value1: date})
-									// }}
+								<TimePicker
 									onChange={ this.onChange.bind(this, 'frontTime') }
-									// disabledDate={ time=>time.getTime() < Date.now() - 8.64e7 }
+									placeholder="选择时间"
+									value={ form.frontTime }
 								/>
 							</Form.Item>
 							<Form.Item label="时间前提额" prop="frontMoney">
@@ -290,11 +291,10 @@ class BlackUser extends Component {
 							</Form.Item>
 							<Form.Item label="时间后" prop="afterTime">
 								{/* <Input type="afterTime" value={ form.afterTime } onChange={ this.onChange.bind(this, 'afterTime') } /> */}
-								<DatePicker
-									value={ form.afterTime }
-									isShowTime
-									placeholder="选择日期"
+								<TimePicker
 									onChange={ this.onChange.bind(this, 'afterTime') }
+									placeholder="选择时间"
+									value={ form.afterTime }
 								/>
 							</Form.Item>
 							<Form.Item label="时间后提额" prop="afterMoney">

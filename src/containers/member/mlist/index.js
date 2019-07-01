@@ -148,7 +148,8 @@ class Mlist extends Component{
 		window.sessionStorage.setItem('locationState', JSON.stringify(sess))
 		this.props.handelSearch()
 		this.props.tabAdd({
-			name: '会员列表'
+			name: '会员列表',
+			url: '/member/mlist'
 		})
 	}
 	handleSearch = e => {
