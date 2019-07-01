@@ -353,7 +353,6 @@ export const findAllLiftingAmount = () => {
 
 // 提额规则设置-添加
 export const addLiftingAmount = obj => {
-  console.log('123')
   return async dispatch => {
     dispatch(btnRequestPosts())
     const data = await api.addLiftingAmountApi(obj)
@@ -365,6 +364,20 @@ export const addLiftingAmount = obj => {
     }
   }
 }
+// 提额规则设置-修改
+export const updateLiftingAmount = obj => {
+  return async dispatch => {
+    dispatch(btnRequestPosts())
+    const data = await api.updateLiftingAmountApi(obj)
+    if (data.success) {
+      dispatch(findAllLiftingAmount())
+      dispatch(btnReceivePosts(data.msg))
+    } else {
+      dispatch(btnFailurePosts(data.msg))
+    }
+  }
+}
+
 // 区域管理-启用/禁用
 // export const updateAreaState = obj => {
 //   return dispatch => {

@@ -107,12 +107,14 @@ export default {
   distributionsCuiShouApi: params => Fetch(jk.distributionsCuiShou, {method: 'put', body: params}),
   selectAreasByIdApi: params => Fetch(jk.selectAreasById, {method: 'get', data: params}),
   updateAreaStateApi: params => Fetch(jk.updateAreaState, {method: 'post', body: params}),
-  toLoanApi: params => Fetch(jk.toLoan, {method: 'put', body: params}),
+  toLoanApi: params => Fetch(jk.toLoan, {method: 'get', data: params}),
   toLoanBankApi: params => Fetch(jk.toLoanBank, {method: 'put', body: params}),
   selectUnAllowableAreaApi: params => Fetch(jk.selectUnAllowableArea, {method: 'post', body:params}),
   updateNextApplyTimeApi: params => Fetch(jk.updateNextApplyTime, {method: 'get', data: params}),
   findAllLiftingAmountApi: params => Fetch(jk.findAllLiftingAmount, {method: 'post', body:params}),
   findMinAndCappingMoneyApi: params => Fetch(jk.findMinAndCappingMoney, {method: 'get', data: params}),
   addLiftingAmountApi: params => Fetch(jk.addLiftingAmount, {method: 'post', body:params}),
+  updateLiftingAmountApi: params => Fetch(jk.updateLiftingAmount, {method: 'post', body:params}),
+  updateMinAndCappingMoneyApi: params => Fetch(jk.updateMinAndCappingMoney, {method: 'put', body: params})
 }
 

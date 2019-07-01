@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { Button, Loading, Table, Input, Form, Dialog } from 'element-react'
+import { Button, Loading, Table, Input, Form, Dialog, DatePicker } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { findAllLiftingAmount, addLiftingAmount } from './actions'
+import { findAllLiftingAmount, addLiftingAmount, updateLiftingAmount } from './actions'
 import MyPagination from '@components/MyPagination'
 import api from '@api/index'
 import validate from '@global/validate'
@@ -17,12 +17,20 @@ class BlackUser extends Component {
     initSearch: PropTypes.func.isRequired,
 		findAllLiftingAmount: PropTypes.func.isRequired,
 		addLiftingAmount: PropTypes.func.isRequired,
+		updateLiftingAmount: PropTypes.func.isRequired,
 		btnLoading: PropTypes.bool.isRequired
   }
 	constructor(props) {
 		super(props)
 		this.state = {
-			configValue:'',
+			editConfit: false,
+			// kan: new Date(2000, 10, 10, 10, 10),
+			kan: new Date('2019-06-30T17:02:02.000Z'),
+			// kan: new Date('2019-07-01 11:42:58'),
+			maxMoney:{
+				configValue: '',
+				id: null
+			},
 			dialogTitle:'',
 			form:{
 				money: null, // 小于等于多少金额
@@ -36,7 +44,13 @@ class BlackUser extends Component {
 			},
 			rules: {
 				money:  [{required: true, validator: validate.numEmpty}],
-				advanceDayNum: [{required: true, validator: validate.numEmpty}],
+				advanceDayNum: [{required: true, validator: validate.dayNum}],
+				advanceMoney: [{required: true, validator: validate.numEmpty}],
+				frontTime: [{ type: 'date', required: true, message: '请选择日期', trigger: 'change' }],
+				frontMoney: [{required: true, validator: validate.numEmpty}],
+				afterTime: [{ type: 'date', required: true, message: '请选择日期', trigger: 'change' }],
+				afterMoney: [{required: true, validator: validate.numEmpty}],
+				otherMoney: [{required: true, validator: validate.numEmpty}]
 			},
 			value: 1,
 			sort: null,
@@ -115,10 +129,12 @@ class BlackUser extends Component {
 	}
 	findMinAndCappingMoney = async () => {
 		const res = await api.findMinAndCappingMoneyApi()
-		console.log(res)
 		if(res.success){
 			this.setState({
-				configValue: res.data.configValue
+				maxMoney:{
+					configValue: res.data.configValue,
+					id: res.data.id
+				}
 			})
 		}
 	}
@@ -150,9 +166,9 @@ class BlackUser extends Component {
 					money: r.money,
 					advanceDayNum: parseInt(r.advanceDayNum), //提前多少天
 					advanceMoney: r.advanceMoney, //提前天数提额
-					frontTime: r.frontTime, //时间前
+					frontTime: '', //时间前
 					frontMoney: r.frontMoney, //时间前提额
-					afterTime: r.afterTime, // 时间后
+					afterTime: '', // 时间后
 					afterMoney: r.afterMoney, //时间后提额
 					otherMoney: r.otherMoney //其他时间提额
 				},
@@ -162,6 +178,7 @@ class BlackUser extends Component {
 	}
 	saveContent = e => {
 		e.preventDefault()
+		console.log(this.state.form)
 		this.form.validate((valid) => {
 			if (valid) {
 				this.setState({
@@ -170,9 +187,9 @@ class BlackUser extends Component {
 				console.log(this.state.id)
 				if (this.state.id) { // editor
 					const trans = Object.assign({},this.state.form,{id:this.state.id})
-					this.props.addLiftingAmount(trans)
+					this.props.updateLiftingAmount(trans)
 				} else { // add
-					// this.props.addLiftingAmount(this.state.form)
+					this.props.addLiftingAmount(this.state.form)
 				}
 
 			} else {
@@ -181,18 +198,47 @@ class BlackUser extends Component {
 			}
 		})
 	}
+	editConfitBtn(){
+		this.setState({
+			editConfit:true
+		})
+		if(this.state.editConfit){
+			console.log('2334')
+		}
+	}
+	updateMinAndCappingMoney = async () => {
+		const res = await api.updateMinAndCappingMoneyApi()
+		console.log(res)
+		if (res.success) {
+			this.setState({
+				configValue: res.data.configValue
+			})
+		}
+	}
 	render() {
 		const { list, btnLoading } = this.props
-		const { configValue, form, rules, dialogTitle } = this.state
+		const { maxMoney, form, rules, dialogTitle, editConfit } = this.state
 		return (
 			<div>
+				{/* <DatePicker
+					value={ this.state.kan }
+					isShowTime
+					placeholder="选择日期"
+				/> */}
 				<Button type="primary" className="margin-bottom15" onClick={ this.openDialog.bind(this,'add') }>{'添加'}</Button>
-				<Form labelWidth="120">
+				<Form labelWidth="100" inline>
 					<Form.Item label="自动提额上限">
-						<Input type="number" value={ configValue } />
+						{
+							!editConfit &&
+							<p>{ maxMoney.configValue }</p>
+						}
+						{
+							editConfit &&
+							<Input type="number" value={ maxMoney.configValue } />
+						}
 					</Form.Item>
 					<Form.Item>
-						<Button type="primary" size="mini">{'修改上限'}</Button>
+						<Button type="primary" onClick={ this.editConfitBtn.bind(this) }>{editConfit ? '保存':'修改上限'}</Button>
 					</Form.Item>
 				</Form>
 				<Loading loading={ list.loading }>
@@ -226,13 +272,30 @@ class BlackUser extends Component {
 								<Input type="advanceMoney" value={ form.advanceMoney } onChange={ this.onChange.bind(this, 'advanceMoney') } />
 							</Form.Item>
 							<Form.Item label="时间前" prop="frontTime">
-								<Input type="frontTime" value={ form.frontTime } onChange={ this.onChange.bind(this, 'frontTime') } />
+								{/* <Input type="frontTime" value={ form.frontTime } onChange={ this.onChange.bind(this, 'frontTime') } /> */}
+								<DatePicker
+									value={ form.frontTime }
+									isShowTime
+									placeholder="选择日期"
+									// onChange={ date=>{
+									// 	console.debug('DatePicker1 changed: ', date)
+									// 	this.setState({value1: date})
+									// }}
+									onChange={ this.onChange.bind(this, 'frontTime') }
+									// disabledDate={ time=>time.getTime() < Date.now() - 8.64e7 }
+								/>
 							</Form.Item>
 							<Form.Item label="时间前提额" prop="frontMoney">
 								<Input type="frontMoney" value={ form.frontMoney } onChange={ this.onChange.bind(this, 'frontMoney') } />
 							</Form.Item>
 							<Form.Item label="时间后" prop="afterTime">
-								<Input type="afterTime" value={ form.afterTime } onChange={ this.onChange.bind(this, 'afterTime') } />
+								{/* <Input type="afterTime" value={ form.afterTime } onChange={ this.onChange.bind(this, 'afterTime') } /> */}
+								<DatePicker
+									value={ form.afterTime }
+									isShowTime
+									placeholder="选择日期"
+									onChange={ this.onChange.bind(this, 'afterTime') }
+								/>
 							</Form.Item>
 							<Form.Item label="时间后提额" prop="afterMoney">
 								<Input type="afterMoney" value={ form.afterMoney } onChange={ this.onChange.bind(this, 'afterMoney') } />
@@ -258,7 +321,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, findAllLiftingAmount, addLiftingAmount}, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, findAllLiftingAmount, addLiftingAmount,updateLiftingAmount}, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(BlackUser)

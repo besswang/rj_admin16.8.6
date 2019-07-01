@@ -54,5 +54,12 @@ export default {
     } else {
       callback()
     }
+  },
+  dayNum: (rule, value, callback) => {
+    if (value === '' || value === null) {
+      callback(new Error('天数不能为空'))
+    } else {
+      callback()
+    }
   }
 }

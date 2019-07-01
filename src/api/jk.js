@@ -101,6 +101,8 @@ export default {
   'findAllLiftingAmount': 'api/findAllLiftingAmount',
   'findMinAndCappingMoney': 'api/globalConfig/findMinAndCappingMoney',
   'addLiftingAmount': 'api/addLiftingAmount',
+  'updateLiftingAmount': 'api/updateLiftingAmount',
+  'updateMinAndCappingMoney': 'api/globalConfig/updateMinAndCappingMoney',
   // 轮播图管理
   'pageRotationChart': 'api/rotationChart/pageRotationChart', // 列表
   'deleteRotationChart': 'api/rotationChart/deleteRotationChart', // 删除
