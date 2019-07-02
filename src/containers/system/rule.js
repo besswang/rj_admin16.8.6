@@ -27,9 +27,21 @@ class BlackUser extends Component {
 			// kan: new Date(2000, 10, 10, 10, 10),
 			// kan: new Date('2019-06-30T17:02:02.000Z'),
 			// kan: new Date('2019-07-01 11:42:58'),
-			maxMoney:{
-				configValue: '',
+			form2: {
+				configValue: null,
 				id: null
+			},
+			rules2: {
+				configValue: [{
+					required: true,
+					validator: (rule, value, callback) => {
+						if (value === '' || value === null) {
+							callback(new Error('请输入上限金额'))
+						} else {
+							callback()
+						}
+					}
+				}]
 			},
 			dialogTitle:'',
 			form:{
@@ -131,7 +143,7 @@ class BlackUser extends Component {
 		const res = await api.findMinAndCappingMoneyApi()
 		if(res.success){
 			this.setState({
-				maxMoney:{
+				form2: {
 					configValue: res.data.configValue,
 					id: res.data.id
 				}
@@ -204,11 +216,19 @@ class BlackUser extends Component {
 			editConfit:true
 		})
 		if(this.state.editConfit){
-			this.updateMinAndCappingMoney()
+			this.form2.validate((valid) => {
+				if (valid) {
+					this.updateMinAndCappingMoney()
+				} else {
+					console.log('error submit!!')
+					return false
+				}
+			})
+
 		}
 	}
 	updateMinAndCappingMoney = async () => {
-		const res = await api.updateMinAndCappingMoneyApi(this.state.maxMoney)
+		const res = await api.updateMinAndCappingMoneyApi(this.state.form2)
 		if (res.success) {
 			Message.success(res.msg)
 			this.setState({
@@ -216,32 +236,26 @@ class BlackUser extends Component {
 			})
 		}
 	}
-	// handelChange = e => {
-	// 	this.setState({
-	// 		maxMoney:{
-	// 			configValue: e.target.value
-	// 		}
-	// 	})
-	// }
+	onChange2(key, value) {
+		this.setState({
+			form2: Object.assign({}, this.state.form2, { [key]: value })
+		})
+	}
 	render() {
 		const { list, btnLoading } = this.props
-		const { maxMoney, form, rules, dialogTitle, editConfit } = this.state
+		const { form2, form, rules, rules2, dialogTitle, editConfit } = this.state
 		return (
 			<div>
 				<Button type="primary" className="margin-bottom15" onClick={ this.openDialog.bind(this,'add') }>{'添加'}</Button>
-				<Form labelWidth="100" inline>
-					<Form.Item label="自动提额上限">
+				<Form labelWidth="120" inline model={ form2 } ref={ e => {this.form2 = e} } rules={ rules2 }>
+					<Form.Item label="自动提额上限" prop="configValue">
 						{
 							!editConfit &&
-							<p>{ maxMoney.configValue }</p>
+							<p>{ form2.configValue }</p>
 						}
-						{/* {
-							editConfit &&
-							<Input type="number" defaultValue={ maxMoney.configValue } onChange={ this.handelChange.bind(this) } />
-						} */}
 						{
 							editConfit &&
-							<Input type="number" defaultValue={ maxMoney.configValue } ref={ input => {this.input = input} } />
+							<Input type="number" value={ form2.configValue } onChange={ this.onChange2.bind(this, 'configValue') } />
 						}
 					</Form.Item>
 					<Form.Item>

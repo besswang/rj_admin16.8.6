@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 class Home extends Component {
 	static propTypes = {
-    history: PropTypes.object.isRequired
+		history: PropTypes.object.isRequired
 	}
 	constructor(props) {
 		super(props)

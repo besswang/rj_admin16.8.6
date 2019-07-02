@@ -235,7 +235,7 @@ class Detail extends Component{
                   <p>{'身份证反面'}</p>
                 </div>
                 <div className="photo">
-                  <img src={ `data:image/jpeg;base64,${ idCardInfo.idcardPortraitPhoto }` } alt="" />
+                  <img src={ `data:image/jpeg;base64,${ idCardInfo.livingPhoto }` } alt="" />
                   <p>{'人脸照片'}</p>
                 </div>
               </li>

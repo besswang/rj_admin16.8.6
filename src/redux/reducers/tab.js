@@ -15,8 +15,18 @@ const tabObj = (state = initTab, action) => {
         (obj[next.name] ? '' : obj[next.name] = true) && cur.push(next)
         return cur
       }, []) //设置cur默认类型为数组，并且初始值为空的数组
-      console.log(arr)
       return {...state, tabs:arr,tabActive:action.data.name}
+    }
+    case type.TAB_REMOVE:{
+      // console.log(initTab.tabs)
+      // initTab.tabs.splice(action.data, 1)
+      // return {...state,tabs:initTab.tabs}
+
+      // console.log(action.arr)
+      // action.arr.splice(action.index, 1)
+      // console.log(action.arr)
+
+       return {...state,tabs:action.arr}
     }
     default:
       return state

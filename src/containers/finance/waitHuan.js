@@ -306,10 +306,10 @@ class WaitHuan extends Component {
 				>
 					<Dialog.Body>
 						<Tabs activeName={ activeName } onTabClick={ (tab) => this.tabClick(tab.props.name) }>
-							<Tabs.Pane label="全款" name="1"></Tabs.Pane>
+							<Tabs.Pane label="还款" name="1"></Tabs.Pane>
 							<Tabs.Pane label="延期" name="2"></Tabs.Pane>
-							<Tabs.Pane label="部分还款" name="3"></Tabs.Pane>
-							<Tabs.Pane label="减免" name="4"></Tabs.Pane>
+							{/* <Tabs.Pane label="部分还款" name="3"></Tabs.Pane> */}
+							<Tabs.Pane label="减免（应还-本金减免-利息-逾期-服务费=本金结算）" name="3"></Tabs.Pane>
 						</Tabs>
 						{
 							(activeName === '1' || activeName === '2') &&
@@ -327,6 +327,7 @@ class WaitHuan extends Component {
 									<p>{'借款期限:'}{ timeDate.time(loanDate, 'yyyy-MM-dd hh:mm:ss') }{'-'}{ repaymentDate }</p>
 								</li>
 								<li className="flex flex-direction_row justify-content_flex-justify ptb5">
+									{/* 剩余应还=剩余应还-还款金额 */}
 									<p className="red">{'剩余应还:'}{ realRepaymentMoney }</p>
 								</li>
 							</ul>
@@ -335,7 +336,7 @@ class WaitHuan extends Component {
 							(activeName === '3' || activeName === '4') &&
 							<ul className="flex flex-direction_column margin-bottom15">
 								<li className="flex flex-direction_row justify-content_flex-justify ptb5">
-									<p>{'本金:'}{ orderNumber }</p>
+									<p>{'应还:'}{ orderNumber }</p>
 									<p>{'本金结算:'}{ realRepaymentMoney }</p>
 								</li>
 							</ul>
@@ -357,19 +358,25 @@ class WaitHuan extends Component {
 									<Input type="number" value={ form.repaymentMoney } onChange={ this.onChange.bind(this, 'repaymentMoney') } />
 								</Form.Item>
 							}
-							{ activeName === '1' &&
+							{/* { activeName === '1' &&
 								<Form.Item label="减免金额" prop="reductionMoney">
 									<Input type="number" value={ form.reductionMoney } onChange={ this.onChange.bind(this, 'reductionMoney') } />
 								</Form.Item>
-							}
+							} */}
 							{
 								activeName === '2' &&
-								<Form.Item label="延期天数" prop="delayNumber">
-									<Input type="number" value={ form.delayNumber } onChange={ this.onChange.bind(this, 'delayNumber') } />
+								<Form.Item label="延期天数掉后台接口" prop="delayNumber">
+									{/* <Input type="number" value={ form.delayNumber } onChange={ this.onChange.bind(this, 'delayNumber') } /> */}
+									<SelectPicker
+										value={ form.repaymentType }
+										onChange={ this.onChange.bind(this, 'repaymentType') }
+										options={ REPAYMENT_TYPE }
+										placeholder={ '延期天数调用接口' }
+									/>
 								</Form.Item>
 							}
 							{ activeName === '2' &&
-								<Form.Item label="延期金额" prop="reMoney">
+								<Form.Item label="延期金额（直接显示，延期天数中的百分比*借款金额=延期金额）" prop="reMoney">
 									<Input type="number" value={ form.reMoney } onChange={ this.onChange.bind(this, 'reMoney') } />
 								</Form.Item>
 							}
@@ -381,7 +388,7 @@ class WaitHuan extends Component {
 							}
 							{
 								(activeName === '3' || activeName === '4') &&
-								<Form.Item label="本金减免/还款" prop="payNumber">
+								<Form.Item label="本金减免" prop="payNumber">
 									<Input type="number" value={ form.payNumber } onChange={ this.onChange.bind(this, 'payNumber') } />
 								</Form.Item>
 							}
