@@ -20,37 +20,36 @@ class Loan extends Component {
     super(props)
     this.state = {
       column:[
-              {
-                label:'序号',
-                type:'index'
-              }, {
-                label:'日期',
-                prop: 'date'
-              }, {
-                label:'总放单数',
-                prop: 'allLoanNum'
-              }, {
-                label: '总放金额',
-                prop: 'allLoanAmount'
-              }, {
-                label: '总还金额',
-                prop: 'allReturnAmount'
-              }, {
-                label: '新放单数',
-                prop: 'newLoanNum'
-              }, {
-                label: '新放金额',
-                prop: 'newLoanAmount'
-              }, {
-                label: '老放单数',
-                prop: 'oldLoanNum'
-              }, {
-                label: '老放金额',
-                prop: 'oldLoanAmount'
-              }, {
-                label: '新放款率',
-                prop: 'newLoanRate'
-              }
+        {
+          type:'index'
+        }, {
+          label:'日期',
+          prop: 'date'
+        }, {
+          label:'总放单数',
+          prop: 'allLoanNum'
+        }, {
+          label: '总放金额',
+          prop: 'allLoanAmount'
+        }, {
+          label: '总还金额',
+          prop: 'allReturnAmount'
+        }, {
+          label: '新放单数',
+          prop: 'newLoanNum'
+        }, {
+          label: '新放金额',
+          prop: 'newLoanAmount'
+        }, {
+          label: '老放单数',
+          prop: 'oldLoanNum'
+        }, {
+          label: '老放金额',
+          prop: 'oldLoanAmount'
+        }, {
+          label: '新放款率',
+          prop: 'newLoanRate'
+        }
       ]
     }
   }

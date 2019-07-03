@@ -8,6 +8,7 @@ import { sizeChange, currentChange, initSearch } from '@redux/actions'
 import { pageRepaymentCount } from './actions'
 import MyPagination from '@components/MyPagination'
 import Search from '@components/Search'
+import num from '@global/num'
 class RepayMent extends Component {
   static propTypes = {
     list: PropTypes.object.isRequired,
@@ -22,42 +23,206 @@ class RepayMent extends Component {
     this.state = {
       column:[
         {
-          label:'序号',
-          type:'index'
+          // type:'index'
+          label: '#',
+          width: 60,
+          render: (a,b,c) => {
+            return c+1
+          }
         }, {
           label:'日期',
           prop: 'date',
           width:120
         }, {
-          label: '还款表现',
-          prop: 'repaymentRate'
-        }, {
-          label: '新还款表现',
-          prop: 'newRepaymentRate'
-        }, {
           label: '应还单数',
           prop: 'shouldReturnNum'
         }, {
-          label: '应还金额',
-          prop: 'shouldReturnAmount'
+          label: '实还单数',
+          // prop: 'alreadyReturnNum', // 续期单数+复借单数
+          render: row => {
+            if (row.renewNum && row.moreBorrowNum) {
+              const x = parseInt(row.renewNum) + parseInt(row.moreBorrowNum)
+              return x
+            } else {
+              return 0
+            }
+          }
         }, {
-          label: '已还单数',
-          prop: 'alreadyReturnNum'
+          label: '未还单数',
+          // prop: 'noReturnNum', // 应还单数- 实还单数
+          render: row => {
+            if (row.renewNum && row.moreBorrowNum) {
+              const x = parseInt(row.renewNum) + parseInt(row.moreBorrowNum)
+              if (row.shouldReturnNum && x) {
+                const n = parseInt(row.apply) - parseInt(x)
+                return n
+              } else {
+                return 0
+              }
+            } else {
+              return 0
+            }
+          }
         }, {
-          label: '已还金额',
-          prop: 'alreadyReturnAmount'
+          label: '还款率',
+          // prop: 'repaymentRate', // 实还单数 /应还单数
+          render: row => {
+            if (row.renewNum && row.moreBorrowNum) {
+              const x = parseInt(row.renewNum) + parseInt(row.moreBorrowNum)
+              if (x && row.shouldReturnNum) {
+                const n = parseInt(x) / parseInt(row.shouldReturnNum)
+                return (num.toDecimal(n))
+              } else {
+                return ('0.00%')
+              }
+            } else {
+              return ('0.00%')
+            }
+          }
         }, {
-          label: '新应还单数',
-          prop: 'newShouldReturnNum'
-        }, {
-          label: '新应还金额',
-          prop: 'newShouldReturnAmount'
-        }, {
-          label: '延期单数',
-          prop: 'delayNum'
-        }, {
-          label: '全款还款单数',
+          label: '全额单数', // 全额还款单数
           prop: 'fullRepaymentNum'
+        }, {
+          label: '全额率', // 全额还款率
+          prop: 'fullRepaymentRate', // 全额还款单数/应还单数
+          render: row => {
+            if (row.fullRepaymentNum && row.shouldReturnNum) {
+              const n = parseInt(row.fullRepaymentNum) / parseInt(row.shouldReturnNum)
+              return (num.toDecimal(n))
+            } else {
+              return ('0.00%')
+            }
+          }
+        }, {
+          label: '续期单数',
+          prop: 'renewNum'
+        }, {
+          label: '续期率',
+          prop: 'renewRate', // 续期单数/应还单数
+          render: row => {
+            if (row.fullRepaymentNum && row.shouldReturnNum) {
+              const n = parseInt(row.fullRepaymentNum) / parseInt(row.shouldReturnNum)
+              return (num.toDecimal(n))
+            } else {
+              return ('0.00%')
+            }
+          }
+        }, {
+          label: '复借单数',
+          prop: 'moreBorrowNum'
+        }, {
+          label: '复借率',
+          prop: 'moreBorrowRate', // 复借单数/应还单数
+          render: row => {
+            if (row.moreBorrowNum && row.shouldReturnNum) {
+              const n = parseInt(row.moreBorrowNum) / parseInt(row.shouldReturnNum)
+              return (num.toDecimal(n))
+            } else {
+              return ('0.00%')
+            }
+          }
+        }, {
+          label: '首借',
+          subColumns: [
+            {
+              label: '应还单数',
+              prop: 'newShouldReturnNum'
+            }, {
+              label: '已还单数',
+              prop: 'newAlreadyReturnNum'
+            }, {
+              label: '未还单数',
+              // prop: 'newNoReturnNum',
+              render: row => {
+                if (row.newShouldReturnNum && row.newAlreadyReturnNum) {
+                  const n = parseInt(row.newShouldReturnNum) - parseInt(row.newAlreadyReturnNum)
+                  return n
+                } else {
+                  return 0
+                }
+              }
+            }, {
+              label: '还款率',
+              prop: 'newRepaymentRate', // 已还单数（首借）/应还单数（首借）
+              render: row => {
+                if (row.newAlreadyReturnNum && row.newShouldReturnNum) {
+                  const n = parseInt(row.newAlreadyReturnNum) / parseInt(row.newShouldReturnNum)
+                  return (num.toDecimal(n))
+                } else {
+                  return ('0.00%')
+                }
+              }
+            }
+          ]
+        }, {
+          label: '续期',
+          subColumns: [
+            {
+              label: '应还单数',
+              prop: 'xuShouldReturnNum'
+            }, {
+              label: '已还单数',
+              prop: 'xuAlreadyReturnNum'
+            }, {
+              label: '未还单数',
+              // prop: 'xuNoReturnNum',
+              render: row => {
+                if (row.xuShouldReturnNum && row.xuAlreadyReturnNum) {
+                  const n = parseInt(row.xuShouldReturnNum) - parseInt(row.xuAlreadyReturnNum)
+                  return n
+                } else {
+                  return 0
+                }
+              }
+            }, {
+              label: '还款率',
+              prop: 'xuRepaymentRate', // 已还单数（续期）/应还单数（续期）
+              render: row => {
+                if (row.xuAlreadyReturnNum && row.xuShouldReturnNum) {
+                  const n = parseInt(row.xuAlreadyReturnNum) / parseInt(row.xuShouldReturnNum)
+                  return (num.toDecimal(n))
+                } else {
+                  return ('0.00%')
+                }
+              }
+            }
+          ]
+        }, {
+          label: '复借',
+          subColumns: [
+            {
+              label: '应还单数',
+              prop: 'fuShouldReturnNum',
+              render: row => {
+                return row.fuShouldReturnNum ? row.fuAlreadyReturnNum:0
+              }
+            }, {
+              label: '已还单数',
+              prop: 'fuAlreadyReturnNum'
+            }, {
+              label: '未还单数',
+              // prop: 'fuNoReturnNum',
+              render: row => {
+                if (row.fuShouldReturnNum && row.fuAlreadyReturnNum) {
+                  const n = parseInt(row.fuShouldReturnNum) - parseInt(row.fuAlreadyReturnNum)
+                  return n
+                } else {
+                  return 0
+                }
+              }
+            }, {
+              label: '还款率',
+              prop: 'fuRepaymentRate', // 已还单数（续期）/应还单数（续期）
+              render: row => {
+                if (row.fuAlreadyReturnNum && row.fuShouldReturnNum) {
+                  const n = parseInt(row.fuAlreadyReturnNum) / parseInt(row.fuShouldReturnNum)
+                  return (num.toDecimal(n))
+                } else {
+                  return ('0.00%')
+                }
+              }
+            }
+          ]
         }
       ]
     }

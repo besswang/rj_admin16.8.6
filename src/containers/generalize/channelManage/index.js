@@ -3,8 +3,9 @@ import { Button, Table, Loading, Dialog, Form, Input } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { Link } from 'react-router-dom'
 import { sizeChange, currentChange, initSearch, menuActive } from '@redux/actions'
-import { selectChannel, insertChannel, updateChannel, prohibitChannel } from './actions'
+import { selectChannel, insertChannel, updateChannel, prohibitChannel } from './action'
 import MyPagination from '@components/MyPagination'
 import Search from '@components/Search'
 import SelectPicker from '@components/SelectPicker'
@@ -114,13 +115,17 @@ class Apply extends Component {
 					}
 				}, {
 						label: '操作',
-						width:140,
+						width:200,
 						fixed: 'right',
 						render: row => {
 							return (
 								<div>
 									<Button type="primary" size="mini" onClick={ this.openDialog.bind(this, row) }>{'编辑'}</Button>
 									<DisableBtn value={ row.state } result={ 1 } text={ ['启用','禁用'] } onClick={ this.props.prohibitChannel.bind(this,{channelName:row.channelName,id:row.id,state:row.state}) }/>
+									<Link to={ {pathname:'/generalize/exhibition',state:{date:row.channelName}} }>
+										<Button type="success" size="mini" onClick={ this.ditchType.bind(this, row.channelName) }>{'展期模式'}</Button>
+									</Link>
+
 								</div>
 							)
 						}
@@ -130,10 +135,14 @@ class Apply extends Component {
 	componentWillMount() {
 		this.props.initSearch()
 		this.props.menuActive(this.props.location.pathname)
+		window.sessionStorage.removeItem('channelName')
 	}
 	componentDidMount() {
 		this.props.selectChannel()
 	}
+	ditchType = (name) => {
+    window.sessionStorage.setItem('channelName', name)
+  }
 	handleSearch = e => {
 		e.preventDefault()
 		this.props.selectChannel()

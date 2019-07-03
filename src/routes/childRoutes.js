@@ -60,7 +60,8 @@ import Banner from '@containers/system/banner'
 import Quota from '@containers/system/rule' // 提额规则设置
 import Versions from '@containers/system/versions'
 // 推广管理
-import ChannelManage from '@containers/generalize/channelManage'
+import ChannelManage from '@containers/generalize/channelManage/index'
+import Exhibition from '@containers/generalize/channelManage/exhibition'
 import Statistics from '@containers/generalize/statistics'
 import ChannelMember from '@containers/generalize/channelMember'
 import Login from '@containers/user/login'
@@ -347,7 +348,7 @@ export const CHILD_ROUTES = [
     path: '/generalize',
     children: [{
       name: '渠道管理',
-      path: '/generalize/channelManage',
+      path: '/generalize/channelmanage',
       exact: true,
       component: ChannelManage
     }, {
@@ -373,5 +374,17 @@ export const CHILD_ROUTES = [
     hideInMenu: true,
     childSingle: true,
     component: Detail
+  }, {
+    id: 102,
+    pid: 0,
+    state: 0,
+    state1: '1',
+    superState: 0,
+    name: '展期模式',
+    path: '/generalize/exhibition',
+    exact: true,
+    component: Exhibition,
+    hideInMenu: true,
+    childSingle: true
   }
 ]

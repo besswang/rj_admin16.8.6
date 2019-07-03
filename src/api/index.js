@@ -115,6 +115,9 @@ export default {
   findMinAndCappingMoneyApi: params => Fetch(jk.findMinAndCappingMoney, {method: 'get', data: params}),
   addLiftingAmountApi: params => Fetch(jk.addLiftingAmount, {method: 'post', body:params}),
   updateLiftingAmountApi: params => Fetch(jk.updateLiftingAmount, {method: 'post', body:params}),
-  updateMinAndCappingMoneyApi: params => Fetch(jk.updateMinAndCappingMoney, {method: 'get', data: params})
+  updateMinAndCappingMoneyApi: params => Fetch(jk.updateMinAndCappingMoney, {method: 'get', data: params}),
+  findDelayRateApi: params => Fetch(jk.findDelayRate, {method: 'get', data:params}),
+  bindingRateApi: params => Fetch(jk.bindingRate, {method: 'post', body:params}),
+  deleteDelayRateApi: params => Fetch(jk.deleteDelayRate, {method: 'delete', data: params}),
 }
 

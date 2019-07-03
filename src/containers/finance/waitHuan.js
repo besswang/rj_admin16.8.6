@@ -328,7 +328,7 @@ class WaitHuan extends Component {
 								</li>
 								<li className="flex flex-direction_row justify-content_flex-justify ptb5">
 									{/* 剩余应还=剩余应还-还款金额 */}
-									<p className="red">{'剩余应还:'}{ realRepaymentMoney }</p>
+									<p className="red">{'剩余应还:'}{ realRepaymentMoney-form.repaymentMoney }</p>
 								</li>
 							</ul>
 						}

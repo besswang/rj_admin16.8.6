@@ -121,6 +121,9 @@ export default {
   'insertChannel': 'api/channel/insertChannel', // 渠道管理-添加
   'updateChannel': 'api/channel/updateChannel', // 渠道管理-编辑
   'prohibitChannel': 'api/channel/prohibitChannel', // 渠道管理-禁用
+  'findDelayRate': 'api/quotaDelay/findDelayRate', // 渠道管理-展期模式-列表
+  'bindingRate': 'api/channel/bindingRate', // 渠道管理-展期模式-添加
+  'deleteDelayRate': 'api/quotaDelay/deleteDelayRate', // 渠道管理-展期模式-删除
   'selectPromotionStatistics': 'api/order/selectPromotionStatistics', // 推广统计
   'selectChannelMember': 'api/user/selectChannelMember', // 渠道会员
   // select-渠道名称搜索
