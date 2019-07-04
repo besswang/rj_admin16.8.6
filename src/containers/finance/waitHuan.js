@@ -1,11 +1,11 @@
 // 催收管理-个人对账
 import React, { Component } from 'react'
-import { Button, Loading, Table, Dialog, Form, Input, Tabs } from 'element-react'
+import { Button, Loading, Table, Dialog, Form, Input, Tabs, Message } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { selectPendingRepay, updateStateComplete, updateStateDelay } from './actions'
+import { selectPendingRepay, updateStateComplete, updateStateDelay, findAllDelayRate, updateStateReduction } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
 import filter from '@global/filter'
@@ -14,6 +14,9 @@ import SelectPicker from '@components/SelectPicker'
 import { REPAYMENT_TYPE } from '@meta/select'
 import DetailBtn from '@components/DetailBtn'
 import { dwaitHuan } from '@meta/details'
+import api from '@api/index'
+import SelectDay from '@components/SelectDay'
+import validate from '@global/validate'
 class WaitHuan extends Component {
 	static propTypes = {
 		list: PropTypes.object.isRequired,
@@ -23,11 +26,20 @@ class WaitHuan extends Component {
     initSearch: PropTypes.func.isRequired,
 		selectPendingRepay: PropTypes.func.isRequired,
 		updateStateComplete: PropTypes.func.isRequired,
-		updateStateDelay: PropTypes.func.isRequired
+		updateStateDelay: PropTypes.func.isRequired,
+		findAllDelayRate: PropTypes.func.isRequired,
+		updateStateReduction: PropTypes.func.isRequired,
+		dayList: PropTypes.arrayOf(
+			PropTypes.object.isRequired
+		)
   }
 	constructor(props) {
 		super(props)
 		this.state = {
+			delayNumber: null, // 延期天数
+			reMoney: null, // 延期金额
+			delayRate:null, // 费率
+			surplusMoney: null, // 剩余应还金额
 			activeName: '1',
 			orderNumber:'', // 订单号
 			realRepaymentMoney: null, // 应还金额
@@ -40,27 +52,23 @@ class WaitHuan extends Component {
 			form: {
 				repaymentType: 3, // 还款方式（3:线下支付宝，4：线下微信）
 				repaymentMoney:null, // 还款金额
-				reductionMoney: null, // 减免金额
 				payNumber: null, // 支付单号
-				delayNumber: null, // 延期天数
-				reMoney: null // 延期金额
+				dayValue: null,
+				principalReductionMoney:null, // 本金减免
+				rateReductionMoney: null, // 利息减免
+				overdueReductionMoney: null, // 逾期减免
+				serviceReductionMoney: null, // 服务费减免
 			},
 			rules: {
-				delayNumber: [{
+				principalReductionMoney: [{required: true, validator: validate.numEmpty}],
+				rateReductionMoney: [{required: true, validator: validate.numEmpty}],
+				overdueReductionMoney: [{required: true, validator: validate.numEmpty}],
+				serviceReductionMoney: [{required: true, validator: validate.numEmpty}],
+				dayValue: [{
 					required: true,
 					validator: (rule, value, callback) => {
 						if (value === '' || value === null) {
-							callback(new Error('请输入延期天数'))
-						} else {
-							callback()
-						}
-					}
-				}],
-				reMoney: [{
-					required: true,
-					validator: (rule, value, callback) => {
-						if (value === '' || value === null) {
-							callback(new Error('请输入延期金额'))
+							callback(new Error('请选择延期天数'))
 						} else {
 							callback()
 						}
@@ -76,27 +84,7 @@ class WaitHuan extends Component {
 						}
 					}
 				}],
-				repaymentMoney: [{
-						required:true,
-						validator: (rule, value, callback) => {
-							if (value === '' || value === null) {
-								callback(new Error('请输入还款金额'))
-							} else {
-								callback()
-							}
-						}
-					}
-				],
-				reductionMoney: [{
-					required: true,
-					validator: (rule, value, callback) => {
-						if (value === '' || value === null) {
-							callback(new Error('请输入减免金额'))
-						} else {
-							callback()
-						}
-					}
-				}],
+				repaymentMoney: [{required: true, validator: validate.numEmpty}],
 				payNumber: [{
 					required: true,
 					validator: (rule, value, callback) => {
@@ -213,6 +201,7 @@ class WaitHuan extends Component {
 			url: '/finance/waitHuan'
 		}
 		window.sessionStorage.setItem('locationState', JSON.stringify(sess))
+		this.props.findAllDelayRate()
   }
   handleSearch = e => {
     e.preventDefault()
@@ -227,9 +216,20 @@ class WaitHuan extends Component {
     this.props.selectPendingRepay()
 	}
 	onChange(key, value) {
+		console.log(key)
+		console.log(value)
 		this.setState({
 			form: Object.assign({}, this.state.form, { [key]: value })
 		})
+		if (key === 'dayValue'){
+			const day = this.props.dayList.filter(item => item.id === value)
+			console.log(day)
+			this.setState({
+				delayRate: day[0].delayRate,
+				reMoney: day[0].delayRate * this.state.applyMoney,
+				delayNumber: day[0].dayNum
+			})
+		}
 	}
 	openDialog = obj => {
 		this.setState({
@@ -238,12 +238,14 @@ class WaitHuan extends Component {
 			orderNumber: obj.orderNumber, // 订单号
 			realRepaymentMoney: obj.realRepaymentMoney, // 应还金额
 			applyMoney: obj.applyMoney, // 借款金额
+			reMoney: obj.applyMoney, // 延期金额
 			serviceMoney: obj.serviceMoney, // 服务费
 			loanDate: obj.loanDate, // 放款时间
 			repaymentDate: obj.repaymentDate, // 约定还款日
 		})
 		this.tabClick('1')
 		this.form.resetFields()
+		this.findRepaymentMoney(obj.id)
 	}
 	saveContent = e => {
 		e.preventDefault()
@@ -256,11 +258,16 @@ class WaitHuan extends Component {
 						obj[a] = form[a]
 					}
 				}
-				const data = Object.assign({}, obj, {orderId:orderId})
-				if(activeName === '1'){ // 全款
+				const adminObj = JSON.parse(window.sessionStorage.getItem('adminInfo'))
+				const { delayNumber, delayRate, reMoney } = this.state
+				const data = Object.assign({}, obj, {orderId:orderId},{adminName:adminObj.adminName})
+				if(activeName === '1'){ // 还款
 					this.props.updateStateComplete(data)
-				} else { // 延期
-					this.props.updateStateDelay(data)
+				} else if (activeName === '2') { // 延期
+					const trans = Object.assign({},data,{delayNumber:delayNumber},{delayRate:delayRate},{reMoney:reMoney})
+					this.props.updateStateDelay(trans)
+				} else { // 减免
+					this.props.updateStateReduction(data)
 				}
 				this.setState({
 					dialogVisible: false
@@ -277,9 +284,22 @@ class WaitHuan extends Component {
 		})
 		this.form.resetFields()
 	}
+	findRepaymentMoney = async (id) => {
+		const res = await api.findRepaymentMoneyApi({id:id})
+		if(res.success){
+			this.setState({
+				surplusMoney: res.data
+			})
+		}else{
+			Message.error(res.msg)
+		}
+	}
+	changeDay = e => {
+		console.log(e)
+	}
 	render() {
-		const { list, btnLoading } = this.props
-		const { columns, dialogVisible, form, rules, orderNumber, realRepaymentMoney, applyMoney, serviceMoney, loanDate, repaymentDate, activeName } = this.state
+		const { list, btnLoading, dayList } = this.props
+		const { columns, dialogVisible, form, rules, orderNumber, realRepaymentMoney, applyMoney, serviceMoney, loanDate, repaymentDate, activeName, surplusMoney, reMoney } = this.state
 		return (
 			<div>
 				<Search showSelect2 showLoanType showSelectClient showSelectTime>
@@ -328,7 +348,12 @@ class WaitHuan extends Component {
 								</li>
 								<li className="flex flex-direction_row justify-content_flex-justify ptb5">
 									{/* 剩余应还=剩余应还-还款金额 */}
-									<p className="red">{'剩余应还:'}{ realRepaymentMoney-form.repaymentMoney }</p>
+									<p className="red">{'剩余应还:'}{ surplusMoney-form.repaymentMoney }</p>
+									{/* 延期天数中的百分比 * 借款金额 = 延期金额 */}
+									{
+										activeName === '2' &&
+										<p>{'延期金额:'}{ reMoney }</p>
+									}
 								</li>
 							</ul>
 						}
@@ -336,80 +361,59 @@ class WaitHuan extends Component {
 							(activeName === '3' || activeName === '4') &&
 							<ul className="flex flex-direction_column margin-bottom15">
 								<li className="flex flex-direction_row justify-content_flex-justify ptb5">
-									<p>{'应还:'}{ orderNumber }</p>
-									<p>{'本金结算:'}{ realRepaymentMoney }</p>
+									<p>{'应还金额:'}{ realRepaymentMoney }</p>
+									<p>{'本金结算:'}{ realRepaymentMoney-form.principalReductionMoney-form.rateReductionMoney-form.overdueReductionMoney-form.serviceReductionMoney }</p>
 								</li>
 							</ul>
 						}
 						<Form labelWidth="90" ref={ e => {this.form=e} } model={ form } rules={ rules }>
-							{	(activeName === '1' || activeName === '2') &&
-								<Form.Item label="还款方式" prop="repaymentType">
-									<SelectPicker
-										value={ form.repaymentType }
-										onChange={ this.onChange.bind(this, 'repaymentType') }
-										options={ REPAYMENT_TYPE }
-										placeholder={ '选择还款方式' }
-									/>
-								</Form.Item>
-							}
+							<Form.Item label="还款方式" prop="repaymentType">
+								<SelectPicker
+									value={ form.repaymentType }
+									onChange={ this.onChange.bind(this, 'repaymentType') }
+									options={ REPAYMENT_TYPE }
+									placeholder={ '选择还款方式' }
+								/>
+							</Form.Item>
 							{
 								activeName === '1' &&
 								<Form.Item label="还款金额" prop="repaymentMoney">
 									<Input type="number" value={ form.repaymentMoney } onChange={ this.onChange.bind(this, 'repaymentMoney') } />
 								</Form.Item>
 							}
-							{/* { activeName === '1' &&
-								<Form.Item label="减免金额" prop="reductionMoney">
-									<Input type="number" value={ form.reductionMoney } onChange={ this.onChange.bind(this, 'reductionMoney') } />
-								</Form.Item>
-							} */}
 							{
 								activeName === '2' &&
-								<Form.Item label="延期天数掉后台接口" prop="delayNumber">
-									{/* <Input type="number" value={ form.delayNumber } onChange={ this.onChange.bind(this, 'delayNumber') } /> */}
-									<SelectPicker
-										value={ form.repaymentType }
-										onChange={ this.onChange.bind(this, 'repaymentType') }
-										options={ REPAYMENT_TYPE }
-										placeholder={ '延期天数调用接口' }
-									/>
-								</Form.Item>
-							}
-							{ activeName === '2' &&
-								<Form.Item label="延期金额（直接显示，延期天数中的百分比*借款金额=延期金额）" prop="reMoney">
-									<Input type="number" value={ form.reMoney } onChange={ this.onChange.bind(this, 'reMoney') } />
+								<Form.Item label="延期天数" prop="dayValue">
+									<SelectDay value={ form.dayValue } options={ dayList } onChange={ this.onChange.bind(this, 'dayValue') }/>
 								</Form.Item>
 							}
 							{
-								(activeName === '1' || activeName === '2') &&
-								<Form.Item label="还款单号" prop="payNumber">
-									<Input type="number" value={ form.payNumber } onChange={ this.onChange.bind(this, 'payNumber') } />
+								(activeName === '3') &&
+								<Form.Item label="本金" prop="principalReductionMoney">
+									<Input type="number" value={ form.principalReductionMoney } onChange={ this.onChange.bind(this, 'principalReductionMoney') } />
 								</Form.Item>
 							}
 							{
-								(activeName === '3' || activeName === '4') &&
-								<Form.Item label="本金减免" prop="payNumber">
-									<Input type="number" value={ form.payNumber } onChange={ this.onChange.bind(this, 'payNumber') } />
+								(activeName === '3') &&
+								<Form.Item label="利息" prop="rateReductionMoney">
+									<Input type="number" value={ form.rateReductionMoney } onChange={ this.onChange.bind(this, 'rateReductionMoney') } />
 								</Form.Item>
 							}
 							{
-								(activeName === '3' || activeName === '4') &&
-								<Form.Item label="利息" prop="payNumber">
-									<Input type="number" value={ form.payNumber } onChange={ this.onChange.bind(this, 'payNumber') } />
+								(activeName === '3') &&
+								<Form.Item label="逾期" prop="overdueReductionMoney">
+									<Input type="number" value={ form.overdueReductionMoney } onChange={ this.onChange.bind(this, 'overdueReductionMoney') } />
 								</Form.Item>
 							}
 							{
-								(activeName === '3' || activeName === '4') &&
-								<Form.Item label="逾期" prop="payNumber">
-									<Input type="number" value={ form.payNumber } onChange={ this.onChange.bind(this, 'payNumber') } />
+								(activeName === '3') &&
+								<Form.Item label="服务费" prop="serviceReductionMoney">
+									<Input type="number" value={ form.serviceReductionMoney } onChange={ this.onChange.bind(this, 'serviceReductionMoney') } />
 								</Form.Item>
 							}
-							{
-								(activeName === '3' || activeName === '4') &&
-								<Form.Item label="服务费" prop="payNumber">
-									<Input type="number" value={ form.payNumber } onChange={ this.onChange.bind(this, 'payNumber') } />
-								</Form.Item>
-							}
+							<Form.Item label="单号" prop="payNumber">
+								<Input type="number" value={ form.payNumber } onChange={ this.onChange.bind(this, 'payNumber') } />
+							</Form.Item>
 						</Form>
 					</Dialog.Body>
 					<Dialog.Footer className="dialog-footer">
@@ -423,12 +427,12 @@ class WaitHuan extends Component {
 }
 
 const mapStateToProps = state => {
-	const { list, btnLoading } = state
-	return { list, btnLoading }
+	const { list, btnLoading, dayList } = state
+	return { list, btnLoading, dayList }
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, selectPendingRepay, updateStateComplete, updateStateDelay }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, selectPendingRepay, updateStateComplete, updateStateDelay,findAllDelayRate, updateStateReduction }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(WaitHuan)

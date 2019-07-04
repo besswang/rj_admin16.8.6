@@ -1,4 +1,5 @@
 import api from '@api/index'
+import * as type from '@redux/actionTypes'
 import { requestPosts, receivePosts, failurePosts, shouldFetchPosts, btnRequestPosts, btnReceivePosts, btnFailurePosts } from '@redux/actions'
 import { MessageBox, Message } from 'element-react'
 // 待放款
@@ -81,7 +82,7 @@ export const selectPendingRepay = () => {
     console.log(data)
   }
 }
-// 待还款-全款
+// 待还款-还款
 export const updateStateComplete = obj => {
   return async dispatch => {
     dispatch(btnRequestPosts())
@@ -107,7 +108,19 @@ export const updateStateDelay = obj => {
     }
   }
 }
-
+// 待还款-减免
+export const updateStateReduction = obj => {
+  return async dispatch => {
+    dispatch(btnRequestPosts())
+    const data = await api.updateStateReductionApi(obj)
+    if (data.success) {
+      dispatch(selectPendingRepay())
+      dispatch(btnReceivePosts(data.msg))
+    } else {
+      dispatch(btnFailurePosts(data.msg))
+    }
+  }
+}
 // 已完成
 export const selectOrderCompleted = () => {
   return async (dispatch, getState) => {
@@ -177,6 +190,23 @@ export const distributionsCuiShou = obj => {
       dispatch(selectTheDayLoan())
     } else {
       dispatch(btnFailurePosts(data.msg))
+    }
+  }
+}
+
+// 待还款-还款-延期-延期天数 findAllDelayRateApi
+// select-延期天数
+const saveDayList = data => ({
+  type: type.SAVE_DAY_LIST,
+  data
+})
+export const findAllDelayRate = () => {
+  return async dispatch => {
+    const data = await api.findAllDelayRateApi()
+    if (data.success) {
+      dispatch(saveDayList(data.data))
+    } else {
+      Message.error(data.msg)
     }
   }
 }

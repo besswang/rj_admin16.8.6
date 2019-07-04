@@ -119,5 +119,8 @@ export default {
   findDelayRateApi: params => Fetch(jk.findDelayRate, {method: 'get', data:params}),
   bindingRateApi: params => Fetch(jk.bindingRate, {method: 'post', body:params}),
   deleteDelayRateApi: params => Fetch(jk.deleteDelayRate, {method: 'delete', data: params}),
+  findRepaymentMoneyApi: params => Fetch(jk.findRepaymentMoney, {method: 'get', data:params}),
+  findAllDelayRateApi: () => Fetch(jk.findAllDelayRate, {method: 'post'}),
+  updateStateReductionApi: params => Fetch(jk.updateStateReduction, {method: 'put', body: params}),
 }
 

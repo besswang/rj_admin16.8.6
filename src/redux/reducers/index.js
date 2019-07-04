@@ -11,6 +11,7 @@ import { PAGE_SIZE, CURRENT_PAGE } from '@meta/state'
 import treeData from '@containers/system/role/reducer'
 import roleList from './roleList'
 import collList from './collList'
+import dayList from './dayList'
 import { Message } from 'element-react'
 import { Notification } from 'element-react'
 import lookInfo from './lookInfo'
@@ -223,7 +224,7 @@ const searchAll = (state = search, action) => {
     case type.SELECT_SEARCH_TEXT:
       return { ...state, typeName: action.text, pageNum:1 }
     case type.SIZE_CHANGE:
-      return { ...state, pageSize: action.size }
+      return { ...state, pageSize: action.size, pageNum:1 }
     case type.CURRENT_CHANGE:
       return { ...state, pageNum: action.pageNum }
     case type.CLEAR_SEARCH_ALL:
@@ -379,5 +380,5 @@ const payTypeId = (state = null, action) => {
   }
 }
 export default combineReducers({
-  user, typeId, typeName, searchAll, time, regTime, payTime, list, listInfo, idCardInfo, newClient, selectTime, router, btnLoading, realName, treeData, channelList, channelName, roleList, roleId, adminName, loanType, mobileData, collList, neiCuiId, isTheDay, payTypeId, lookInfo, tabObj
+  user, typeId, typeName, searchAll, time, regTime, payTime, list, listInfo, idCardInfo, newClient, selectTime, router, btnLoading, realName, treeData, channelList, channelName, roleList, roleId, adminName, loanType, mobileData, collList, dayList, neiCuiId, isTheDay, payTypeId, lookInfo, tabObj
 })

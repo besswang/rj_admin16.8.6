@@ -76,6 +76,12 @@ class Ditch extends Component {
           //   }
           // }
 				}, {
+				  label: '0分申请人数',
+				  prop: 'zeroCount'
+				}, {
+				  label: '0分申请率',
+				  prop: 'zeroRate'
+				}, {
 				  label: '操作',
           prop: 'operate',
           width:220,
@@ -117,8 +123,9 @@ class Ditch extends Component {
 		this.props.handleSearch()
 	}
 	sizeChange = e => {
-		this.props.sizeChange(e)
-		this.props.handleSearch()
+    this.props.sizeChange(e)
+    this.props.handleSearch()
+
 	}
 	onCurrentChange = e => {
 		this.props.currentChange(e)
