@@ -329,7 +329,7 @@ class WaitHuan extends Component {
 							<Tabs.Pane label="还款" name="1"></Tabs.Pane>
 							<Tabs.Pane label="延期" name="2"></Tabs.Pane>
 							{/* <Tabs.Pane label="部分还款" name="3"></Tabs.Pane> */}
-							<Tabs.Pane label="减免（应还-本金减免-利息-逾期-服务费=本金结算）" name="3"></Tabs.Pane>
+							<Tabs.Pane label="减免" name="3"></Tabs.Pane>
 						</Tabs>
 						{
 							(activeName === '1' || activeName === '2') &&
@@ -362,6 +362,7 @@ class WaitHuan extends Component {
 							<ul className="flex flex-direction_column margin-bottom15">
 								<li className="flex flex-direction_row justify-content_flex-justify ptb5">
 									<p>{'应还金额:'}{ realRepaymentMoney }</p>
+									{/* （应还-本金减免-利息-逾期-服务费=本金结算） */}
 									<p>{'本金结算:'}{ realRepaymentMoney-form.principalReductionMoney-form.rateReductionMoney-form.overdueReductionMoney-form.serviceReductionMoney }</p>
 								</li>
 							</ul>
