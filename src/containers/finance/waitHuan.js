@@ -358,12 +358,15 @@ class WaitHuan extends Component {
 							</ul>
 						}
 						{
-							(activeName === '3' || activeName === '4') &&
+							(activeName === '3') &&
 							<ul className="flex flex-direction_column margin-bottom15">
 								<li className="flex flex-direction_row justify-content_flex-justify ptb5">
 									<p>{'应还金额:'}{ realRepaymentMoney }</p>
+								</li>
+								<li className="flex flex-direction_row justify-content_flex-justify ptb5">
+									<p className="red">{'剩余应还:'}{ surplusMoney-form.repaymentMoney }</p>
 									{/* （应还-本金减免-利息-逾期-服务费=本金结算） */}
-									<p>{'本金结算:'}{ realRepaymentMoney-form.principalReductionMoney-form.rateReductionMoney-form.overdueReductionMoney-form.serviceReductionMoney }</p>
+									<p>{'本金结算:'}{ surplusMoney-form.principalReductionMoney-form.rateReductionMoney-form.overdueReductionMoney-form.serviceReductionMoney }</p>
 								</li>
 							</ul>
 						}
