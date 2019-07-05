@@ -249,7 +249,7 @@ class Search extends Component {
           </Form.Item>
         }
         {/* <Form.Item>
-          <Input type="number" placeholder="请输入分控分(最小)" />
+          <Input type="number" placeholder="请输入分控分(最小)数字123" />
         </Form.Item>
         <Form.Item>{'~'}</Form.Item>
         <Form.Item>
