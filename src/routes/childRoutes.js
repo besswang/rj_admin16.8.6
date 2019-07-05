@@ -62,6 +62,8 @@ import Versions from '@containers/system/versions'
 // 推广管理
 import ChannelManage from '@containers/generalize/channelManage/index'
 import Exhibition from '@containers/generalize/channelManage/exhibition'
+import ChannelLimit from '@containers/generalize/channelManage/channellimit'
+import Add from '@containers/generalize/channelManage/add'
 import Statistics from '@containers/generalize/statistics'
 import ChannelMember from '@containers/generalize/channelMember'
 import Login from '@containers/user/login'
@@ -380,10 +382,34 @@ export const CHILD_ROUTES = [
     state: 0,
     state1: '1',
     superState: 0,
-    name: '展期模式',
+    name: '展期',
     path: '/generalize/exhibition',
     exact: true,
     component: Exhibition,
+    hideInMenu: true,
+    childSingle: true
+  }, {
+    id: 103,
+    pid: 0,
+    state: 0,
+    state1: '1',
+    superState: 0,
+    name: '额度',
+    path: '/generalize/channellimit',
+    exact: true,
+    component: ChannelLimit,
+    hideInMenu: true,
+    childSingle: true
+  }, {
+    id: 104,
+    pid: 0,
+    state: 0,
+    state1: '1',
+    superState: 0,
+    name: '添加',
+    path: '/generalize/add',
+    exact: true,
+    component: Add,
     hideInMenu: true,
     childSingle: true
   }

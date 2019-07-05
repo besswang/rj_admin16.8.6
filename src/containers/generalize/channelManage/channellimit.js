@@ -146,7 +146,7 @@ class Apply extends Component {
 					<Breadcrumb.Item>
 						<Link to="/generalize/channelmanage">{'渠道管理'}</Link>
 					</Breadcrumb.Item>
-					<Breadcrumb.Item>{'展期'}</Breadcrumb.Item>
+					<Breadcrumb.Item>{'额度'}</Breadcrumb.Item>
 				</Breadcrumb>
 				<Button className="margin-bottom15" type="primary" onClick={ this.openDialog.bind(this,'add') }>{'添加'}</Button>
 				<Loading loading={ list.loading }>

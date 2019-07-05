@@ -240,7 +240,6 @@ class Search extends Component {
           </Form.Item>
         }
         {
-
           (showTime || selectTime !==0) &&
           <Form.Item>
             <Time
@@ -249,6 +248,13 @@ class Search extends Component {
             />
           </Form.Item>
         }
+        <Form.Item>
+          <Input type="number" placeholder="请输入分控分(最小)" />
+        </Form.Item>
+        <Form.Item>{'~'}</Form.Item>
+        <Form.Item>
+          <Input type="number" placeholder="请输入分控分(最大)" />
+        </Form.Item>
         {
           showBeginTime &&
           <Form.Item>

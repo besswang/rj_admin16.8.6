@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Breadcrumb, Tabs, Button, Table, Loading } from 'element-react'
+import { Breadcrumb, Tabs, Button, Table, Loading, Dialog } from 'element-react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -34,6 +34,8 @@ class Detail extends Component{
   constructor(props) {
       super(props)
       this.state = {
+        dialogVisible: false,
+        dialogImageUrl:'',
         name: '',
         title:'',
         linkUrl:'',
@@ -117,9 +119,15 @@ class Detail extends Component{
     a.click()
     console.log(url)
   }
+  openDialog = url => {
+		this.setState({
+			dialogVisible: true,
+			dialogImageUrl: url
+		})
+	}
 	render(){
     const { idCardInfo, list } = this.props
-    const { name, title, linkUrl, listInfo, activeName, userId } = this.state
+    const { name, title, linkUrl, listInfo, activeName, userId, dialogVisible, dialogImageUrl } = this.state
 		return(
 			<div>
 				<Breadcrumb separator="/" className="margin-bottom15">
@@ -227,15 +235,15 @@ class Detail extends Component{
               </li>
               <li className="flex flex-direction_row info-li">
                 <div className="photo">
-                  <img src = { `data:image/jpeg;base64,${ idCardInfo.idcardFrontPhoto }` } alt="" />
+                  <img src = { `data:image/jpeg;base64,${ idCardInfo.idcardFrontPhoto }` } alt="" onClick={ this.openDialog.bind(this,`data:image/jpeg;base64,${ idCardInfo.idcardFrontPhoto }`) } />
                   <p>{'身份证正面'}</p>
                 </div>
                 <div className="photo">
-                  <img src={ `data:image/jpeg;base64,${ idCardInfo.idcardBackPhoto }` } alt="" />
+                  <img src={ `data:image/jpeg;base64,${ idCardInfo.idcardBackPhoto }` } alt="" onClick={ this.openDialog.bind(this,`data:image/jpeg;base64,${ idCardInfo.idcardBackPhoto }`) } />
                   <p>{'身份证反面'}</p>
                 </div>
                 <div className="photo">
-                  <img src={ `data:image/jpeg;base64,${ idCardInfo.livingPhoto }` } alt="" />
+                  <img src={ `data:image/jpeg;base64,${ idCardInfo.livingPhoto }` } alt="" onClick={ this.openDialog.bind(this,`data:image/jpeg;base64,${ idCardInfo.livingPhoto }`) } />
                   <p>{'人脸照片'}</p>
                 </div>
               </li>
@@ -321,6 +329,12 @@ class Detail extends Component{
             <Detailtable columns={ CALL_LOG } num={ 2 } userId={ userId }/>
           </Tabs.Pane>
         </Tabs>
+        <Dialog
+				visible={ dialogVisible }
+				onCancel={ () => this.setState({ dialogVisible: false }) }
+        >
+					<img width="100%" src={ dialogImageUrl } alt="" />
+        </Dialog>
 			</div>
 		)
 	}

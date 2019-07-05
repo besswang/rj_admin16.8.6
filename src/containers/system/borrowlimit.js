@@ -6,7 +6,8 @@ import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
 import { pageQuota, deleteQuota, addQuota, updateQuota } from './actions'
 import MyPagination from '@components/MyPagination'
-import validate from '../../global/validate'
+import validate from '@global/validate'
+import Search from '@components/Search'
 // import filter from '@global/filter'
 class BlackUser extends Component {
 	static propTypes = {
@@ -52,8 +53,13 @@ class BlackUser extends Component {
 					type: 'index',
 					fixed: 'left'
 				}, {
+					label: '渠道名称',
+					prop: 'channelName',
+					fixed: 'left'
+				}, {
 					label: '额度',
-					prop: 'money'
+					prop: 'money',
+					fixed: 'left'
 				}, {
 					label: '是否是默认值',
 					prop: 'defaultValue',
@@ -200,13 +206,22 @@ class BlackUser extends Component {
 			form: Object.assign({}, this.state.form, { [key]: value })
 		})
 	}
+	handleSearch = e => {
+		e.preventDefault()
+		this.props.pageQuota()
+	}
 	render() {
 		const { list, btnLoading } = this.props
 		const { form, rules, dialogTitle, dialogVisible } = this.state
 		return (
 			<div>
         {/* <Button className="margin-bottom15" type="primary" onClick={ e => this.openDialog(e) }>{'添加'}</Button> */}
-				<Button className="margin-bottom15" type="primary" onClick={ this.openDialog.bind(this,'add') }>{'添加'}</Button>
+				<Search showChannel>
+					<div>
+						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+						<Button className="margin-bottom15" type="primary" onClick={ this.openDialog.bind(this,'add') }>{'添加'}</Button>
+					</div>
+				</Search>
 				<Loading loading={ list.loading }>
 					<Table
 						style={ { width: '100%' } }

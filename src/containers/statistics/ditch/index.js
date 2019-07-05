@@ -80,7 +80,14 @@ class Ditch extends Component {
 				  prop: 'zeroCount'
 				}, {
 				  label: '0分申请率',
-				  prop: 'zeroRate'
+          prop: 'zeroRate',
+          render: row => {
+            console.log()
+            const a = parseFloat(row.zeroRate)
+            const b = parseFloat('15%')
+            const c = a <= b ? 'green' : 'red'
+            return <span className={ c }>{ row.zeroRate }</span>
+          }
 				}, {
 				  label: '操作',
           prop: 'operate',

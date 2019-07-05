@@ -24,7 +24,7 @@ const tabObj = (state = initTab, action) => {
 
       // console.log(action.arr)
       // action.arr.splice(action.index, 1)
-      // console.log(action.arr)
+      console.log(action.arr)
 
        return {...state,tabs:action.arr}
     }

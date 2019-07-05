@@ -1,11 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Select } from 'element-react'
-const SelectPicker = ({ value, stringValue, onChange, options, optionsArr, placeholder }) => (
+const SelectPicker = ({ value, stringValue, onChange, options, optionsArr, placeholder, clearable }) => (
   <Select
     onChange={ e => onChange(e) }
     value={ value ? value : stringValue }
-    clearable placeholder={ placeholder ? placeholder : '搜索类型' }
+    clearable={ clearable ? false : true }
+    placeholder={ placeholder ? placeholder : '搜索类型' }
+    style={ {width:'100%'} }
   >
     {
       options &&
@@ -35,7 +37,8 @@ SelectPicker.propTypes = {
   value: PropTypes.number,
   stringValue: PropTypes.string,
   placeholder: PropTypes.string,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  clearable: PropTypes.number
 }
 
 export default SelectPicker

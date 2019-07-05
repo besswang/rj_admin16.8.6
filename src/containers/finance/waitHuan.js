@@ -223,7 +223,6 @@ class WaitHuan extends Component {
 		})
 		if (key === 'dayValue'){
 			const day = this.props.dayList.filter(item => item.id === value)
-			console.log(day)
 			this.setState({
 				delayRate: day[0].delayRate,
 				reMoney: day[0].delayRate * this.state.applyMoney,
@@ -293,9 +292,6 @@ class WaitHuan extends Component {
 		}else{
 			Message.error(res.msg)
 		}
-	}
-	changeDay = e => {
-		console.log(e)
 	}
 	render() {
 		const { list, btnLoading, dayList } = this.props
@@ -374,6 +370,7 @@ class WaitHuan extends Component {
 							<Form.Item label="还款方式" prop="repaymentType">
 								<SelectPicker
 									value={ form.repaymentType }
+									clearable={ 1 }
 									onChange={ this.onChange.bind(this, 'repaymentType') }
 									options={ REPAYMENT_TYPE }
 									placeholder={ '选择还款方式' }

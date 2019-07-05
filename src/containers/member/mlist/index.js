@@ -34,6 +34,11 @@ class Mlist extends Component{
 						type: 'index',
 						fixed: 'left'
 				}, {
+					label: '渠道名称',
+					prop: 'channelName',
+					width:100,
+					fixed: 'left'
+				}, {
 					label: '真实姓名',
 					prop: 'realName',
 					width:100,
@@ -46,16 +51,13 @@ class Mlist extends Component{
 					label: '身份证号',
 					prop: 'idNumber',
 					width:112
-				},
-				{
-					label: '渠道名称',
-					prop: 'channelName'
-				},
-				{
+				},{
 					label: '授信额度',
 					prop: 'loanQuota'
-				},
-				{
+				}, {
+					label: '风控分数',
+					prop: 'riskNum'
+				}, {
 					label: '认证参数',
 					prop: 'authentype',
 					render: row => {

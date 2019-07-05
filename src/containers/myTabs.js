@@ -24,11 +24,11 @@ class MyTabs extends React.Component{
 	}
 	handleTabRemove = (tab,index,e) => {
 		// e.stopPropagation()
- 		e.preventDefault()
+ 		// e.preventDefault()
 		console.log(this.props.tabObj.tabs)
 		this.props.tabObj.tabs.splice(index, 1)
 		console.log(this.props.tabObj.tabs)
-		// this.props.tabRemove(this.props.tabObj.tabs)
+		this.props.tabRemove(this.props.tabObj.tabs)
 
 		// console.log(index)
 		// this.props.tabRemove(this.props.tabObj.tabs,index)
@@ -51,8 +51,8 @@ class MyTabs extends React.Component{
 												<Link to={ item.url }>{item.name}</Link>
 												{
 													item.name !=='欢迎页' &&
-													<Link to="/welcome">
-														<span className="el-icon-close" onClick={ (e) => this.handleTabRemove(item, index, e) } />
+													<Link to="/welcome" onClick={ (e) => this.handleTabRemove(item, index, e) } >
+														<span className="el-icon-close" />
 													</Link>
 												}
 											</li>

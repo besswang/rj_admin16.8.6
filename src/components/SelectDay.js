@@ -5,7 +5,7 @@ const SelectDay = ({ value, onChange, options, placeholder }) => (
   <Select
     onChange={ e => onChange(e) }
     value={ value }
-    clearable placeholder={ placeholder ? placeholder : '选择天数' }
+    placeholder={ placeholder ? placeholder : '选择天数' }
     style={ {width:'100%'} }
   >
     {

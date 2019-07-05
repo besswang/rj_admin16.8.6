@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Header from '@components/header'
 import Sidebar from '@components/sidebar'
-import MyTabs from './myTabs'
+// import MyTabs from './myTabs'
 import '@styles/home.less'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
@@ -31,7 +31,7 @@ class Home extends Component {
 						<Sidebar />
 					</li>
 					<li className="main">
-						<MyTabs />
+						{/* <MyTabs /> */}
 						<div className="content" key={ time }>
 							{ children }
 						</div>

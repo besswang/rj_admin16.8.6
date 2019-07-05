@@ -37,11 +37,22 @@ class Apply extends Component {
 				type: '', // 类型,
 				machineScore: null, // 机审分数,
 				userScore: null, // 人工分数
+				firstMoney: null, // 首借额度
 				remake: '', // 备注,
 			},
 			rules: {
 				channelName: [{required: true,message: '请输入渠道名称',trigger: 'blur'}],
 				daiName: [{required: true,message: '请输入超贷名称',trigger: 'blur'}],
+				firstMoney:[{
+					required: true,
+					validator: (rule, value, callback) => {
+						if (value === '' || value === null) {
+							callback(new Error('请输入首借额度'))
+						} else {
+							callback()
+						}
+					}
+				}],
 				price: [{
 						required:true,
 						validator: (rule, value, callback) => {
@@ -105,6 +116,9 @@ class Apply extends Component {
 					label: '人工审核分数',
 					prop: 'userScore'
 				}, {
+					label: '首借额度',
+					prop: 'firstMoney'
+				}, {
 					label: '备注',
 					prop: 'remake'
 				}, {
@@ -115,17 +129,19 @@ class Apply extends Component {
 					}
 				}, {
 						label: '操作',
-						width:200,
+						width:210,
 						fixed: 'right',
 						render: row => {
 							return (
 								<div>
 									<Button type="primary" size="mini" onClick={ this.openDialog.bind(this, row) }>{'编辑'}</Button>
 									<DisableBtn value={ row.state } result={ 1 } text={ ['启用','禁用'] } onClick={ this.props.prohibitChannel.bind(this,{channelName:row.channelName,id:row.id,state:row.state}) }/>
-									<Link to={ {pathname:'/generalize/exhibition',state:{date:row.channelName}} }>
-										<Button type="success" size="mini" onClick={ this.ditchType.bind(this, row.channelName) }>{'展期模式'}</Button>
+									<Link to={ {pathname:'/generalize/exhibition',state:{date:row.channelName}} } className="margin_right10">
+										<Button type="success" size="mini" onClick={ this.ditchType.bind(this, row.channelName) }>{'展期'}</Button>
 									</Link>
-
+									<Link to={ {pathname:'/generalize/channellimit',state:{date:row.channelName}} }>
+										<Button type="warning" size="mini" onClick={ this.ditchType.bind(this, row.channelName) }>{'额度'}</Button>
+									</Link>
 								</div>
 							)
 						}
@@ -217,8 +233,11 @@ class Apply extends Component {
 			<div>
 				<Search showChannel>
 					<div>
-						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
-						<Button type="primary" onClick={ this.openDialog.bind(this,'add') }>{'添加'}</Button>
+						<Button onClick={ this.handleSearch } type="primary" className="margin_right10">{'搜索'}</Button>
+						{/* <Button type="primary" onClick={ this.openDialog.bind(this,'add') }>{'添加'}</Button> */}
+						<Link to={ {pathname:'/generalize/add'} }>
+							<Button type="primary">{'添加'}</Button>
+						</Link>
 					</div>
 				</Search>
 				<Loading loading={ list.loading }>
@@ -264,6 +283,9 @@ class Apply extends Component {
 							</Form.Item>
 							<Form.Item label="人工审核分数" prop="userScore">
 								<Input type="number" value={ form.userScore } onChange={ this.onChange.bind(this, 'userScore') } />
+							</Form.Item>
+							<Form.Item label="首借额度" prop="firstMoney">
+								<Input type="number" value={ form.firstMoney } onChange={ this.onChange.bind(this, 'firstMoney') } />
 							</Form.Item>
 							<Form.Item label="备注" prop="remake">
 								<Input value={ form.remake } onChange={ this.onChange.bind(this, 'remake') } />

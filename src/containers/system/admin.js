@@ -253,7 +253,7 @@ class BlackUser extends Component {
 							} */}
 							{
 								<Form.Item label="角色" prop="roleId">
-									<SelectPicker value={ form.roleId } options={ roleList } onChange={ this.onChange.bind(this, 'roleId') } />
+									<SelectPicker value={ form.roleId } clearable={ 1 } options={ roleList } onChange={ this.onChange.bind(this, 'roleId') } />
 								</Form.Item>
 							}
 							{

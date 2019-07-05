@@ -17,13 +17,14 @@ export const selectChannel = () => {
 }
 
 // 渠道管理-添加
-export const insertChannel = obj => {
+export const insertChannel = (obj,to) => {
   return async dispatch => {
     dispatch(btnRequestPosts())
     const data = await api.insertChannelApi(obj)
     if (data.success) {
       dispatch(selectChannel())
       dispatch(btnReceivePosts(data.msg))
+      to.push('/generalize/channelmanage')
     } else {
       dispatch(btnFailurePosts(data.msg))
     }

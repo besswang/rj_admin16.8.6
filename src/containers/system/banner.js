@@ -133,7 +133,6 @@ class Banner extends Component {
         />
 				<Dialog
 				visible={ dialogVisible }
-				size="tiny"
 				onCancel={ () => this.setState({ dialogVisible: false }) }
 				>
 					<img width="100%" src={ dialogImageUrl } alt="" />
