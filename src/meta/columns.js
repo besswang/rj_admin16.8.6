@@ -172,6 +172,12 @@ export const OVERDUE = [
     label: '应还单数',
     prop: 'shouldRepaidNum'
   }, {
+    label: '首逾率',
+    prop: 'oneOverdueRate'
+  }, {
+    label: '再逾率',
+    prop: 'towOverudeRate'
+  }, {
     label: '逾期总单数',
     prop: 'allOverdueNum'
   }, {

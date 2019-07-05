@@ -56,8 +56,8 @@ import Backup from '@containers/system/backup'
 import Borrowlimit from '@containers/system/borrowlimit'
 import Help from '@containers/system/help'
 import Banner from '@containers/system/banner'
-// import Quota from '@containers/system/quota' // 提额管理
-import Quota from '@containers/system/rule' // 提额规则设置
+import Quota from '@containers/system/quota' // 提额管理
+import Rule from '@containers/system/rule' // 提额规则设置
 import Versions from '@containers/system/versions'
 // 推广管理
 import ChannelManage from '@containers/generalize/channelManage/index'
@@ -114,7 +114,7 @@ export const CHILD_ROUTES = [
     ]
   }, {
     id: 2,
-    name: '报表统计',
+    name: '统计管理',
     path: '/statistics',
     children: [
       {
@@ -221,7 +221,7 @@ export const CHILD_ROUTES = [
     ]
   }, {
     id: 5,
-    name: '财务管理',
+    name: '还款计划',
     path: '/finance',
     children: [
       {
@@ -303,11 +303,6 @@ export const CHILD_ROUTES = [
         exact: true,
         component: Admin
       }, {
-        name: '角色管理',
-        path: '/system/role',
-        exact: true,
-        component: Role
-      }, {
         name: '区域管理',
         path: '/system/area',
         exact: true,
@@ -323,7 +318,7 @@ export const CHILD_ROUTES = [
         exact: true,
         component: Borrowlimit
       }, {
-        name: '帮助中心',
+        name: '系统配置', //帮助中心
         path: '/system/help',
         exact: true,
         component: Help
@@ -342,7 +337,12 @@ export const CHILD_ROUTES = [
         path: '/system/versions',
         exact: true,
         component: Versions
-      }
+      }, {
+        name: '提额规则设置',
+        path: '/system/rule',
+        exact: true,
+        component: Rule
+      },
     ]
   }, {
     id: 9,
@@ -363,6 +363,16 @@ export const CHILD_ROUTES = [
       path: '/generalize/channelMember',
       exact: true,
       component: ChannelMember
+    }]
+  },{
+    id: 10,
+    name: '管理员管理',
+    path: '/manager',
+    children: [{
+      name: '角色管理',
+      path: '/manager/role',
+      exact: true,
+      component: Role
     }]
   }, {
     id: 100,

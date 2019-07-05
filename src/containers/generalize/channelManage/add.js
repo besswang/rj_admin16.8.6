@@ -132,7 +132,7 @@ class Apply extends Component {
 				</Breadcrumb>
 
 				<Form labelWidth="120" ref={ e => {this.form=e} } model={ form } rules={ rules }>
-					<h1 className="title">{ '渠道添加' }</h1>
+					<h1 className="channeltitle">{ '渠道添加' }</h1>
 					<Layout.Row>
 						<Layout.Col span="12" xs="24" sm="24" md="12" lg="8">
 							<Form.Item label="渠道名称" prop="channelName">
@@ -168,7 +168,7 @@ class Apply extends Component {
 							</Form.Item>
 						</Layout.Col>
 					</Layout.Row>
-					<h1 className="title">{ '额度添加' }</h1>
+					<h1 className="channeltitle">{ '额度添加' }</h1>
 					<Layout.Row>
 						<Layout.Col span="12" xs="24" sm="24" md="12" lg="8">
 							<Form.Item label="额度" prop="money">
