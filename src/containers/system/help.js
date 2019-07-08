@@ -150,6 +150,7 @@ class Help extends Component {
     this.props.pageGlobalconfig()
 	}
 	openDialog = r => {
+		this.editor.txt.html('')
 		this.setState({
 			dialogVisible: true,
 			id: r.id

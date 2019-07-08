@@ -106,6 +106,9 @@ export default {
   'addLiftingAmount': 'api/addLiftingAmount',
   'updateLiftingAmount': 'api/updateLiftingAmount',
   'updateMinAndCappingMoney': 'api/globalConfig/updateMinAndCappingMoney',
+  // 系统管理-系统充值
+  'addRecharge': 'api/addRecharge', // 充值
+  'pageRecharge': 'api/pageRecharge', // 列表
   // 轮播图管理
   'pageRotationChart': 'api/rotationChart/pageRotationChart', // 列表
   'deleteRotationChart': 'api/rotationChart/deleteRotationChart', // 删除

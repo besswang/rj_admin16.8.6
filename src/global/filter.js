@@ -160,8 +160,9 @@ export default {
         return '待认证'
       case state.CERTITICATTON:
         return '认证中'
-      case state.COMPLETED:
+      case state.COMPLETED:{
         return '认证完成'
+      }
       default:
         return '空值'
     }

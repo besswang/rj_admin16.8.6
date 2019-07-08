@@ -86,11 +86,17 @@ export const updateAdmin = (obj, t) => {
   }
 }
 // 借款额度管理列表
-export const pageQuota = () => {
+export const pageQuota = name => {
   return async (dispatch, getState) => {
     dispatch(requestPosts())
+    let trans = null
     const searchAll = shouldFetchPosts(getState())
-    const data = await api.pageQuotaApi(searchAll)
+    if(name){
+      trans = Object.assign({},searchAll,{channelName:name})
+    }else{
+      trans = searchAll
+    }
+    const data = await api.pageQuotaApi(trans)
     if (data.success) {
       dispatch(receivePosts(data.data))
     } else {
@@ -100,12 +106,16 @@ export const pageQuota = () => {
   }
 }
 // 借款额度管理-添加
-export const addQuota = obj => {
+export const addQuota = (obj,name) => {
   return async dispatch => {
     dispatch(btnRequestPosts())
     const data = await api.addQuotaApi(obj)
     if (data.success) {
-      dispatch(pageQuota())
+      if(name){
+        dispatch(pageQuota(name))
+      }else{
+        dispatch(pageQuota())
+      }
       dispatch(btnReceivePosts(data.msg))
     } else {
       dispatch(btnFailurePosts(data.msg))
@@ -113,12 +123,17 @@ export const addQuota = obj => {
   }
 }
 // 借款额度管理-编辑
-export const updateQuota = obj => {
+export const updateQuota = (obj,name) => {
   return async dispatch => {
     dispatch(btnRequestPosts())
-    const data = await api.updateQuotaApi(obj)
+    const trans = name ? Object.assign({},obj,{channelName:name}):obj
+    const data = await api.updateQuotaApi(trans)
     if (data.success) {
-      dispatch(pageQuota())
+      if(name){
+        dispatch(pageQuota(name))
+      }else{
+        dispatch(pageQuota())
+      }
       dispatch(btnReceivePosts(data.msg))
     } else {
       dispatch(btnFailurePosts(data.msg))
@@ -126,14 +141,18 @@ export const updateQuota = obj => {
   }
 }
 // 借款额度管理-删除
-export const deleteQuota = id => {
+export const deleteQuota = (id,name) => {
   return dispatch => {
     MessageBox.confirm('删除该额度, 是否继续?', '提示', {
       type: 'warning'
     }).then(async () => {
       const data = await api.deleteQuotaApi({id:id})
       if (data.success) {
-        dispatch(pageQuota())
+        if(name){
+          dispatch(pageQuota(name))
+        }else{
+          dispatch(pageQuota())
+        }
         Message.success(data.msg)
       } else {
         Message.warning(data.msg)
@@ -378,6 +397,20 @@ export const updateLiftingAmount = obj => {
   }
 }
 
+// 系统充值-列表
+export const pageRecharge = () => {
+  return async (dispatch, getState) => {
+    dispatch(requestPosts())
+    const searchAll = shouldFetchPosts(getState())
+    const data = await api.pageRechargeApi(searchAll)
+    if (data.success) {
+      dispatch(receivePosts(data.data))
+    } else {
+      dispatch(failurePosts(data))
+    }
+    console.log(data)
+  }
+}
 // 区域管理-启用/禁用
 // export const updateAreaState = obj => {
 //   return dispatch => {

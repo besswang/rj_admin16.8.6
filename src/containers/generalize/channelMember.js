@@ -30,7 +30,13 @@ class Apply extends Component {
 					label: '姓名',
 					prop: 'realName',
 					render: row => {
-						return row.realName === null ? '未命名' : row.realName
+						// return row.realName === null ? '未命名' : row.realName
+						if (row.realName === null){
+							return '未命名'
+						}else{
+							const reg = /(?<=.)./g
+							return row.realName.replace(reg, '*')
+						}
 					}
 				}, {
 					label: '手机号码',

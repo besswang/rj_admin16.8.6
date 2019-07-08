@@ -11,9 +11,6 @@ import { BANK, ADDRESS, CALL_LOG } from '@meta/columns'
 import '@styles/detail.less'
 import timeDate from '@global/timeDate'
 import filter from '@global/filter'
-window.onbeforeunload = function(){
-
-}
 class Detail extends Component{
   static propTypes = {
     history: PropTypes.object.isRequired,

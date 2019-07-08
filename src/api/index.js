@@ -122,5 +122,7 @@ export default {
   findRepaymentMoneyApi: params => Fetch(jk.findRepaymentMoney, {method: 'get', data:params}),
   findAllDelayRateApi: () => Fetch(jk.findAllDelayRate, {method: 'post'}),
   updateStateReductionApi: params => Fetch(jk.updateStateReduction, {method: 'put', body: params}),
+  addRechargeApi: params => Fetch(jk.addRecharge, {method: 'post', body:params}),
+  pageRechargeApi: params => Fetch(jk.pageRecharge, {method: 'post', body:params}),
 }
 

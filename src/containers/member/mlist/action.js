@@ -2,7 +2,7 @@ import api from '@api/index'
 import { MessageBox, Message } from 'element-react'
 import { requestPosts, receivePosts, failurePosts, shouldFetchPosts } from '@redux/actions'
 // 会员管理-会员列表
-export const handelSearch = () => {
+export const handelSearch = form => {
   return async (dispatch, getState) => {
     const searchAll = shouldFetchPosts(getState())
     if (searchAll.typeId && !searchAll.typeName) {
@@ -10,7 +10,8 @@ export const handelSearch = () => {
       return false
     }
     dispatch(requestPosts())
-    const data = await api.selectUserBySeachApi(searchAll)
+    const trans = Object.assign({}, searchAll,form)
+    const data = await api.selectUserBySeachApi(trans)
     if(data.success){
       dispatch(receivePosts(data.data))
     }else{

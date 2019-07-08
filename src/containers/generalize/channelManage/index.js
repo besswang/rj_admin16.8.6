@@ -23,7 +23,7 @@ class Apply extends Component {
 		btnLoading: PropTypes.bool.isRequired,
 		insertChannel: PropTypes.func.isRequired,
 		updateChannel: PropTypes.func.isRequired,
-		prohibitChannel: PropTypes.func.isRequired,
+		prohibitChannel: PropTypes.func.isRequired
 	}
 	constructor(props) {
 		super(props)

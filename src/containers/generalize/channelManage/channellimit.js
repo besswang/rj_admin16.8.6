@@ -1,4 +1,4 @@
-// 推广管理-渠道管理-展期模式
+// 推广管理-渠道管理-额度（不用了）
 import React, { Component } from 'react'
 import { Button, Table, Loading, Dialog, Form, Input, Radio, Breadcrumb } from 'element-react'
 import PropTypes from 'prop-types'
@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux'
 import { Link } from 'react-router-dom'
 import { sizeChange, currentChange, initSearch, menuActive } from '@redux/actions'
 import { findDelayRate, bindingRate, deleteDelayRate } from './action'
+import { pageQuota } from '../../system/actions'
 class Apply extends Component {
 	static propTypes = {
 		location: PropTypes.object.isRequired,
@@ -18,7 +19,8 @@ class Apply extends Component {
 		menuActive: PropTypes.func.isRequired,
 		btnLoading: PropTypes.bool.isRequired,
 		bindingRate: PropTypes.func.isRequired,
-		deleteDelayRate: PropTypes.func.isRequired
+		deleteDelayRate: PropTypes.func.isRequired,
+		pageQuota: PropTypes.func.isRequired,
 	}
 	constructor(props) {
 		super(props)
@@ -95,7 +97,8 @@ class Apply extends Component {
 			const n = window.sessionStorage.getItem('channelName')
 			name = n
 		}
-		this.props.findDelayRate()
+
+		this.props.pageQuota(name)
 		this.setState({
 			channelName: name,
 		})
@@ -202,7 +205,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, menuActive, findDelayRate, bindingRate, deleteDelayRate }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, menuActive, findDelayRate, bindingRate, deleteDelayRate, pageQuota }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Apply)

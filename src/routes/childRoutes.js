@@ -59,10 +59,11 @@ import Banner from '@containers/system/banner'
 import Quota from '@containers/system/quota' // 提额管理
 import Rule from '@containers/system/rule' // 提额规则设置
 import Versions from '@containers/system/versions'
+import Recharge from '@containers/system/recharge' // 系统充值
 // 推广管理
 import ChannelManage from '@containers/generalize/channelManage/index'
 import Exhibition from '@containers/generalize/channelManage/exhibition'
-import ChannelLimit from '@containers/generalize/channelManage/channellimit'
+// import ChannelLimit from '@containers/generalize/channelManage/channellimit'
 import Add from '@containers/generalize/channelManage/add'
 import Statistics from '@containers/generalize/statistics'
 import ChannelMember from '@containers/generalize/channelMember'
@@ -342,6 +343,11 @@ export const CHILD_ROUTES = [
         path: '/system/rule',
         exact: true,
         component: Rule
+      }, {
+        name: '系统充值',
+        path: '/system/recharge',
+        exact: true,
+        component: Recharge
       },
     ]
   }, {
@@ -407,7 +413,8 @@ export const CHILD_ROUTES = [
     name: '额度',
     path: '/generalize/channellimit',
     exact: true,
-    component: ChannelLimit,
+    // component: ChannelLimit,
+    component: Borrowlimit,
     hideInMenu: true,
     childSingle: true
   }, {

@@ -77,6 +77,7 @@ class Search extends Component {
   render() {
     const { typeId, typeName, realName, time, regTime, newClient, selectTime, showSelectClient, showSelectTime, showSelectTime2, showTime, showSelect1, showSelect2, showSelect3, showLoanType, showLoanMode, showBeginTime,showAllotType, showRealName, showChannel, channelList,channelName, roleList, showRole, roleId, showAdminName, adminName, loanType,showColl, neiCuiId, collList, isTheDay, payTypeId } = this.props
     return (
+      <div>
       <Form inline>
         {
           showAdminName &&
@@ -248,13 +249,6 @@ class Search extends Component {
             />
           </Form.Item>
         }
-        {/* <Form.Item>
-          <Input type="number" placeholder="请输入分控分(最小)数字123" />
-        </Form.Item>
-        <Form.Item>{'~'}</Form.Item>
-        <Form.Item>
-          <Input type="number" placeholder="请输入分控分(最大)" />
-        </Form.Item> */}
         {
           showBeginTime &&
           <Form.Item>
@@ -265,9 +259,12 @@ class Search extends Component {
           </Form.Item>
         }
         <Form.Item>
-          { this.props.children }
+          {
+            this.props.children
+          }
         </Form.Item>
       </Form>
+      </div>
     )
   }
 }

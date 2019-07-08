@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Table, Loading } from 'element-react'
+import { Button, Table, Loading, Form, Input, Message } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -11,6 +11,7 @@ import Search from '@components/Search'
 import DetailBtn from '@components/DetailBtn'
 import timeDate from '@global/timeDate'
 import { dmlist } from '@meta/details'
+import filter from '@global/filter'
 class Mlist extends Component{
 	static propTypes = {
 		location: PropTypes.object.isRequired,
@@ -30,6 +31,10 @@ class Mlist extends Component{
 	constructor(props) {
 		super(props)
 		this.state = {
+			form:{
+				minScore:'', // 最小分控分
+				maxScore:'' // 最大分控分
+			},
 			columns: [{
 						type: 'index',
 						fixed: 'left'
@@ -58,30 +63,61 @@ class Mlist extends Component{
 					label: '风控分数',
 					prop: 'riskNum'
 				}, {
-					label: '认证参数',
-					prop: 'authentype',
+					label:'身份证认证',
+					width:100,
+					prop: 'idcardType',
 					render: row => {
-						const text = []
-						if (row.authentype){
-							row.authentype.map(item => {
-								if (item === 'COMPLETED') {
-									text.push('red')
-								} else {
-									text.push('')
-								}
-								return text
-							})
-						}
-						return (
-							<div>
-								<span className={ text[0] }>{'身'}</span>{'、'}
-								<span className={ text[1] }>{'个'}</span>{'、'}
-								<span className={ text[2] }>{'手'}</span>{'、'}
-								<span className={ text[3] }>{'银'}</span>
-							</div>
-						)
+						return this.textType(row.idcardType)
 					}
 				}, {
+					label: '个人信息认证',
+					prop: 'idcardType',
+					width: 100,
+					render: row => {
+						return this.textType(row.idcardType)
+					}
+				}, {
+					label: '银行卡认证',
+					prop: 'bankType',
+					width: 100,
+					render: row => {
+						return this.textType(row.idcardType)
+					}
+				}, {
+					label: '运营商认证', // 手机认证
+					prop: 'mobileType',
+					width: 100,
+					render: row => {
+						return this.textType(row.idcardType)
+					}
+				}
+				// {
+				// 	label: '认证参数',
+				// 	prop: 'authentype',
+				// 	render: row => {
+				// 		// authentype: ["COMPLETED", "COMPLETED", "COMPLETED", "COMPLETED"]
+				// 		const text = []
+				// 		if (row.authentype){
+				// 			row.authentype.map(item => {
+				// 				if (item === 'COMPLETED') {
+				// 					text.push('red')
+				// 				} else {
+				// 					text.push('')
+				// 				}
+				// 				return text
+				// 			})
+				// 		}
+				// 		return (
+				// 			<div>
+				// 				<span className={ text[0] }>{'身'}</span>{'、'}
+				// 				<span className={ text[1] }>{'个'}</span>{'、'}
+				// 				<span className={ text[2] }>{'手'}</span>{'、'}
+				// 				<span className={ text[3] }>{'银'}</span>
+				// 			</div>
+				// 		)
+				// 	}
+				// }
+				, {
 					label: '借款次数',
 					prop: 'loanNum'
 				}, {
@@ -156,7 +192,27 @@ class Mlist extends Component{
 	}
 	handleSearch = e => {
 		e.preventDefault()
-		this.props.handelSearch()
+		const { form } = this.state
+		if (form.minScore !=='' || form.maxScore!==''){
+			if (form.minScore !== '' && form.maxScore ===''){
+				Message.warning('请输入最大分控')
+				return false
+			}
+			if (form.minScore === '' && form.maxScore !== '') {
+				Message.warning('请输入最小分控')
+				return false
+			}
+			if (form.minScore > form.maxScore) {
+				Message.warning('最小分控分不能大于最大分控分')
+				return false
+			}
+			this.props.handelSearch(this.state.form)
+		}else{
+			this.props.handelSearch()
+		}
+
+
+
 	}
 	sizeChange = e => {
 		this.props.sizeChange(e)
@@ -182,16 +238,42 @@ class Mlist extends Component{
 			this.props.removeUserBlack({phone: r.phone})
 		}
 	}
+	onChange(key, value) {
+		this.setState({
+			form: Object.assign({}, this.state.form, { [key]: value })
+		})
+	}
+	textType = x => {
+		const t = filter.personalType(x)
+		if (x === 'COMPLETED') {
+			return <span className="g-border">{t}</span>
+		} else {
+			return <span className="r-border">{t}</span>
+		}
+	}
 	render() {
 		const { list } = this.props
+		const { form } = this.state
 		return (
 			<div>
 				<Search showSelect1 showTime>
 					<div>
-						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
-						<Button onClick={ this.props.exportUser } type="primary">{'导出列表'}</Button>
+						<Form.Item>
+							<Input value={ form.minScore } onChange={ this.onChange.bind(this, 'minScore') } placeholder="请输入分控分(最小)" />
+						</Form.Item>
+						<Form.Item>{'~'}</Form.Item>
+						<Form.Item>
+							<Input value={ form.maxScore } onChange={ this.onChange.bind(this, 'maxScore') } placeholder="请输入分控分(最大)" />
+						</Form.Item>
+						<Form.Item>
+							<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+						</Form.Item>
+						<Form.Item>
+							<Button onClick={ this.props.exportUser } type="primary">{'导出列表'}</Button>
+						</Form.Item>
 					</div>
 				</Search>
+
 				<Loading loading={ list.loading }>
 					<Table
 					style= { { width: '100%' } }

@@ -1,30 +1,5 @@
 import timeDate from '@global/timeDate'
 import filter from '@global/filter'
-export const APPLY_COLUMNS = [
-  {
-    type:'index'
-  },
-  {
-    label: '渠道名称',
-    prop: 'channelName'
-  },
-  {
-    label: '真实姓名',
-    prop: 'realName'
-  },
-  {
-    label: '手机号码',
-    prop: 'phone'
-  },
-  {
-    label: '注册时间',
-    prop: 'gmt',
-    render: row => {
-      const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
-      return date
-    }
-  }
-]
 export const NORMAL_COLUMNS = [
   {
     type: 'index'

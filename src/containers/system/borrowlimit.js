@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Loading, Table, Dialog,Form, Input, Radio } from 'element-react'
+import { Button, Loading, Table, Dialog,Form, Input, Radio, Breadcrumb } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -8,9 +8,11 @@ import { pageQuota, deleteQuota, addQuota, updateQuota } from './actions'
 import MyPagination from '@components/MyPagination'
 import validate from '@global/validate'
 import Search from '@components/Search'
+import { Link } from 'react-router-dom'
 // import filter from '@global/filter'
 class BlackUser extends Component {
 	static propTypes = {
+		history: PropTypes.object.isRequired,
     list: PropTypes.object.isRequired,
     sizeChange: PropTypes.func.isRequired,
     currentChange: PropTypes.func.isRequired,
@@ -24,6 +26,7 @@ class BlackUser extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			channelName: '', // 渠道名称
 			dialogTitle: '',
 			id: null,
 			form: {
@@ -111,6 +114,7 @@ class BlackUser extends Component {
 					width:120,
 					fixed: 'right',
           render: row => {
+						const name = this.state.channelName
             return (
 							<div>
 							{/* {
@@ -118,7 +122,14 @@ class BlackUser extends Component {
 								<Button type="primary" size="mini" onClick={ this.props.deleteQuota.bind(this,{id:row.id, defaultValue:0}) }>{'设为默认'}</Button>
 							} */}
 							<Button type="primary" size="mini" onClick={ this.openDialog.bind(this, row) }>{'编辑'}</Button>
-              <Button type="danger" size="mini" onClick={ this.props.deleteQuota.bind(this,row.id) }>{'删除'}</Button>
+							{
+								this.props.history.location.pathname === '/system/borrowlimit' &&
+								<Button type="danger" size="mini" onClick={ this.props.deleteQuota.bind(this, row.id, null) }>{'删除'}</Button>
+							}
+              {
+								this.props.history.location.pathname !== '/system/borrowlimit' &&
+								<Button type="danger" size="mini" onClick={ this.props.deleteQuota.bind(this, row.id, name) }>{'删除'}</Button>
+							}
 							</div>
             )
           }
@@ -126,10 +137,19 @@ class BlackUser extends Component {
 		}
 	}
 	componentWillMount() {
-    this.props.initSearch()
+		this.props.initSearch()
+		const n = window.sessionStorage.getItem('channelName')
+		this.setState({
+			channelName: n
+		})
   }
   componentDidMount() {
-    this.props.pageQuota()
+		const { channelName } = this.state
+		if (this.props.history.location.pathname === '/system/borrowlimit') {
+			this.props.pageQuota()
+		}else{
+			this.props.pageQuota(channelName)
+		}
 	}
   sizeChange = e => {
     this.props.sizeChange(e)
@@ -188,9 +208,19 @@ class BlackUser extends Component {
 			if (valid) {
 				if(this.state.id){// 编辑
 					const data = Object.assign({},this.state.form,{id:this.state.id})
-					this.props.updateQuota(data)
+					if (this.props.history.location.pathname === '/system/borrowlimit') {
+						this.props.updateQuota(data)
+					}else{
+						this.props.updateQuota(data, this.state.channelName)
+					}
 				}else{//添加
-					this.props.addQuota(this.state.form)
+					if (this.props.history.location.pathname === '/system/borrowlimit'){
+						this.props.addQuota(this.state.form)
+					}else{
+						const trans = Object.assign({}, this.state.form,{channelName:this.state.channelName})
+						this.props.addQuota(trans,this.state.channelName)
+					}
+
 				}
 				this.setState({
 					dialogVisible: false
@@ -215,13 +245,26 @@ class BlackUser extends Component {
 		const { form, rules, dialogTitle, dialogVisible } = this.state
 		return (
 			<div>
-        {/* <Button className="margin-bottom15" type="primary" onClick={ e => this.openDialog(e) }>{'添加'}</Button> */}
-				<Search showChannel>
+				{
+					this.props.history.location.pathname === '/system/borrowlimit' &&
+					<Search showChannel>
+						<div>
+							<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+							<Button className="margin-bottom15" type="primary" onClick={ this.openDialog.bind(this,'add') }>{'添加'}</Button>
+						</div>
+					</Search>
+				}
+				{	this.props.history.location.pathname !== '/system/borrowlimit' &&
 					<div>
-						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+						<Breadcrumb separator="/" className="margin-bottom15">
+							<Breadcrumb.Item>
+								<Link to="/generalize/channelmanage">{'渠道管理'}</Link>
+							</Breadcrumb.Item>
+							<Breadcrumb.Item>{'额度'}</Breadcrumb.Item>
+						</Breadcrumb>
 						<Button className="margin-bottom15" type="primary" onClick={ this.openDialog.bind(this,'add') }>{'添加'}</Button>
 					</div>
-				</Search>
+				}
 				<Loading loading={ list.loading }>
 					<Table
 						style={ { width: '100%' } }
