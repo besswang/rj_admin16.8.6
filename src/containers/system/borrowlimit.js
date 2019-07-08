@@ -58,7 +58,10 @@ class BlackUser extends Component {
 				}, {
 					label: '渠道名称',
 					prop: 'channelName',
-					fixed: 'left'
+					fixed: 'left',
+					render: row => {
+						return row.channelName === null ? '默认' : row.channelName
+					}
 				}, {
 					label: '额度',
 					prop: 'money',

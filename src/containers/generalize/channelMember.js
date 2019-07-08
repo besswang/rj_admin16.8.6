@@ -35,7 +35,10 @@ class Apply extends Component {
 							return '未命名'
 						}else{
 							const reg = /(?<=.)./g
-							return row.realName.replace(reg, '*')
+							if (row.realName){
+								const t = row.realName.replace(reg, '*')
+								return t
+							}
 						}
 					}
 				}, {
