@@ -16,7 +16,7 @@ class Example extends Component {
 	  // console.log(this.props)
   }
   fetchFn = () => {
-    fetch('/rjwl/api/login/channellogin', {
+    fetch('/api/login/channellogin', {
       method: 'POST',
       headers:{
         'Accept': 'application/json',

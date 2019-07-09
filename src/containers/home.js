@@ -5,6 +5,7 @@ import Sidebar from '@components/sidebar'
 import '@styles/home.less'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
+// import {  } from 'element-react'
 class Home extends Component {
 	static propTypes = {
 		history: PropTypes.object.isRequired
@@ -35,6 +36,7 @@ class Home extends Component {
 						<div className="content" key={ time }>
 							{ children }
 						</div>
+						{/* <div className="footer">123</div> */}
 					</li>
 				</ul>
 			</div>

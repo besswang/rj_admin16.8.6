@@ -411,6 +411,19 @@ export const pageRecharge = () => {
     console.log(data)
   }
 }
+// 系统充值-充值
+export const addRecharge = obj => {
+  return async dispatch => {
+    dispatch(btnRequestPosts())
+    const data = await api.addRechargeApi(obj)
+    if (data.success) {
+      dispatch(pageRecharge())
+      dispatch(btnReceivePosts(data.msg))
+    } else {
+      dispatch(btnFailurePosts(data.msg))
+    }
+  }
+}
 // 区域管理-启用/禁用
 // export const updateAreaState = obj => {
 //   return dispatch => {

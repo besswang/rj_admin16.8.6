@@ -5,7 +5,7 @@ import 'whatwg-fetch'
 require('es6-promise').polyfill()
 // 前置拼接url,process.env.luoHost取的是config--dev.env.js--tbtHost
 // const luoHost = process.env.luoHost && process.env.luoHost.url
-const luoHost = '/rjwl/'
+const luoHost = '/api/'
 // 自定义headers
 const headers = {
   // 'Accept': 'application/json',

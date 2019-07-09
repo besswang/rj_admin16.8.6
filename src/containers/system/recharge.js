@@ -1,14 +1,15 @@
 // 系统充值
 import React, { Component } from 'react'
-import { Button, Loading, Table, Dialog,Form, Input, Upload, Message } from 'element-react'
+import { Button, Loading, Table, Dialog,Form, Input, Message } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { pageRecharge, addQuota } from './actions'
+import { pageRecharge, addRecharge } from './actions'
 import MyPagination from '@components/MyPagination'
 import validate from '@global/validate'
 import Search from '@components/Search'
+import timeDate from '@global/timeDate'
 // import filter from '@global/filter'
 class BlackUser extends Component {
 	static propTypes = {
@@ -18,18 +19,18 @@ class BlackUser extends Component {
     currentChange: PropTypes.func.isRequired,
     initSearch: PropTypes.func.isRequired,
 		pageRecharge: PropTypes.func.isRequired,
-		addQuota: PropTypes.func.isRequired,
+		addRecharge: PropTypes.func.isRequired,
 		btnLoading: PropTypes.bool.isRequired,
   }
 	constructor(props) {
 		super(props)
 		this.state = {
+			voucher:'',
 			form: {
-				money: null,
-				imageUrl: '',
+				rechargeMoney: null
 			},
 			rules: {
-				money: [{required: true, validator: validate.money}]
+				rechargeMoney: [{required: true, validator: validate.numEmpty}]
 			},
 			dialogVisible: false,
 			columns: [{
@@ -37,16 +38,23 @@ class BlackUser extends Component {
 				fixed: 'left'
 			}, {
 				label: '充值用户',
-				prop: ''
+				prop: 'adminName'
 			}, {
 				label: '充值金额',
-				prop: ''
+				prop: 'rechargeMoney'
 			}, {
 				label: '充值时间',
-				prop: ''
+				prop: 'gmt',
+				render: row => {
+					const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
+					return date
+				}
 			}, {
 				label: '支付凭证',
-				prop: ''
+				prop: 'voucher',
+				render: row => {
+					return (<div className="table-img-con"><img className="table-img" alt="" src={ row.voucher } /></div>)
+				}
 			}]
 		}
 	}
@@ -69,18 +77,22 @@ class BlackUser extends Component {
 		this.setState({
 			dialogVisible: true
 		})
-		this.setState({
-			form: {
-				money: null,
-				imageUrl:''
-			}
-		})
 	}
 	saveContent = e => {
 		e.preventDefault()
+		console.log(this.state.voucher)
+		// Notification({
+		// 	title: '成功',
+		// 	message: '这是一条成功的提示消息',
+		// 	type: 'success'
+		// })
 		this.form.validate((valid) => {
 			if (valid) {
-				this.props.addQuota(this.state.form)
+				if (this.state.voucher === '') {
+					Message.warning('请上传支付凭证')
+					return false
+				}
+				this.props.addRecharge({rechargeMoney:this.state.form.rechargeMoney,voucher:this.state.voucher})
 				this.setState({
 					dialogVisible: false
 				})
@@ -99,9 +111,6 @@ class BlackUser extends Component {
 		e.preventDefault()
 		this.props.pageRecharge()
 	}
-	handleAvatarScucess(res, file) {
-		this.setState({ imageUrl: URL.createObjectURL(file.raw) })
-	}
 	beforeAvatarUpload(file) {
 		const isJPG = file.type === 'image/jpeg'
 		const isLt2M = file.size / 1024 / 1024 < 2
@@ -113,9 +122,30 @@ class BlackUser extends Component {
 		}
 		return isJPG && isLt2M
 	}
+	inputfile =()=> {
+		const file1 = document.querySelector('#input').files[0]
+		// const flag = this.beforeAvatarUpload(file1)
+		// if(!flag){
+		// 	return false
+		// }
+		console.log(file1)
+		const that=this
+    if(file1){
+      var reader = new FileReader()
+					// 图片文件转换为base64
+				reader.readAsDataURL(file1)
+				reader.onload = function(){
+				// 显示图片
+				// document.getElementById('file1_img').src = this.result
+				that.setState({
+					voucher:this.result
+				})
+			}
+    }
+  }
 	render() {
 		const { list, btnLoading } = this.props
-		const { form, rules, dialogVisible, imageUrl } = this.state
+		const { form, rules, dialogVisible, voucher } = this.state
 		return (
 			<div>
 				<Search showTime>
@@ -145,20 +175,14 @@ class BlackUser extends Component {
 				>
 					<Dialog.Body>
 						<Form labelWidth="120" ref={ e => {this.form=e} } model={ form } rules={ rules }>
-							<Form.Item label="充值金额" prop="">
-								<Input type="number" value={ form.money } onChange={ this.onChange.bind(this,'money') } />
+							<Form.Item label="充值金额" prop="rechargeMoney">
+								<Input type="number" value={ form.rechargeMoney } onChange={ this.onChange.bind(this,'rechargeMoney') } />
 							</Form.Item>
-							<Form.Item label="支付凭证" prop="">
-								<Upload
-									className="avatar-uploader"
-									action="//jsonplaceholder.typicode.com/posts/"
-									showFileList={ false }
-									onSuccess={ (res, file) => this.handleAvatarScucess(res, file) }
-									beforeUpload={ file => this.beforeAvatarUpload(file) }
-									tip={ <div className="el-upload__tip">{'只能上传jpg/png文件，且不超过500kb'}</div> }
-								>
-								{ imageUrl ? <img src={ imageUrl } className="avatar" alt="" /> : <i className="el-icon-plus avatar-uploader-icon" /> }
-								</Upload>
+							<Form.Item label="支付凭证" prop="voucher">
+								<div className="my-upload">
+								<input className="upload-input" type="file" id="input" name="file1" onChange={ this.inputfile } />
+								{ voucher ? <img src={ voucher } className="avatar" alt="" /> : <i className="el-icon-plus avatar-uploader-icon" /> }
+								</div>
 							</Form.Item>
 						</Form>
 					</Dialog.Body>
@@ -178,7 +202,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({ sizeChange, currentChange, initSearch, pageRecharge, addQuota }, dispatch)
+		...bindActionCreators({ sizeChange, currentChange, initSearch, pageRecharge, addRecharge }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(BlackUser)

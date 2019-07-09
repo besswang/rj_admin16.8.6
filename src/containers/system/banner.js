@@ -32,8 +32,8 @@ class Banner extends Component {
 					align: 'center',
 					render: row => {
 						return (
-							<div style={ {overflow:'hidden', paddingTop:10, paddingBottom:10} }>
-								<img style={ { display:'block', height: 60, margin: '0 auto'} } src={ row.advertUrl } alt="" onClick={ this.openDialog.bind(this,row.advertUrl) }/>
+							<div className="table-img-con">
+								<img className="table-img" src={ row.advertUrl } alt="" onClick={ this.openDialog.bind(this,row.advertUrl) }/>
 							</div>
 						)
 					}
@@ -41,7 +41,7 @@ class Banner extends Component {
 					label: '上架状态',
 					prop: 'status',
 					render: row => {
-						const text = row.status === 1 ? '已下架' : '已上架'
+						const text = row.status === 0 ? '已下架' : '已上架'
 						return text
 					}
 				}, {
@@ -107,7 +107,7 @@ class Banner extends Component {
 				<Upload
 					className = "margin-bottom15"
 					ref={ e => {this.upload = e} }
-					action="/rjwl/api/rotationChart/addRotationChart"
+					action="/api/rotationChart/addRotationChart"
 					accept=".jpg,.jpeg,.png,.gif,.bmp,.pdf,.JPG,.JPEG,.PBG,.GIF,.BMP,.PDF"
 					limit={ 1 }
 					autoUpload={ false }

@@ -202,7 +202,7 @@ class Mlist extends Component{
 				Message.warning('请输入最小分控')
 				return false
 			}
-			if (form.minScore > form.maxScore) {
+			if (parseFloat(form.minScore) > parseFloat(form.maxScore)) {
 				Message.warning('最小分控分不能大于最大分控分')
 				return false
 			}

@@ -103,7 +103,7 @@ class BlackUser extends Component {
 				<Upload
 					className = "margin-bottom15"
 					ref={ e => {this.upload = e} }
-					action = "/rjwl/api/blackPhone/importExcel"
+					action = "/api/blackPhone/importExcel"
 					limit={ 1 }
 					accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
 					autoUpload={ false }

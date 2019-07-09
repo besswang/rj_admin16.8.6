@@ -36,6 +36,7 @@ class WaitHuan extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			channelName:'',
 			delayNumber: null, // 延期天数
 			reMoney: null, // 延期金额
 			delayRate:null, // 费率
@@ -201,7 +202,7 @@ class WaitHuan extends Component {
 			url: '/finance/waitHuan'
 		}
 		window.sessionStorage.setItem('locationState', JSON.stringify(sess))
-		this.props.findAllDelayRate()
+		// this.props.findAllDelayRate()
   }
   handleSearch = e => {
     e.preventDefault()
@@ -232,6 +233,7 @@ class WaitHuan extends Component {
 	}
 	openDialog = obj => {
 		this.setState({
+			channelName: obj.channelName,
 			dialogVisible: true,
 			orderId: obj.id,
 			orderNumber: obj.orderNumber, // 订单号
@@ -282,6 +284,9 @@ class WaitHuan extends Component {
 			activeName: v
 		})
 		this.form.resetFields()
+		if(v === '2'){
+			this.props.findAllDelayRate(this.state.channelName)
+		}
 	}
 	findRepaymentMoney = async (id) => {
 		const res = await api.findRepaymentMoneyApi({id:id})

@@ -30,14 +30,19 @@ class Apply extends Component {
 					label: '姓名',
 					prop: 'realName',
 					render: row => {
-						// return row.realName === null ? '未命名' : row.realName
 						if (row.realName === null){
 							return '未命名'
 						}else{
-							const reg = /(?<=.)./g
 							if (row.realName){
-								const t = row.realName.replace(reg, '*')
-								return t
+								const reg = row.realName.slice(1)
+								const s = reg.split('')
+								const x = []
+								for(let i=0;i<s.length;i++){
+									x.push('*')
+								}
+								const z = x.join('')
+								const y = row.realName.substring(1, 0)
+								return y+z
 							}
 						}
 					}
@@ -61,6 +66,17 @@ class Apply extends Component {
 	componentDidMount() {
 		this.props.selectChannelMember()
 	}
+	// name = n => {
+	// 	if (n === null) {
+	// 		return '未命名'
+	// 	} else {
+	// 		if (n) {
+	// 			const reg = /(?<=.)./g
+	// 			const t = n.replace(reg, '*')
+	// 			return t
+	// 		}
+	// 	}
+	// }
 	handleSearch = e => {
 		e.preventDefault()
 		this.props.selectChannelMember()
