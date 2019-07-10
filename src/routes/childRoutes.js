@@ -93,7 +93,7 @@ export const CHILD_ROUTES = [
   },
   {
     id: 1,
-    name: '会员管理',
+    name: '用户管理',
     path: '/member',
     children: [
       {
@@ -298,12 +298,7 @@ export const CHILD_ROUTES = [
     id: 8,
     name: '系统管理',
     path: '/system',
-    children: [{
-        name: '用户管理',
-        path: '/system/admin',
-        exact: true,
-        component: Admin
-      }, {
+    children: [ {
         name: '区域管理',
         path: '/system/area',
         exact: true,
@@ -379,6 +374,11 @@ export const CHILD_ROUTES = [
       path: '/manager/role',
       exact: true,
       component: Role
+    }, {
+      name: '管理员列表',
+      path: '/system/admin',
+      exact: true,
+      component: Admin
     }]
   }, {
     id: 100,

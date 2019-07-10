@@ -56,6 +56,7 @@ class Backup extends Component {
 	backupBtn = e => {
 		e.preventDefault()
 		this.props.backup()
+		this.props.pageBackup()
 	}
 	render() {
 		const { list, btnLoading } = this.props

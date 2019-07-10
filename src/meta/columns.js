@@ -280,9 +280,9 @@ export const BANK = [{
   prop: 'reservePhone'
 }, {
   label: '状态',
-  prop: 'bankType',
+  prop: 'bankAuthType',
   render: row => {
-    const type = filter.personalType(row.bankType)
+    const type = filter.personalType(row.bankAuthType)
     return type
   }
 }, {

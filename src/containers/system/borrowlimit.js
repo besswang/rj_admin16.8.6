@@ -77,7 +77,7 @@ class BlackUser extends Component {
 					label: '状态',
 					prop: 'state',
 					render: row => {
-						const t = row.state === 0 ? '启用':'禁用'
+						const t = row.state === 1 ? '启用':'禁用'
 						return t
 					}
 				}, {
