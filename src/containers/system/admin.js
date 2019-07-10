@@ -32,6 +32,7 @@ class BlackUser extends Component {
 				adminName:'',
 				nickName:'',
 				roleId: null,
+				loginMode: 'PASSWORD', // 登陆方式
 				adminState: 0, // 用户状态
 				distribution: 0, // 是否分配
 				password:''
@@ -159,9 +160,10 @@ class BlackUser extends Component {
 			this.setState({
 				dialogTitle: '添加用户',
 				form: {
-					adminName:'',
+					adminName:null,
 					nickName:'',
 					roleId: null,
+					loginMode: 'PASSWORD', // 登陆方式
 					adminState: 0, // 用户状态
 					distribution: 0, // 是否分配
 					password:''
@@ -239,9 +241,24 @@ class BlackUser extends Component {
 				>
 					<Dialog.Body>
 						<Form labelWidth="120" model={ form } ref={ e => {this.form = e} } rules={ rules }>
-							<Form.Item label="登录手机号" prop="adminName">
-								<Input disabled={ adminDisabled } type="number" value={ form.adminName } onChange={ this.onChange.bind(this, 'adminName') } />
+							<Form.Item label="登陆方式">
+								<Radio.Group value={ form.loginMode } onChange={ this.onChange.bind(this, 'loginMode') } >
+									<Radio value={ 'PASSWORD' }>{'密码登陆'}</Radio>
+									<Radio value={ 'VERIFYCODE' }>{'验证码登陆'}</Radio>
+								</Radio.Group>
 							</Form.Item>
+						 {
+						 		form.loginMode === 'PASSWORD' &&
+								<Form.Item label="用户名" prop="adminName">
+									<Input disabled={ adminDisabled } value={ form.adminName } onChange={ this.onChange.bind(this, 'adminName') } />
+								</Form.Item>
+						 }
+						 {
+								form.loginMode === 'VERIFYCODE' &&
+								<Form.Item label="登录手机号" prop="adminName">
+									<Input disabled={ adminDisabled } type="number" value={ form.adminName } onChange={ this.onChange.bind(this, 'adminName') } />
+								</Form.Item>
+						 }
 							<Form.Item label="昵称" prop="nickName">
 								<Input value={ form.nickName } onChange={ this.onChange.bind(this, 'nickName') } />
 							</Form.Item>

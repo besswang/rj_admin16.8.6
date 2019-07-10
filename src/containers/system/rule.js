@@ -28,8 +28,7 @@ class BlackUser extends Component {
 			// kan: new Date('2019-06-30T17:02:02.000Z'),
 			// kan: new Date('2019-07-01 11:42:58'),
 			form2: {
-				configValue: null,
-				id: null
+				configValue: null
 			},
 			rules2: {
 				configValue: [{
@@ -144,10 +143,11 @@ class BlackUser extends Component {
 		if(res.success){
 			this.setState({
 				form2: {
-					configValue: res.data.configValue,
-					id: res.data.id
+					configValue: res.data.configValue
 				}
 			})
+		}else{
+			Message.error('res.msg')
 		}
 	}
 	openDialog = r => {
@@ -228,12 +228,14 @@ class BlackUser extends Component {
 		}
 	}
 	updateMinAndCappingMoney = async () => {
-		const res = await api.updateMinAndCappingMoneyApi(this.state.form2)
+		const res = await api.updateMinAndCappingMoneyApi({money:this.state.form2.configValue})
 		if (res.success) {
 			Message.success(res.msg)
 			this.setState({
 				editConfit: false
 			})
+		}else{
+			Message.error(res.msg)
 		}
 	}
 	onChange2(key, value) {

@@ -5,6 +5,8 @@ import Sidebar from '@components/sidebar'
 import '@styles/home.less'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
+import api from '@api/index'
+import { Message } from 'element-react'
 // import {  } from 'element-react'
 class Home extends Component {
 	static propTypes = {
@@ -13,15 +15,36 @@ class Home extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-
+			 recharge: 0, // 充值总金额
+			 consume: 0, // 已消费
+			 consumeLowerLimit: 0, // 系统费用最低-提醒
+			 residue: 0 // 充值总金额 - 消耗费用
 		}
 	}
 	componentDidMount() {
 		console.log(this.props)
+		this.selectGlobalValue()
 	}
+	selectGlobalValue = async () => {
+		const res = await api.selectGlobalValueApi()
+		console.log(res)
+		if(res.success){
+			const result = parseInt(res.data.recharge) - parseInt(res.data.consume)
+			this.setState({
+				recharge: res.data.recharge,
+				consume: res.data.consume,
+				consumeLowerLimit: res.data.consumeLowerLimit,
+				residue:result
+			})
+		}else{
+			Message.error(res.msg)
+		}
+  }
 	render() {
 		const time = new Date()
 		const { children } = this.props
+		const { recharge, consume, consumeLowerLimit, residue } = this.state
+		console.log(recharge)
 		return (
 			<div className="flex flex-direction_column">
 				<div className="header">
@@ -36,8 +59,16 @@ class Home extends Component {
 						<div className="content" key={ time }>
 							{ children }
 						</div>
-						{/* <div className="footer">123</div> */}
 					</li>
+				</ul>
+				<ul className="footer flex flex-direction_row">
+					<li>{ '©2019' }</li>
+					<li>{'系统名称：现金滴滴后台管理系统'}</li>
+					<li>{'消费环境：开启状态'}</li>
+					<li>{'总充值:'}{recharge}{'¥'}</li>
+					<li>{'已消费:'}{consume}{'¥'}</li>
+					<li>{'剩余:'}{residue}{'¥'}</li>
+					<li>{'提醒:'}{consumeLowerLimit}{'¥'}</li>
 				</ul>
 			</div>
 		)

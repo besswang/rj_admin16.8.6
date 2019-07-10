@@ -29,7 +29,7 @@ class WaitFang extends Component {
 		super(props)
 		this.state = {
 			obj:{},
-			loanType: 0,
+			loanType: 1,
 			dialogVisible: false,
 			columns: [{
 					type: 'index',
@@ -141,7 +141,7 @@ class WaitFang extends Component {
 	openDialog = r => {
 		this.setState({
 			dialogVisible: true,
-			loanType: 0,
+			loanType: 1,
 			obj:r
 		})
 	}
@@ -218,7 +218,7 @@ class WaitFang extends Component {
 						<Form labelWidth="80">
 							<Form.Item label="放款方式:">
 								<Radio.Group value={ loanType } onChange={ this.onChange.bind(this) }>
-									<Radio value={ 0 }>{'银行卡'}</Radio>
+									{/* <Radio value={ 0 }>{'银行卡'}</Radio> */}
 									<Radio value={ 1 }>{'线下放款'}</Radio>
 								</Radio.Group>
 							</Form.Item>

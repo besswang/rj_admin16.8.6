@@ -22,40 +22,58 @@ class Apply extends Component {
 		super(props)
 		this.state = {
 			columns: [{
-					type: 'index'
-				}, {
-					label: '渠道名称',
-					prop: 'channelName'
-				}, {
-					label: '姓名',
-					prop: 'realName',
-					render: row => {
-						if (row.realName === null){
-							return '未命名'
-						}else{
-							if (row.realName){
-								const reg = row.realName.slice(1)
-								const s = reg.split('')
-								const x = []
-								for(let i=0;i<s.length;i++){
-									x.push('*')
-								}
-								const z = x.join('')
-								const y = row.realName.substring(1, 0)
-								return y+z
+				type: 'index'
+			}, {
+				label: '渠道名称',
+				prop: 'channelName'
+			}, {
+				label: '姓名',
+				prop: 'realName',
+				render: row => {
+					if (row.realName === null){
+						return '未命名'
+					}else{
+						if (row.realName){
+							const reg = row.realName.slice(1)
+							const s = reg.split('')
+							const x = []
+							for(let i=0;i<s.length;i++){
+								x.push('*')
 							}
+							const z = x.join('')
+							const y = row.realName.substring(1, 0)
+							return y+z
 						}
 					}
-				}, {
-					label: '手机号码',
-					prop: 'phone'
-				}, {
-					label: '注册时间',
-					prop: 'gmt',
-					render: row => {
-						const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
-						return date
-					}
+				}
+			}, {
+				label: '手机号码',
+				prop: 'phone'
+			}, {
+				label: '身份号码',
+				prop: 'idcardNumber'
+			}, {
+				label: '身份认证',
+				prop: 'idcardType'
+			}, {
+				label: '个人信息',
+				prop: 'personalType'
+			}, {
+				label: '手机认证',
+				prop: 'mobileType'
+			}, {
+				label: '收款银行',
+				prop: 'bankName'
+			},{
+				label: '注册时间',
+				prop: 'gmt',
+				render: row => {
+					const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
+					return date
+				}
+			}, {
+				label: '申请状态',
+				prop: ''
 			}]
 		}
 	}

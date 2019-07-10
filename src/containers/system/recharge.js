@@ -25,6 +25,8 @@ class BlackUser extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			dialogVisible2: false,
+			dialogImageUrl: '',
 			voucher:'',
 			form: {
 				rechargeMoney: null
@@ -53,7 +55,7 @@ class BlackUser extends Component {
 				label: '支付凭证',
 				prop: 'voucher',
 				render: row => {
-					return (<div className="table-img-con"><img className="table-img" alt="" src={ row.voucher } /></div>)
+					return (<div className="table-img-con"><img className="table-img" alt="" src={ row.voucher } onClick={ this.openDialog2.bind(this,row.voucher) }/></div>)
 				}
 			}]
 		}
@@ -142,10 +144,16 @@ class BlackUser extends Component {
 				})
 			}
     }
-  }
+	}
+	openDialog2 = url => {
+		this.setState({
+			dialogVisible2: true,
+			dialogImageUrl: url
+		})
+	}
 	render() {
 		const { list, btnLoading } = this.props
-		const { form, rules, dialogVisible, voucher } = this.state
+		const { form, rules, dialogVisible, voucher, dialogVisible2, dialogImageUrl } = this.state
 		return (
 			<div>
 				<Search showTime>
@@ -190,6 +198,13 @@ class BlackUser extends Component {
 						<Button onClick={ () => this.setState({ dialogVisible: false }) }>{'取 消'}</Button>
 						<Button type="primary" onClick={ this.saveContent } loading={ btnLoading }>{'确 定'}</Button>
 					</Dialog.Footer>
+				</Dialog>
+				<Dialog
+					visible={ dialogVisible2 }
+					size="tiny"
+					onCancel={ () => this.setState({ dialogVisible2: false }) }
+				>
+					<img width="100%" src={ dialogImageUrl } alt="" />
 				</Dialog>
 			</div>
 		)

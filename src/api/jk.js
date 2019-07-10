@@ -136,4 +136,6 @@ export default {
   'selectAllChannel': 'channel/selectAllChannel',
   'allRoles': 'role/allRoles',
   'selectAllAdmin': 'admin/selectAllAdmin', // 根据角色id查询多个用户
+  // footer
+  'selectGlobalValue': 'selectGlobalValue'
 }
