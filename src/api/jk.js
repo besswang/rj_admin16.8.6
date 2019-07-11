@@ -2,6 +2,7 @@ export default {
   'managelogin': 'login/managelogin', // 用户登陆
   'verifycode': 'login/verifycode', // 获取验证码
   'logout': 'logout', // 登出
+  'selectAdminLoginByName': 'admin/selectAdminLoginByName', //根据用户名查询登录方式
   'channellogin': 'login/channellogin', // 渠道登陆
   // 欢迎页
   'selectQu': 'chart/selectQus', // 渠道统计-饼图

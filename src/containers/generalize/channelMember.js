@@ -8,6 +8,7 @@ import { selectChannelMember } from './actions'
 import MyPagination from '@components/MyPagination'
 import Search from '@components/Search'
 import timeDate from '@global/timeDate'
+import filter from '@global/filter'
 class Apply extends Component {
 	static propTypes = {
 		location: PropTypes.object.isRequired,
@@ -43,24 +44,54 @@ class Apply extends Component {
 							const z = x.join('')
 							const y = row.realName.substring(1, 0)
 							return y+z
+							// return row.realName.replace(/(?<=.)./g, '*')
 						}
 					}
 				}
 			}, {
 				label: '手机号码',
-				prop: 'phone'
+				prop: 'phone',
+				render: row => {
+					if (row.phone){
+						return row.phone.replace(/^(\d{3})\d{4}(\d+)/, '$1****$2')
+					}
+				}
 			}, {
 				label: '身份号码',
-				prop: 'idcardNumber'
+				prop: 'idcardNumber',
+				render: row => {
+					if (row.idcardNumber){
+						return row.idcardNumber.replace(/^(\d{3})\d{8}(\d+)/, '$1****$2')
+					}
+				}
 			}, {
-				label: '身份认证',
-				prop: 'idcardType'
+				label: '身份证认证',
+				width: 100,
+				prop: 'idcardType',
+				render: row => {
+					return this.textType(row.idcardType)
+				}
 			}, {
-				label: '个人信息',
-				prop: 'personalType'
+				label: '个人信息认证',
+				prop: 'idcardType',
+				width: 100,
+				render: row => {
+					return this.textType(row.idcardType)
+				}
 			}, {
-				label: '手机认证',
-				prop: 'mobileType'
+				label: '银行卡认证',
+				prop: 'bankType',
+				width: 100,
+				render: row => {
+					return this.textType(row.idcardType)
+				}
+			}, {
+				label: '运营商认证', // 手机认证
+				prop: 'mobileType',
+				width: 100,
+				render: row => {
+					return this.textType(row.idcardType)
+				}
 			}, {
 				label: '收款银行',
 				prop: 'bankName'
@@ -73,7 +104,10 @@ class Apply extends Component {
 				}
 			}, {
 				label: '申请状态',
-				prop: ''
+				prop: 'loanType',
+				render: row => {
+					return filter.loanTyp(row.loanType)
+				}
 			}]
 		}
 	}
@@ -84,17 +118,14 @@ class Apply extends Component {
 	componentDidMount() {
 		this.props.selectChannelMember()
 	}
-	// name = n => {
-	// 	if (n === null) {
-	// 		return '未命名'
-	// 	} else {
-	// 		if (n) {
-	// 			const reg = /(?<=.)./g
-	// 			const t = n.replace(reg, '*')
-	// 			return t
-	// 		}
-	// 	}
-	// }
+	textType = x => {
+		const t = filter.personalType(x)
+		if (x === 'COMPLETED') {
+			return <span className="g-border">{t}</span>
+		} else {
+			return <span className="r-border">{t}</span>
+		}
+	}
 	handleSearch = e => {
 		e.preventDefault()
 		this.props.selectChannelMember()

@@ -65,7 +65,7 @@ export default {
   updateRolemenusApi: params => Fetch(jk.updateRolemenus, {method: 'post', body: params}),
   selectPromotionStatisticsApi: params => Fetch(jk.selectPromotionStatistics, {method: 'post', body: params}),
   selectAllChannelApi: params => Fetch(jk.selectAllChannel, {method: 'post', body: params}),
-  selectChannelMemberApi: params => Fetch(jk.selectChannelMember, {method: 'get', data: params}),
+  selectChannelMemberApi: params => Fetch(jk.selectChannelMember, {method: 'post', body: params}),
   selectChannelApi: params => Fetch(jk.selectChannel, {method: 'post', body: params}),
   insertChannelApi: params => Fetch(jk.insertChannel, {method: 'post', body: params}),
   updateChannelApi: params => Fetch(jk.updateChannel, {method: 'put', body: params}),
@@ -125,5 +125,6 @@ export default {
   addRechargeApi: params => Fetch(jk.addRecharge, {method: 'post', body:params}),
   pageRechargeApi: params => Fetch(jk.pageRecharge, {method: 'post', body:params}),
   selectGlobalValueApi: () => Fetch(jk.selectGlobalValue, {method: 'post'}),
+  selectAdminLoginByNameApi: params => Fetch(jk.selectAdminLoginByName, {method: 'get', data:params}),
 }
 

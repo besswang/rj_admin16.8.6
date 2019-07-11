@@ -46,9 +46,6 @@ class BlackUser extends Component {
 					}
 				}, {
 					label: '状态',
-					prop: ''
-				}, {
-					label: '状态',
 					prop: 'idcardType',
 					render: row => {
 						const text = filter.personalType(row.idcardType)

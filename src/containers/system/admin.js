@@ -175,6 +175,7 @@ class BlackUser extends Component {
 			this.setState({
 				dialogTitle: '编辑用户',
 				form: {
+					loginMode: r.loginMode,
 					adminName: r.adminName,
 					nickName: r.nickName,
 					roleId: r.roleId,
@@ -243,8 +244,8 @@ class BlackUser extends Component {
 						<Form labelWidth="120" model={ form } ref={ e => {this.form = e} } rules={ rules }>
 							<Form.Item label="登陆方式">
 								<Radio.Group value={ form.loginMode } onChange={ this.onChange.bind(this, 'loginMode') } >
-									<Radio value={ 'PASSWORD' }>{'密码登陆'}</Radio>
-									<Radio value={ 'VERIFYCODE' }>{'验证码登陆'}</Radio>
+									<Radio value={ 'PASSWORD' } disabled={ adminDisabled }>{'密码登陆'}</Radio>
+									<Radio value={ 'VERIFYCODE' } disabled={ adminDisabled }>{'验证码登陆'}</Radio>
 								</Radio.Group>
 							</Form.Item>
 						 {
