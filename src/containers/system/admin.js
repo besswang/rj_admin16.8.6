@@ -33,6 +33,7 @@ class BlackUser extends Component {
 				nickName:'',
 				roleId: null,
 				loginMode: 'PASSWORD', // 登陆方式
+				adminType: 'CHANNEL', // 后台登陆
 				adminState: 0, // 用户状态
 				distribution: 0, // 是否分配
 				password:''
@@ -164,6 +165,7 @@ class BlackUser extends Component {
 					nickName:'',
 					roleId: null,
 					loginMode: 'PASSWORD', // 登陆方式
+					adminType: 'CHANNEL',
 					adminState: 0, // 用户状态
 					distribution: 0, // 是否分配
 					password:''
@@ -176,6 +178,7 @@ class BlackUser extends Component {
 				dialogTitle: '编辑用户',
 				form: {
 					loginMode: r.loginMode,
+					adminType: r.adminType,
 					adminName: r.adminName,
 					nickName: r.nickName,
 					roleId: r.roleId,
@@ -280,6 +283,12 @@ class BlackUser extends Component {
 									<Input value={ form.password } onChange={ this.onChange.bind(this, 'password') } />
 								</Form.Item>
 							}
+							<Form.Item label="后台登陆">
+								<Radio.Group value={ form.adminType } onChange={ this.onChange.bind(this, 'adminType') } >
+									<Radio value={ 'CHANNEL' }>{'渠道'}</Radio>
+									<Radio value={ 'ADMIN' }>{'管理员'}</Radio>
+								</Radio.Group>
+							</Form.Item>
 							<Form.Item label="用户状态">
 								<Radio.Group value={ form.adminState } onChange={ this.onChange.bind(this, 'adminState') } >
 									<Radio value={ 0 }>{'启用'}</Radio>

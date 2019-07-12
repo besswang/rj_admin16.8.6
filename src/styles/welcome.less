@@ -12,21 +12,35 @@
       margin-right:15px;
     }
     li {
-      background: #F0F2F5;
       padding: 10px 20px;
       width: 0;
       -webkit-box-flex: 1;
       -ms-flex: 1;
       -webkit-flex: 1;
       flex: 1;
-      p {
-        white-space: nowrap;
-        margin-bottom: 5px;
-        color: #999;
-        font-size: 11px;
+      text-align: center;
+      .sta-left{
+        width: 66px;
+        height:66px;
+        .icon {
+          display: block;
+          line-height:66px;
+          color:#fff;
+          font-size:30px;
+        }
       }
-      span {
-        font-size: 20px;
+      .sta-right{
+        border:1px solid #e8ebf3;
+        border-radius: 3px;
+        border-left:0;
+        p {
+          white-space: nowrap;
+          color: #999;
+          font-size: 11px;
+        }
+        span {
+          font-size: 20px;
+        }
       }
     }
   }

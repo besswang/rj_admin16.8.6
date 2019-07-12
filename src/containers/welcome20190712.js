@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Message } from 'element-react'
+import { Button } from 'element-react'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -8,7 +8,6 @@ import Echart from '@components/echarts'
 import Time from '@components/setime'
 import api from '@api/index'
 import '@styles/welcome.less'
-import { WEL_STATISTICS } from '@meta/welcome'
 class Welcome extends React.Component{
 	static propTypes = {
 		router: PropTypes.object.isRequired,
@@ -18,17 +17,21 @@ class Welcome extends React.Component{
 		super(props)
 		this.state = {
 			time: {},
-			statistics: []
+			overdueCount: 0, // 逾期数
+			loanCount: 0, // 申请贷款数
+			auditFailureCount: 0, // 审核失败数
+			registerCount: 0, // 注册app数
+			authenticationCount: 0 // 认证信息数
 		}
 	}
 	componentWillMount() {
+		this.initData()
 		this.props.tabAdd({
 			name: '欢迎页'
 		})
-
 	}
 	componentDidMount() {
-		this.initData()
+
 	}
 	search = () => {
 		this.initData()
@@ -36,27 +39,17 @@ class Welcome extends React.Component{
 	initData = async () => {
 		const res = await api.selectTotalLogByTimeApi(this.state.time)
 		if(res.success){
-			const arr = []
-			let obj = {}
-			for (const i in WEL_STATISTICS) {
-				obj = {
-					value: res.data[WEL_STATISTICS[i].value] ? res.data[WEL_STATISTICS[i].value] : 0,
-					icon: WEL_STATISTICS[i].icon,
-					color: WEL_STATISTICS[i].color,
-					text: WEL_STATISTICS[i].text
-				}
-				arr.push(obj)
-			}
 			this.setState({
-				statistics: arr
+				overdueCount:res.data.overdueCount,
+				loanCount: res.data.loanCount,
+				auditFailureCount: res.data.auditFailureCount,
+				registerCount: res.data.registerCount,
+				authenticationCount: res.data.authenticationCount
 			})
-		}else{
-			Message.warning(res.msg)
 		}
 	}
 	render(){
 		const { router } = this.props
-		const { statistics } = this.state
 		const wel = router.defaultRouter.filter( item => item.text === '欢迎页')
 		if (wel[0].hideInMenu) {
 			return ''
@@ -69,23 +62,27 @@ class Welcome extends React.Component{
 					</div>
 					<div className="section">
 							<h1 className="title">{'统计'}</h1>
-							<ul className="flex flex-direction_row wel-ul">
-							{
-								statistics.length>0 &&
-								statistics.map((item) => {
-									return (
-										<li className="flex flex-direction_row" key={ item.text }>
-											<div className="sta-left" style={ { backgroundColor: item.color } }>
-												<i className={ `${ item.icon }` } />
-											</div>
-											<div className="sta-right flex_1 flex flex-direction_column justify-content_flex-center">
-												<span style={ { color: item.color } }>{ item.value }</span>
-												<p>{ item.text }</p>
-											</div>
-										</li>
-									)
-								})
-							}
+							<ul className="flex flex-direction_row justify-content_flex-center wel-ul">
+								<li>
+									<p>{'逾期数'}</p>
+									<span>{ this.state.overdueCount }</span>
+								</li>
+								<li>
+									<p>{'申请贷款数'}</p>
+									<span>{ this.state.loanCount }</span>
+								</li>
+								<li>
+									<p>{'审核失败数'}</p>
+									<span>{ this.state.auditFailureCount }</span>
+								</li>
+								<li>
+									<p>{'注册app数'}</p>
+									<span>{ this.state.registerCount }</span>
+								</li>
+								<li>
+									<p>{'认证信息数'}</p>
+									<span>{ this.state.authenticationCount }</span>
+								</li>
 							</ul>
 					</div>
 					<div className="section">

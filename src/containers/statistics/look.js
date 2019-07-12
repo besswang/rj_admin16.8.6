@@ -15,33 +15,7 @@ class Look extends Component {
   constructor(props){
     super(props)
     this.state={
-      data:[
-        {
-          text:'放款金额',
-          num: 'allLoanMoney'
-        }, {
-          text: '待还总金额',
-          num: 'allToReturnMoney'
-        }, {
-          text: '未逾期待还金额',
-          num: 'noOverdueReturnMoney'
-        }, {
-          text: '还款总金额',
-          num: 'allReturnMoney'
-        }, {
-          text: '还款收益',
-          num: 'allReturnProfit'
-        }, {
-          text: '续期金额',
-          num: 'allRenewalMoney'
-        }, {
-          text: '逾期金额',
-          num: 'overdueToReturnMoney'
-        }, {
-          text: '逾期本金',
-          num: 'overduePrincipal'
-        }
-      ]
+
     }
   }
   componentWillMount() {

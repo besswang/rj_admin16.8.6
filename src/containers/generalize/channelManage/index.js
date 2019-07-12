@@ -192,6 +192,7 @@ class Apply extends Component {
 					type: obj.type,
 					machineScore: obj.machineScore,
 					userScore: obj.userScore,
+					firstMoney: obj.firstMoney,
 					remake: obj.remake
 				},
 				id: obj.id
