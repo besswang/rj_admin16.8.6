@@ -44,7 +44,7 @@ export default class SetEndTime extends Component {
 							onClick: () => {
 								const end = new Date()
 								const start = new Date()
-								start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+								start.setTime(start.getTime() - 3600 * 1000 * 24 * 6)
 								this.setState({ value2: [start, end] })
 								this.handleVal([start, end])
 								this.daterangepicker2.togglePickerVisible()

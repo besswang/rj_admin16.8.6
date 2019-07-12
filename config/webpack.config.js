@@ -68,6 +68,8 @@ module.exports = function(webpackEnv) {
     ? publicPath.slice(0, -1)
     // : isEnvDevelopment && 'http://47.94.142.215:8081'
     : isEnvDevelopment && 'http://cs.huakodai.com'
+    // : isEnvDevelopment && 'http://localhost:8081'
+    // : isEnvDevelopment && 'http://h5.huakodai.com'
   // Get environment variables to inject into our app.
   const env = getClientEnvironment(publicUrl)
 
