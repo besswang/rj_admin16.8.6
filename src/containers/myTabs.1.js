@@ -9,7 +9,7 @@ import { tabRemove } from '@redux/actions'
 class MyTabs extends React.Component{
 	static propTypes = {
 		history: PropTypes.object.isRequired,
-		tabObj: PropTypes.array,
+		tabObj: PropTypes.object.isRequired,
 		tabRemove: PropTypes.func.isRequired,
 	}
 	constructor(props) {
@@ -36,11 +36,10 @@ class MyTabs extends React.Component{
 		// console.log(index)
 		// this.props.tabRemove(this.props.tabObj.tabs,index)
 
-		this.props.tabRemove(index)
+		// this.props.tabRemove(this.props.tabObj.tabs)
 	}
 	render() {
 		const { tabObj } = this.props
-		console.log(tabObj)
 		return (
 			<div style={ {margin:'15px'} }>
 			<div className="el-tabs el-tabs--card">
@@ -48,8 +47,8 @@ class MyTabs extends React.Component{
 					<div className="el-tabs__nav-wrap">
 						<div className="el-tabs__nav-scroll">
 							<ul className="el-tabs__nav">
-								{ tabObj.length>0 &&
-									tabObj.map((item, index) => {
+								{
+									tabObj.tabs.map((item, index) => {
 										return (
 											<li className="el-tabs__item is-closable" key={ item.name }>
 												<Link to={ item.url }>{item.name}</Link>

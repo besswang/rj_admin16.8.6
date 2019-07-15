@@ -147,14 +147,14 @@ class Detail extends Component{
                   </li>
                   <li className="flex flex-direction_row info-li">
                     <p>{'申请期限：'}{ listInfo.applyTerm }</p>
-                    <p>{'申请时间：'}{ listInfo.gmt }</p>
+                    <p>{'申请时间：'}{ timeDate.time(listInfo.gmt, 'yyyy-MM-dd hh:mm:ss') }</p>
                   </li>
                   <li className="flex flex-direction_row info-li">
                     <p>{'审核状态：'}{ filter.auditType(listInfo.state) }</p>
-                    <p>{'贷款利率：'}{ timeDate.time(listInfo.gmt, 'yyyy-MM-dd hh:mm:ss') }</p>
+                    <p>{'贷款利率：'}{ listInfo.moneyRate }</p>
                   </li>
                   <li className="flex flex-direction_row info-li">
-                    <p>{'息费：'}</p>
+                    <p>{'息费：'}{ listInfo.rateMoney }</p>
                     <p>{'服务费：'}{ listInfo.serviceMoney }</p>
                   </li>
                   <li className="flex flex-direction_row info-li">
@@ -174,7 +174,7 @@ class Detail extends Component{
                     <p>{'打款单号：'}{ listInfo.loanNumber }</p>
                   </li>
                   <li className="flex flex-direction_row info-li">
-                    <p>{'打款方式：'}{ filter.loanMode(listInfo.loanMode) }</p>
+                    <p>{'打款方式：'}{ filter.payType(listInfo.loanMode) }</p>
                     <p>{'打款账号：'}{ listInfo.accountNumber }</p>
                   </li>
                 </ul>
@@ -276,7 +276,7 @@ class Detail extends Component{
                 <p>{'认证时间：'}{ timeDate.time(listInfo.gmt, 'yyyy-MM-dd hh:mm:ss') }</p>
               </li>
               <li className="flex flex-direction_row info-li">
-                <p>{'认证状态：'}{ filter.personalType(listInfo.mobileType) }</p>
+                <p>{'认证状态：'}{ filter.personalType(idCardInfo.mobileType) }</p>
               </li>
             </ul>
             <div className="flex flex-direction_row justify-content_flex-end">

@@ -175,8 +175,14 @@ export default {
         return '待审核'
       case state.FALSE:
         return '审核失败'
-      case state.PENDING_LOAN:
+      case state.PENDING_LOAN:// 待放款
         return '审核成功'
+      case state.LOAN_FAILURE:
+        return '放款失败'
+      case state.PENDING_REPAYMENT:
+        return '待还款'
+      case state.COMPLETED:
+        return '已完成'
       default:
         return '空值'
     }

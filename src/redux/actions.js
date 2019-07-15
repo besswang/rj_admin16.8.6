@@ -253,8 +253,7 @@ export const tabAdd = data => ({
   type: type.TAB_ADD,
   data
 })
-export const tabRemove = (arr,index) => ({
+export const tabRemove = index => ({
   type: type.TAB_REMOVE,
-  arr,
   index
 })

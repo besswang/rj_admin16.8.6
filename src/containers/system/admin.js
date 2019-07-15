@@ -215,7 +215,7 @@ class BlackUser extends Component {
 	}
 	render() {
 		const { list, btnLoading, roleList } = this.props
-		const { form, rules, dialogTitle, adminDisabled, rid } = this.state
+		const { form, rules, dialogTitle, adminDisabled } = this.state
 		return (
 			<div>
 				<Search showRole showAdminName>
@@ -277,8 +277,9 @@ class BlackUser extends Component {
 									<SelectPicker value={ form.roleId } clearable={ 1 } options={ roleList } onChange={ this.onChange.bind(this, 'roleId') } />
 								</Form.Item>
 							}
+							{/* form.roleId === rid && */}
 							{
-								form.roleId === rid &&
+								form.loginMode === 'PASSWORD' &&
 								<Form.Item label="密码" prop="password">
 									<Input value={ form.password } onChange={ this.onChange.bind(this, 'password') } />
 								</Form.Item>

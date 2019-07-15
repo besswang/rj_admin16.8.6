@@ -34,8 +34,10 @@ export const selectIdCardByUserId = id => {
 // 手机认证
 export const selectPhoneDateByUserId = id => {
   return async dispatch => {
+    console.log('123')
     const data = await api.selectPhoneDateByUserIdApi(id)
     if (data.success) {
+      console.log(data)
       if (data.data){
         dispatch(saveIdCardInfo(data.data))
       }else{

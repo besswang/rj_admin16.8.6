@@ -83,7 +83,8 @@ class BlackUser extends Component {
 		})
 	}
 	openRules = roleId => {
-		this.props.selectRolemenus({roleId:roleId},this.tree)
+		const adminObj = JSON.parse(window.sessionStorage.getItem('adminInfo'))
+		this.props.selectRolemenus({adminName: adminObj.adminName,roleId:roleId},this.tree)
 		this.setState({
 			roleId: roleId,
 			treeDialogVisible: true

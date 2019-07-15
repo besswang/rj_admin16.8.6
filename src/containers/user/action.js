@@ -24,7 +24,7 @@ export const managelogin = (form, fn) => {
       // setTimeout(() => {
         dispatch(btnReceivePosts(data.msg))
         fn.push('/welcome')
-        dispatch(selectRolemenus())
+        dispatch(selectRolemenus(data.data.adminName))
       // }, 1000)
     } else {
       dispatch(btnFailurePosts(data.msg))
@@ -58,9 +58,9 @@ const saveDefaultRouter = data => ({
   type: type.SAVE_DEFAULT_ROUTER,
   data
 })
-export const selectRolemenus = () => {
+export const selectRolemenus = name => {
   return async dispatch => {
-    const data = await api.selectRolemenusApi()
+    const data = await api.selectRolemenusApi({adminName:name})
     if (data.success) {
       dispatch(saveDefaultRouter(data.data))
     } else {

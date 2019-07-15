@@ -11,6 +11,7 @@ import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
 import filter from '@global/filter'
 import SelectPicker from '@components/SelectPicker'
+import timeDate from '@global/timeDate'
 class WaitHuan extends Component {
 	static propTypes = {
 		btnLoading: PropTypes.bool.isRequired,
@@ -101,10 +102,18 @@ class WaitHuan extends Component {
 					prop: 'loanTerm'
 				}, {
 					label: '申请时间',
-					prop: 'nextApplyTime'
+					prop: 'gmt',
+					width:120,
+					render: row => {
+						return timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
+					}
 				}, {
 					label: '放款时间',
-					prop: 'loanDate'
+					prop: 'loanDate',
+					width: 120,
+					render: row => {
+						return timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
+					}
 				}, {
 					label: '约定还款日',
 					prop: 'repaymentDate'
