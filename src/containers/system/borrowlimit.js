@@ -300,8 +300,8 @@ class BlackUser extends Component {
 							</Form.Item>
 							<Form.Item label="状态">
 								<Radio.Group value={ form.state } onChange={ this.onChange.bind(this,'state') }>
-									<Radio value="0">{'启用'}</Radio>
-									<Radio value="1">{'禁用'}</Radio>
+									<Radio value="1">{'启用'}</Radio>
+									<Radio value="0">{'禁用'}</Radio>
 								</Radio.Group>
 							</Form.Item>
 							<Form.Item label="排序" prop="sort">
