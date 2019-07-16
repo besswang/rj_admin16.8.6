@@ -34,8 +34,8 @@ class BlackUser extends Component {
 				roleId: null,
 				loginMode: 'PASSWORD', // 登陆方式
 				adminType: 'CHANNEL', // 后台登陆
-				adminState: 0, // 用户状态
-				distribution: 0, // 是否分配
+				adminState: 1, // 用户状态
+				distribution: 1, // 是否分配
 				password:''
 			},
 			rules: {
@@ -95,7 +95,7 @@ class BlackUser extends Component {
 					label: '分配状态',
 					prop: 'distribution',
 					render: row => {
-						return row.distribution === 0 ? '正常分配' : '未分配'
+						return row.distribution === 1 ? '正常分配' : '未分配'
 					}
 				}, {
           label: '操作',
@@ -103,7 +103,7 @@ class BlackUser extends Component {
             return (
 							<div>
 								<Button type="primary" size="mini" onClick={ this.openDialog.bind(this,row) }>{'编辑'}</Button>
-								<DisableBtn value={ row.distribution } result={ 1 } text={ ['正常分配','不分配'] } onClick={ this.updateAdmin.bind(this,row,'distribution') } />
+								<DisableBtn value={ row.distribution } result={ 0 } text={ ['正常分配','不分配'] } onClick={ this.updateAdmin.bind(this,row,'distribution') } />
 								<DisableBtn value={ row.adminState } result={ 1 } text={ ['启用','禁用'] } onClick={ this.updateAdmin.bind(this,row) } />
 							</div>
             )
@@ -292,14 +292,14 @@ class BlackUser extends Component {
 							</Form.Item>
 							<Form.Item label="用户状态">
 								<Radio.Group value={ form.adminState } onChange={ this.onChange.bind(this, 'adminState') } >
-									<Radio value={ 0 }>{'启用'}</Radio>
-									<Radio value={ 1 }>{'禁用'}</Radio>
+									<Radio value={ 1 }>{'启用'}</Radio>
+									<Radio value={ 0 }>{'禁用'}</Radio>
 								</Radio.Group>
 							</Form.Item>
 							<Form.Item label="是否分配">
 								<Radio.Group value={ form.distribution } onChange={ this.onChange.bind(this, 'distribution') }>
-									<Radio value={ 0 }>{'是'}</Radio>
-									<Radio value={ 1 }>{'否'}</Radio>
+									<Radio value={ 1 }>{'是'}</Radio>
+									<Radio value={ 0 }>{'否'}</Radio>
 								</Radio.Group>
 							</Form.Item>
 						</Form>

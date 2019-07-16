@@ -125,7 +125,7 @@ class Apply extends Component {
 					label: '状态',
 					prop: 'state',
 					render: row => {
-						return (row.state === 0 ? '正常': '禁用')
+						return (row.state === 1 ? '正常': '禁用')
 					}
 				}, {
 						label: '操作',
@@ -135,7 +135,7 @@ class Apply extends Component {
 							return (
 								<div>
 									<Button type="primary" size="mini" onClick={ this.openDialog.bind(this, row) }>{'编辑'}</Button>
-									<DisableBtn value={ row.state } result={ 1 } text={ ['启用','禁用'] } onClick={ this.props.prohibitChannel.bind(this,{channelName:row.channelName,id:row.id,state:row.state}) }/>
+									<DisableBtn value={ row.state } result={ 0 } text={ ['启用','禁用'] } onClick={ this.props.prohibitChannel.bind(this,{channelName:row.channelName,id:row.id,state:row.state}) }/>
 									<Link to={ {pathname:'/generalize/exhibition',state:{date:row.channelName}} } className="margin_right10">
 										<Button type="success" size="mini" onClick={ this.ditchType.bind(this, row.channelName) }>{'展期'}</Button>
 									</Link>

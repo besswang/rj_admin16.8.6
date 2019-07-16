@@ -31,11 +31,11 @@ class BlackUser extends Component {
 			id: null,
 			form: {
 				money: null,
-				defaultValue: 0,
-				state:0,
+				defaultValue: 1,
+				state:1,
 				sort:null,
-				delayType:0,
-				overdueType:0,
+				delayType:1,
+				overdueType:1,
 				moneyRate:'',
 				overdueRate:'',
 				serverMoney: null,
@@ -70,7 +70,7 @@ class BlackUser extends Component {
 					label: '是否是默认值',
 					prop: 'defaultValue',
 					render: row => {
-						const data = row.defaultValue === 0 ? '是' : '否'
+						const data = row.defaultValue === 1 ? '是' : '否'
 						return data
 					}
 				}, {
@@ -87,14 +87,14 @@ class BlackUser extends Component {
 					label: '延期开关',
 					prop: 'delayType',
 					render: row => {
-						const t = row.delayType === 0 ? '开' : '关'
+						const t = row.delayType === 1 ? '开' : '关'
 						return t
 					}
 				}, {
 					label: '逾期开关',
 					prop: 'overdueType',
 					render: row => {
-						const t = row.overdueType === 0 ? '开' : '关'
+						const t = row.overdueType === 1 ? '开' : '关'
 						return t
 					}
 				}, {
@@ -173,11 +173,11 @@ class BlackUser extends Component {
 				id: null,
 				form: {
 					money: null,
-					defaultValue: 0,
-					state: 0,
+					defaultValue: 1,
+					state: 1,
 					sort: null,
-					delayType: 0,
-					overdueType: 0,
+					delayType: 1,
+					overdueType: 1,
 					moneyRate: '',
 					overdueRate: '',
 					serverMoney: null,
@@ -188,6 +188,7 @@ class BlackUser extends Component {
 		} else {
 			this.setState({
 				dialogTitle: '编辑额度',
+				channelName:r.channelName,
 				id: r.id,
 				form: {
 					money: r.money,
@@ -212,9 +213,9 @@ class BlackUser extends Component {
 				if(this.state.id){// 编辑
 					const data = Object.assign({},this.state.form,{id:this.state.id})
 					if (this.props.history.location.pathname === '/system/borrowlimit') {
-						this.props.updateQuota(data)
-					}else{
 						this.props.updateQuota(data, this.state.channelName)
+					}else{
+						this.props.updateQuota(data, this.state.channelName,1)
 					}
 				}else{//添加
 					if (this.props.history.location.pathname === '/system/borrowlimit'){
@@ -294,8 +295,8 @@ class BlackUser extends Component {
 							</Form.Item>
 							<Form.Item label="是否默认">
 								<Radio.Group value={ form.defaultValue } onChange={ this.onChange.bind(this,'defaultValue') }>
-									<Radio value="0">{'是'}</Radio>
-									<Radio value="1">{'否'}</Radio>
+									<Radio value="1">{'是'}</Radio>
+									<Radio value="0">{'否'}</Radio>
 								</Radio.Group>
 							</Form.Item>
 							<Form.Item label="状态">
@@ -309,14 +310,14 @@ class BlackUser extends Component {
 							</Form.Item>
 							<Form.Item label="延期开关">
 								<Radio.Group value={ form.delayType } onChange={ this.onChange.bind(this,'delayType') }>
-									<Radio value="0">{'开'}</Radio>
-									<Radio value="1">{'关'}</Radio>
+									<Radio value="1">{'开'}</Radio>
+									<Radio value="0">{'关'}</Radio>
 								</Radio.Group>
 							</Form.Item>
 							<Form.Item label="逾期开关">
 								<Radio.Group value={ form.overdueType } onChange={ this.onChange.bind(this,'overdueType') }>
-									<Radio value="0">{'开'}</Radio>
-									<Radio value="1">{'关'}</Radio>
+									<Radio value="1">{'开'}</Radio>
+									<Radio value="0">{'关'}</Radio>
 								</Radio.Group>
 							</Form.Item>
 							<Form.Item label="借款年化利率（利息）" prop="moneyRate">

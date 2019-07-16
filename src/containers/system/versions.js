@@ -64,7 +64,7 @@ class BlackUser extends Component {
 					label: '是否必须更新',
 					prop: 'isUpdate',
 					render: row => {
-						const text = row.isUpdate === 0 ? '是' : '否'
+						const text = row.isUpdate === 1 ? '是' : '否'
 						return text
 					}
 				}, {
@@ -74,7 +74,7 @@ class BlackUser extends Component {
 					label: '状态',
 					prop: 'state',
 					render: row => {
-						const text = row.state === 0 ? '正常' : '禁用'
+						const text = row.state === 1 ? '正常' : '禁用'
 						return text
 					}
 				}, {
@@ -206,8 +206,8 @@ class BlackUser extends Component {
 							</Form.Item>
 							<Form.Item label="是否必须更新">
 								<Radio.Group value={ form.isUpdate } onChange={ this.onChange.bind(this, 'isUpdate') } >
-									<Radio value={ 0 }>{'是'}</Radio>
-									<Radio value={ 1 }>{'否'}</Radio>
+									<Radio value={ 1 }>{'是'}</Radio>
+									<Radio value={ 0 }>{'否'}</Radio>
 								</Radio.Group>
 							</Form.Item>
 							<Form.Item label="手机类型">
@@ -218,8 +218,8 @@ class BlackUser extends Component {
 							</Form.Item>
 							<Form.Item label="状态">
 								<Radio.Group value={ form.state } onChange={ this.onChange.bind(this, 'state') }>
-									<Radio value={ 0 }>{'启用'}</Radio>
-									<Radio value={ 1 }>{'禁用'}</Radio>
+									<Radio value={ 1 }>{'启用'}</Radio>
+									<Radio value={ 0 }>{'禁用'}</Radio>
 								</Radio.Group>
 							</Form.Item>
 							<Form.Item label="备注" prop="updateContent">

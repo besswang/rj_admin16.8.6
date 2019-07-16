@@ -143,7 +143,7 @@ class Overdue extends Component{
 					label: '打款方式',
 					prop: 'loanMode',
 					render: row => {
-						const t = filter.loanModeState(row.loanMode)
+						const t = filter.payType(row.loanMode)
 						return t
 					}
 				}, {

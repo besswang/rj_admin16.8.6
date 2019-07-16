@@ -29,11 +29,11 @@ class Apply extends Component {
 				firstMoney: null, // 首借额度
 				remake: '', // 备注,
 				money: null, // 额度
-				defaultValue: 0,
-				state:0,
+				defaultValue: 1,
+				state:1,
 				sort:null, // 排序
-				delayType:0,
-				overdueType:0,
+				delayType:1,
+				overdueType:1,
 				moneyRate: '', // 借款年化利率（利息）
 				overdueRate: '', // 逾期利率
 				serverMoney: null, // 逾期服务费
@@ -176,14 +176,14 @@ class Apply extends Component {
 							</Form.Item>
 							<Form.Item label="是否默认">
 								<Radio.Group value={ form.defaultValue } onChange={ this.onChange.bind(this,'defaultValue') }>
-									<Radio value="0">{'是'}</Radio>
-									<Radio value="1">{'否'}</Radio>
+									<Radio value="1">{'是'}</Radio>
+									<Radio value="0">{'否'}</Radio>
 								</Radio.Group>
 							</Form.Item>
 							<Form.Item label="状态">
 								<Radio.Group value={ form.state } onChange={ this.onChange.bind(this,'state') }>
-									<Radio value="0">{'启用'}</Radio>
-									<Radio value="1">{'禁用'}</Radio>
+									<Radio value="1">{'启用'}</Radio>
+									<Radio value="0">{'禁用'}</Radio>
 								</Radio.Group>
 							</Form.Item>
 							<Form.Item label="排序" prop="sort">
@@ -191,14 +191,14 @@ class Apply extends Component {
 							</Form.Item>
 							<Form.Item label="延期开关">
 								<Radio.Group value={ form.delayType } onChange={ this.onChange.bind(this,'delayType') }>
-									<Radio value="0">{'开'}</Radio>
-									<Radio value="1">{'关'}</Radio>
+									<Radio value="1">{'开'}</Radio>
+									<Radio value="0">{'关'}</Radio>
 								</Radio.Group>
 							</Form.Item>
 							<Form.Item label="逾期开关">
 								<Radio.Group value={ form.overdueType } onChange={ this.onChange.bind(this,'overdueType') }>
-									<Radio value="0">{'开'}</Radio>
-									<Radio value="1">{'关'}</Radio>
+									<Radio value="1">{'开'}</Radio>
+									<Radio value="0">{'关'}</Radio>
 								</Radio.Group>
 							</Form.Item>
 						</Layout.Col>

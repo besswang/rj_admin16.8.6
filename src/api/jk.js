@@ -51,7 +51,7 @@ export default {
   'updateStateComplete': 'order/updateStateComplete', // 待还款-还款-全款
   'findRepaymentMoney': 'order/findRepaymentMoney', // 剩余应还金额
   'updateStateDelay': 'order/updateStateDelay', // 待还款-还款-延期
-  'findAllDelayRate': 'quotaDelay/findAllDelayRate', // 待还款-还款-延期-延期天数
+  'findAllDelayRate': 'quotaDelay/findAllDelayRate',
   'updateStateReduction': 'order/updateStateReduction', // 待还款-还款-减免
   'selectOrderCompleted': 'order/selectOrderCompleted', // 已完成
   'selectBill': 'bill/selectBill', // 已还款
@@ -128,7 +128,7 @@ export default {
   'insertChannel': 'channel/insertChannel', // 渠道管理-添加
   'updateChannel': 'channel/updateChannel', // 渠道管理-编辑
   'prohibitChannel': 'channel/prohibitChannel', // 渠道管理-禁用
-  'findDelayRate': 'quotaDelay/findDelayRate', // 渠道管理-展期模式-列表
+  'findDelayRate': 'quotaDelay/findDelayRate', // 渠道管理-展期模式-列表 // // 待还款-还款-延期-延期天数
   'bindingRate': 'channel/bindingRate', // 渠道管理-展期模式-添加
   'deleteDelayRate': 'quotaDelay/deleteDelayRate', // 渠道管理-展期模式-删除
   'selectPromotionStatistics': 'order/selectPromotionStatistics', // 推广统计

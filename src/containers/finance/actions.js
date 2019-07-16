@@ -205,7 +205,7 @@ const saveDayList = data => ({
 })
 export const findAllDelayRate = name => {
   return async dispatch => {
-    const data = await api.findAllDelayRateApi({channelName:name})
+    const data = await api.findDelayRateApi({channelName:name})
     if (data.success) {
       dispatch(saveDayList(data.data))
     } else {

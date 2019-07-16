@@ -12,6 +12,7 @@ import DisableBtn from '@components/DisableBtn'
 import DetailBtn from '@components/DetailBtn'
 import { dcollection } from '@meta/details'
 import filter from '@global/filter'
+import timeDate from '@global/timeDate'
 class Collection extends Component {
 	static propTypes = {
     list: PropTypes.object.isRequired,
@@ -94,13 +95,28 @@ class Collection extends Component {
 					 }
 				}, {
 					label: '申请时间',
-					prop: 'nextApplyTime'
+					prop: 'gmt',
+					width: 120,
+					render: row => {
+						const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
+						return date
+					}
 				}, {
 					label: '审核时间',
-					prop: 'examineDate'
+					prop: 'examineDate',
+					width: 120,
+					render: row => {
+						const date = timeDate.time(row.examineDate, 'yyyy-MM-dd hh:mm:ss')
+						return date
+					}
 				}, {
 					label: '放款时间',
-					prop: 'loanDate'
+					prop: 'loanDate',
+					width: 120,
+					render: row => {
+						const date = timeDate.time(row.loanDate, 'yyyy-MM-dd hh:mm:ss')
+						return date
+					}
 				}, {
 					label: '打款单号',
 					prop: 'loanNumber'
@@ -108,7 +124,7 @@ class Collection extends Component {
 					label: '打款方式',
 					prop: 'loanMode',
 					render: row => {
-						const text = filter.loanModeState(row.loanMode)
+						const text = filter.payType(row.loanMode)
 						return text
 					}
 				}, {

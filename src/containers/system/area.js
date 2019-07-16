@@ -9,6 +9,7 @@ import { selectUnAllowableArea } from './actions'
 import MyPagination from '@components/MyPagination'
 class Backup extends Component {
 	static propTypes = {
+		history: PropTypes.object.isRequired,
 		list: PropTypes.object.isRequired,
 		sizeChange: PropTypes.func.isRequired,
 		currentChange: PropTypes.func.isRequired,
@@ -59,7 +60,12 @@ class Backup extends Component {
 	}
   componentDidMount() {
 		this.selectProvince()
-		this.props.selectUnAllowableArea()
+		this.props.selectUnAllowableArea(this.props.history)
+		// if (res.msg === '请先登陆') {
+		// 	setTimeout(() => {
+				// this.props.history.push('/login')
+		// 	}, 3000)
+		// }
 	}
 	selectProvince = async () => {
 		const data = await api.selectAreasByIdApi()

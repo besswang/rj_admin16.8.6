@@ -33,7 +33,9 @@ export const pageAdmin = () => {
   return async (dispatch, getState) => {
     dispatch(requestPosts())
     const searchAll = shouldFetchPosts(getState())
-    const data = await api.pageAdminApi(searchAll)
+    const adminInfo = JSON.parse(window.sessionStorage.getItem('adminInfo'))
+    const trans = Object.assign({},searchAll,{name:adminInfo.adminName})
+    const data = await api.pageAdminApi(trans)
     if (data.success) {
       dispatch(receivePosts(data.data))
     } else {
@@ -123,13 +125,13 @@ export const addQuota = (obj,name) => {
   }
 }
 // 借款额度管理-编辑
-export const updateQuota = (obj,name) => {
+export const updateQuota = (obj,name,type) => {
   return async dispatch => {
     dispatch(btnRequestPosts())
     const trans = name ? Object.assign({},obj,{channelName:name}):obj
     const data = await api.updateQuotaApi(trans)
     if (data.success) {
-      if(name){
+      if(type===1){
         dispatch(pageQuota(name))
       }else{
         dispatch(pageQuota())
@@ -343,7 +345,7 @@ export const updateAppversion = obj => {
 }
 
 // 禁用区域-列表
-export const selectUnAllowableArea = () => {
+export const selectUnAllowableArea = fn => {
   return async (dispatch, getState) => {
     dispatch(requestPosts())
     const searchAll = shouldFetchPosts(getState())
@@ -351,6 +353,11 @@ export const selectUnAllowableArea = () => {
     if (data.success) {
       dispatch(receivePosts(data.data))
     } else {
+      if (data.msg === '请先登录') {
+        setTimeout(() => {
+          fn.push('/login')
+        }, 3000)
+      }
       dispatch(failurePosts(data))
     }
   }

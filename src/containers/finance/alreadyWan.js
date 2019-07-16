@@ -72,10 +72,10 @@ class AlreadyWan extends Component {
 					}
 				}, {
 					label: '延期费用',
-					prop: 'continueMoney'
+					prop: 'continuePayNumber'
 				}, {
 					label: '延期天数',
-					prop: 'continueNumber'
+					prop: 'continueDay'
 				}, {
 					label: '借款次数',
 					prop: 'loanTerm'
@@ -119,7 +119,7 @@ class AlreadyWan extends Component {
 					label: '打款方式',
 					prop: 'loanMode',
 					render: row => {
-						const data = filter.loanModeState(row.loanMode)
+						const data = filter.payType(row.loanMode)
 						return data
 					}
 				}, {

@@ -11,6 +11,7 @@ import '@styles/welcome.less'
 import { WEL_STATISTICS } from '@meta/welcome'
 class Welcome extends React.Component{
 	static propTypes = {
+		history: PropTypes.object.isRequired,
 		router: PropTypes.object.isRequired,
 		tabAdd: PropTypes.func.isRequired
 	}
@@ -51,6 +52,12 @@ class Welcome extends React.Component{
 				statistics: arr
 			})
 		}else{
+			if(res.msg === '请先登录'){
+				console.log('1234')
+				setTimeout(() => {
+					this.props.history.push('/login')
+				},3000)
+			}
 			Message.warning(res.msg)
 		}
 	}

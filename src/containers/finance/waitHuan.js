@@ -36,6 +36,7 @@ class WaitHuan extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			listObj:{},
 			channelName:'',
 			delayNumber: null, // 延期天数
 			reMoney: null, // 延期金额
@@ -132,8 +133,14 @@ class WaitHuan extends Component {
 					label: '服务费',
 					prop: 'serviceMoney'
 				}, {
-					label: '待放金额',
+					label: '放款金额',
 					prop: 'loanMoney'
+				}, {
+					label: '应还金额',
+					prop: 'repaymentMoney'
+				}, {
+					label: '约定还款日',
+					prop: 'finalDate'
 				}, {
 					label: '借款次数',
 					prop: 'loanTerm'
@@ -233,6 +240,7 @@ class WaitHuan extends Component {
 	}
 	openDialog = obj => {
 		this.setState({
+			listObj: obj,
 			channelName: obj.channelName,
 			dialogVisible: true,
 			orderId: obj.id,
@@ -298,9 +306,14 @@ class WaitHuan extends Component {
 			Message.error(res.msg)
 		}
 	}
+	valiNum = num => {
+		if(num<0){
+			Message.warning('金额不能为负数')
+		}
+	}
 	render() {
 		const { list, btnLoading, dayList } = this.props
-		const { columns, dialogVisible, form, rules, orderNumber, realRepaymentMoney, applyMoney, serviceMoney, loanDate, repaymentDate, activeName, surplusMoney, reMoney } = this.state
+		const { columns, dialogVisible, form, rules, orderNumber, realRepaymentMoney, applyMoney, serviceMoney, loanDate, repaymentDate, activeName, surplusMoney, reMoney, listObj } = this.state
 		return (
 			<div>
 				<Search showSelect2 showLoanType showSelectClient showSelectTime>
@@ -349,7 +362,9 @@ class WaitHuan extends Component {
 								</li>
 								<li className="flex flex-direction_row justify-content_flex-justify ptb5">
 									{/* 剩余应还=剩余应还-还款金额 */}
-									<p className="red">{'剩余应还:'}{ surplusMoney-form.repaymentMoney }</p>
+									<p className="red">{'剩余应还:'}{ surplusMoney-form.repaymentMoney }
+										{this.valiNum(surplusMoney-form.repaymentMoney)}
+									</p>
 									{/* 延期天数中的百分比 * 借款金额 = 延期金额 */}
 									{
 										activeName === '2' &&
@@ -365,13 +380,16 @@ class WaitHuan extends Component {
 									<p>{'应还金额:'}{ realRepaymentMoney }</p>
 								</li>
 								<li className="flex flex-direction_row justify-content_flex-justify ptb5">
-									<p className="red">{'剩余应还:'}{ surplusMoney-form.repaymentMoney }</p>
+									<p className="red">{'剩余应还:'}{ surplusMoney-form.repaymentMoney }
+										{this.valiNum(surplusMoney-form.repaymentMoney)}
+									</p>
 									{/* （应还-本金减免-利息-逾期-服务费=本金结算） */}
 									<p>{'本金结算:'}{ surplusMoney-form.principalReductionMoney-form.rateReductionMoney-form.overdueReductionMoney-form.serviceReductionMoney }</p>
+									{this.valiNum(surplusMoney-form.principalReductionMoney-form.rateReductionMoney-form.overdueReductionMoney-form.serviceReductionMoney)}
 								</li>
 							</ul>
 						}
-						<Form labelWidth="90" ref={ e => {this.form=e} } model={ form } rules={ rules }>
+						<Form labelWidth="110" ref={ e => {this.form=e} } model={ form } rules={ rules }>
 							<Form.Item label="还款方式" prop="repaymentType">
 								<SelectPicker
 									value={ form.repaymentType }
@@ -395,27 +413,51 @@ class WaitHuan extends Component {
 							}
 							{
 								(activeName === '3') &&
-								<Form.Item label="本金" prop="principalReductionMoney">
-									<Input type="number" value={ form.principalReductionMoney } onChange={ this.onChange.bind(this, 'principalReductionMoney') } />
-								</Form.Item>
+								<div className="flex flex-direction_row justify-content_flex-justify">
+									<Form.Item label="减免本金" prop="principalReductionMoney">
+										<Input type="number" value={ form.principalReductionMoney } onChange={ this.onChange.bind(this, 'principalReductionMoney') } />
+									</Form.Item>
+									<Form.Item label="本金">
+											<p>{ listObj.repaymentPrincipal-form.principalReductionMoney }</p>
+											{this.valiNum(listObj.realRepaymentMoney-form.principalReductionMoney)}
+									</Form.Item>
+								</div>
 							}
 							{
 								(activeName === '3') &&
-								<Form.Item label="利息" prop="rateReductionMoney">
-									<Input type="number" value={ form.rateReductionMoney } onChange={ this.onChange.bind(this, 'rateReductionMoney') } />
-								</Form.Item>
+								<div className="flex flex-direction_row justify-content_flex-justify">
+									<Form.Item label="减免利息" prop="rateReductionMoney">
+										<Input type="number" value={ form.rateReductionMoney } onChange={ this.onChange.bind(this, 'rateReductionMoney') } />
+									</Form.Item>
+									<Form.Item label="利息">
+											<p>{ listObj.rateMoney-form.rateReductionMoney }</p>
+											{this.valiNum(listObj.rateMoney-form.rateReductionMoney)}
+									</Form.Item>
+								</div>
 							}
 							{
 								(activeName === '3') &&
-								<Form.Item label="逾期" prop="overdueReductionMoney">
-									<Input type="number" value={ form.overdueReductionMoney } onChange={ this.onChange.bind(this, 'overdueReductionMoney') } />
-								</Form.Item>
+								<div className="flex flex-direction_row justify-content_flex-justify">
+									<Form.Item label="减免逾期" prop="overdueReductionMoney">
+										<Input type="number" value={ form.overdueReductionMoney } onChange={ this.onChange.bind(this, 'overdueReductionMoney') } />
+									</Form.Item>
+									<Form.Item label="逾期">
+											<p>{ listObj.overdueRealMoney-form.overdueReductionMoney }</p>
+											{this.valiNum(listObj.overdueRealMoney-form.overdueReductionMoney)}
+									</Form.Item>
+								</div>
 							}
 							{
-								(activeName === '3') &&
-								<Form.Item label="服务费" prop="serviceReductionMoney">
-									<Input type="number" value={ form.serviceReductionMoney } onChange={ this.onChange.bind(this, 'serviceReductionMoney') } />
-								</Form.Item>
+								(activeName === '3') && listObj.deductionMethod===false &&
+								<div className="flex flex-direction_row justify-content_flex-justify">
+									<Form.Item label="减免服务费" prop="serviceReductionMoney">
+										<Input type="number" value={ form.serviceReductionMoney } onChange={ this.onChange.bind(this, 'serviceReductionMoney') } />
+									</Form.Item>
+									<Form.Item label="服务费">
+											<p>{ listObj.serviceMoney-form.serviceReductionMoney }</p>
+											{this.valiNum(listObj.serviceMoney-form.serviceReductionMoney)}
+									</Form.Item>
+								</div>
 							}
 							<Form.Item label="单号" prop="payNumber">
 								<Input type="number" value={ form.payNumber } onChange={ this.onChange.bind(this, 'payNumber') } />

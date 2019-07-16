@@ -114,7 +114,10 @@ class BlackUser extends Component {
 	getCheckedKeys = e => {
 		e.preventDefault()
 		// const brr = this.tree.getCheckedKeys(true)
+		// const r = JSON.parse(window.sessionStorage.getItem('defaultRouter'))
+		// console.log(r)
 		const brr = this.tree.getCheckedKeys()
+		console.log(brr)
 		const crr = this.props.treeData.data
 		const drr = []
 		// 判断子元素id是否被勾选，如果是，则筛选出相应的父元素ID，
@@ -126,6 +129,7 @@ class BlackUser extends Component {
 				}
 			}
 		}
+		console.log(drr)
 		const frr = brr.concat(drr)
 		// 拼装后台传参格式
 		if(frr.length >0){

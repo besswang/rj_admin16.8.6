@@ -54,7 +54,7 @@ class Self extends Component {
 					prop: 'realMoney'
 				}, {
 					label: '逾期天数',
-					prop: 'continueNumber'
+					prop: 'overdueNumber'
 				}, {
 					label: '分单时间',
 					prop: 'fendanDate',

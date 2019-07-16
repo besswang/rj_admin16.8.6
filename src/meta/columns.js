@@ -273,9 +273,6 @@ export const BANK = [{
   label: '所属银行',
   prop: 'bank'
 }, {
-  label: '开户行地址',
-  prop: ''
-}, {
   label: '预留号码',
   prop: 'reservePhone'
 }, {
