@@ -111,26 +111,35 @@ class BlackUser extends Component {
 			}
 		})
 	}
-	getCheckedKeys = e => {
-		e.preventDefault()
-		// const brr = this.tree.getCheckedKeys(true)
+	aaa = id => {
 		// const r = JSON.parse(window.sessionStorage.getItem('defaultRouter'))
 		// console.log(r)
-		const brr = this.tree.getCheckedKeys()
-		console.log(brr)
-		const crr = this.props.treeData.data
-		const drr = []
-		// 判断子元素id是否被勾选，如果是，则筛选出相应的父元素ID，
-		for(const i in crr){
-			const child = crr[i].children
+		const tree = this.props.treeData.data
+		for (const i in tree) {
+			const child = tree[i].children
 			for(const j in child){
-				if(child[j].id === brr[i]){
-					drr.push(crr[i].id)
+				if(child[j].id === id){
+					return tree[i].id
 				}
 			}
 		}
-		console.log(drr)
-		const frr = brr.concat(drr)
+	}
+	getCheckedKeys = e => {
+		e.preventDefault()
+		const brr = this.tree.getCheckedKeys()
+		const xx = []
+		for(const i in brr){
+			const idd = this.aaa(brr[i])
+			xx.push(idd)
+		}
+		const drr = [...new Set(xx)]
+		const grr = brr.concat(drr)
+		const frr = []
+		for (const r of grr) {
+			if (r) {
+				frr.push(r)
+			}
+		}
 		// 拼装后台传参格式
 		if(frr.length >0){
 			const arr = []

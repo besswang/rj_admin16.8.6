@@ -68,12 +68,19 @@ class BlackUser extends Component {
 			id: null,
 			dialogVisible: false,
 			columns: [{
-					type: 'index',
-					fixed: 'left'
-				}, {
-					label: '小于等于多少金额',
-					prop: 'money'
-				}, {
+					label: '借款金额',
+					prop:'money',
+					// render: row => {
+					// 	return <div>{ '小于等于' }<Input value={ row.money } /></div>
+					// }
+				},
+				//  {
+				// 	label: '还款方式',
+				// 	render: () => {
+				// 		return '正常还款'
+				// 	}
+				// },
+				{
 					label: '提前多少天',
 					prop: 'advanceDayNum'
 				}, {
@@ -243,6 +250,22 @@ class BlackUser extends Component {
 			form2: Object.assign({}, this.state.form2, { [key]: value })
 		})
 	}
+	objectSpanMethod = ({ row, column, rowIndex, columnIndex }) => {
+		console.log('666666')
+		if (columnIndex === 0) {
+			if (rowIndex % 2 === 0) {
+				return {
+					rowspan: 2,
+					colspan: 1
+				}
+			} else {
+				return {
+					rowspan: 0,
+					colspan: 0
+				}
+			}
+		}
+	}
 	render() {
 		const { list, btnLoading } = this.props
 		const { form2, form, rules, rules2, dialogTitle, editConfit } = this.state
@@ -266,6 +289,7 @@ class BlackUser extends Component {
 				</Form>
 				<Loading loading={ list.loading }>
 					<Table
+						spanMethod={ this.objectSpanMethod }
 						style={ { width: '100%' } }
 						columns={ this.state.columns }
 						data={ list.data }

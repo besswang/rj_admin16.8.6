@@ -275,3 +275,9 @@ p {
   width: 100%;
   table-layout: fixed !important;
 }
+.dis-red{
+  color:#d82137;
+}
+.theme-blue{
+  color:#247cfb;
+}

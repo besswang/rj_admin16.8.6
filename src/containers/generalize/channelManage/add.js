@@ -37,11 +37,24 @@ class Apply extends Component {
 				moneyRate: '', // 借款年化利率（利息）
 				overdueRate: '', // 逾期利率
 				serverMoney: null, // 逾期服务费
-				continueMoney:null,
+				// continueMoney:null,
 				dayNumber:null // 申请天数
 			},
 			rules: {
-				channelName: [{required: true,message: '请输入渠道名称',trigger: 'blur'}],
+				// channelName: [{required: true,message: '请输入渠道名称',trigger: 'blur'}],
+				channelName:[{
+					required:true,
+					validator: (rule, value, callback) => {
+						const usern = /^[a-zA-Z0-9_]{1,}$/
+						if (value === '' || value === null) {
+							callback(new Error('请输入首借额度'))
+						} else if (!value.match(usern)) {
+							callback(new Error('渠道名称只能由字母数字组成'))
+						} else {
+							callback()
+						}
+					}
+				}],
 				daiName: [{required: true,message: '请输入超贷名称',trigger: 'blur'}],
 				firstMoney:[{
 					required: true,
@@ -91,7 +104,7 @@ class Apply extends Component {
 				moneyRate: [{required: true,validator:validate.moneyRate}],
 				overdueRate: [{required: true,validator:validate.overdueRate}],
 				serverMoney: [{required: true, validator: validate.serverMoney}],
-				continueMoney: [{required: true, validator:validate.continueMoney}],
+				// continueMoney: [{required: true, validator:validate.continueMoney}],
 				dayNumber: [{required: true,validator:validate.dayNumber}],
 			}
 		}
@@ -160,7 +173,7 @@ class Apply extends Component {
 							<Form.Item label="人工审核分数" prop="userScore">
 								<Input type="number" value={ form.userScore } onChange={ this.onChange.bind(this, 'userScore') } />
 							</Form.Item>
-							<Form.Item label="首借额度" prop="firstMoney">
+							<Form.Item label="授信额度" prop="firstMoney">
 								<Input type="number" value={ form.firstMoney } onChange={ this.onChange.bind(this, 'firstMoney') } />
 							</Form.Item>
 							<Form.Item label="备注" prop="remake">
@@ -195,12 +208,6 @@ class Apply extends Component {
 									<Radio value="0">{'关'}</Radio>
 								</Radio.Group>
 							</Form.Item>
-							<Form.Item label="逾期开关">
-								<Radio.Group value={ form.overdueType } onChange={ this.onChange.bind(this,'overdueType') }>
-									<Radio value="1">{'开'}</Radio>
-									<Radio value="0">{'关'}</Radio>
-								</Radio.Group>
-							</Form.Item>
 						</Layout.Col>
 						<Layout.Col span="12" xs="24" sm="24" md="12" lg="8">
 							<Form.Item label="借款年化利率（利息）" prop="moneyRate">
@@ -212,11 +219,17 @@ class Apply extends Component {
 							<Form.Item label="服务费" prop="serverMoney">
 								<Input type="number" value={ form.serverMoney } onChange={ this.onChange.bind(this,'serverMoney') } />
 							</Form.Item>
-							<Form.Item label="延期金额" prop="continueMoney">
+							{/* <Form.Item label="延期金额" prop="continueMoney">
 								<Input type="number" value={ form.continueMoney } onChange={ this.onChange.bind(this,'continueMoney') } />
-							</Form.Item>
+							</Form.Item> */}
 							<Form.Item label="申请天数" prop="dayNumber">
 								<Input type="number" value={ form.dayNumber } onChange={ this.onChange.bind(this,'dayNumber') } />
+							</Form.Item>
+							<Form.Item label="逾期开关">
+								<Radio.Group value={ form.overdueType } onChange={ this.onChange.bind(this,'overdueType') }>
+									<Radio value="1">{'开'}</Radio>
+									<Radio value="0">{'关'}</Radio>
+								</Radio.Group>
 							</Form.Item>
 						</Layout.Col>
 					</Layout.Row>

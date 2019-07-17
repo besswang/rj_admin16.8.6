@@ -42,7 +42,7 @@ class Backup extends Component {
 				}, {
 					label: '状态',
 					render: () => {
-						return '禁用'
+						return <span className="dis-red">{'禁用'}</span>
 					}
 				}, {
 					label: '操作',

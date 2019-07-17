@@ -9,6 +9,7 @@ import MyPagination from '@components/MyPagination'
 import validate from '@global/validate'
 import Search from '@components/Search'
 import { Link } from 'react-router-dom'
+import DisableBtn from '@components/DisableBtn'
 // import filter from '@global/filter'
 class BlackUser extends Component {
 	static propTypes = {
@@ -31,7 +32,7 @@ class BlackUser extends Component {
 			id: null,
 			form: {
 				money: null,
-				defaultValue: 1,
+				// defaultValue: 1,
 				state:1,
 				sort:null,
 				delayType:1,
@@ -39,7 +40,7 @@ class BlackUser extends Component {
 				moneyRate:'',
 				overdueRate:'',
 				serverMoney: null,
-				continueMoney:null,
+				// continueMoney:null,
 				dayNumber:null
 			},
 			rules: {
@@ -48,7 +49,7 @@ class BlackUser extends Component {
 				moneyRate: [{required: true,validator:validate.moneyRate}],
 				overdueRate: [{required: true,validator:validate.overdueRate}],
 				serverMoney: [{required: true, validator: validate.serverMoney}],
-				continueMoney: [{required: true, validator:validate.continueMoney}],
+				// continueMoney: [{required: true, validator:validate.continueMoney}],
 				dayNumber: [{required: true,validator:validate.dayNumber}],
 			},
 			dialogVisible: false,
@@ -66,18 +67,24 @@ class BlackUser extends Component {
 					label: '额度',
 					prop: 'money',
 					fixed: 'left'
-				}, {
-					label: '是否是默认值',
-					prop: 'defaultValue',
-					render: row => {
-						const data = row.defaultValue === 1 ? '是' : '否'
-						return data
-					}
-				}, {
+				},
+				// {
+				// 	label: '是否是默认值',
+				// 	prop: 'defaultValue',
+				// 	render: row => {
+				// 		const y = <span className="theme-blue">{'是'}</span>
+				// 		const n = <span className="dis-red">{'否'}</span>
+				// 		const data = row.defaultValue === 1 ? y : n
+				// 		return data
+				// 	}
+				// },
+				{
 					label: '状态',
 					prop: 'state',
 					render: row => {
-						const t = row.state === 1 ? '启用':'禁用'
+						const y = <span className="theme-blue">{'启用'}</span>
+						const n = <span className="dis-red">{'禁用'}</span>
+						const t = row.state === 1 ? y : n
 						return t
 					}
 				}, {
@@ -87,14 +94,18 @@ class BlackUser extends Component {
 					label: '延期开关',
 					prop: 'delayType',
 					render: row => {
-						const t = row.delayType === 1 ? '开' : '关'
+						const y = <span className="theme-blue">{'开'}</span>
+						const n = <span className="dis-red">{'关'}</span>
+						const t = row.delayType === 1 ? y : n
 						return t
 					}
 				}, {
 					label: '逾期开关',
 					prop: 'overdueType',
 					render: row => {
-						const t = row.overdueType === 1 ? '开' : '关'
+						const y = <span className="theme-blue">{'开'}</span>
+						const n = <span className="dis-red">{'关'}</span>
+						const t = row.overdueType === 1 ? y : n
 						return t
 					}
 				}, {
@@ -106,18 +117,19 @@ class BlackUser extends Component {
 				}, {
 					label: '服务费',
 					prop: 'serverMoney'
-				}, {
-					label: '延期金额',
-					prop: 'continueMoney'
-				}, {
+				},
+				// {
+				// 	label: '延期金额',
+				// 	prop: 'continueMoney'
+				// },
+				 {
 					label: '申请天数',
 					prop: 'dayNumber'
 				}, {
 					label: '操作',
-					width:120,
+					width:140,
 					fixed: 'right',
           render: row => {
-						const name = this.state.channelName
             return (
 							<div>
 							{/* {
@@ -125,13 +137,14 @@ class BlackUser extends Component {
 								<Button type="primary" size="mini" onClick={ this.props.deleteQuota.bind(this,{id:row.id, defaultValue:0}) }>{'设为默认'}</Button>
 							} */}
 							<Button type="primary" size="mini" onClick={ this.openDialog.bind(this, row) }>{'编辑'}</Button>
+							{/* <Button type="danger" size="mini" onClick={ this.props.deleteQuota.bind(this, row.id, null) }>{'删除'}</Button> */}
 							{
 								this.props.history.location.pathname === '/system/borrowlimit' &&
-								<Button type="danger" size="mini" onClick={ this.props.deleteQuota.bind(this, row.id, null) }>{'删除'}</Button>
+								<DisableBtn value={ row.state } result={ 0 } text={ ['启用','禁用'] } onClick={ this.props.updateQuota.bind(this,{state:row.state,id:row.id}) }/>
 							}
               {
 								this.props.history.location.pathname !== '/system/borrowlimit' &&
-								<Button type="danger" size="mini" onClick={ this.props.deleteQuota.bind(this, row.id, name) }>{'删除'}</Button>
+								<DisableBtn value={ row.state } result={ 0 } text={ ['启用','禁用'] } onClick={ this.props.updateQuota.bind(this,{state:row.state,id:row.id},1) }/>
 							}
 							</div>
             )
@@ -173,7 +186,7 @@ class BlackUser extends Component {
 				id: null,
 				form: {
 					money: null,
-					defaultValue: 1,
+					// defaultValue: 1,
 					state: 1,
 					sort: null,
 					delayType: 1,
@@ -181,7 +194,7 @@ class BlackUser extends Component {
 					moneyRate: '',
 					overdueRate: '',
 					serverMoney: null,
-					continueMoney: null,
+					// continueMoney: null,
 					dayNumber: null
 				}
 			})
@@ -192,7 +205,7 @@ class BlackUser extends Component {
 				id: r.id,
 				form: {
 					money: r.money,
-					defaultValue: r.defaultValue,
+					// defaultValue: r.defaultValue,
 					state:r.state,
 					sort:r.sort,
 					delayType:r.delayType,
@@ -200,7 +213,7 @@ class BlackUser extends Component {
 					moneyRate:r.moneyRate,
 					overdueRate:r.overdueRate,
 					serverMoney: r.serverMoney,
-					continueMoney:r.continueMoney,
+					// continueMoney:r.continueMoney,
 					dayNumber:r.dayNumber
 				}
 			})
@@ -211,11 +224,11 @@ class BlackUser extends Component {
 		this.form.validate((valid) => {
 			if (valid) {
 				if(this.state.id){// 编辑
-					const data = Object.assign({},this.state.form,{id:this.state.id})
+					const data = Object.assign({},this.state.form,{id:this.state.id},{channelName:this.state.channelName})
 					if (this.props.history.location.pathname === '/system/borrowlimit') {
-						this.props.updateQuota(data, this.state.channelName)
+						this.props.updateQuota(data, )
 					}else{
-						this.props.updateQuota(data, this.state.channelName,1)
+						this.props.updateQuota(data,1)
 					}
 				}else{//添加
 					if (this.props.history.location.pathname === '/system/borrowlimit'){
@@ -251,7 +264,7 @@ class BlackUser extends Component {
 			<div>
 				{
 					this.props.history.location.pathname === '/system/borrowlimit' &&
-					<Search showChannel>
+					<Search showChannel showState>
 						<div>
 							<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
 							<Button className="margin-bottom15" type="primary" onClick={ this.openDialog.bind(this,'add') }>{'添加'}</Button>
@@ -293,16 +306,16 @@ class BlackUser extends Component {
 							<Form.Item label="额度" prop="money">
 								<Input type="number" value={ form.money } onChange={ this.onChange.bind(this,'money') } />
 							</Form.Item>
-							<Form.Item label="是否默认">
+							{/* <Form.Item label="是否默认">
 								<Radio.Group value={ form.defaultValue } onChange={ this.onChange.bind(this,'defaultValue') }>
-									<Radio value="1">{'是'}</Radio>
-									<Radio value="0">{'否'}</Radio>
+									<Radio value={ 1 }>{'是'}</Radio>
+									<Radio value={ 0 }>{'否'}</Radio>
 								</Radio.Group>
-							</Form.Item>
+							</Form.Item> */}
 							<Form.Item label="状态">
 								<Radio.Group value={ form.state } onChange={ this.onChange.bind(this,'state') }>
-									<Radio value="1">{'启用'}</Radio>
-									<Radio value="0">{'禁用'}</Radio>
+									<Radio value={ 1 }>{'启用'}</Radio>
+									<Radio value={ 0 }>{'禁用'}</Radio>
 								</Radio.Group>
 							</Form.Item>
 							<Form.Item label="排序" prop="sort">
@@ -310,14 +323,14 @@ class BlackUser extends Component {
 							</Form.Item>
 							<Form.Item label="延期开关">
 								<Radio.Group value={ form.delayType } onChange={ this.onChange.bind(this,'delayType') }>
-									<Radio value="1">{'开'}</Radio>
-									<Radio value="0">{'关'}</Radio>
+									<Radio value={ 1 }>{'开'}</Radio>
+									<Radio value={ 0 }>{'关'}</Radio>
 								</Radio.Group>
 							</Form.Item>
 							<Form.Item label="逾期开关">
 								<Radio.Group value={ form.overdueType } onChange={ this.onChange.bind(this,'overdueType') }>
-									<Radio value="1">{'开'}</Radio>
-									<Radio value="0">{'关'}</Radio>
+									<Radio value={ 1 }>{'开'}</Radio>
+									<Radio value={ 0 }>{'关'}</Radio>
 								</Radio.Group>
 							</Form.Item>
 							<Form.Item label="借款年化利率（利息）" prop="moneyRate">
@@ -329,9 +342,9 @@ class BlackUser extends Component {
 							<Form.Item label="服务费" prop="serverMoney">
 								<Input type="number" value={ form.serverMoney } onChange={ this.onChange.bind(this,'serverMoney') } />
 							</Form.Item>
-							<Form.Item label="延期金额" prop="continueMoney">
+							{/* <Form.Item label="延期金额" prop="continueMoney">
 								<Input type="number" value={ form.continueMoney } onChange={ this.onChange.bind(this,'continueMoney') } />
-							</Form.Item>
+							</Form.Item> */}
 							<Form.Item label="申请天数" prop="dayNumber">
 								<Input type="number" value={ form.dayNumber } onChange={ this.onChange.bind(this,'dayNumber') } />
 							</Form.Item>

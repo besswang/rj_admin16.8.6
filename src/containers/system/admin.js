@@ -89,13 +89,17 @@ class BlackUser extends Component {
 					label: '用户状态',
 					prop: 'adminState',
 					render: row => {
-						return row.adminState === 0 ? '启用':'禁用'
+						const y = <span className="theme-blue">{'启用'}</span>
+						const n = <span className="dis-red">{'禁用'}</span>
+						return row.adminState === 0 ? y : n
 					}
 				}, {
 					label: '分配状态',
 					prop: 'distribution',
 					render: row => {
-						return row.distribution === 1 ? '正常分配' : '未分配'
+						const y = <span className="theme-blue">{'正常分配'}</span>
+						const n = <span className="dis-red">{'未分配'}</span>
+						return row.distribution === 1 ? y : n
 					}
 				}, {
           label: '操作',
@@ -286,8 +290,8 @@ class BlackUser extends Component {
 							}
 							<Form.Item label="后台登陆">
 								<Radio.Group value={ form.adminType } onChange={ this.onChange.bind(this, 'adminType') } >
-									<Radio value={ 'CHANNEL' }>{'渠道'}</Radio>
-									<Radio value={ 'ADMIN' }>{'管理员'}</Radio>
+									<Radio value={ 'CHANNEL' } disabled={ adminDisabled }>{'渠道/催收'}</Radio>
+									<Radio value={ 'ADMIN' } disabled={ adminDisabled }>{'管理员'}</Radio>
 								</Radio.Group>
 							</Form.Item>
 							<Form.Item label="用户状态">

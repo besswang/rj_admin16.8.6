@@ -125,7 +125,9 @@ class Apply extends Component {
 					label: '状态',
 					prop: 'state',
 					render: row => {
-						return (row.state === 1 ? '正常': '禁用')
+						const y = <span className="theme-blue">{'正常'}</span>
+						const n = <span className="dis-red">{'禁用'}</span>
+						return (row.state === 1 ? y: n)
 					}
 				}, {
 						label: '操作',

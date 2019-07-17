@@ -98,6 +98,13 @@ export const ALLOT_TYPE = [{
   value: 1,
   label: '未分配'
 }]
+export const STATE_TYPE = [{
+  value: 0,
+  label: '禁用'
+}, {
+  value: 1,
+  label: '启用'
+}]
 
 export const PROMOTION_TYPE = ['cpa', 'cps', 'uv']
 

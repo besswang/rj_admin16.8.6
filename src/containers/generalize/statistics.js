@@ -26,17 +26,35 @@ class Apply extends Component {
 					label: '日期',
 					prop: 'date'
 				}, {
+					label: 'UV',
+					prop: 'uv'
+				}, {
 					label: '注册人数',
-					prop: 'register',
+					prop: 'userCount',
 					render: row => {
-						return row.register === null ? 0 : row.register
+						return row.userCount === null ? 0 : row.userCount
 					}
 				}, {
+					label: '登陆APP人数',
+					prop: 'loginCount'
+				}, {
+					label: '登陆APP比例',
+					prop: 'loginRate'
+				}, {
+					label: '资料完成人数',
+					prop: 'completedCount'
+				}, {
 					label: '申请人数',
-					prop: 'apply',
-					render: row => {
-						return row.apply === null ? 0 : row.apply
-					}
+					prop: 'applicantsCount'
+				}, {
+					label: '申请比例',
+					prop: 'applicantsRate'
+				}, {
+					label: '放款人数',
+					prop: 'orderStateCount'
+				}, {
+					label: '放款比例',
+					prop: 'orderStateRate'
 				}
 			]
 		}

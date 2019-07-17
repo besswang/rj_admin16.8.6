@@ -147,6 +147,7 @@ const search = {
   loanType: 0,
   neiCuiId: 0,
   isTheDay: null,
+  isState: null,
   payTypeId:null
 }
 const searchAll = (state = search, action) => {
@@ -155,6 +156,8 @@ const searchAll = (state = search, action) => {
       return { ...state, payTypeId: action.data, pageNum:1}
     case type.SELECT_ALLOT_TYPE:
       return { ...state, isTheDay: action.data, pageNum:1}
+    case type.SELECT_STATE_TYPE:
+      return { ...state, isState: action.data, pageNum:1}
     case type.SELECT_COLL_TYPE:
       return { ...state, neiCuiId: action.data, pageNum:1}
     case type.SELECT_LOAN_TYPE:
@@ -364,6 +367,21 @@ const isTheDay = (state = null, action) => {
       return state
   }
 }
+// 启用状态
+const isState = (state = null, action) => {
+  switch (action.type) {
+    case type.SELECT_STATE_TYPE:
+      if (action.data !== '') {
+        return action.data
+      } else {
+        return null
+      }
+      case type.CLEAR_SEARCH_ALL:
+        return null
+      default:
+        return state
+  }
+}
 // 支付类型
 const payTypeId = (state = null, action) => {
   switch (action.type) {
@@ -380,5 +398,5 @@ const payTypeId = (state = null, action) => {
   }
 }
 export default combineReducers({
-  user, typeId, typeName, searchAll, time, regTime, payTime, list, listInfo, idCardInfo, newClient, selectTime, router, btnLoading, realName, treeData, channelList, channelName, roleList, roleId, adminName, loanType, mobileData, collList, dayList, neiCuiId, isTheDay, payTypeId, lookInfo, tabObj
+  user, typeId, typeName, searchAll, time, regTime, payTime, list, listInfo, idCardInfo, newClient, selectTime, router, btnLoading, realName, treeData, channelList, channelName, roleList, roleId, adminName, loanType, mobileData, collList, dayList, neiCuiId, isTheDay, payTypeId, lookInfo, tabObj,isState
 })

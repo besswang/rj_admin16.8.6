@@ -59,12 +59,17 @@ class BlackUser extends Component {
 					prop: 'publisher'
 				}, {
 					label: '更新地址',
-					prop: 'updateAddress'
+					prop: 'updateAddress',
+					render: row => {
+						return <a href={ row.updateAddress } target="_blank" rel="noopener noreferrer">{ row.updateAddress }</a>
+					}
 				}, {
 					label: '是否必须更新',
 					prop: 'isUpdate',
 					render: row => {
-						const text = row.isUpdate === 1 ? '是' : '否'
+						const y = <span className="theme-blue">{'是'}</span>
+						const n = <span className="dis-red">{'否'}</span>
+						const text = row.isUpdate === 1 ? y : n
 						return text
 					}
 				}, {
@@ -74,7 +79,9 @@ class BlackUser extends Component {
 					label: '状态',
 					prop: 'state',
 					render: row => {
-						const text = row.state === 1 ? '正常' : '禁用'
+						const y = <span className="theme-blue">{'正常'}</span>
+						const n = <span className="dis-red">{'禁用'}</span>
+						const text = row.state === 1 ? y : n
 						return text
 					}
 				}, {

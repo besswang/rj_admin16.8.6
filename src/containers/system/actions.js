@@ -125,14 +125,13 @@ export const addQuota = (obj,name) => {
   }
 }
 // 借款额度管理-编辑
-export const updateQuota = (obj,name,type) => {
+export const updateQuota = (obj,type) => {
   return async dispatch => {
     dispatch(btnRequestPosts())
-    const trans = name ? Object.assign({},obj,{channelName:name}):obj
-    const data = await api.updateQuotaApi(trans)
+    const data = await api.updateQuotaApi(obj)
     if (data.success) {
       if(type===1){
-        dispatch(pageQuota(name))
+        dispatch(pageQuota(obj.channelName))
       }else{
         dispatch(pageQuota())
       }

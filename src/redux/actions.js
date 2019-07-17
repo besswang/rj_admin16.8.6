@@ -42,6 +42,7 @@ export const initSearch = () => ({
     loanType: 0,
     neiCuiId: 0,
     isTheDay: null,
+    isState: null,
     payTypeId: null
   }
 })
@@ -159,6 +160,10 @@ export const shouldFetchPosts = (state) => {
     if (params['payTypeId'] === 0) {
       pam['payTypeId'] = params['payTypeId']
     }
+    if (params['isState'] || params['isState'] === 0) {
+      pam['state'] = params['isState']
+      delete pam['isState']
+    }
   }
   return pam
 }
@@ -243,6 +248,10 @@ export const selectAllAdmin = id => {
 }
 export const changeAllot = data => ({
   type: type.SELECT_ALLOT_TYPE,
+  data
+})
+export const changeState = data => ({
+  type: type.SELECT_STATE_TYPE,
   data
 })
 export const changePayTypeId = data => ({
