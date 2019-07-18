@@ -12,6 +12,7 @@ import DetailBtn from '@components/DetailBtn'
 import timeDate from '@global/timeDate'
 import { dmlist } from '@meta/details'
 import filter from '@global/filter'
+import { Link } from 'react-router-dom'
 class Mlist extends Component{
 	static propTypes = {
 		location: PropTypes.object.isRequired,
@@ -60,7 +61,7 @@ class Mlist extends Component{
 					label: '授信额度',
 					prop: 'loanQuota'
 				}, {
-					label: '风控分数',
+					label: '米融分',
 					prop: 'thresholdScore'
 				}, {
 					label:'身份证认证',
@@ -135,6 +136,9 @@ class Mlist extends Component{
 					label: '登陆次数',
 					prop: 'loanNum'
 				},{
+					label: '手机机型',
+					prop: 'appType'
+				},{
 				 	label: '黑名单',
 					fixed:'right',
 					 render: row => {
@@ -150,7 +154,7 @@ class Mlist extends Component{
 				},{
 					label: '操作',
 					fixed: 'right',
-					width:120,
+					width:160,
 					render: row => {
 						return (
 							<div className="flex flex-direction_row">
@@ -161,6 +165,9 @@ class Mlist extends Component{
 									text={ ['启用','禁用'] }
 								/>
 								<DetailBtn linkTo={ dmlist } row={ row } />
+								<Link to={ '/member/report' } className="margin_left15">
+									<Button type="text" size="small" onClick={ this.props.saveList.bind(this,row) }>{ '报告' }</Button>
+								</Link>
 							</div>
 						)
 					}

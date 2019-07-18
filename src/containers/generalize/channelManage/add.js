@@ -34,7 +34,7 @@ class Apply extends Component {
 				sort:null, // 排序
 				delayType:1,
 				overdueType:1,
-				moneyRate: '', // 借款年化利率（利息）
+				// moneyRate: '', // 借款年化利率（利息）
 				overdueRate: '', // 逾期利率
 				serverMoney: null, // 逾期服务费
 				// continueMoney:null,
@@ -101,7 +101,7 @@ class Apply extends Component {
 				remake: [{required: true,message: '请输入备注',trigger: 'blur'}],
 				money: [{required: true, validator: validate.money}],
 				sort: [{required: true, validator:validate.sort}],
-				moneyRate: [{required: true,validator:validate.moneyRate}],
+				// moneyRate: [{required: true,validator:validate.moneyRate}],
 				overdueRate: [{required: true,validator:validate.overdueRate}],
 				serverMoney: [{required: true, validator: validate.serverMoney}],
 				// continueMoney: [{required: true, validator:validate.continueMoney}],
@@ -210,9 +210,9 @@ class Apply extends Component {
 							</Form.Item>
 						</Layout.Col>
 						<Layout.Col span="12" xs="24" sm="24" md="12" lg="8">
-							<Form.Item label="借款年化利率（利息）" prop="moneyRate">
+							{/* <Form.Item label="借款年化利率（利息）" prop="moneyRate">
 								<Input value={ form.moneyRate } onChange={ this.onChange.bind(this,'moneyRate') } />
-							</Form.Item>
+							</Form.Item> */}
 							<Form.Item label="逾期利率" prop="overdueRate">
 								<Input value={ form.overdueRate } onChange={ this.onChange.bind(this,'overdueRate') } />
 							</Form.Item>

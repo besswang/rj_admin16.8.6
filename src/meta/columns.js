@@ -151,7 +151,7 @@ export const OVERDUE = [
     prop: 'oneOverdueRate'
   }, {
     label: '再逾率',
-    prop: 'towOverudeRate'
+    prop: 'towOverdueRate'
   }, {
     label: '逾期总单数',
     prop: 'allOverdueNum'

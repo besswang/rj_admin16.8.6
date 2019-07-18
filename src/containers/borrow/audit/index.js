@@ -46,7 +46,7 @@ class Audit extends Component{
 					label: '真实姓名',
 					prop: 'realName'
 				}, {
-					label: '风控分数',
+					label: '米融分',
 					prop: 'riskNum'
 				}, {
 					label: '手机号码',

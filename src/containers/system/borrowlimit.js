@@ -37,7 +37,7 @@ class BlackUser extends Component {
 				sort:null,
 				delayType:1,
 				overdueType:1,
-				moneyRate:'',
+				// moneyRate:'',
 				overdueRate:'',
 				serverMoney: null,
 				// continueMoney:null,
@@ -46,7 +46,7 @@ class BlackUser extends Component {
 			rules: {
 				money: [{required: true, validator: validate.money}],
 				sort: [{required: true, validator:validate.sort}],
-				moneyRate: [{required: true,validator:validate.moneyRate}],
+				// moneyRate: [{required: true,validator:validate.moneyRate}],
 				overdueRate: [{required: true,validator:validate.overdueRate}],
 				serverMoney: [{required: true, validator: validate.serverMoney}],
 				// continueMoney: [{required: true, validator:validate.continueMoney}],
@@ -67,6 +67,9 @@ class BlackUser extends Component {
 					label: '额度',
 					prop: 'money',
 					fixed: 'left'
+				}, {
+					label: '申请天数',
+					prop: 'dayNumber'
 				},
 				// {
 				// 	label: '是否是默认值',
@@ -108,10 +111,12 @@ class BlackUser extends Component {
 						const t = row.overdueType === 1 ? y : n
 						return t
 					}
-				}, {
-					label: '借款年化利率（利息）',
-					prop: 'moneyRate'
-				}, {
+				},
+				// {
+				// 	label: '借款年化利率（利息）',
+				// 	prop: 'moneyRate'
+				// },
+				{
 					label: '逾期利率',
 					prop: 'overdueRate'
 				}, {
@@ -122,10 +127,7 @@ class BlackUser extends Component {
 				// 	label: '延期金额',
 				// 	prop: 'continueMoney'
 				// },
-				 {
-					label: '申请天数',
-					prop: 'dayNumber'
-				}, {
+				{
 					label: '操作',
 					width:140,
 					fixed: 'right',
@@ -140,11 +142,11 @@ class BlackUser extends Component {
 							{/* <Button type="danger" size="mini" onClick={ this.props.deleteQuota.bind(this, row.id, null) }>{'删除'}</Button> */}
 							{
 								this.props.history.location.pathname === '/system/borrowlimit' &&
-								<DisableBtn value={ row.state } result={ 0 } text={ ['启用','禁用'] } onClick={ this.props.updateQuota.bind(this,{state:row.state,id:row.id}) }/>
+								<DisableBtn value={ row.state } result={ 0 } text={ ['启用','禁用'] } onClick={ this.props.updateQuota.bind(this,{state:row.state===1 ? 0:1,id:row.id}) }/>
 							}
               {
 								this.props.history.location.pathname !== '/system/borrowlimit' &&
-								<DisableBtn value={ row.state } result={ 0 } text={ ['启用','禁用'] } onClick={ this.props.updateQuota.bind(this,{state:row.state,id:row.id},1) }/>
+								<DisableBtn value={ row.state } result={ 0 } text={ ['启用','禁用'] } onClick={ this.props.updateQuota.bind(this,{state:row.state===1 ? 0:1,id:row.id},1) }/>
 							}
 							</div>
             )
@@ -191,7 +193,7 @@ class BlackUser extends Component {
 					sort: null,
 					delayType: 1,
 					overdueType: 1,
-					moneyRate: '',
+					// moneyRate: '',
 					overdueRate: '',
 					serverMoney: null,
 					// continueMoney: null,
@@ -210,7 +212,7 @@ class BlackUser extends Component {
 					sort:r.sort,
 					delayType:r.delayType,
 					overdueType:r.overdueType,
-					moneyRate:r.moneyRate,
+					// moneyRate:r.moneyRate,
 					overdueRate:r.overdueRate,
 					serverMoney: r.serverMoney,
 					// continueMoney:r.continueMoney,
@@ -333,9 +335,9 @@ class BlackUser extends Component {
 									<Radio value={ 0 }>{'关'}</Radio>
 								</Radio.Group>
 							</Form.Item>
-							<Form.Item label="借款年化利率（利息）" prop="moneyRate">
+							{/* <Form.Item label="借款年化利率（利息）" prop="moneyRate">
 								<Input value={ form.moneyRate } onChange={ this.onChange.bind(this,'moneyRate') } />
-							</Form.Item>
+							</Form.Item> */}
 							<Form.Item label="逾期利率" prop="overdueRate">
 								<Input value={ form.overdueRate } onChange={ this.onChange.bind(this,'overdueRate') } />
 							</Form.Item>

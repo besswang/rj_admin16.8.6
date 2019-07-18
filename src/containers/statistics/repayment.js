@@ -38,10 +38,10 @@ class RepayMent extends Component {
           prop: 'shouldReturnNum'
         }, {
           label: '实还单数',
-          // prop: 'alreadyReturnNum', // 续期单数+复借单数
+          // prop: 'alreadyReturnNum', //   全额单数+续期单数
           render: row => {
-            if (row.renewNum && row.moreBorrowNum) {
-              const x = parseInt(row.renewNum) + parseInt(row.moreBorrowNum)
+            if (row.fullRepaymentNum !== null && row.renewNum !== null) {
+              const x = parseInt(row.fullRepaymentNum) + parseInt(row.renewNum)
               return x
             } else {
               return 0
@@ -51,10 +51,10 @@ class RepayMent extends Component {
           label: '未还单数',
           // prop: 'noReturnNum', // 应还单数- 实还单数
           render: row => {
-            if (row.renewNum && row.moreBorrowNum) {
-              const x = parseInt(row.renewNum) + parseInt(row.moreBorrowNum)
-              if (row.shouldReturnNum && x) {
-                const n = parseInt(row.apply) - parseInt(x)
+            if (row.fullRepaymentNum !== null && row.renewNum !== null) {
+              const x = parseInt(row.fullRepaymentNum) + parseInt(row.renewNum)
+              if (row.shouldReturnNum !==null && x !== null) {
+                const n = parseInt(row.shouldReturnNum) - parseInt(x)
                 return n
               } else {
                 return 0
@@ -67,11 +67,11 @@ class RepayMent extends Component {
           label: '还款率',
           // prop: 'repaymentRate', // 实还单数 /应还单数
           render: row => {
-            if (row.renewNum && row.moreBorrowNum) {
+            if (row.renewNum !== null && row.moreBorrowNum !== null) {
               const x = parseInt(row.renewNum) + parseInt(row.moreBorrowNum)
               if (x && row.shouldReturnNum) {
                 const n = parseInt(x) / parseInt(row.shouldReturnNum)
-                return (num.toDecimal(n))
+                return (num.toDecimal(n*100))
               } else {
                 return ('0.00%')
               }
@@ -88,7 +88,7 @@ class RepayMent extends Component {
           render: row => {
             if (row.fullRepaymentNum && row.shouldReturnNum) {
               const n = parseInt(row.fullRepaymentNum) / parseInt(row.shouldReturnNum)
-              return (num.toDecimal(n))
+              return (num.toDecimal(n*100))
             } else {
               return ('0.00%')
             }
@@ -100,9 +100,9 @@ class RepayMent extends Component {
           label: '续期率',
           prop: 'renewRate', // 续期单数/应还单数
           render: row => {
-            if (row.fullRepaymentNum && row.shouldReturnNum) {
-              const n = parseInt(row.fullRepaymentNum) / parseInt(row.shouldReturnNum)
-              return (num.toDecimal(n))
+            if (row.renewNum && row.shouldReturnNum) {
+              const n = parseInt(row.renewNum) / parseInt(row.shouldReturnNum)
+              return (num.toDecimal(n*100))
             } else {
               return ('0.00%')
             }
@@ -116,7 +116,7 @@ class RepayMent extends Component {
           render: row => {
             if (row.moreBorrowNum && row.shouldReturnNum) {
               const n = parseInt(row.moreBorrowNum) / parseInt(row.shouldReturnNum)
-              return (num.toDecimal(n))
+              return (num.toDecimal(n*100))
             } else {
               return ('0.00%')
             }
@@ -134,7 +134,7 @@ class RepayMent extends Component {
               label: '未还单数',
               // prop: 'newNoReturnNum',
               render: row => {
-                if (row.newShouldReturnNum && row.newAlreadyReturnNum) {
+                if (row.newShouldReturnNum !== null && row.newAlreadyReturnNum !== null) {
                   const n = parseInt(row.newShouldReturnNum) - parseInt(row.newAlreadyReturnNum)
                   return n
                 } else {
@@ -147,7 +147,7 @@ class RepayMent extends Component {
               render: row => {
                 if (row.newAlreadyReturnNum && row.newShouldReturnNum) {
                   const n = parseInt(row.newAlreadyReturnNum) / parseInt(row.newShouldReturnNum)
-                  return (num.toDecimal(n))
+                  return (num.toDecimal(n*100))
                 } else {
                   return ('0.00%')
                 }
@@ -167,7 +167,7 @@ class RepayMent extends Component {
               label: '未还单数',
               // prop: 'xuNoReturnNum',
               render: row => {
-                if (row.xuShouldReturnNum && row.xuAlreadyReturnNum) {
+                if (row.xuShouldReturnNum !== null && row.xuAlreadyReturnNum !== null) {
                   const n = parseInt(row.xuShouldReturnNum) - parseInt(row.xuAlreadyReturnNum)
                   return n
                 } else {
@@ -180,7 +180,7 @@ class RepayMent extends Component {
               render: row => {
                 if (row.xuAlreadyReturnNum && row.xuShouldReturnNum) {
                   const n = parseInt(row.xuAlreadyReturnNum) / parseInt(row.xuShouldReturnNum)
-                  return (num.toDecimal(n))
+                  return (num.toDecimal(n*100))
                 } else {
                   return ('0.00%')
                 }
@@ -203,7 +203,7 @@ class RepayMent extends Component {
               label: '未还单数',
               // prop: 'fuNoReturnNum',
               render: row => {
-                if (row.fuShouldReturnNum && row.fuAlreadyReturnNum) {
+                if (row.fuShouldReturnNum !== null && row.fuAlreadyReturnNum !== null) {
                   const n = parseInt(row.fuShouldReturnNum) - parseInt(row.fuAlreadyReturnNum)
                   return n
                 } else {
@@ -216,7 +216,7 @@ class RepayMent extends Component {
               render: row => {
                 if (row.fuAlreadyReturnNum && row.fuShouldReturnNum) {
                   const n = parseInt(row.fuAlreadyReturnNum) / parseInt(row.fuShouldReturnNum)
-                  return (num.toDecimal(n))
+                  return (num.toDecimal(n*100))
                 } else {
                   return ('0.00%')
                 }

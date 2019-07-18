@@ -1,21 +1,6 @@
 import api from '@api/index'
-import * as type from '@redux/actionTypes'
 import { requestPosts, receivePosts, failurePosts, saveIdCardInfo, shouldFetchPosts } from '@redux/actions'
 import { Message } from 'element-react'
-
-const saveMobile = data => ({
-  type: type.SAVE_MOBILE_DATA,
-  data
-})
-// 查看手机报表
-export const selectMobileReport = obj => {
-  return async dispatch => {
-    const data = await api.selectMobileReportApi(obj)
-    if(data.success){
-      dispatch(saveMobile(data.data))
-    }
-  }
-}
 
 // 身份证信息
 export const selectIdCardByUserId = id => {

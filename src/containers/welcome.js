@@ -53,10 +53,9 @@ class Welcome extends React.Component{
 			})
 		}else{
 			if(res.msg === '请先登录'){
-				console.log('1234')
 				setTimeout(() => {
 					this.props.history.push('/login')
-				},3000)
+				},1000)
 			}
 			Message.warning(res.msg)
 		}

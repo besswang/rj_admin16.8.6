@@ -3,6 +3,7 @@ import Welcome from '@containers/welcome'
 import Mlist from '@containers/member/mlist/index'
 // 会员管理-会员详情
 import Detail from '@containers/detail/index'
+import Report from '@containers/member/mlist/report'
 // 会员管理-注册未申请
 import Apply from '@containers/member/apply'
 // 会员管理-正常还款未借
@@ -427,6 +428,18 @@ export const CHILD_ROUTES = [
     path: '/generalize/add',
     exact: true,
     component: Add,
+    hideInMenu: true,
+    childSingle: true
+  }, {
+    id: 105,
+    pid: 0,
+    state: 0,
+    state1: '1',
+    superState: 0,
+    name: '报告',
+    path: '/member/report',
+    exact: true,
+    component: Report,
     hideInMenu: true,
     childSingle: true
   }

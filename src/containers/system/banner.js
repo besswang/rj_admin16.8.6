@@ -28,14 +28,20 @@ class Banner extends Component {
 					fixed: 'left'
 				}, {
 					label: '图片',
-					prop: 'advertUrl',
+					prop: 'imgUrl',
 					align: 'center',
 					render: row => {
 						return (
 							<div className="table-img-con">
-								<img className="table-img" src={ row.advertUrl } alt="" onClick={ this.openDialog.bind(this,row.advertUrl) }/>
+								<img className="table-img" src={ row.imgUrl } alt="" onClick={ this.openDialog.bind(this,row.imgUrl) }/>
 							</div>
 						)
+					}
+				}, {
+					label: '跳转地址',
+					prop: 'advertUrl',
+					render: row => {
+						return <a className="theme-blue" href={ row.advertUrl } target="_blank" rel="noopener noreferrer">{ row.advertUrl }</a>
 					}
 				}, {
 					label: '上架状态',

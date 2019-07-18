@@ -100,6 +100,9 @@ class Apply extends Component {
 					label: '推广链接',
 					prop: 'extensionLink',
 					width:280
+					// render: row =>{
+					// 	return <Button type="text" onClick={ this.copy.bind(this,row.extensionLink) }>{ row.extensionLink }</Button>
+					// }
 				}, {
 					label: '单价',
 					prop: 'price'
@@ -158,6 +161,10 @@ class Apply extends Component {
 	componentDidMount() {
 		this.props.selectChannel()
 	}
+	// copy = url => {
+  //  // 执行浏览器复制
+  //  document.execCommand('Copy')
+	// }
 	ditchType = (name) => {
     window.sessionStorage.setItem('channelName', name)
   }

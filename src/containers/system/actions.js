@@ -355,7 +355,7 @@ export const selectUnAllowableArea = fn => {
       if (data.msg === '请先登录') {
         setTimeout(() => {
           fn.push('/login')
-        }, 3000)
+        }, 1000)
       }
       dispatch(failurePosts(data))
     }

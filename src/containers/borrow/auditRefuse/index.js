@@ -39,7 +39,7 @@ class AuditRefuse extends Component{
 					prop: 'realName'
 				},
 				{
-					label: '风控分数',
+					label: '米融分',
 					prop: 'riskNum'
 				},
 				{

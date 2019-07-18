@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
-import { Breadcrumb, Tabs, Button, Table, Loading, Dialog } from 'element-react'
+import { Breadcrumb, Tabs, Button, Table, Loading, Dialog, Message } from 'element-react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { initSearch } from '@redux/actions'
-import { selectIdCardByUserId, selectPhoneDateByUserId, emergency, bankInfo, selectReportMail, selectReport, selectMobileReport } from './action'
+import { selectIdCardByUserId, selectPhoneDateByUserId, emergency, bankInfo, selectReportMail, selectReport } from './action'
 import Detailtable from '@components/detailTable'
 import { BANK, ADDRESS, CALL_LOG } from '@meta/columns'
 import '@styles/detail.less'
 import timeDate from '@global/timeDate'
 import filter from '@global/filter'
+import api from '@api/index'
 class Detail extends Component{
   static propTypes = {
     history: PropTypes.object.isRequired,
@@ -25,8 +26,6 @@ class Detail extends Component{
     selectReportMail:PropTypes.func.isRequired,
     selectReport: PropTypes.func.isRequired,
     initSearch: PropTypes.func.isRequired,
-    selectMobileReport: PropTypes.func.isRequired,
-    mobileData: PropTypes.object
   }
   constructor(props) {
       super(props)
@@ -37,7 +36,8 @@ class Detail extends Component{
         title:'',
         linkUrl:'',
         listInfo: {},
-        activeName: '1'
+        activeName: '1',
+        mobileData:''
       }
   }
 	componentWillMount() {
@@ -67,6 +67,17 @@ class Detail extends Component{
     console.log(this.state.activeName)
     this.tabChange(this.state.activeName)
   }
+  selectMobileReport = async (obj) => {
+    const res = await api.selectMobileReportApi(obj)
+    if (res.success) {
+      this.setState({
+        mobileData:res.data
+      })
+      console.log(res.data)
+    }else{
+      Message.warning(res.msg)
+    }
+  }
   tabChange = (e) => {
     window.sessionStorage.setItem('activeName',e)
     this.setState({
@@ -79,7 +90,7 @@ class Detail extends Component{
         return this.props.selectIdCardByUserId({userId: userId})
       }
       case '3':{ // 手机认证
-        this.props.selectMobileReport({userId: userId})
+        this.selectMobileReport({userId: userId})
         return this.props.selectPhoneDateByUserId({userId: userId})
       }
       case '4':{ // 紧急联系人
@@ -107,14 +118,14 @@ class Detail extends Component{
     }
   }
   goReport = () => {
-    const { mobileData } = this.props
-    const url = `https://tenant.51datakey.com/carrier/mxreport_data?data=${ mobileData.reportData }&contact=${ mobileData.relativesPhone }:${ mobileData.relativesName }:${ mobileData.relatives },${ mobileData.sociologyPhone }:${ mobileData.sociologyName }:${ mobileData.sociology }`
-    console.log(url)
-    const a = document.createElement('a')
-    a.setAttribute('target', 'view_window')
-    a.setAttribute('href', url)
-    a.click()
-    console.log(url)
+    console.log(this.state.mobileData)
+    if (this.state.mobileData){
+      const a = document.createElement('a')
+      a.setAttribute('target', '_blank')
+      a.setAttribute('rel', 'noopener noreferrer')
+      a.setAttribute('href', this.state.mobileData)
+      a.click()
+    }
   }
   openDialog = url => {
 		this.setState({
@@ -338,12 +349,12 @@ class Detail extends Component{
 	}
 }
 const mapStateToProps = state => {
-	const { listInfo, idCardInfo, list, mobileData } = state
-	return { listInfo, idCardInfo, list, mobileData }
+	const { listInfo, idCardInfo, list } = state
+	return { listInfo, idCardInfo, list }
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({ selectIdCardByUserId, selectPhoneDateByUserId, emergency, bankInfo, initSearch, selectReportMail, selectReport, selectMobileReport }, dispatch)
+		...bindActionCreators({ selectIdCardByUserId, selectPhoneDateByUserId, emergency, bankInfo, initSearch, selectReportMail, selectReport }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Detail)

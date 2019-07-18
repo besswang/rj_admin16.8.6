@@ -61,7 +61,7 @@ class BlackUser extends Component {
 					label: '更新地址',
 					prop: 'updateAddress',
 					render: row => {
-						return <a href={ row.updateAddress } target="_blank" rel="noopener noreferrer">{ row.updateAddress }</a>
+						return <a className="theme-blue" href={ row.updateAddress } target="_blank" rel="noopener noreferrer">{ row.updateAddress }</a>
 					}
 				}, {
 					label: '是否必须更新',

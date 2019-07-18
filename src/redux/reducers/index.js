@@ -324,15 +324,6 @@ const loanType = (state = 0, action) => {
       return state
   }
 }
-// 手机报表
-const mobileData = (state = {}, action) => {
-  switch (action.type) {
-    case type.SAVE_MOBILE_DATA:
-      return action.data
-    default:
-      return state
-  }
-}
 // 催收人员id
 const neiCuiId = (state = 0, action) => {
   switch (action.type) {
@@ -398,5 +389,5 @@ const payTypeId = (state = null, action) => {
   }
 }
 export default combineReducers({
-  user, typeId, typeName, searchAll, time, regTime, payTime, list, listInfo, idCardInfo, newClient, selectTime, router, btnLoading, realName, treeData, channelList, channelName, roleList, roleId, adminName, loanType, mobileData, collList, dayList, neiCuiId, isTheDay, payTypeId, lookInfo, tabObj,isState
+  user, typeId, typeName, searchAll, time, regTime, payTime, list, listInfo, idCardInfo, newClient, selectTime, router, btnLoading, realName, treeData, channelList, channelName, roleList, roleId, adminName, loanType, collList, dayList, neiCuiId, isTheDay, payTypeId, lookInfo, tabObj,isState
 })
