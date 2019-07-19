@@ -137,6 +137,14 @@ export default {
       return '老客'
     }
   },
+  // 等于0为首借 大于0为复借
+  loanTer(x) {
+    if (parseInt(x) === 0) {
+      return '首借'
+    } else {
+      return '复借'
+    }
+  },
 
   // 打款状态
   payStatus(x) {

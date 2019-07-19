@@ -126,5 +126,6 @@ export default {
   pageRechargeApi: params => Fetch(jk.pageRecharge, {method: 'post', body:params}),
   selectGlobalValueApi: () => Fetch(jk.selectGlobalValue, {method: 'post'}),
   selectAdminLoginByNameApi: params => Fetch(jk.selectAdminLoginByName, {method: 'get', data:params}),
+  insertRotationChartApi: params => Fetch(jk.insertRotationChart, {method: 'get', data:params}),
 }
 

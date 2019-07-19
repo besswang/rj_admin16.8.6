@@ -67,7 +67,6 @@ class Detail extends Component{
 	componentDidMount() {
     console.log(this.state.activeName)
     this.tabChange(this.state.activeName)
-    this.selectMobileReport({ userId: this.state.listInfo.userId ? this.state.listInfo.userId : this.state.listInfo.id })
   }
   selectMobileReport = async (obj) => {
     this.setState({
@@ -95,9 +94,10 @@ class Detail extends Component{
       case '2':{ // 身份证信息
         return this.props.selectIdCardByUserId({userId: userId})
       }
-      // case '3':{ // 手机认证
-      //   return this.props.selectPhoneDateByUserId({userId: userId})
-      // }
+      case '3':{ // 手机认证
+        return this.selectMobileReport({ userId: userId})
+        // return this.props.selectPhoneDateByUserId({userId: userId})
+      }
       case '4':{ // 紧急联系人
         return this.props.emergency({userId: userId})
       }

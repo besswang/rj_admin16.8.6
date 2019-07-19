@@ -202,6 +202,17 @@ export const pageRotationChart = () => {
     }
   }
 }
+// 轮播图管理-添加
+export const insertRotationChart = obj => {
+  return async dispatch => {
+    const data = await api.insertRotationChartApi(obj)
+    if (data.success) {
+      dispatch(pageRotationChart())
+    } else {
+      Message.warning(data.msg)
+    }
+  }
+}
 // 轮播图管理-删除
 export const deleteRotationChart = subreddit => {
   return dispatch => {

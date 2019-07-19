@@ -138,5 +138,6 @@ export default {
   'allRoles': 'role/allRoles',
   'selectAllAdmin': 'admin/selectAllAdmin', // 根据角色id查询多个用户
   // footer
-  'selectGlobalValue': 'selectGlobalValue'
+  'selectGlobalValue': 'selectGlobalValue',
+  'insertRotationChart': 'rotationChart/insertRotationChart' // 增加banner图
 }

@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { Button, Loading, Table, Dialog, Upload, Message } from 'element-react'
+import { Button, Loading, Table, Dialog, Upload, Message, Form, Input } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { pageRotationChart, deleteRotationChart, updateRotationChart } from './actions'
+import { pageRotationChart, deleteRotationChart, updateRotationChart,insertRotationChart } from './actions'
 import MyPagination from '@components/MyPagination'
 import DisableBtn from '@components/DisableBtn'
 class Banner extends Component {
@@ -15,13 +15,23 @@ class Banner extends Component {
     initSearch: PropTypes.func.isRequired,
 		pageRotationChart: PropTypes.func.isRequired,
 		deleteRotationChart: PropTypes.func.isRequired,
-		updateRotationChart: PropTypes.func.isRequired
+		updateRotationChart: PropTypes.func.isRequired,
+		btnLoading: PropTypes.bool.isRequired,
+		insertRotationChart: PropTypes.func.isRequired,
   }
 	constructor(props) {
 		super(props)
 		this.state = {
-			btnLoading: false,
 			dialogVisible: false,
+			imgUrl: '',
+			form:{
+				advertUrl: '', // 跳转地址
+			},
+			rules:{
+				advertUrl:[{ required: true, message: '请输入跳转地址', trigger: 'blur' }]
+			},
+			btnLoading: false,
+			dialogVisible2: false,
 			dialogImageUrl: '',
 			columns: [{
 					type: 'index',
@@ -33,7 +43,7 @@ class Banner extends Component {
 					render: row => {
 						return (
 							<div className="table-img-con">
-								<img className="table-img" src={ row.imgUrl } alt="" onClick={ this.openDialog.bind(this,row.imgUrl) }/>
+								<img className="table-img" src={ row.imgUrl } alt="" onClick={ this.openDialog2.bind(this,row.imgUrl) }/>
 							</div>
 						)
 					}
@@ -80,23 +90,26 @@ class Banner extends Component {
     this.props.currentChange(e)
     this.props.pageRotationChart()
 	}
-	openDialog = url => {
+	openDialog2 = url => {
 		this.setState({
-			dialogVisible: true,
+			dialogVisible2: true,
 			dialogImageUrl: url
 		})
 	}
 	submitUpload() {
 		this.upload.submit()
 		this.setState({
-			btnLoading: true
+			btnLoading: true,
 		})
 	}
-	onChange = (file) => {
+	onChange2 = (file) => {
 		const { success, msg } = file.response
 		if(success){
 			Message.success(msg)
 			this.props.pageRotationChart()
+			this.setState({
+				imgUrl:file.response.data
+			})
 		}else{
 			Message.error(msg)
 		}
@@ -105,12 +118,76 @@ class Banner extends Component {
 			btnLoading: false
 		})
 	}
+	onChange(key, value) {
+		this.setState({
+			form: Object.assign({}, this.state.form, { [key]: value })
+		})
+	}
+	openDialog = url => {
+		this.setState({
+			dialogVisible: true,
+			imgUrl: ''
+		})
+	}
+	saveContent = e => {
+		e.preventDefault()
+		if (this.state.imgUrl === '') {
+			Message.warning('请上传图片')
+			return false
+		}
+		this.form.validate((valid) => {
+			if (valid) {
+				console.log(this.state)
+				this.props.insertRotationChart({imgUrl:this.state.imgUrl,advertUrl: this.state.form.advertUrl})
+				this.setState({
+					dialogVisible:false
+				})
+			} else {
+				console.log('error submit!!')
+				return false
+			}
+		})
+	}
 	render() {
 		const { list } = this.props
-		const { columns, dialogVisible, dialogImageUrl, btnLoading } = this.state
+		const load = this.props.btnLoading
+		const { columns, dialogVisible2, dialogImageUrl, btnLoading,dialogVisible,form, rules } = this.state
 		return (
 			<div>
-				<Upload
+				<Button className="margin-bottom15" type="primary" onClick={ this.openDialog.bind(this) }>{'添加'}</Button>
+				<Dialog
+					title={ '添加' }
+					visible={ dialogVisible }
+					onCancel={ () => this.setState({ dialogVisible: false }) }
+				>
+					<Dialog.Body>
+						<Form labelWidth="140" ref={ e => {this.form=e} } model={ form } rules={ rules }>
+							<Form.Item label="上传图片">
+								<Upload
+									className = "margin-bottom15"
+									ref={ e => {this.upload = e} }
+									action="/api/rotationChart/addRotationChart"
+									accept=".jpg,.jpeg,.png,.gif,.bmp,.pdf,.JPG,.JPEG,.PBG,.GIF,.BMP,.PDF"
+									limit={ 1 }
+									autoUpload={ false }
+									tip={ <div className="el-upload__tip">{'只能上传jpg/png文件，且不超过500kb'}</div> }
+									trigger={ <Button size="small" type="primary">{'选取文件'}</Button> }
+									onChange={ this.onChange2 }
+								>
+									<Button style={ { marginLeft: '10px'} } size="small" type="success" onClick={ () => this.submitUpload() } loading={ btnLoading }>{'上传到服务器'}</Button>
+								</Upload>
+							</Form.Item>
+							<Form.Item label="跳转地址" prop="advertUrl">
+								<Input value={ form.advertUrl } onChange={ this.onChange.bind(this,'advertUrl') } prepend="Http://"/>
+							</Form.Item>
+						</Form>
+					</Dialog.Body>
+					<Dialog.Footer className="dialog-footer">
+						<Button onClick={ () => this.setState({ dialogVisible: false }) }>{'取 消'}</Button>
+						<Button type="primary" onClick={ this.saveContent } loading={ load }>{'确 定'}</Button>
+					</Dialog.Footer>
+				</Dialog>
+				{/* <Upload
 					className = "margin-bottom15"
 					ref={ e => {this.upload = e} }
 					action="/api/rotationChart/addRotationChart"
@@ -119,10 +196,10 @@ class Banner extends Component {
 					autoUpload={ false }
 					tip={ <div className="el-upload__tip">{'只能上传jpg/png文件，且不超过500kb'}</div> }
 					trigger={ <Button size="small" type="primary">{'选取文件'}</Button> }
-					onChange={ this.onChange }
+					onChange={ this.onChange2 }
 				>
 					<Button style={ { marginLeft: '10px'} } size="small" type="success" onClick={ () => this.submitUpload() } loading={ btnLoading }>{'上传到服务器'}</Button>
-				</Upload>
+				</Upload> */}
 				<Loading loading={ list.loading }>
 					<Table
 						style={ { width: '100%' } }
@@ -138,8 +215,8 @@ class Banner extends Component {
           onCurrentChange={ this.onCurrentChange }
         />
 				<Dialog
-				visible={ dialogVisible }
-				onCancel={ () => this.setState({ dialogVisible: false }) }
+				visible={ dialogVisible2 }
+				onCancel={ () => this.setState({ dialogVisible2: false }) }
 				>
 					<img width="100%" src={ dialogImageUrl } alt="" />
 				</Dialog>
@@ -149,12 +226,12 @@ class Banner extends Component {
 }
 
 const mapStateToProps = state => {
-	const { list } = state
-	return { list }
+	const { list, btnLoading } = state
+	return { list, btnLoading }
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({ sizeChange, currentChange, initSearch, pageRotationChart, deleteRotationChart, updateRotationChart }, dispatch)
+		...bindActionCreators({ sizeChange, currentChange, initSearch, pageRotationChart, deleteRotationChart, updateRotationChart,insertRotationChart }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Banner)

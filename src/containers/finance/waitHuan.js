@@ -8,7 +8,7 @@ import { sizeChange, currentChange, initSearch } from '@redux/actions'
 import { selectPendingRepay, updateStateComplete, updateStateDelay, findAllDelayRate, updateStateReduction } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
-// import filter from '@global/filter'
+import filter from '@global/filter'
 import timeDate from '@global/timeDate'
 import SelectPicker from '@components/SelectPicker'
 import { REPAYMENT_TYPE } from '@meta/select'
@@ -149,10 +149,16 @@ class WaitHuan extends Component {
 					prop: 'repaymentMoney'
 				}, {
 					label: '减免金额',
-					prop: ''
+					prop: 'reductionMoney',
+					render: row => {
+						return row.reductionMoney === null ? 0 : row.reductionMoney
+					}
 				}, {
 					label: '目前应还',
-					prop: ''
+					prop: 'realRepayMoney',
+					render: row =>{
+						return row.realRepayMoney === null ? 0 :row.realRepayMoney
+					}
 				}, {
 					label: '约定还款日',
 					prop: 'finalDate'
@@ -195,13 +201,23 @@ class WaitHuan extends Component {
 					prop: 'bankNumber'
 				}, {
 					label: '订单类型',
-					prop: ''
+					prop: 'loanTerm', // 等于0 为新客  大于0 为老客
+					render: row => {
+						const data = filter.loanTer(row.loanTerm)
+						return data
+					}
 				}, {
 					label: '续期订单',
-					prop: 'orderType     '
+					prop: 'orderType',
+					render: row =>{
+						return filter.loanTyp(row.orderType)
+					}
 				}, {
 					label: '是否逾期',
-					prop: 'overType'
+					prop: 'overType',
+					render: row =>{
+						return row.overType ? '是': '否'
+					}
 				}, {
 					label: '操作',
 					fixed: 'right',
