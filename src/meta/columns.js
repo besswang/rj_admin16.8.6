@@ -235,7 +235,10 @@ export const CONSUME = [
         prop: 'fuRiskA'
       }, {
         label: '风控金额',
-        prop: 'riskAmountA'
+        prop: 'riskAmountA',
+        render: row => {
+          return row.riskAmountA === null ? 0 : row.riskAmountA
+        }
       }
     ]
   }, {
@@ -248,7 +251,10 @@ export const CONSUME = [
       prop: 'fuRiskB'
     }, {
       label: '风控金额',
-      prop: 'riskAmountB'
+      prop: 'riskAmountB',
+      render: row => {
+        return row.riskAmountB === null ? 0 : row.riskAmountB
+      }
     }]
   }, {
     label: 'AB分控',
