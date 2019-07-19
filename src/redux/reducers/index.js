@@ -124,6 +124,20 @@ const btnLoading = (state = false, action) => {
       return state
   }
 }
+const areaLoading = (state = false,action) => {
+  switch(action.type){
+    case type.AREA_REQUEST_POSTS:
+      return true
+    case type.AREA_RECEIVE_POSTS:
+      return false
+    case type.AREA_FAILURE_POSTS:{
+      Notification.error({title:'失败',message:action.data, duration:0})
+      return false
+    }
+    default:
+      return state
+  }
+}
 const realName = (state = '', action) => {
   switch (action.type) {
     case type.SAVE_REAL_NAME:
@@ -247,8 +261,13 @@ const listInfo = (state = {}, action) => {
 }
 const idCardInfo = (state = {}, action) => {
   switch (action.type) {
-    case type.SAVE_ID_CARD_INFO:
-      return action.data
+    case type.SAVE_ID_CARD_INFO:{
+      if(action.data === null){
+        return {}
+      }else{
+        return action.data
+      }
+    }
     default:
       return state
   }
@@ -389,5 +408,5 @@ const payTypeId = (state = null, action) => {
   }
 }
 export default combineReducers({
-  user, typeId, typeName, searchAll, time, regTime, payTime, list, listInfo, idCardInfo, newClient, selectTime, router, btnLoading, realName, treeData, channelList, channelName, roleList, roleId, adminName, loanType, collList, dayList, neiCuiId, isTheDay, payTypeId, lookInfo, tabObj,isState
+  user, typeId, typeName, searchAll, time, regTime, payTime, list, listInfo, idCardInfo, newClient, selectTime, router, btnLoading, realName, treeData, channelList, channelName, roleList, roleId, adminName, loanType, collList, dayList, neiCuiId, isTheDay, payTypeId, lookInfo, tabObj, isState, areaLoading
 })

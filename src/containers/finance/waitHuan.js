@@ -8,7 +8,7 @@ import { sizeChange, currentChange, initSearch } from '@redux/actions'
 import { selectPendingRepay, updateStateComplete, updateStateDelay, findAllDelayRate, updateStateReduction } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
-import filter from '@global/filter'
+// import filter from '@global/filter'
 import timeDate from '@global/timeDate'
 import SelectPicker from '@components/SelectPicker'
 import { REPAYMENT_TYPE } from '@meta/select'
@@ -102,33 +102,42 @@ class WaitHuan extends Component {
 					type: 'index',
 					fixed: 'left'
 				}, {
+					label: '申请单号',
+					prop: 'orderNumber'
+				}, {
 					label: '渠道名称',
 					prop: 'channelName'
-				}, {
-					label: '新老客户',
-					prop: 'loanTerm', // 等于0 为新客  大于0 为老客
-					render: row => {
-						const data = filter.loanTerm(row.loanTerm)
-						return data
-					}
 				}, {
 					label: '真实姓名',
 					prop: 'realName'
 				}, {
+					label: '手机号码',
+					prop: 'phone'
+				},
+				// {
+				// 	label: '新老客户',
+				// 	prop: 'loanTerm', // 等于0 为新客  大于0 为老客
+				// 	render: row => {
+				// 		const data = filter.loanTerm(row.loanTerm)
+				// 		return data
+				// 	}
+				// },
+				//  {
+				// 	label: '身份证号',
+				// 	prop: 'idcardNumber'
+				// },
+				{
 					label: '米融分',
 					prop: 'riskNum'
 				}, {
-					label: '手机号码',
-					prop: 'phone'
-				}, {
-					label: '身份证号',
-					prop: 'idcardNumber'
-				}, {
-					label: '申请金额',
-					prop: 'applyMoney'
+					label: '风控类型',
+					prop: 'riskType'
 				}, {
 					label: '申请期限',
 					prop: 'applyTerm'
+				}, {
+					label: '申请金额',
+					prop: 'applyMoney'
 				}, {
 					label: '服务费',
 					prop: 'serviceMoney'
@@ -139,46 +148,60 @@ class WaitHuan extends Component {
 					label: '应还金额',
 					prop: 'repaymentMoney'
 				}, {
+					label: '减免金额',
+					prop: ''
+				}, {
+					label: '目前应还',
+					prop: ''
+				}, {
 					label: '约定还款日',
 					prop: 'finalDate'
-				}, {
-					label: '借款次数',
-					prop: 'loanTerm'
-				}, {
-					label: '申请时间',
-					prop: 'upt',
-					width: 120,
-					render: row => {
-						const date = timeDate.time(row.upt, 'yyyy-MM-dd hh:mm:ss')
-						return date
-					}
-				}, {
-					label: '审核客服',
-					prop: 'examineCustomerName'
-				}, {
-					label: '审核时间',
-					prop: 'examineDate',
-					width:120,
-					render: row => {
-						const date = timeDate.time(row.examineDate, 'yyyy-MM-dd hh:mm:ss')
-						return date
-					}
-				}, {
-					label: '打款状态',
-					prop: 'payStatus',
-					render: row => {
-						const data = filter.payStatus(row.payStatus)
-						return data
-					}
-				}, {
-					label: '申请单号',
-					prop: 'orderNumber'
-				}, {
+				},
+				// {
+				// 	label: '借款次数',
+				// 	prop: 'loanTerm'
+				// }, {
+				// 	label: '申请时间',
+				// 	prop: 'upt',
+				// 	width: 120,
+				// 	render: row => {
+				// 		const date = timeDate.time(row.upt, 'yyyy-MM-dd hh:mm:ss')
+				// 		return date
+				// 	}
+				// }, {
+				// 	label: '审核客服',
+				// 	prop: 'examineCustomerName'
+				// }, {
+				// 	label: '审核时间',
+				// 	prop: 'examineDate',
+				// 	width:120,
+				// 	render: row => {
+				// 		const date = timeDate.time(row.examineDate, 'yyyy-MM-dd hh:mm:ss')
+				// 		return date
+				// 	}
+				// }, {
+				// 	label: '打款状态',
+				// 	prop: 'payStatus',
+				// 	render: row => {
+				// 		const data = filter.payStatus(row.payStatus)
+				// 		return data
+				// 	}
+				// },
+				{
 					label: '银行名称',
 					prop: 'bankName'
 				}, {
 					label: '银行卡号',
 					prop: 'bankNumber'
+				}, {
+					label: '订单类型',
+					prop: ''
+				}, {
+					label: '续期订单',
+					prop: 'orderType     '
+				}, {
+					label: '是否逾期',
+					prop: 'overType'
 				}, {
 					label: '操作',
 					fixed: 'right',

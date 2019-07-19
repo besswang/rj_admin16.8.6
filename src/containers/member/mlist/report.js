@@ -22,7 +22,7 @@ class Mlist extends Component{
 	render() {
 		return (
 			<div>
-				{ '2233' }
+				{ '报告' }
 			</div>
 		)
 	}

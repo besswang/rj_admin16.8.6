@@ -34,7 +34,7 @@ class BlackUser extends Component {
 				roleId: null,
 				loginMode: 'PASSWORD', // 登陆方式
 				adminType: 'CHANNEL', // 后台登陆
-				adminState: 1, // 用户状态
+				adminState: 0, // 用户状态
 				distribution: 1, // 是否分配
 				password:''
 			},
@@ -171,7 +171,7 @@ class BlackUser extends Component {
 					loginMode: 'PASSWORD', // 登陆方式
 					adminType: 'CHANNEL',
 					adminState: 0, // 用户状态
-					distribution: 0, // 是否分配
+					distribution: 1, // 是否分配
 					password:''
 				},
 				id: null,
@@ -296,8 +296,8 @@ class BlackUser extends Component {
 							</Form.Item>
 							<Form.Item label="用户状态">
 								<Radio.Group value={ form.adminState } onChange={ this.onChange.bind(this, 'adminState') } >
-									<Radio value={ 1 }>{'启用'}</Radio>
-									<Radio value={ 0 }>{'禁用'}</Radio>
+									<Radio value={ 0 }>{'启用'}</Radio>
+									<Radio value={ 1 }>{'禁用'}</Radio>
 								</Radio.Group>
 							</Form.Item>
 							<Form.Item label="是否分配">

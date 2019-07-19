@@ -31,7 +31,7 @@ class Apply extends Component {
 				money: null, // 额度
 				defaultValue: 1,
 				state:1,
-				sort:null, // 排序
+				// sort:null, // 排序
 				delayType:1,
 				overdueType:1,
 				// moneyRate: '', // 借款年化利率（利息）
@@ -100,7 +100,7 @@ class Apply extends Component {
 				}],
 				remake: [{required: true,message: '请输入备注',trigger: 'blur'}],
 				money: [{required: true, validator: validate.money}],
-				sort: [{required: true, validator:validate.sort}],
+				// sort: [{required: true, validator:validate.sort}],
 				// moneyRate: [{required: true,validator:validate.moneyRate}],
 				overdueRate: [{required: true,validator:validate.overdueRate}],
 				serverMoney: [{required: true, validator: validate.serverMoney}],
@@ -144,7 +144,7 @@ class Apply extends Component {
 					<Breadcrumb.Item>{'添加'}</Breadcrumb.Item>
 				</Breadcrumb>
 
-				<Form labelWidth="120" ref={ e => {this.form=e} } model={ form } rules={ rules }>
+				<Form labelWidth="140" ref={ e => {this.form=e} } model={ form } rules={ rules }>
 					<h1 className="channeltitle">{ '渠道添加' }</h1>
 					<Layout.Row>
 						<Layout.Col span="12" xs="24" sm="24" md="12" lg="8">
@@ -199,10 +199,10 @@ class Apply extends Component {
 									<Radio value="0">{'禁用'}</Radio>
 								</Radio.Group>
 							</Form.Item>
-							<Form.Item label="排序" prop="sort">
+							{/* <Form.Item label="排序" prop="sort">
 								<Input type="number" value={ form.sort } onChange={ this.onChange.bind(this,'sort') } />
-							</Form.Item>
-							<Form.Item label="延期开关">
+							</Form.Item> */}
+							<Form.Item label="是否开启延期功能">
 								<Radio.Group value={ form.delayType } onChange={ this.onChange.bind(this,'delayType') }>
 									<Radio value="1">{'开'}</Radio>
 									<Radio value="0">{'关'}</Radio>
@@ -225,7 +225,7 @@ class Apply extends Component {
 							<Form.Item label="申请天数" prop="dayNumber">
 								<Input type="number" value={ form.dayNumber } onChange={ this.onChange.bind(this,'dayNumber') } />
 							</Form.Item>
-							<Form.Item label="逾期开关">
+							<Form.Item label="逾期是否可以延期">
 								<Radio.Group value={ form.overdueType } onChange={ this.onChange.bind(this,'overdueType') }>
 									<Radio value="1">{'开'}</Radio>
 									<Radio value="0">{'关'}</Radio>

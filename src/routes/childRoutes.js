@@ -61,6 +61,7 @@ import Quota from '@containers/system/quota' // 提额管理
 import Rule from '@containers/system/rule' // 提额规则设置
 import Versions from '@containers/system/versions'
 import Recharge from '@containers/system/recharge' // 系统充值
+import HighSetting from '@containers/system/highSetting' // 系统高级设置
 // 推广管理
 import ChannelManage from '@containers/generalize/channelManage/index'
 import Exhibition from '@containers/generalize/channelManage/exhibition'
@@ -344,7 +345,17 @@ export const CHILD_ROUTES = [
         path: '/system/recharge',
         exact: true,
         component: Recharge
-      },
+      },{
+        name: '系统高级设置',
+        path:'/system/highsetting',
+        exact:true,
+        component: HighSetting
+      },{
+        name: '展期管理',
+        path: '/system/exmessage',
+        exact: true,
+        component: Exhibition
+      }
     ]
   }, {
     id: 9,

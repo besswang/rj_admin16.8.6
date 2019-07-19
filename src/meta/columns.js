@@ -225,11 +225,43 @@ export const CONSUME = [
     label: '手机金额',
     prop: 'phoneAmount'
   }, {
-    label: '风控人数',
-    prop: 'risk'
+    label: 'A分控',
+    subColumns: [
+      {
+        label:'首借人数',
+        prop: 'newRiskA'
+      }, {
+        label: '复借人数',
+        prop: 'fuRiskA'
+      }, {
+        label: '风控金额',
+        prop: 'riskAmountA'
+      }
+    ]
   }, {
-    label: '风控金额',
-    prop: 'riskAmount'
+    label: 'B分控',
+    subColumns: [{
+      label: '首借人数',
+      prop: 'newRiskB'
+    }, {
+      label: '复借人数',
+      prop: 'fuRiskB'
+    }, {
+      label: '风控金额',
+      prop: 'riskAmountB'
+    }]
+  }, {
+    label: 'AB分控',
+    subColumns: [{
+      label: '首借人数',
+      prop: 'newRiskAB'
+    }, {
+      label: '复借人数',
+      prop: 'fuRiskAB'
+    }, {
+      label: '风控金额',
+      prop: 'riskAmountAB'
+    }]
   }
 ]
 export const TURNOVER = [

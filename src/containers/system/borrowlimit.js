@@ -34,7 +34,7 @@ class BlackUser extends Component {
 				money: null,
 				// defaultValue: 1,
 				state:1,
-				sort:null,
+				// sort:null,
 				delayType:1,
 				overdueType:1,
 				// moneyRate:'',
@@ -45,7 +45,7 @@ class BlackUser extends Component {
 			},
 			rules: {
 				money: [{required: true, validator: validate.money}],
-				sort: [{required: true, validator:validate.sort}],
+				// sort: [{required: true, validator:validate.sort}],
 				// moneyRate: [{required: true,validator:validate.moneyRate}],
 				overdueRate: [{required: true,validator:validate.overdueRate}],
 				serverMoney: [{required: true, validator: validate.serverMoney}],
@@ -61,7 +61,8 @@ class BlackUser extends Component {
 					prop: 'channelName',
 					fixed: 'left',
 					render: row => {
-						return row.channelName === null ? '默认' : row.channelName
+						const d = <span className="def-color">{'默认'}</span>
+						return row.channelName === null ? d : row.channelName
 					}
 				}, {
 					label: '额度',
@@ -90,11 +91,13 @@ class BlackUser extends Component {
 						const t = row.state === 1 ? y : n
 						return t
 					}
-				}, {
-					label: '排序',
-					prop: 'sort'
-				}, {
-					label: '延期开关',
+				},
+				//  {
+				// 	label: '排序',
+				// 	prop: 'sort'
+				// },
+				{
+					label: '是否开启延期功能',
 					prop: 'delayType',
 					render: row => {
 						const y = <span className="theme-blue">{'开'}</span>
@@ -103,7 +106,7 @@ class BlackUser extends Component {
 						return t
 					}
 				}, {
-					label: '逾期开关',
+					label: '逾期是否可以延期',
 					prop: 'overdueType',
 					render: row => {
 						const y = <span className="theme-blue">{'开'}</span>
@@ -170,12 +173,20 @@ class BlackUser extends Component {
 		}
 	}
   sizeChange = e => {
-    this.props.sizeChange(e)
-    this.props.pageQuota()
+		this.props.sizeChange(e)
+		if (this.props.history.location.pathname === '/system/borrowlimit') {
+			this.props.pageQuota()
+		} else {
+			this.props.pageQuota(this.state.channelName)
+		}
   }
   onCurrentChange = e => {
-    this.props.currentChange(e)
-    this.props.pageQuota()
+		this.props.currentChange(e)
+		if (this.props.history.location.pathname === '/system/borrowlimit') {
+			this.props.pageQuota()
+		} else {
+			this.props.pageQuota(this.state.channelName)
+		}
 	}
 	openDialog = r => {
 		this.form.resetFields()
@@ -190,7 +201,7 @@ class BlackUser extends Component {
 					money: null,
 					// defaultValue: 1,
 					state: 1,
-					sort: null,
+					// sort: null,
 					delayType: 1,
 					overdueType: 1,
 					// moneyRate: '',
@@ -209,7 +220,7 @@ class BlackUser extends Component {
 					money: r.money,
 					// defaultValue: r.defaultValue,
 					state:r.state,
-					sort:r.sort,
+					// sort:r.sort,
 					delayType:r.delayType,
 					overdueType:r.overdueType,
 					// moneyRate:r.moneyRate,
@@ -304,7 +315,7 @@ class BlackUser extends Component {
 					onCancel={ () => this.setState({ dialogVisible: false }) }
 				>
 					<Dialog.Body>
-						<Form labelWidth="120" ref={ e => {this.form=e} } model={ form } rules={ rules }>
+						<Form labelWidth="140" ref={ e => {this.form=e} } model={ form } rules={ rules }>
 							<Form.Item label="额度" prop="money">
 								<Input type="number" value={ form.money } onChange={ this.onChange.bind(this,'money') } />
 							</Form.Item>
@@ -320,16 +331,16 @@ class BlackUser extends Component {
 									<Radio value={ 0 }>{'禁用'}</Radio>
 								</Radio.Group>
 							</Form.Item>
-							<Form.Item label="排序" prop="sort">
+							{/* <Form.Item label="排序" prop="sort">
 								<Input type="number" value={ form.sort } onChange={ this.onChange.bind(this,'sort') } />
-							</Form.Item>
-							<Form.Item label="延期开关">
+							</Form.Item> */}
+							<Form.Item label="是否开启延期功能">
 								<Radio.Group value={ form.delayType } onChange={ this.onChange.bind(this,'delayType') }>
 									<Radio value={ 1 }>{'开'}</Radio>
 									<Radio value={ 0 }>{'关'}</Radio>
 								</Radio.Group>
 							</Form.Item>
-							<Form.Item label="逾期开关">
+							<Form.Item label="逾期是否可以延期">
 								<Radio.Group value={ form.overdueType } onChange={ this.onChange.bind(this,'overdueType') }>
 									<Radio value={ 1 }>{'开'}</Radio>
 									<Radio value={ 0 }>{'关'}</Radio>

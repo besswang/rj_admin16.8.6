@@ -128,10 +128,23 @@ export const btnReceivePosts = data => ({
   type: type.BTN_RECEIVE_POSTS,
   data
 })
-
 // 按钮的请求失败
 export const btnFailurePosts = data => ({
   type: type.BTN_FAILURE_POSTS,
+  data
+})
+
+// 区域loading状态
+export const areaRequestPosts = () => ({
+  type: type.AREA_REQUEST_POSTS
+})
+// 区域loading请求成功
+export const areaReceivePosts = () => ({
+  type: type.AREA_RECEIVE_POSTS
+})
+// 区域loading请求失败
+export const areaFailurePosts = data => ({
+  type: type.AREA_FAILURE_POSTS,
   data
 })
 

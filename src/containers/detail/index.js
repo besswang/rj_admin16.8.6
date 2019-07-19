@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { initSearch } from '@redux/actions'
-import { selectIdCardByUserId, selectPhoneDateByUserId, emergency, bankInfo, selectReportMail, selectReport } from './action'
+import { selectIdCardByUserId, emergency, bankInfo, selectReportMail, selectReport } from './action'
 import Detailtable from '@components/detailTable'
 import { BANK, ADDRESS, CALL_LOG } from '@meta/columns'
 import '@styles/detail.less'
@@ -20,12 +20,12 @@ class Detail extends Component{
     list: PropTypes.object,
     idCardInfo: PropTypes.object,
     selectIdCardByUserId: PropTypes.func.isRequired,
-    selectPhoneDateByUserId: PropTypes.func.isRequired,
     emergency:PropTypes.func.isRequired,
     bankInfo: PropTypes.func.isRequired,
     selectReportMail:PropTypes.func.isRequired,
     selectReport: PropTypes.func.isRequired,
     initSearch: PropTypes.func.isRequired,
+    areaLoading: PropTypes.bool
   }
   constructor(props) {
       super(props)
@@ -37,7 +37,8 @@ class Detail extends Component{
         linkUrl:'',
         listInfo: {},
         activeName: '1',
-        mobileData:''
+        mobileData:'',
+        btnLoading: false
       }
   }
 	componentWillMount() {
@@ -66,12 +67,17 @@ class Detail extends Component{
 	componentDidMount() {
     console.log(this.state.activeName)
     this.tabChange(this.state.activeName)
+    this.selectMobileReport({ userId: this.state.listInfo.userId ? this.state.listInfo.userId : this.state.listInfo.id })
   }
   selectMobileReport = async (obj) => {
+    this.setState({
+      btnLoading: true
+    })
     const res = await api.selectMobileReportApi(obj)
     if (res.success) {
       this.setState({
-        mobileData:res.data
+        mobileData:res.data,
+        btnLoading: false
       })
       console.log(res.data)
     }else{
@@ -89,10 +95,9 @@ class Detail extends Component{
       case '2':{ // 身份证信息
         return this.props.selectIdCardByUserId({userId: userId})
       }
-      case '3':{ // 手机认证
-        this.selectMobileReport({userId: userId})
-        return this.props.selectPhoneDateByUserId({userId: userId})
-      }
+      // case '3':{ // 手机认证
+      //   return this.props.selectPhoneDateByUserId({userId: userId})
+      // }
       case '4':{ // 紧急联系人
         return this.props.emergency({userId: userId})
       }
@@ -135,7 +140,7 @@ class Detail extends Component{
 	}
 	render(){
     const { idCardInfo, list } = this.props
-    const { name, title, linkUrl, listInfo, activeName, userId, dialogVisible, dialogImageUrl } = this.state
+    const { name, title, linkUrl, listInfo, activeName, userId, dialogVisible, dialogImageUrl, btnLoading } = this.state
 		return(
 			<div>
 				<Breadcrumb separator="/" className="margin-bottom15">
@@ -237,45 +242,47 @@ class Detail extends Component{
             </Tabs.Pane>
           }
           <Tabs.Pane label="身份证信息" name="2">
-            <ul className="flex flex-direction_column info-ul">
-              <li className="flex flex-direction_row info-li">
-                <p>{'身份证信息'}</p>
-              </li>
-              <li className="flex flex-direction_row info-li">
-                <div className="photo">
-                  <img src = { `data:image/jpeg;base64,${ idCardInfo.idcardFrontPhoto }` } alt="" onClick={ this.openDialog.bind(this,`data:image/jpeg;base64,${ idCardInfo.idcardFrontPhoto }`) } />
-                  <p>{'身份证正面'}</p>
-                </div>
-                <div className="photo">
-                  <img src={ `data:image/jpeg;base64,${ idCardInfo.idcardBackPhoto }` } alt="" onClick={ this.openDialog.bind(this,`data:image/jpeg;base64,${ idCardInfo.idcardBackPhoto }`) } />
-                  <p>{'身份证反面'}</p>
-                </div>
-                <div className="photo">
-                  <img src={ `data:image/jpeg;base64,${ idCardInfo.livingPhoto }` } alt="" onClick={ this.openDialog.bind(this,`data:image/jpeg;base64,${ idCardInfo.livingPhoto }`) } />
-                  <p>{'人脸照片'}</p>
-                </div>
-              </li>
-              <li className="flex flex-direction_row info-li">
-                <p>{'姓名：'}{ idCardInfo.realName }</p>
-                <p>{'性别：'}{ idCardInfo.gender }</p>
-              </li>
-              <li className="flex flex-direction_row info-li">
-                <p>{'身份证号：'}{ idCardInfo.idNumber}</p>
-                <p>{'家庭住址：'}{ idCardInfo.address }</p>
-              </li>
-              <li className="flex flex-direction_row info-li">
-                <p>{'签发机关：'}{ idCardInfo.issuingAuthority }</p>
-                <p>{'有效期：'}{ idCardInfo.validityPeriod }</p>
-              </li>
-              <li className="flex flex-direction_row info-li">
-                <p>{'实名认证结果：'}{ filter.verifyStatus(idCardInfo.verifyStatus) }</p>
-                <p>{'风险标签：'}{ this.text(idCardInfo.riskTag) }</p>
-              </li>
-              <li className="flex flex-direction_row info-li">
-                <p>{'认证日期：'}{ timeDate.time(idCardInfo.gmt, 'yyyy-MM-dd hh:mm:ss') }</p>
-                <p>{'商户唯一订单号：'}{ idCardInfo.partnerOrderId }</p>
-              </li>
-            </ul>
+            {/* <Loading loading={ areaLoading }> */}
+              <ul className="flex flex-direction_column info-ul">
+                <li className="flex flex-direction_row info-li">
+                  <p>{'身份证信息'}</p>
+                </li>
+                <li className="flex flex-direction_row info-li">
+                  <div className="photo">
+                    <img src = { `data:image/jpeg;base64,${ idCardInfo.idcardFrontPhoto }` } alt="" onClick={ this.openDialog.bind(this,`data:image/jpeg;base64,${ idCardInfo.idcardFrontPhoto }`) } />
+                    <p>{'身份证正面'}</p>
+                  </div>
+                  <div className="photo">
+                    <img src={ `data:image/jpeg;base64,${ idCardInfo.idcardBackPhoto }` } alt="" onClick={ this.openDialog.bind(this,`data:image/jpeg;base64,${ idCardInfo.idcardBackPhoto }`) } />
+                    <p>{'身份证反面'}</p>
+                  </div>
+                  <div className="photo">
+                    <img src={ `data:image/jpeg;base64,${ idCardInfo.livingPhoto }` } alt="" onClick={ this.openDialog.bind(this,`data:image/jpeg;base64,${ idCardInfo.livingPhoto }`) } />
+                    <p>{'人脸照片'}</p>
+                  </div>
+                </li>
+                <li className="flex flex-direction_row info-li">
+                  <p>{'姓名：'}{ idCardInfo.realName }</p>
+                  <p>{'性别：'}{ idCardInfo.gender }</p>
+                </li>
+                <li className="flex flex-direction_row info-li">
+                  <p>{'身份证号：'}{ idCardInfo.idNumber}</p>
+                  <p>{'家庭住址：'}{ idCardInfo.address }</p>
+                </li>
+                <li className="flex flex-direction_row info-li">
+                  <p>{'签发机关：'}{ idCardInfo.issuingAuthority }</p>
+                  <p>{'有效期：'}{ idCardInfo.validityPeriod }</p>
+                </li>
+                <li className="flex flex-direction_row info-li">
+                  <p>{'实名认证结果：'}{ filter.verifyStatus(idCardInfo.verifyStatus) }</p>
+                  <p>{'风险标签：'}{ this.text(idCardInfo.riskTag) }</p>
+                </li>
+                <li className="flex flex-direction_row info-li">
+                  <p>{'认证日期：'}{ timeDate.time(idCardInfo.gmt, 'yyyy-MM-dd hh:mm:ss') }</p>
+                  <p>{'商户唯一订单号：'}{ idCardInfo.partnerOrderId }</p>
+                </li>
+              </ul>
+            {/* </Loading> */}
           </Tabs.Pane>
           <Tabs.Pane label="手机认证" name="3">
             <ul className="flex flex-direction_column info-ul">
@@ -283,15 +290,15 @@ class Detail extends Component{
                 <p>{'真实姓名：'}{ listInfo.realName }</p>
               </li>
               <li className="flex flex-direction_row info-li">
-                <p>{'认证手机号：'}{ listInfo.phone }</p>
+                <p>{'认证手机号：'}{ listInfo.authPhone }</p>
                 <p>{'认证时间：'}{ timeDate.time(listInfo.gmt, 'yyyy-MM-dd hh:mm:ss') }</p>
               </li>
               <li className="flex flex-direction_row info-li">
-                <p>{'认证状态：'}{ filter.personalType(idCardInfo.mobileType) }</p>
+                <p>{'认证状态：'}{ filter.personalType(listInfo.mobileType) }</p>
               </li>
             </ul>
             <div className="flex flex-direction_row justify-content_flex-end">
-              <Button size="small" type="primary" className="margin_top15" onClick={ this.goReport.bind(this) }>{'查看手机报表'}</Button>
+              <Button loading={ btnLoading } size="small" type="primary" className="margin_top15" onClick={ this.goReport.bind(this) }>{'查看手机报表'}</Button>
             </div>
           </Tabs.Pane>
           <Tabs.Pane label="紧急联系人" name="4">
@@ -349,12 +356,12 @@ class Detail extends Component{
 	}
 }
 const mapStateToProps = state => {
-	const { listInfo, idCardInfo, list } = state
-	return { listInfo, idCardInfo, list }
+	const { listInfo, idCardInfo, list, areaLoading } = state
+	return { listInfo, idCardInfo, list, areaLoading }
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({ selectIdCardByUserId, selectPhoneDateByUserId, emergency, bankInfo, initSearch, selectReportMail, selectReport }, dispatch)
+		...bindActionCreators({ selectIdCardByUserId, emergency, bankInfo, initSearch, selectReportMail, selectReport }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Detail)

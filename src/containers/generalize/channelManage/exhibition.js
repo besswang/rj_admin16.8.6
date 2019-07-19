@@ -5,20 +5,23 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Link } from 'react-router-dom'
-import { sizeChange, currentChange, initSearch, menuActive } from '@redux/actions'
-import { findDelayRate, bindingRate, deleteDelayRate } from './action'
-class Apply extends Component {
+import { sizeChange, currentChange, initSearch } from '@redux/actions'
+import { findDelayRate,findAllDelayRate, bindingRate, deleteDelayRate } from './action'
+import MyPagination from '@components/MyPagination'
+import Search from '@components/Search'
+class Exhibition extends Component {
 	static propTypes = {
+		history: PropTypes.object.isRequired,
 		location: PropTypes.object.isRequired,
 		list: PropTypes.object.isRequired,
 		sizeChange: PropTypes.func.isRequired,
 		currentChange: PropTypes.func.isRequired,
 		initSearch: PropTypes.func.isRequired,
 		findDelayRate: PropTypes.func.isRequired,
-		menuActive: PropTypes.func.isRequired,
 		btnLoading: PropTypes.bool.isRequired,
 		bindingRate: PropTypes.func.isRequired,
-		deleteDelayRate: PropTypes.func.isRequired
+		deleteDelayRate: PropTypes.func.isRequired,
+		findAllDelayRate: PropTypes.func.isRequired
 	}
 	constructor(props) {
 		super(props)
@@ -56,7 +59,16 @@ class Apply extends Component {
 			},
 			dialogVisible: false,
 			columns: [{
-					type: 'index'
+					type: 'index',
+					fixed:'left'
+				}, {
+					label: '渠道名称',
+					prop: 'channelName',
+					fixed: 'left',
+					render: row => {
+						const d = <span className="def-color">{'默认'}</span>
+						return row.channelName === null ? d : row.channelName
+					}
 				}, {
 					label: '展期期限',
 					prop: 'dayNum'
@@ -67,7 +79,9 @@ class Apply extends Component {
 					label: '状态',
 					prop: 'status',
 					render: row => {
-						return row.status ? '启用':'禁用'
+						const y = <span className="theme-blue">{'启用'}</span>
+						const n = <span className="dis-red">{'禁用'}</span>
+						return row.status ? y:n
 					}
 				}, {
 						label: '操作',
@@ -76,7 +90,14 @@ class Apply extends Component {
 						render: row => {
 							return (
 								<div>
-									<Button type="danger" size="mini" onClick={ this.props.deleteDelayRate.bind(this, row.id) }>{ '删除' }</Button>
+									{
+										this.props.history.location.pathname === '/system/exmessage' &&
+										<Button type="danger" size="mini" onClick={ this.props.deleteDelayRate.bind(this, row.id,null) }>{ '删除' }</Button>
+									}
+									{
+										this.props.history.location.pathname !== '/system/exmessage' &&
+										<Button type="danger" size="mini" onClick={ this.props.deleteDelayRate.bind(this, row.id,row.channelName) }>{ '删除' }</Button>
+									}
 								</div>
 							)
 						}
@@ -85,20 +106,23 @@ class Apply extends Component {
 	}
 	componentWillMount() {
 		this.props.initSearch()
-		this.props.menuActive('/generalize/channelmanage')
-	}
-	componentDidMount() {
 		let name = ''
-		if (this.props.location.state !== undefined){
+		if (this.props.location.state !== undefined) {
 			name = this.props.location.state.date
-		}else{
+		} else {
 			const n = window.sessionStorage.getItem('channelName')
 			name = n
 		}
-		this.props.findDelayRate()
 		this.setState({
-			channelName: name,
+			channelName: name
 		})
+	}
+	componentDidMount() {
+		if (this.props.history.location.pathname === '/system/exmessage') { // 系统管理-展期管理
+			this.props.findAllDelayRate()
+		} else { // 推广管理-渠道管理-展期
+			this.props.findDelayRate({channelName: this.state.channelName})
+		}
 	}
 	openDialog = obj => {
 		this.setState({
@@ -110,16 +134,18 @@ class Apply extends Component {
 				dialogTitle:'添加'
 			})
 		}
-		// else {
-
-		// }
 	}
 	saveContent = e => {
 		e.preventDefault()
 		this.form.validate((valid) => {
 			if (valid) {
-				const trans = Object.assign({},this.state.form,{channelName:this.state.channelName})
-				this.props.bindingRate(trans)
+
+				if (this.props.history.location.pathname === '/system/exmessage') { // 系统管理-展期管理
+					this.props.bindingRate(this.state.form,1)
+				} else { // 推广管理-渠道管理-展期
+					const trans = Object.assign({},this.state.form,{channelName:this.state.channelName})
+					this.props.bindingRate(trans)
+				}
 				this.setState({
 					dialogVisible: false
 				})
@@ -137,18 +163,56 @@ class Apply extends Component {
 			form: Object.assign({}, this.state.form, { [key]: value })
 		})
 	}
+	sizeChange = e => {
+		this.props.sizeChange(e)
+		if (this.props.history.location.pathname === '/system/exmessage') { // 系统管理-展期管理
+			this.props.findAllDelayRate()
+		} else { // 推广管理-渠道管理-展期
+			this.props.findDelayRate({
+				channelName: this.state.channelName
+			})
+		}
+	}
+	onCurrentChange = e => {
+		this.props.currentChange(e)
+		if (this.props.history.location.pathname === '/system/exmessage') { // 系统管理-展期管理
+			this.props.findAllDelayRate()
+		} else { // 推广管理-渠道管理-展期
+			this.props.findDelayRate({
+				channelName: this.state.channelName
+			})
+		}
+	}
+	handleSearch = e => {
+		e.preventDefault()
+		this.props.findAllDelayRate()
+	}
 	render(){
 		const { list, btnLoading } = this.props
 		const { dialogTitle, columns, dialogVisible, form, rules, channelName } = this.state
 		return(
 			<div>
-				<Breadcrumb separator="/" className="margin-bottom15">
-					<Breadcrumb.Item>
-						<Link to="/generalize/channelmanage">{'渠道管理'}</Link>
-					</Breadcrumb.Item>
-					<Breadcrumb.Item>{'展期'}</Breadcrumb.Item>
-				</Breadcrumb>
-				<Button className="margin-bottom15" type="primary" onClick={ this.openDialog.bind(this,'add') }>{'添加'}</Button>
+				{
+					this.props.history.location.pathname === '/system/exmessage' &&
+					<Search showChannel showState>
+						<div>
+							<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+							<Button className="margin-bottom15" type="primary" onClick={ this.openDialog.bind(this,'add') }>{'添加'}</Button>
+						</div>
+					</Search>
+				}
+				{
+					this.props.history.location.pathname !== '/system/exmessage' &&
+					<div>
+						<Breadcrumb separator="/" className="margin-bottom15">
+							<Breadcrumb.Item>
+								<Link to="/generalize/channelmanage">{'渠道管理'}</Link>
+							</Breadcrumb.Item>
+							<Breadcrumb.Item>{'展期'}</Breadcrumb.Item>
+						</Breadcrumb>
+						<Button className="margin-bottom15" type="primary" onClick={ this.openDialog.bind(this,'add') }>{'添加'}</Button>
+					</div>
+				}
 				<Loading loading={ list.loading }>
 					<Table
 						style={ { width: '100%' } }
@@ -158,11 +222,11 @@ class Apply extends Component {
 						stripe
 					/>
 				</Loading>
-				{/* <MyPagination
+				<MyPagination
 					total={ list.total }
 					onSizeChange={ this.sizeChange }
 					onCurrentChange={ this.onCurrentChange }
-				/> */}
+				/>
 				<Dialog
 					title={ dialogTitle }
 					visible={ dialogVisible }
@@ -202,7 +266,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, menuActive, findDelayRate, bindingRate, deleteDelayRate }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, findDelayRate, bindingRate, deleteDelayRate,findAllDelayRate }, dispatch)
 	}
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Apply)
+export default connect(mapStateToProps, mapDispatchToProps)(Exhibition)

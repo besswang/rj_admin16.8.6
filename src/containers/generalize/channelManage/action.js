@@ -64,11 +64,12 @@ export const prohibitChannel = obj => {
 }
 
 // 渠道管理-展期模式-列表
-export const findDelayRate = name => {
+export const findDelayRate = obj => {
   return async dispatch => {
     dispatch(requestPosts())
-    const n = window.sessionStorage.getItem('channelName')
-    const data = await api.findDelayRateApi({ channelName: n })
+    // const n = window.sessionStorage.getItem('channelName')
+    // const data = await api.findDelayRateApi({ channelName: n })
+    const data = await api.findDelayRateApi(obj)
     if (data.success) {
       dispatch(receivePosts({list:data.data}))
     } else {
@@ -77,13 +78,34 @@ export const findDelayRate = name => {
     console.log(data)
   }
 }
+
+// 系统管理-展期管理
+export const findAllDelayRate = () => {
+  return async (dispatch, getState) => {
+    dispatch(requestPosts())
+    const searchAll = shouldFetchPosts(getState())
+    const data = await api.findAllDelayRateApi(searchAll)
+    if (data.success) {
+      dispatch(receivePosts({
+        list: data.data
+      }))
+    } else {
+      dispatch(failurePosts(data))
+    }
+    console.log(data)
+  }
+}
 // 渠道管理-展期模式-添加
-export const bindingRate = obj => {
+export const bindingRate = (obj,type) => {
   return async dispatch => {
     dispatch(btnRequestPosts())
     const data = await api.bindingRateApi(obj)
     if (data.success) {
-      dispatch(findDelayRate())
+      if(type===1){
+        dispatch(findAllDelayRate())
+      }else{
+        dispatch(findDelayRate({ channelName: obj.channelName }))
+      }
       dispatch(btnReceivePosts(data.msg))
     } else {
       dispatch(btnFailurePosts(data.msg))
@@ -92,7 +114,7 @@ export const bindingRate = obj => {
 }
 
 // 渠道管理-展期模式-删除
-export const deleteDelayRate = id => {
+export const deleteDelayRate = (id,name) => {
   return dispatch => {
     MessageBox.confirm('删除, 是否继续?', '提示', {
       type: 'warning'
@@ -100,7 +122,12 @@ export const deleteDelayRate = id => {
       dispatch(requestPosts())
       const data = await api.deleteDelayRateApi({id:id})
       if (data.success) {
-        dispatch(findDelayRate())
+        console.log(name)
+        if(name){
+          dispatch(findDelayRate({channelName:name}))
+        }else{
+          dispatch(findAllDelayRate())
+        }
         Message({
           type: 'success',
           message: data.msg

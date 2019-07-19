@@ -1,6 +1,6 @@
 // 催收管理-个人对账
 import React, { Component } from 'react'
-import { Button, Loading, Table, Dialog, Radio, Form } from 'element-react'
+import { Button, Loading, Table, Dialog, Radio, Form, MessageBox } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -139,11 +139,21 @@ class WaitFang extends Component {
     this.props.selectPendingLoan()
 	}
 	openDialog = r => {
-		this.setState({
-			dialogVisible: true,
-			loanType: 1,
-			obj:r
-		})
+		if (r.payStatus === 'FIGHT_MONEY'){
+			 MessageBox.confirm('打款中', '提示', {
+			 	type: 'warning'
+			 }).then(() => {
+
+			 }).catch(() => {
+
+			 })
+		}else{
+			this.setState({
+				dialogVisible: true,
+				loanType: 1,
+				obj: r
+			})
+		}
 	}
 	onChange = v => {
 		this.setState({
