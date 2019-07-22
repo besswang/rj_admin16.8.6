@@ -52,11 +52,11 @@ class Welcome extends React.Component{
 				statistics: arr
 			})
 		}else{
-			if(res.msg === '请先登录'){
-				// setTimeout(() => {
-					this.props.history.push('/login')
-				// },1000)
-			}
+			// if(res.msg === '请先登录'){
+			// 	// setTimeout(() => {
+			// 		this.props.history.push('/login')
+			// 	// },1000)
+			// }
 			Message.warning(res.msg)
 		}
 	}

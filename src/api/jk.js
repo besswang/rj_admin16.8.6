@@ -110,6 +110,10 @@ export default {
   // 系统管理-系统充值
   'addRecharge': 'addRecharge', // 充值
   'pageRecharge': 'pageRecharge', // 列表
+  // 系统管理-文本设置
+  'selectTextConfig': 'globalConfig/selectTextConfig', // 文本设置-列表
+  // 系统高级设置
+  'selectSeniorConfig': 'globalConfig/selectSeniorConfig',
   // 轮播图管理
   'pageRotationChart': 'rotationChart/pageRotationChart', // 列表
   'deleteRotationChart': 'rotationChart/deleteRotationChart', // 删除

@@ -83,7 +83,11 @@ class WaitFang extends Component {
 					prop: 'examineCustomerName'
 				}, {
 					label: '审核时间',
-					prop: 'examineDate'
+					prop: 'examineDate',
+					render: row => {
+						const date = timeDate.time(row.examineDate, 'yyyy-MM-dd hh:mm:ss')
+						return date
+					}
 				}, {
 					label: '打款状态',
 					prop: 'payStatus',
@@ -110,7 +114,7 @@ class WaitFang extends Component {
 									<Button className="margin_right10" type="success" size="mini" onClick={ this.openDialog.bind(this,row) }>
 										{'放款'}
 									</Button>
-									<Button className="margin_right10" type="danger" size="mini" onClick={ this.props.updateStateLoan.bind(this,{orderId:row.id,phone:row.phone,realName:row.realName,state:FALSE}) }>
+									<Button className="margin_right10" type="danger" size="mini" onClick={ this.props.updateStateLoan.bind(this,{orderId:row.id,phone:row.phone,realName:row.realName,state:FALSE}, row.payStatus) }>
 										{'拒绝'}
 									</Button>
 									<DetailBtn linkTo={ dwaitFang } row={ row } />

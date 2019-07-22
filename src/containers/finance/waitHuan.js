@@ -350,6 +350,10 @@ class WaitHuan extends Component {
 			Message.warning('金额不能为负数')
 		}
 	}
+	blurMoney1 = v => {
+		console.log(v)
+		console.log(this.state.form.principalReductionMoney)
+	}
 	render() {
 		const { list, btnLoading, dayList } = this.props
 		const { columns, dialogVisible, form, rules, orderNumber, realRepaymentMoney, applyMoney, serviceMoney, loanDate, repaymentDate, activeName, surplusMoney, reMoney, listObj } = this.state
@@ -454,11 +458,11 @@ class WaitHuan extends Component {
 								(activeName === '3') &&
 								<div className="flex flex-direction_row justify-content_flex-justify">
 									<Form.Item label="减免本金" prop="principalReductionMoney">
-										<Input type="number" value={ form.principalReductionMoney } onChange={ this.onChange.bind(this, 'principalReductionMoney') } />
+										<Input type="number" value={ form.principalReductionMoney } onChange={ this.onChange.bind(this, 'principalReductionMoney') } onBlur={ this.blurMoney1(listObj.realPrincipal) } />
 									</Form.Item>
 									<Form.Item label="本金">
-											<p>{ listObj.repaymentPrincipal-form.principalReductionMoney }</p>
-											{this.valiNum(listObj.realRepaymentMoney-form.principalReductionMoney)}
+											<p>{ listObj.realPrincipal-form.principalReductionMoney }</p>
+											{this.valiNum(listObj.realPrincipal-form.principalReductionMoney)}
 									</Form.Item>
 								</div>
 							}
@@ -469,8 +473,8 @@ class WaitHuan extends Component {
 										<Input type="number" value={ form.rateReductionMoney } onChange={ this.onChange.bind(this, 'rateReductionMoney') } />
 									</Form.Item>
 									<Form.Item label="利息">
-											<p>{ listObj.rateMoney-form.rateReductionMoney }</p>
-											{this.valiNum(listObj.rateMoney-form.rateReductionMoney)}
+											<p>{ listObj.realRateMoney-form.rateReductionMoney }</p>
+											{this.valiNum(listObj.realRateMoney-form.rateReductionMoney)}
 									</Form.Item>
 								</div>
 							}
@@ -481,8 +485,8 @@ class WaitHuan extends Component {
 										<Input type="number" value={ form.overdueReductionMoney } onChange={ this.onChange.bind(this, 'overdueReductionMoney') } />
 									</Form.Item>
 									<Form.Item label="逾期">
-											<p>{ listObj.overdueRealMoney-form.overdueReductionMoney }</p>
-											{this.valiNum(listObj.overdueRealMoney-form.overdueReductionMoney)}
+											<p>{ listObj.realOverdueMoney-form.overdueReductionMoney }</p>
+											{this.valiNum(listObj.realOverdueMoney-form.overdueReductionMoney)}
 									</Form.Item>
 								</div>
 							}
@@ -493,13 +497,13 @@ class WaitHuan extends Component {
 										<Input type="number" value={ form.serviceReductionMoney } onChange={ this.onChange.bind(this, 'serviceReductionMoney') } />
 									</Form.Item>
 									<Form.Item label="服务费">
-											<p>{ listObj.serviceMoney-form.serviceReductionMoney }</p>
-											{this.valiNum(listObj.serviceMoney-form.serviceReductionMoney)}
+											<p>{ listObj.realServiceMoney-form.serviceReductionMoney }</p>
+											{this.valiNum(listObj.realServiceMoney-form.serviceReductionMoney)}
 									</Form.Item>
 								</div>
 							}
 							<Form.Item label="单号" prop="payNumber">
-								<Input type="number" value={ form.payNumber } onChange={ this.onChange.bind(this, 'payNumber') } />
+								<Input value={ form.payNumber } onChange={ this.onChange.bind(this, 'payNumber') } />
 							</Form.Item>
 						</Form>
 					</Dialog.Body>

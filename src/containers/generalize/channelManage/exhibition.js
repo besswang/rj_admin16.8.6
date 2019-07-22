@@ -139,7 +139,6 @@ class Exhibition extends Component {
 		e.preventDefault()
 		this.form.validate((valid) => {
 			if (valid) {
-
 				if (this.props.history.location.pathname === '/system/exmessage') { // 系统管理-展期管理
 					this.props.bindingRate(this.state.form,1)
 				} else { // 推广管理-渠道管理-展期

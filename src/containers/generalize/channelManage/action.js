@@ -86,13 +86,10 @@ export const findAllDelayRate = () => {
     const searchAll = shouldFetchPosts(getState())
     const data = await api.findAllDelayRateApi(searchAll)
     if (data.success) {
-      dispatch(receivePosts({
-        list: data.data
-      }))
+      dispatch(receivePosts(data.data))
     } else {
       dispatch(failurePosts(data))
     }
-    console.log(data)
   }
 }
 // 渠道管理-展期模式-添加

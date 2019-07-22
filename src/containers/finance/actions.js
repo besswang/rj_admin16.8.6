@@ -53,22 +53,33 @@ export const toLoan = id => {
   }
 }
 // 待放款-拒绝
-export const updateStateLoan = subreddit => {
+export const updateStateLoan = (subreddit, t) => {
   return dispatch => {
-    MessageBox.confirm('拒绝该用户, 是否继续?', '提示', {
-      type: 'warning'
-    }).then(async () => {
-      dispatch(requestPosts())
-      const data = await api.updateStateLoanApi(subreddit)
-      if (data.success) {
-        dispatch(selectPendingLoan())
-        Message.success(data.msg)
-      } else {
-        dispatch(failurePosts(data))
-      }
-    }).catch(() => {
-      Message.info('已取消操作')
-    })
+    if (t === 'FIGHT_MONEY') {
+      MessageBox.confirm('打款中', '提示', {
+        type: 'warning'
+      }).then(() => {
+
+      }).catch(() => {
+
+      })
+      return false
+    }else{
+      MessageBox.confirm('拒绝该用户, 是否继续?', '提示', {
+        type: 'warning'
+      }).then(async () => {
+        dispatch(requestPosts())
+        const data = await api.updateStateLoanApi(subreddit)
+        if (data.success) {
+          dispatch(selectPendingLoan())
+          Message.success(data.msg)
+        } else {
+          dispatch(failurePosts(data))
+        }
+      }).catch(() => {
+        Message.info('已取消操作')
+      })
+    }
   }
 }
 // 待还款

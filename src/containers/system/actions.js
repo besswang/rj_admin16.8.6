@@ -179,12 +179,17 @@ export const pageGlobalconfig = () => {
   }
 }
 // 帮助中心-编辑
-export const updateGlobalConfig = (obj) => {
+export const updateGlobalConfig = (obj,type) => {
   return async dispatch => {
     const data = await api.updateGlobalConfigApi(obj)
     if (data.success) {
       Message.success(data.msg)
-      dispatch(pageGlobalconfig())
+      if(type === 2){
+        dispatch(selectTextConfig())
+      }else{
+        dispatch(pageGlobalconfig())
+      }
+
     }
   }
 }
@@ -363,11 +368,11 @@ export const selectUnAllowableArea = fn => {
     if (data.success) {
       dispatch(receivePosts(data.data))
     } else {
-      if (data.msg === '请先登录') {
-        // setTimeout(() => {
-          fn.push('/login')
-        // }, 1000)
-      }
+      // if (data.msg === '请先登录') {
+      //   // setTimeout(() => {
+      //     fn.push('/login')
+      //   // }, 1000)
+      // }
       dispatch(failurePosts(data))
     }
   }
@@ -438,6 +443,32 @@ export const addRecharge = obj => {
       dispatch(btnReceivePosts(data.msg))
     } else {
       dispatch(btnFailurePosts(data.msg))
+    }
+  }
+}
+// 文本设置-列表
+export const selectTextConfig = () => {
+  return async dispatch => {
+    dispatch(requestPosts())
+    const data = await api.selectTextConfigApi()
+    if (data.success) {
+      dispatch(receivePosts({list:data.data}))
+    } else {
+      dispatch(failurePosts(data))
+    }
+  }
+}
+// 文本设置-列表
+export const selectSeniorConfig = () => {
+  return async dispatch => {
+    dispatch(requestPosts())
+    const data = await api.selectSeniorConfigApi()
+    if (data.success) {
+      dispatch(receivePosts({
+        list: data.data
+      }))
+    } else {
+      dispatch(failurePosts(data))
     }
   }
 }

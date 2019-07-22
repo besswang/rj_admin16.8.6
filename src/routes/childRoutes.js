@@ -62,6 +62,7 @@ import Rule from '@containers/system/rule' // 提额规则设置
 import Versions from '@containers/system/versions'
 import Recharge from '@containers/system/recharge' // 系统充值
 import HighSetting from '@containers/system/highSetting' // 系统高级设置
+import TextSet from '@containers/system/textSet'
 // 推广管理
 import ChannelManage from '@containers/generalize/channelManage/index'
 import Exhibition from '@containers/generalize/channelManage/exhibition'
@@ -355,6 +356,11 @@ export const CHILD_ROUTES = [
         path: '/system/exmessage',
         exact: true,
         component: Exhibition
+      }, {
+        name: '文本设置',
+        path: '/system/textset',
+        exact: true,
+        component: TextSet
       }
     ]
   }, {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Checkbox, Button } from 'element-react'
+import { Switch, Button, Form } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -16,7 +16,10 @@ class HighSetting extends Component {
 				{value:'0,0,1,0',id:1},
 				{value:'true',id:2}
 			],
-			checkedCities:[]
+			checkedCities:[],
+			form:{
+				value1: 0
+			}
 		}
 	}
 	componentWillMount() {
@@ -33,7 +36,13 @@ class HighSetting extends Component {
 			checkedCities: value,
 		})
 	}
+	onChange(key, value) {
+		this.setState({
+			form: Object.assign({}, this.state.form, { [key]: value })
+		})
+	}
 	render() {
+		const {form} = this.state
 		const {list} = this.props
 		return (
 			<div>
@@ -43,31 +52,28 @@ class HighSetting extends Component {
 						<li key={ item.id }>{ item.title }
 						{
 							item.configKey === 'BANK_PAY' &&
-							<Checkbox.Group
-							// value={ this.arr(item.configValue) }
-							value={ this.state.checkedCities }
-							onChange={ this.handleCheckedCitiesChange.bind(this) }
-							>
-								<Checkbox value="0" label="连连" />
-								<Checkbox value="1" label="富有" />
-								<Checkbox value="2" label="快钱" />
-								<Checkbox value="3" label="合利" />
-							</Checkbox.Group>
+							<Form labelWidth="120" model={ form } ref={ e => {this.form = e} }>
+								<Form.Item label="连连">
+									<Switch
+										value = { this.arr(item.configValue)[2] }
+										onText=""
+										offText=""
+										onValue={ '1' }
+										offValue={ '0' }
+										onChange={ this.onChange.bind(this, 'value1') }
+									/>
+								</Form.Item>
+							</Form>
 						}
 						</li>
 					)
 				})}
 			</ul>
+			{/* this.arr(item.configValue) */}
 			<Button onClick={ () => {console.log(list.data[0].configValue)} }>{'看看'}</Button>
 			<Button onClick={ () => {console.log(this.state.checkedCities)} }>{'看看'}</Button>
-				{/* <Form labelWidth="120" model={ form } ref={ e => {this.form = e} } rules={ rules }>
-					<Form.Item label="登陆方式">
-						<Radio.Group value={ form.loginMode } onChange={ this.onChange.bind(this, 'loginMode') } >
-							<Radio value={ 'PASSWORD' } disabled={ adminDisabled }>{'密码登陆'}</Radio>
-							<Radio value={ 'VERIFYCODE' } disabled={ adminDisabled }>{'验证码登陆'}</Radio>
-						</Radio.Group>
-					</Form.Item>
-				</Form> */}
+			<Button onClick={ () => {console.log(this.state.form.value1)} }>{'value'}</Button>
+
 			</div>
 		)
 	}
