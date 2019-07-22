@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { initSearch } from '@redux/actions'
-import { selectIdCardByUserId, emergency, bankInfo, selectReportMail, selectReport } from './action'
+import { selectIdCardByUserId, emergency, bankInfo, selectReportMail, selectReport, selectPhoneDateByUserId } from './action'
 import Detailtable from '@components/detailTable'
 import { BANK, ADDRESS, CALL_LOG } from '@meta/columns'
 import '@styles/detail.less'
@@ -25,7 +25,8 @@ class Detail extends Component{
     selectReportMail:PropTypes.func.isRequired,
     selectReport: PropTypes.func.isRequired,
     initSearch: PropTypes.func.isRequired,
-    areaLoading: PropTypes.bool
+    areaLoading: PropTypes.bool,
+    selectPhoneDateByUserId: PropTypes.func.isRequired
   }
   constructor(props) {
       super(props)
@@ -95,8 +96,8 @@ class Detail extends Component{
         return this.props.selectIdCardByUserId({userId: userId})
       }
       case '3':{ // 手机认证
-        return this.selectMobileReport({ userId: userId})
-        // return this.props.selectPhoneDateByUserId({userId: userId})
+        this.selectMobileReport({ userId: userId})
+        return this.props.selectPhoneDateByUserId({userId: userId})
       }
       case '4':{ // 紧急联系人
         return this.props.emergency({userId: userId})
@@ -294,7 +295,7 @@ class Detail extends Component{
                 <p>{'认证时间：'}{ timeDate.time(listInfo.gmt, 'yyyy-MM-dd hh:mm:ss') }</p>
               </li>
               <li className="flex flex-direction_row info-li">
-                <p>{'认证状态：'}{ filter.personalType(listInfo.mobileType) }</p>
+                <p>{'认证状态：'}{ filter.personalType(idCardInfo.mobileType) }</p>
               </li>
             </ul>
             <div className="flex flex-direction_row justify-content_flex-end">
@@ -361,7 +362,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({ selectIdCardByUserId, emergency, bankInfo, initSearch, selectReportMail, selectReport }, dispatch)
+		...bindActionCreators({ selectIdCardByUserId, emergency, bankInfo, initSearch, selectReportMail, selectReport,selectPhoneDateByUserId }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Detail)

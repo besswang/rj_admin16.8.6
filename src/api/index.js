@@ -24,7 +24,7 @@ export default {
   pageChannelCountApi: params => Fetch(jk.pageChannelCount, {method: 'post', body: params}),
   pageOverdueCountApi: params => Fetch(jk.pageOverdueCount, {method: 'post', body: params}),
   selectIdCardByUserIdApi: params => Fetch(jk.selectIdCardByUserId, {method: 'get', data: params}),
-  // selectPhoneDateByUserIdApi: params => Fetch(jk.selectPhoneDateByUserId, {method: 'get', data: params}), 详情-手机认证
+  selectPhoneDateByUserIdApi: params => Fetch(jk.selectPhoneDateByUserId, {method: 'get', data: params}), // 详情-手机认证
   selectEmergencyByUserIdApi: params => Fetch(jk.selectEmergencyByUserId, {method: 'get', data: params} ),
   selectBankByUserIdApi: params => Fetch(jk.selectBankByUserId, {method: 'get', data: params}),
   selectReportMailApi: params => Fetch(jk.selectReportMail, {method: 'get', data: params}),

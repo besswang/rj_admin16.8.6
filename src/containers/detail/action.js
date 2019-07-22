@@ -20,20 +20,20 @@ export const selectIdCardByUserId = id => {
 }
 
 // 手机认证
-// export const selectPhoneDateByUserId = id => {
-//   return async dispatch => {
-//     console.log('123')
-//     const data = await api.selectPhoneDateByUserIdApi(id)
-//     if (data.success) {
-//       console.log(data)
-//       if (data.data){
-//         dispatch(saveIdCardInfo(data.data))
-//       }else{
-//         Message.info('无数据')
-//       }
-//     }
-//   }
-// }
+export const selectPhoneDateByUserId = id => {
+  return async dispatch => {
+    console.log('123')
+    const data = await api.selectPhoneDateByUserIdApi(id)
+    if (data.success) {
+      console.log(data)
+      if (data.data){
+        dispatch(saveIdCardInfo(data.data))
+      }else{
+        Message.info('无数据')
+      }
+    }
+  }
+}
 
 // 紧急联系人
 export const emergency = id => {
