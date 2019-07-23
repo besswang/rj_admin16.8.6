@@ -128,6 +128,7 @@ export default {
   selectAdminLoginByNameApi: params => Fetch(jk.selectAdminLoginByName, {method: 'get', data:params}),
   insertRotationChartApi: params => Fetch(jk.insertRotationChart, {method: 'get', data:params}),
   selectTextConfigApi: () => Fetch(jk.selectTextConfig, {method: 'get'}),
-  selectSeniorConfigApi: () => Fetch(jk.selectSeniorConfig, {method: 'get'})
+  selectSeniorConfigApi: () => Fetch(jk.selectSeniorConfig, {method: 'get'}),
+  updateGlobalConfigsApi: params => Fetch(jk.updateGlobalConfigs, {method: 'put', body: params})
 }
 

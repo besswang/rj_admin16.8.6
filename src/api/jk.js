@@ -114,6 +114,7 @@ export default {
   'selectTextConfig': 'globalConfig/selectTextConfig', // 文本设置-列表
   // 系统高级设置
   'selectSeniorConfig': 'globalConfig/selectSeniorConfig',
+  'updateGlobalConfigs': 'globalConfig/updateGlobalConfigs', // 修改
   // 轮播图管理
   'pageRotationChart': 'rotationChart/pageRotationChart', // 列表
   'deleteRotationChart': 'rotationChart/deleteRotationChart', // 删除

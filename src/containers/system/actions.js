@@ -240,7 +240,7 @@ export const deleteRotationChart = subreddit => {
 
 // 轮播图管理-上/下架
 export const updateRotationChart = subreddit => {
-  const t = subreddit.status === 1 ? '上架' : '下架'
+  const t = subreddit.status === 0 ? '上架' : '下架'
   return dispatch => {
     MessageBox.confirm(`${ t }该图片, 是否继续?`, '提示', {
       type: 'warning'
@@ -467,6 +467,18 @@ export const selectSeniorConfig = () => {
       dispatch(receivePosts({
         list: data.data
       }))
+    } else {
+      dispatch(failurePosts(data))
+    }
+  }
+}
+
+export const updateGlobalConfigs = obj => {
+  return async dispatch => {
+    dispatch(requestPosts())
+    const data = await api.updateGlobalConfigsApi(obj)
+    if (data.success) {
+      Message.success(data.msg)
     } else {
       dispatch(failurePosts(data))
     }

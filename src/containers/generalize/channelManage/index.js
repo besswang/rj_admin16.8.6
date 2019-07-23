@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Table, Loading, Dialog, Form, Input } from 'element-react'
+import { Button, Table, Loading, Dialog, Form, Input, Radio } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -39,6 +39,7 @@ class Apply extends Component {
 				userScore: null, // 人工分数
 				firstMoney: null, // 首借额度
 				remake: '', // 备注,
+				riskType: 'PAIXU' // PAIXU("米融"),RUIJING("瑞鲸")
 			},
 			rules: {
 				channelName: [{required: true,message: '请输入渠道名称',trigger: 'blur'}],
@@ -202,7 +203,8 @@ class Apply extends Component {
 					machineScore: obj.machineScore,
 					userScore: obj.userScore,
 					firstMoney: obj.firstMoney,
-					remake: obj.remake
+					remake: obj.remake,
+					riskType: obj.riskType
 				},
 				id: obj.id
 			})
@@ -299,6 +301,12 @@ class Apply extends Component {
 							</Form.Item>
 							<Form.Item label="备注" prop="remake">
 								<Input value={ form.remake } onChange={ this.onChange.bind(this, 'remake') } />
+							</Form.Item>
+							<Form.Item label="选择风控">
+								<Radio.Group value={ form.riskType } onChange={ this.onChange.bind(this,'riskType') }>
+									<Radio value="PAIXU">{'米融'}</Radio>
+									<Radio value="RUIJING">{'瑞鲸'}</Radio>
+								</Radio.Group>
 							</Form.Item>
 						</Form>
 					</Dialog.Body>

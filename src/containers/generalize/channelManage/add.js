@@ -38,7 +38,8 @@ class Apply extends Component {
 				overdueRate: '', // 逾期利率
 				serverMoney: null, // 逾期服务费
 				// continueMoney:null,
-				dayNumber:null // 申请天数
+				dayNumber:null, // 申请天数
+				riskType: 'PAIXU'
 			},
 			rules: {
 				// channelName: [{required: true,message: '请输入渠道名称',trigger: 'blur'}],
@@ -164,6 +165,12 @@ class Apply extends Component {
 									optionsArr={ PROMOTION_TYPE }
 									placeholder={ '选择方式' }
 								/>
+							</Form.Item>
+							<Form.Item label="选择风控">
+								<Radio.Group value={ form.riskType } onChange={ this.onChange.bind(this,'riskType') }>
+									<Radio value="PAIXU">{'米融'}</Radio>
+									<Radio value="RUIJING">{'瑞鲸'}</Radio>
+								</Radio.Group>
 							</Form.Item>
 						</Layout.Col>
 						<Layout.Col span="12" xs="24" sm="24" md="12" lg="8">

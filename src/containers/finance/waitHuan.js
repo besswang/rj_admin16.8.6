@@ -350,10 +350,17 @@ class WaitHuan extends Component {
 			Message.warning('金额不能为负数')
 		}
 	}
-	blurMoney1 = v => {
-		console.log(v)
-		console.log(this.state.form.principalReductionMoney)
-	}
+	// blurMoney1 = () => {
+	// 	const { listObj, form } = this.state
+	// 	const n = listObj.realPrincipal - form.principalReductionMoney
+	// 	if(n<0){
+	// 		this.setState({
+	// 			form:{
+	// 				principalReductionMoney:listObj.realPrincipal
+	// 			}
+	// 		})
+	// 	}
+	// }
 	render() {
 		const { list, btnLoading, dayList } = this.props
 		const { columns, dialogVisible, form, rules, orderNumber, realRepaymentMoney, applyMoney, serviceMoney, loanDate, repaymentDate, activeName, surplusMoney, reMoney, listObj } = this.state
@@ -458,7 +465,7 @@ class WaitHuan extends Component {
 								(activeName === '3') &&
 								<div className="flex flex-direction_row justify-content_flex-justify">
 									<Form.Item label="减免本金" prop="principalReductionMoney">
-										<Input type="number" value={ form.principalReductionMoney } onChange={ this.onChange.bind(this, 'principalReductionMoney') } onBlur={ this.blurMoney1(listObj.realPrincipal) } />
+										<Input type="number" value={ form.principalReductionMoney } onChange={ this.onChange.bind(this, 'principalReductionMoney') } onBlur={ this.blurMoney1 } />
 									</Form.Item>
 									<Form.Item label="本金">
 											<p>{ listObj.realPrincipal-form.principalReductionMoney }</p>
