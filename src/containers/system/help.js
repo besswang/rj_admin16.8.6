@@ -24,7 +24,7 @@ class HighSetting extends Component {
 				// thresholdscoreuser: '0', //风控分数人工审核门槛
 				// fengkongnumber: 'false', // 老客是否调用
 				// thresholdscore: '0', // 风控分数机器审核门槛
-				// riskilencetime: '0.1' // 手机认证单价
+				// riskilencetime: '0.1', // 风控静默时间
 			},
 			rules:{
 				cappingmoneyl: [{required: true,message: '请输入封顶金额',trigger: 'blur'}],
@@ -32,7 +32,7 @@ class HighSetting extends Component {
 				beaparttime: [{required: true,message: '请输入申请相隔时间(天为单位)',trigger: 'blur'}],
 				thresholdscoreuser: [{required: true,message: '请输入风控分数人工审核门槛',trigger: 'blur'}],
 				thresholdscore: [{required: true,message: '请输入风控分数机器审核门槛',trigger: 'blur'}],
-				riskilencetime: [{required: true,message: '请输入手机认证单价',trigger: 'blur'}],
+				riskilencetime: [{required: true,message: '请输入风控静默时间',trigger: 'blur'}],
 			}
 		}
 	}
@@ -105,17 +105,6 @@ class HighSetting extends Component {
 		this.forceUpdate()
 	}
 	render() {
-				// modetype: 'true', // 服务费申请扣款方式 true 先扣  false  后扣
-				// wechat: '1,2,3,4', // 官方微信
-				// cappingmoneyl: '3000', // 封顶金额
-				// qqnumber: '1,2,3', //企业QQ号
-				// servicephone: '1,2,3,0', // 客服电话
-				// overhightday: '6', //逾期计算最高天数
-				// beaparttime: '7', // 申请相隔时间(天为单位)
-				// thresholdscoreuser: '0', //风控分数人工审核门槛
-				// fengkongnumber: 'false', // 老客是否调用
-				// thresholdscore: '0', // 风控分数机器审核门槛
-				// riskilencetime: '0.1' // 手机认证单价
 		const { form, rules, wechat } = this.state
 		console.log(wechat)
 		return (
@@ -151,6 +140,12 @@ class HighSetting extends Component {
 					<Form.Item label="风控分数人工审核门槛" prop="thresholdscoreuser">
 						<Input value={ form.thresholdscoreuser } onChange={ this.onChange.bind(this,'thresholdscoreuser') } />
 					</Form.Item>
+					<Form.Item label="风控分数机器审核门槛" prop="thresholdscore">
+						<Input value={ form.thresholdscore } onChange={ this.onChange.bind(this,'thresholdscore') } />
+					</Form.Item>
+					<Form.Item label="风控静默时间" prop="riskilencetime">
+						<Input value={ form.riskilencetime } onChange={ this.onChange.bind(this,'riskilencetime') } />
+					</Form.Item>
 					<Form.Item label="老客是否调用">
 						<Switch
 							value = { form.fengkongnumber }
@@ -160,12 +155,6 @@ class HighSetting extends Component {
 							offValue={ 'false' }
 							onChange={ this.onChange.bind(this, 'fengkongnumber') }
 						/>
-					</Form.Item>
-					<Form.Item label="风控分数机器审核门槛" prop="thresholdscore">
-						<Input value={ form.thresholdscore } onChange={ this.onChange.bind(this,'thresholdscore') } />
-					</Form.Item>
-					<Form.Item label="手机认证单价" prop="riskilencetime">
-						<Input value={ form.riskilencetime } onChange={ this.onChange.bind(this,'riskilencetime') } />
 					</Form.Item>
 					<Form.Item>
 						<Button type="primary" onClick={ this.saveContent }>{'确 定'}</Button>

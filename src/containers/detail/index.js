@@ -291,8 +291,8 @@ class Detail extends Component{
                 <p>{'真实姓名：'}{ listInfo.realName }</p>
               </li>
               <li className="flex flex-direction_row info-li">
-                <p>{'认证手机号：'}{ listInfo.authPhone }</p>
-                <p>{'认证时间：'}{ timeDate.time(listInfo.gmt, 'yyyy-MM-dd hh:mm:ss') }</p>
+                <p>{'认证手机号：'}{ idCardInfo.phone }</p>
+                <p>{'认证时间：'}{ timeDate.time(idCardInfo.gmt, 'yyyy-MM-dd hh:mm:ss') }</p>
               </li>
               <li className="flex flex-direction_row info-li">
                 <p>{'认证状态：'}{ filter.personalType(idCardInfo.mobileType) }</p>

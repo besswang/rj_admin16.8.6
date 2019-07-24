@@ -125,11 +125,11 @@ class WaitHuan extends Component {
 						return t
 					}
 				}, {
-					label: '借款类型',
-					prop: 'loanType',
+					label: '订单类型',
+					prop: 'loanTerm', // 等于0 为新客  大于0 为老客
 					render: row => {
-						const t = filter.loanType(row.loanType)
-						return t
+						const data = filter.loanTer(row.loanTerm)
+						return data
 					}
 				}, {
 					label: '银行名称',

@@ -167,6 +167,24 @@ class WaitHuan extends Component {
 				}, {
 					label: '约定还款日',
 					prop: 'finalDate'
+				},{
+					label: '记录延期时间',
+					prop: 'recordDelay',
+					width:200,
+					render: row => {
+						if (row.recordDelay && row.recordDelay !== null && row.recordDelay.length>0){
+							const b = row.recordDelay.map((item, index) => {
+								if (index + 1 - row.recordDelay.length === 0) {
+									return item
+								}else{
+									return <span>{ item }<span className="theme-blue">{'---'}</span></span>
+								}
+							})
+							return b
+						}else{
+							return ''
+						}
+					}
 				},
 				// {
 				// 	label: '借款次数',
@@ -254,7 +272,7 @@ class WaitHuan extends Component {
 		}
 		window.sessionStorage.setItem('locationState', JSON.stringify(sess))
 		// this.props.findAllDelayRate()
-  }
+	}
   handleSearch = e => {
     e.preventDefault()
     this.props.selectPendingRepay()

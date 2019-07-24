@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Switch, Button, Form, Message, Radio, Checkbox, Input, Select } from 'element-react'
+import { Switch, Button, Form, Message, Radio, Checkbox, Input } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -24,12 +24,16 @@ class HighSetting extends Component {
 				// phoneprice: '0.1', //手机认证单价
 				// riskmanagement: '排序', //风控选择： 排序,瑞鲸
 				// testswitch: 'false', // 测试开关：
+				// Pprice: '', // 排序
+				// Rprice: '', // 瑞鲸
 			},
 			rules:{
 				downloadlink: [{required: true,message: '请输入下载链接',trigger: 'blur'}],
 				idcardprice: [{required: true,message: '请输入身份证认证单价',trigger: 'blur'}],
 				massageprice: [{required: true,message: '请输入短信单价',trigger: 'blur'}],
 				phoneprice: [{required: true,message: '请输入手机认证单价',trigger: 'blur'}],
+				Pprice: [{required: true,message: '请输入排序单价',trigger: 'blur'}],
+				Rprice: [{required: true,message: '请输入瑞鲸单价',trigger: 'blur'}]
 			}
 		}
 	}
@@ -143,27 +147,18 @@ class HighSetting extends Component {
 		})
 	}
 	render() {
-						// bankpay: '快钱', //银行卡支付通道开关：(连连,富有,快钱,合利)
-						// downloadlink: 'http://www.baidu.com', // 下载链接
-						// idcardprice: '', // 身份证认证单价
-						// massageprice: '', // 短信单价
-						// modetype: 'true', // 服务费申请扣款方式 true 先扣  false  后扣
-						// pay: '微信,支付宝', // 支付开关：(微信， 支付宝， 银行卡)
-						// phoneprice: '0.1', //手机认证单价
-						// riskmanagement: '排序', //风控选择： 排序,瑞鲸
-						// testswitch: 'false', // 测试开关：
 		const { form, pay, rules } = this.state
 		return (
 			<div style={ {width:'50%'} }>
 				<Form labelWidth="120" model={ form } ref={ e => {this.form = e} } rules={ rules }>
-					<Form.Item label="银行卡支付通道开关">
+					{/* <Form.Item label="银行卡支付通道开关">
 						<Select value={ form.bankpay } placeholder="" onChange={ this.onChange.bind(this, 'bankpay') }>
 							<Select.Option label="连连" value="连连"></Select.Option>
 							<Select.Option label="富有" value="富有"></Select.Option>
 							<Select.Option label="快钱" value="快钱"></Select.Option>
 							<Select.Option label="合利" value="合利"></Select.Option>
 						</Select>
-					</Form.Item>
+					</Form.Item> */}
 					<Form.Item label="下载链接" prop="downloadlink">
 						<Input value={ form.downloadlink } onChange={ this.onChange.bind(this,'downloadlink') } />
 					</Form.Item>
@@ -173,6 +168,27 @@ class HighSetting extends Component {
 					<Form.Item label="短信单价" prop="massageprice">
 						<Input value={ form.massageprice } onChange={ this.onChange.bind(this,'massageprice') } />
 					</Form.Item>
+					<Form.Item label="手机认证单价" prop="phoneprice">
+						<Input value={ form.phoneprice } onChange={ this.onChange.bind(this,'phoneprice') } />
+					</Form.Item>
+					<Form.Item label="风控选择">
+						<Radio.Group value={ form.riskmanagement } onChange={ this.onChange.bind(this,'riskmanagement') }>
+							<Radio value="排序">{'排序'}</Radio>
+							<Radio value="瑞鲸">{'瑞鲸'}</Radio>
+						</Radio.Group>
+					</Form.Item>
+					{
+						form.riskmanagement === '排序' &&
+						<Form.Item label="排序" prop="Pprice">
+							<Input value={ form.Pprice } onChange={ this.onChange.bind(this,'Pprice') } />
+						</Form.Item>
+					}
+					{
+						form.riskmanagement === '瑞鲸' &&
+						<Form.Item label="瑞鲸" prop="Rprice">
+							<Input value={ form.Rprice } onChange={ this.onChange.bind(this,'Rprice') } />
+						</Form.Item>
+					}
 					<Form.Item label="服务费申请扣款方式">
 						<Radio.Group value={ form.modetype } onChange={ this.onChange.bind(this,'modetype') }>
 							<Radio value={ 'true' }>{'先扣'}</Radio>
@@ -185,15 +201,6 @@ class HighSetting extends Component {
 							<Checkbox label="支付宝" name="type" />
 							<Checkbox label="银行卡" name="type" />
 						</Checkbox.Group>
-					</Form.Item>
-					<Form.Item label="手机认证单价" prop="phoneprice">
-						<Input value={ form.phoneprice } onChange={ this.onChange.bind(this,'phoneprice') } />
-					</Form.Item>
-					<Form.Item label="风控选择">
-						<Radio.Group value={ form.riskmanagement } onChange={ this.onChange.bind(this,'riskmanagement') }>
-							<Radio value="排序">{'排序'}</Radio>
-							<Radio value="瑞鲸">{'瑞鲸'}</Radio>
-						</Radio.Group>
 					</Form.Item>
 					<Form.Item label="测试开关">
 						<Switch

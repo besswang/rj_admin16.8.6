@@ -198,7 +198,7 @@ class Login extends Component {
               <h1 className="wel">{'欢迎来到'}</h1>
               <img className="icon2" src={ icon2 } alt=""/>
             </div>
-            <h1 className="title">{'现金滴滴后台登陆系统'}</h1>
+            <h1 className="title">{'及享用后台登陆系统'}</h1>
           </Layout.Col>
           <Layout.Col span="6" className="grid-content grid-right flex flex-direction_column justify-content_flex-center align-item_center">
             <Form className="form-con" ref={ e => { this.form = e } } model={ form } rules={ rules }>
