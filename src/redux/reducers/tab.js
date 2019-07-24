@@ -7,7 +7,7 @@ import * as type from '@redux/actionTypes'
 const tabObj = (state = [], action) => {
   switch (action.type) {
     case type.TAB_ADD:{
-      console.log(action.data)
+      // console.log(action.data)
       if(state.length>0){
         const ele = state.map(item =>
           (item.name !== action.data.name)

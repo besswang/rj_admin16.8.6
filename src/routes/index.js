@@ -42,7 +42,6 @@ class App extends Component {
     // }
   }
   render() {
-    console.log(this.props.user)
     const { loginSuccess } = this.state
     const { router } = this.props
     return(
