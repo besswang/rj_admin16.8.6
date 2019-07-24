@@ -148,10 +148,15 @@ class WaitHuan extends Component {
 					label: '应还金额',
 					prop: 'repaymentMoney'
 				}, {
+					label: '部分还款',
+					prop: 'reductionAmount'
+				}, {
 					label: '减免金额',
-					prop: 'reductionMoney',
+					prop: '',
 					render: row => {
-						return row.reductionMoney === null ? 0 : row.reductionMoney
+						// 减免金额 = 应还金额 - 目前应还金额 - 部分还款
+						const t = parseFloat(row.repaymentMoney) - parseFloat(row.realRepayMoney) - parseFloat(row.reductionAmount)
+						return t
 					}
 				}, {
 					label: '目前应还',

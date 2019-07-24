@@ -55,7 +55,7 @@ class Header extends Component {
         <li>
           <Dropdown onCommand={ this.handleCommand } menu={ (
             <Dropdown.Menu>
-              <Dropdown.Item command="1">{'修改'}<i className="el-icon-edit el-icon--right" /></Dropdown.Item>
+              {/* <Dropdown.Item command="1">{'修改'}<i className="el-icon-edit el-icon--right" /></Dropdown.Item> */}
               <Dropdown.Item command="0">{'退出'}</Dropdown.Item>
             </Dropdown.Menu>
             ) }

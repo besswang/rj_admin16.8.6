@@ -284,3 +284,8 @@ p {
 .def-color{
   color:#8391a5
 }
+.info-text{
+  color:#8391a5;
+  font-size:12px;
+  line-height:12px;
+}

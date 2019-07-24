@@ -129,6 +129,8 @@ export default {
   insertRotationChartApi: params => Fetch(jk.insertRotationChart, {method: 'get', data:params}),
   selectTextConfigApi: () => Fetch(jk.selectTextConfig, {method: 'get'}),
   selectSeniorConfigApi: () => Fetch(jk.selectSeniorConfig, {method: 'get'}),
-  updateGlobalConfigsApi: params => Fetch(jk.updateGlobalConfigs, {method: 'put', body: params})
+  updateGlobalConfigsApi: params => Fetch(jk.updateGlobalConfigs, {method: 'put', body: params}),
+  selectOtherConfigApi: () => Fetch(jk.selectOtherConfig, {method: 'get'}),
+  updateGlobalConfigssApi: params => Fetch(jk.updateGlobalConfigss, {method: 'put', body: params})
 }
 
