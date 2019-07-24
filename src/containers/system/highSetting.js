@@ -101,11 +101,12 @@ class HighSetting extends Component {
 		}
 	}
 	saveApi = async obj => {
-		const res = await api.updateGlobalConfigsApi()
+		const res = await api.updateGlobalConfigsApi(obj)
 		if (res.success) {
-			Message.success(res.data.msg)
+			Message.success(res.msg)
+			this.configData()
 		}else{
-			Message.warning(res.data.msg)
+			Message.warning(res.msg)
 		}
 	}
 	saveContent = e => {
@@ -129,8 +130,6 @@ class HighSetting extends Component {
 
 				const p = b.join(',')
 				const trans = Object.assign({},this.state.form,{pay:p})
-				console.log(trans)
-				console.log(typeof trans)
 				this.saveApi(trans)
 			} else {
 				console.log('error submit!!')
