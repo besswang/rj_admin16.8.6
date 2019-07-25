@@ -55,24 +55,24 @@ class Apply extends Component {
 						}
 					}, {
 						label: '个人信息认证',
-						prop: 'idcardType',
+						prop: 'personalType',
 						width: 100,
 						render: row => {
-							return this.textType(row.idcardType)
-						}
-					}, {
-						label: '银行卡认证',
-						prop: 'bankType',
-						width: 100,
-						render: row => {
-							return this.textType(row.idcardType)
+							return this.textType(row.personalType)
 						}
 					}, {
 						label: '运营商认证', // 手机认证
 						prop: 'mobileType',
 						width: 100,
 						render: row => {
-							return this.textType(row.idcardType)
+							return this.textType(row.mobileType)
+						}
+					}, {
+						label: '银行卡认证',
+						prop: 'bankType',
+						width: 100,
+						render: row => {
+							return this.textType(row.bankType)
 						}
 					}
 				]

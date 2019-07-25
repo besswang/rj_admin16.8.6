@@ -56,16 +56,16 @@ class WaitHuan extends Component {
 				repaymentMoney:null, // 还款金额
 				payNumber: null, // 支付单号
 				dayValue: null,
-				principalReductionMoney:null, // 本金减免
+				principalReductionMoney: null, // 减免本金
 				rateReductionMoney: null, // 利息减免
 				overdueReductionMoney: null, // 逾期减免
 				serviceReductionMoney: null, // 服务费减免
 			},
 			rules: {
-				principalReductionMoney: [{required: true, validator: validate.numEmpty}],
-				rateReductionMoney: [{required: true, validator: validate.numEmpty}],
-				overdueReductionMoney: [{required: true, validator: validate.numEmpty}],
-				serviceReductionMoney: [{required: true, validator: validate.numEmpty}],
+				principalReductionMoney: [{required: true, validator: validate.moneyType}],
+				rateReductionMoney: [{required: true, validator: validate.moneyType}],
+				overdueReductionMoney: [{required: true, validator: validate.moneyType}],
+				serviceReductionMoney: [{required: true, validator: validate.moneyType}],
 				dayValue: [{
 					required: true,
 					validator: (rule, value, callback) => {
@@ -86,7 +86,7 @@ class WaitHuan extends Component {
 						}
 					}
 				}],
-				repaymentMoney: [{required: true, validator: validate.numEmpty}],
+				repaymentMoney: [{required: true, validator: validate.moneyType}],
 				payNumber: [{
 					required: true,
 					validator: (rule, value, callback) => {

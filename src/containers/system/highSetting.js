@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { selectSeniorConfig, updateGlobalConfigs } from './actions'
 import api from '@api/index'
+import validate from '@global/validate'
 class HighSetting extends Component {
 	static propTypes = {
 		selectSeniorConfig: PropTypes.func.isRequired,
@@ -24,16 +25,16 @@ class HighSetting extends Component {
 				// phoneprice: '0.1', //手机认证单价
 				// riskmanagement: '排序', //风控选择： 排序,瑞鲸
 				// testswitch: 'false', // 测试开关：
-				// Pprice: '', // 排序
-				// Rprice: '', // 瑞鲸
+				// pprice: '', // 排序-米融B单价
+				// rprice: '', // 瑞鲸-米融A单价
 			},
 			rules:{
 				downloadlink: [{required: true,message: '请输入下载链接',trigger: 'blur'}],
-				idcardprice: [{required: true,message: '请输入身份证认证单价',trigger: 'blur'}],
-				massageprice: [{required: true,message: '请输入短信单价',trigger: 'blur'}],
-				phoneprice: [{required: true,message: '请输入手机认证单价',trigger: 'blur'}],
-				Pprice: [{required: true,message: '请输入排序单价',trigger: 'blur'}],
-				Rprice: [{required: true,message: '请输入瑞鲸单价',trigger: 'blur'}]
+				idcardprice: [{required: true, validator: validate.moneyType}],
+				massageprice: [{required: true, validator: validate.moneyType}],
+				phoneprice: [{required: true, validator: validate.moneyType}],
+				pprice: [{required: true, validator: validate.moneyType}],
+				rprice: [{required: true, validator: validate.moneyType}]
 			}
 		}
 	}
@@ -163,32 +164,28 @@ class HighSetting extends Component {
 						<Input value={ form.downloadlink } onChange={ this.onChange.bind(this,'downloadlink') } />
 					</Form.Item>
 					<Form.Item label="身份证认证单价" prop="idcardprice">
-						<Input value={ form.idcardprice } onChange={ this.onChange.bind(this,'idcardprice') } />
+						<Input type="number" value={ form.idcardprice } onChange={ this.onChange.bind(this,'idcardprice') } />
 					</Form.Item>
 					<Form.Item label="短信单价" prop="massageprice">
-						<Input value={ form.massageprice } onChange={ this.onChange.bind(this,'massageprice') } />
+						<Input type="number" value={ form.massageprice } onChange={ this.onChange.bind(this,'massageprice') } />
 					</Form.Item>
 					<Form.Item label="手机认证单价" prop="phoneprice">
-						<Input value={ form.phoneprice } onChange={ this.onChange.bind(this,'phoneprice') } />
+						<Input type="number" value={ form.phoneprice } onChange={ this.onChange.bind(this,'phoneprice') } />
 					</Form.Item>
 					<Form.Item label="风控选择">
 						<Radio.Group value={ form.riskmanagement } onChange={ this.onChange.bind(this,'riskmanagement') }>
-							<Radio value="排序">{'排序'}</Radio>
-							<Radio value="瑞鲸">{'瑞鲸'}</Radio>
+							<Radio value="排序">{'米融A'}</Radio>
+							<Radio value="瑞鲸">{'米融B'}</Radio>
 						</Radio.Group>
 					</Form.Item>
-					{
-						form.riskmanagement === '排序' &&
-						<Form.Item label="排序" prop="Pprice">
-							<Input value={ form.Pprice } onChange={ this.onChange.bind(this,'Pprice') } />
+					<div className="flex flex-direction_row">
+						<Form.Item label="米融A单价" prop="rprice">
+							<Input type="number" value={ form.rprice } onChange={ this.onChange.bind(this,'rprice') } />
 						</Form.Item>
-					}
-					{
-						form.riskmanagement === '瑞鲸' &&
-						<Form.Item label="瑞鲸" prop="Rprice">
-							<Input value={ form.Rprice } onChange={ this.onChange.bind(this,'Rprice') } />
+						<Form.Item label="米融B单价" prop="pprice">
+							<Input type="number" value={ form.pprice } onChange={ this.onChange.bind(this,'pprice') } />
 						</Form.Item>
-					}
+					</div>
 					<Form.Item label="服务费申请扣款方式">
 						<Radio.Group value={ form.modetype } onChange={ this.onChange.bind(this,'modetype') }>
 							<Radio value={ 'true' }>{'先扣'}</Radio>

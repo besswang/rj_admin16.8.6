@@ -9,6 +9,7 @@ import { sizeChange, currentChange, initSearch } from '@redux/actions'
 import { findDelayRate,findAllDelayRate, bindingRate, deleteDelayRate } from './action'
 import MyPagination from '@components/MyPagination'
 import Search from '@components/Search'
+import validate from '@global/validate'
 class Exhibition extends Component {
 	static propTypes = {
 		history: PropTypes.object.isRequired,
@@ -35,27 +36,8 @@ class Exhibition extends Component {
 				status: true, // 状态
 			},
 			rules: {
-				dayNum: [{
-						required:true,
-						validator: (rule, value, callback) => {
-							if (value === '' || value === null) {
-								callback(new Error('请输入展期期限'))
-							} else {
-								callback()
-							}
-						}
-					}
-				],
-				delayRate: [{
-					required: true,
-					validator: (rule, value, callback) => {
-						if (value === '' || value === null) {
-							callback(new Error('请输入展期费率'))
-						} else {
-							callback()
-						}
-					}
-				}]
+				dayNum:[{required: true, validator: validate.dayNum}],
+				delayRate: [{required: true, validator: validate.feilv}]
 			},
 			dialogVisible: false,
 			columns: [{

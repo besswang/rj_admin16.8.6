@@ -8,6 +8,7 @@ import { withRouter } from 'react-router-dom'
 import api from '@api/index'
 import { Message } from 'element-react'
 import { MessageBox } from 'element-react'
+import num from '@global/num'
 class Home extends Component {
 	static propTypes = {
 		history: PropTypes.object.isRequired,
@@ -31,7 +32,8 @@ class Home extends Component {
 	selectGlobalValue = async () => {
 		const res = await api.selectGlobalValueApi()
 		if(res.success){
-			const result = parseInt(res.data.recharge) - parseInt(res.data.consume)
+			// const result = parseFloat(res.data.recharge) - parseFloat(res.data.consume)
+			const result = num.minus(res.data.recharge, res.data.consume)
 			if (result <= res.data.consumeLowerLimit){
 				MessageBox.confirm('余额即将不足', '提示', {
 					type: 'warning'

@@ -11,6 +11,7 @@ import Search from '@components/Search'
 import SelectPicker from '@components/SelectPicker'
 import { PROMOTION_TYPE } from '@meta/select'
 import DisableBtn from '@components/DisableBtn'
+import validate from '@global/validate'
 class Apply extends Component {
 	static propTypes = {
 		location: PropTypes.object.isRequired,
@@ -39,53 +40,16 @@ class Apply extends Component {
 				userScore: null, // 人工分数
 				firstMoney: null, // 首借额度
 				remake: '', // 备注,
-				riskType: 'PAIXU' // PAIXU("米融"),RUIJING("瑞鲸")
+				riskType: 'RUIJING' // PAIXU("排序-米融B"),RUIJING("瑞鲸-米融A")
 			},
 			rules: {
 				channelName: [{required: true,message: '请输入渠道名称',trigger: 'blur'}],
 				daiName: [{required: true,message: '请输入超贷名称',trigger: 'blur'}],
-				firstMoney:[{
-					required: true,
-					validator: (rule, value, callback) => {
-						if (value === '' || value === null) {
-							callback(new Error('请输入首借额度'))
-						} else {
-							callback()
-						}
-					}
-				}],
-				price: [{
-						required:true,
-						validator: (rule, value, callback) => {
-							if (value === '' || value === null) {
-								callback(new Error('请输入单价'))
-							} else {
-								callback()
-							}
-						}
-					}
-				],
+				firstMoney: [{required: true, validator: validate.moneyType}],
+				price:[{required: true, validator: validate.moneyType}],
 				type: [{required: true,message: '请选择推广方式',trigger: 'blur'}],
-				machineScore: [{
-					required: true,
-					validator: (rule, value, callback) => {
-						if (value === '' || value === null) {
-							callback(new Error('请输入机审分数'))
-						} else {
-							callback()
-						}
-					}
-				}],
-				userScore: [{
-					required: true,
-					validator: (rule, value, callback) => {
-						if (value === '' || value === null) {
-							callback(new Error('请输入人工审核分数'))
-						} else {
-							callback()
-						}
-					}
-				}],
+				machineScore: [{required: true, validator: validate.fen}],
+				userScore: [{required: true, validator: validate.fen}],
 				remake: [{required: true,message: '请输入备注',trigger: 'blur'}]
 			},
 			dialogVisible: false,
@@ -122,6 +86,14 @@ class Apply extends Component {
 				}, {
 					label: '首借额度',
 					prop: 'firstMoney'
+				}, {
+					label: '风控类型',
+					prop: 'riskType',
+					render: row => {
+						if (row.riskType){
+							return row.riskType === 'RUIJING' ? '米融A' : '米融B'
+						}
+					}
 				}, {
 					label: '备注',
 					prop: 'remake'
@@ -304,8 +276,8 @@ class Apply extends Component {
 							</Form.Item>
 							<Form.Item label="选择风控">
 								<Radio.Group value={ form.riskType } onChange={ this.onChange.bind(this,'riskType') }>
-									<Radio value="PAIXU">{'米融'}</Radio>
-									<Radio value="RUIJING">{'瑞鲸'}</Radio>
+									<Radio value="RUIJING">{'米融A风控'}</Radio>
+									<Radio value="PAIXU">{'米融B风控'}</Radio>
 								</Radio.Group>
 							</Form.Item>
 						</Form>

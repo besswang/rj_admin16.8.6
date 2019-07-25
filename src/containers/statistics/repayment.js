@@ -65,10 +65,10 @@ class RepayMent extends Component {
           }
         }, {
           label: '还款率',
-          // prop: 'repaymentRate', // 实还单数 /应还单数
+          // prop: 'repaymentRate', // 还款率 = 实还单数 /应还单数
           render: row => {
-            if (row.renewNum !== null && row.moreBorrowNum !== null) {
-              const x = parseInt(row.renewNum) + parseInt(row.moreBorrowNum)
+            if (row.fullRepaymentNum !== null && row.renewNum !== null) {
+              const x = parseInt(row.fullRepaymentNum) + parseInt(row.renewNum)
               if (x && row.shouldReturnNum) {
                 const n = parseInt(x) / parseInt(row.shouldReturnNum)
                 return (num.toDecimal(n*100))

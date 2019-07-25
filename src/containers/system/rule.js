@@ -31,16 +31,7 @@ class BlackUser extends Component {
 				configValue: null
 			},
 			rules2: {
-				configValue: [{
-					required: true,
-					validator: (rule, value, callback) => {
-						if (value === '' || value === null) {
-							callback(new Error('请输入上限金额'))
-						} else {
-							callback()
-						}
-					}
-				}]
+				configValue:[{required: true, validator: validate.moneyType}]
 			},
 			dialogTitle:'',
 			form:{
@@ -54,14 +45,14 @@ class BlackUser extends Component {
 				otherMoney: null, //其他时间提额
 			},
 			rules: {
-				money:  [{required: true, validator: validate.numEmpty}],
+				money:  [{required: true, validator: validate.moneyType}],
 				advanceDayNum: [{required: true, validator: validate.dayNum}],
-				advanceMoney: [{required: true, validator: validate.numEmpty}],
+				advanceMoney: [{required: true, validator: validate.moneyType}],
 				frontTime: [{ type: 'date', required: true, message: '请选择日期', trigger: 'change' }],
-				frontMoney: [{required: true, validator: validate.numEmpty}],
+				frontMoney: [{required: true, validator: validate.moneyType}],
 				afterTime: [{ type: 'date', required: true, message: '请选择日期', trigger: 'change' }],
-				afterMoney: [{required: true, validator: validate.numEmpty}],
-				otherMoney: [{required: true, validator: validate.numEmpty}]
+				afterMoney: [{required: true, validator: validate.moneyType}],
+				otherMoney: [{required: true, validator: validate.moneyType}]
 			},
 			value: 1,
 			sort: null,

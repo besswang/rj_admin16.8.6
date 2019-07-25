@@ -39,7 +39,7 @@ class Apply extends Component {
 				serverMoney: null, // 逾期服务费
 				// continueMoney:null,
 				dayNumber:null, // 申请天数
-				riskType: 'PAIXU'
+				riskType: 'RUIJING'
 			},
 			rules: {
 				// channelName: [{required: true,message: '请输入渠道名称',trigger: 'blur'}],
@@ -79,34 +79,16 @@ class Apply extends Component {
 					}
 				],
 				type: [{required: true,message: '请选择推广方式',trigger: 'blur'}],
-				machineScore: [{
-					required: true,
-					validator: (rule, value, callback) => {
-						if (value === '' || value === null) {
-							callback(new Error('请输入机审分数'))
-						} else {
-							callback()
-						}
-					}
-				}],
-				userScore: [{
-					required: true,
-					validator: (rule, value, callback) => {
-						if (value === '' || value === null) {
-							callback(new Error('请输入人工审核分数'))
-						} else {
-							callback()
-						}
-					}
-				}],
+				machineScore: [{required: true, validator: validate.fen}],
+				userScore: [{required: true, validator: validate.fen}],
 				remake: [{required: true,message: '请输入备注',trigger: 'blur'}],
-				money: [{required: true, validator: validate.money}],
+				money: [{required: true, validator: validate.moneyType}],
 				// sort: [{required: true, validator:validate.sort}],
 				// moneyRate: [{required: true,validator:validate.moneyRate}],
-				overdueRate: [{required: true,validator:validate.overdueRate}],
-				serverMoney: [{required: true, validator: validate.serverMoney}],
+				overdueRate: [{required: true,validator:validate.lilv}],
+				serverMoney: [{required: true, validator: validate.moneyType}],
 				// continueMoney: [{required: true, validator:validate.continueMoney}],
-				dayNumber: [{required: true,validator:validate.dayNumber}],
+				dayNumber: [{required: true,validator:validate.dayNum}]
 			}
 		}
 	}
@@ -168,8 +150,8 @@ class Apply extends Component {
 							</Form.Item>
 							<Form.Item label="选择风控">
 								<Radio.Group value={ form.riskType } onChange={ this.onChange.bind(this,'riskType') }>
-									<Radio value="PAIXU">{'米融'}</Radio>
-									<Radio value="RUIJING">{'瑞鲸'}</Radio>
+									<Radio value="RUIJING">{'米融A风控'}</Radio>
+									<Radio value="PAIXU">{'米融B风控'}</Radio>
 								</Radio.Group>
 							</Form.Item>
 						</Layout.Col>

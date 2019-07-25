@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { pageRotationChart, deleteRotationChart, updateRotationChart,insertRotationChart } from './actions'
+import { pageRotationChart, deleteRotationChart, updateRotationChart,insertRotationChart, editAdvertUrl } from './actions'
 import MyPagination from '@components/MyPagination'
 import DisableBtn from '@components/DisableBtn'
 class Banner extends Component {
@@ -18,11 +18,14 @@ class Banner extends Component {
 		updateRotationChart: PropTypes.func.isRequired,
 		btnLoading: PropTypes.bool.isRequired,
 		insertRotationChart: PropTypes.func.isRequired,
+		editAdvertUrl: PropTypes.func.isRequired
   }
 	constructor(props) {
 		super(props)
 		this.state = {
+			id:null,
 			dialogVisible: false,
+			dialogVisible3:false,
 			imgUrl: '',
 			form:{
 				advertUrl: '', // 跳转地址
@@ -49,9 +52,10 @@ class Banner extends Component {
 					}
 				}, {
 					label: '跳转地址',
+					width:300,
 					prop: 'advertUrl',
 					render: row => {
-						return <a className="theme-blue" href={ row.advertUrl } target="_blank" rel="noopener noreferrer">{ row.advertUrl }</a>
+						return (<div className="flex"><a className="theme-blue flex_1" href={ row.advertUrl } target="_blank" rel="noopener noreferrer">{ row.advertUrl }</a><Button className="margin_left15" type="info" size="mini" onClick={ this.openDialog3.bind(this,row.advertUrl,row.id) }>{'修改'}</Button></div>)
 					}
 				}, {
 					label: '上架状态',
@@ -93,7 +97,19 @@ class Banner extends Component {
 	openDialog2 = url => {
 		this.setState({
 			dialogVisible2: true,
-			dialogImageUrl: url
+			dialogImageUrl: url,
+			form: {
+				advertUrl: ''
+			}
+		})
+	}
+	openDialog3 = (url, id) => {
+		this.setState({
+			dialogVisible3: true,
+			form:{
+				advertUrl: url
+			},
+			id:id
 		})
 	}
 	submitUpload() {
@@ -123,10 +139,11 @@ class Banner extends Component {
 			form: Object.assign({}, this.state.form, { [key]: value })
 		})
 	}
-	openDialog = url => {
+	openDialog = () => {
 		this.setState({
 			dialogVisible: true,
-			imgUrl: ''
+			imgUrl: '',
+			btnLoading:false
 		})
 	}
 	saveContent = e => {
@@ -148,10 +165,24 @@ class Banner extends Component {
 			}
 		})
 	}
+	saveContentEdit = e => {
+		e.preventDefault()
+		this.form.validate((valid) => {
+			if (valid) {
+				this.props.editAdvertUrl({id:this.state.id, advertUrl:this.state.form.advertUrl})
+				this.setState({
+					dialogVisible3:false
+				})
+			} else {
+				console.log('error submit!!')
+				return false
+			}
+		})
+	}
 	render() {
 		const { list } = this.props
 		const load = this.props.btnLoading
-		const { columns, dialogVisible2, dialogImageUrl, btnLoading,dialogVisible,form, rules } = this.state
+		const { columns, dialogVisible2, dialogImageUrl, btnLoading,dialogVisible,form, rules, dialogVisible3 } = this.state
 		return (
 			<div>
 				<Button className="margin-bottom15" type="primary" onClick={ this.openDialog.bind(this) }>{'添加'}</Button>
@@ -185,6 +216,23 @@ class Banner extends Component {
 					<Dialog.Footer className="dialog-footer">
 						<Button onClick={ () => this.setState({ dialogVisible: false }) }>{'取 消'}</Button>
 						<Button type="primary" onClick={ this.saveContent } loading={ load }>{'确 定'}</Button>
+					</Dialog.Footer>
+				</Dialog>
+				<Dialog
+					title={ '修改' }
+					visible={ dialogVisible3 }
+					onCancel={ () => this.setState({ dialogVisible3: false }) }
+				>
+					<Dialog.Body>
+						<Form labelWidth="140" ref={ e => {this.form=e} } model={ form } rules={ rules }>
+							<Form.Item label="跳转地址" prop="advertUrl">
+								<Input value={ form.advertUrl } onChange={ this.onChange.bind(this,'advertUrl') } prepend="Http://"/>
+							</Form.Item>
+						</Form>
+					</Dialog.Body>
+					<Dialog.Footer className="dialog-footer">
+						<Button onClick={ () => this.setState({ dialogVisible3: false }) }>{'取 消'}</Button>
+						<Button type="primary" onClick={ this.saveContentEdit } loading={ load }>{'确 定'}</Button>
 					</Dialog.Footer>
 				</Dialog>
 				{/* <Upload
@@ -231,7 +279,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({ sizeChange, currentChange, initSearch, pageRotationChart, deleteRotationChart, updateRotationChart,insertRotationChart }, dispatch)
+		...bindActionCreators({ sizeChange, currentChange, initSearch, pageRotationChart, deleteRotationChart, updateRotationChart,insertRotationChart, editAdvertUrl }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Banner)

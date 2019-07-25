@@ -54,7 +54,7 @@ export const bankInfo = id => {
     dispatch(requestPosts())
     const data = await api.selectBankByUserIdApi(id)
     if (data.success) {
-      dispatch(receivePosts({list:data.data}))
+      dispatch(receivePosts({list:[data.data]}))
     } else {
       dispatch(failurePosts(data))
     }

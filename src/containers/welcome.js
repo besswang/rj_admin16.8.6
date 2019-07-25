@@ -29,6 +29,10 @@ class Welcome extends React.Component{
 
 	}
 	componentDidMount() {
+		const wel = this.props.router.defaultRouter.filter(item => item.text === '欢迎页')
+		if (wel[0].hideInMenu){
+			return false
+		}
 		this.initData()
 	}
 	search = () => {

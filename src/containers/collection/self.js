@@ -106,7 +106,7 @@ class Self extends Component {
 		const { list } = this.props
 		return (
 			<div>
-				<Search showSelect2>
+				<Search showSelect2 showColl>
 					<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
 				</Search>
 				<Loading loading={ list.loading }>

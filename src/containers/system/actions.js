@@ -258,6 +258,19 @@ export const updateRotationChart = subreddit => {
     })
   }
 }
+// 轮播图管理-修改跳转地址
+export const editAdvertUrl = subreddit => {
+  return async dispatch => {
+    dispatch(requestPosts())
+    const data = await api.updateRotationChartApi(subreddit)
+    if (data.success) {
+      dispatch(pageRotationChart())
+      Message.success(data.msg)
+    } else {
+      dispatch(failurePosts(data))
+    }
+  }
+}
 
 // 提额管理
 export const pageuserQuota = () => {
