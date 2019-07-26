@@ -49,8 +49,14 @@ class HighSetting extends Component {
 		return value.split(',')
 	}
 	onChange(key, value) {
+		let v = null
+		if(value && (typeof value === 'string')){
+			v = value.trim()
+		}else{
+			v = value
+		}
 		this.setState({
-			form: Object.assign({}, this.state.form, { [key]: value })
+			form: Object.assign({}, this.state.form, { [key]: v })
 		})
 	}
 	configData = async () => {
@@ -164,13 +170,13 @@ class HighSetting extends Component {
 						<Input value={ form.downloadlink } onChange={ this.onChange.bind(this,'downloadlink') } />
 					</Form.Item>
 					<Form.Item label="身份证认证单价" prop="idcardprice">
-						<Input type="number" value={ form.idcardprice } onChange={ this.onChange.bind(this,'idcardprice') } />
+						<Input type="number" value={ form.idcardprice } onChange={ this.onChange.bind(this,'idcardprice') } append="元" />
 					</Form.Item>
 					<Form.Item label="短信单价" prop="massageprice">
-						<Input type="number" value={ form.massageprice } onChange={ this.onChange.bind(this,'massageprice') } />
+						<Input type="number" value={ form.massageprice } onChange={ this.onChange.bind(this,'massageprice') } append="元" />
 					</Form.Item>
 					<Form.Item label="手机认证单价" prop="phoneprice">
-						<Input type="number" value={ form.phoneprice } onChange={ this.onChange.bind(this,'phoneprice') } />
+						<Input type="number" value={ form.phoneprice } onChange={ this.onChange.bind(this,'phoneprice') } append="元" />
 					</Form.Item>
 					<Form.Item label="风控选择">
 						<Radio.Group value={ form.riskmanagement } onChange={ this.onChange.bind(this,'riskmanagement') }>
@@ -180,10 +186,10 @@ class HighSetting extends Component {
 					</Form.Item>
 					<div className="flex flex-direction_row">
 						<Form.Item label="米融A单价" prop="rprice">
-							<Input type="number" value={ form.rprice } onChange={ this.onChange.bind(this,'rprice') } />
+							<Input type="number" value={ form.rprice } onChange={ this.onChange.bind(this,'rprice') } append="元" />
 						</Form.Item>
 						<Form.Item label="米融B单价" prop="pprice">
-							<Input type="number" value={ form.pprice } onChange={ this.onChange.bind(this,'pprice') } />
+							<Input type="number" value={ form.pprice } onChange={ this.onChange.bind(this,'pprice') } append="元" />
 						</Form.Item>
 					</div>
 					<Form.Item label="服务费申请扣款方式">

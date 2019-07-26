@@ -36,7 +36,7 @@ class Exhibition extends Component {
 				status: true, // 状态
 			},
 			rules: {
-				dayNum:[{required: true, validator: validate.dayNum}],
+				dayNum:[{required: true, validator: validate.exceptZeroNum}],
 				delayRate: [{required: true, validator: validate.feilv}]
 			},
 			dialogVisible: false,

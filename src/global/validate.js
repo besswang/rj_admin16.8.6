@@ -67,6 +67,32 @@ export default {
       callback()
     }
   },
+  versionId: (rule, value, callback) => {
+    const r = new RegExp('^[0-9.]+$')
+    if (value === '' || value === null) {
+      callback(new Error('请输入版本号'))
+    } else if(!r.test(value)){
+      callback(new Error('版本号必须是数字和小数点组成'))
+    } else {
+      callback()
+    }
+  },
+  password: (rule, value, callback) => {
+    // 正则表达式匹配大写， 小写， 数字及特殊字符 ,必须符合其中三个要求
+    // const r1 = /^(?=.*?[0-9])(?=.*?[A-Z])(?=.*?[a-z])[0-9A-Za-z!-)]{8,}$/
+    // const r2 = /((?=[\x21-\x7e]+)[^A-Za-z0-9])/
+
+    // 正则表达式匹配大写， 小写， 数字及特殊字符 ,必须符合其中三个要求
+    // const s = new RegExp('^(?![a-zA-Z]+$)(?![A-Z0-9]+$)(?![A-Z\\W_!@#$%^&*`~()-+=]+$)(?![a-z0-9]+$)(?![a-z\\W_!@#$%^&*`~()-+=]+$)(?![0-9\\W_!@#$%^&*`~()-+=]+$)[a-zA-Z0-9\\W_!@#$%^&*`~()-+=]{8,30}$')
+    const r = new RegExp('^[0-9a-zA-Z!-_!@#$%^&*]+$')
+    if (value === '' || value === null) {
+      callback(new Error('密码不能为空'))
+    } else if(!r.test(value)){
+      callback(new Error('密码可以是大小写字母，数字，特殊字符'))
+    } else {
+      callback()
+    }
+  },
   fen: (rule, value, callback) => {
     const r = new RegExp('^[0-9]*$')
     if (value === '' || value === null) {
@@ -77,7 +103,27 @@ export default {
       callback()
     }
   },
-  dayNum: (rule, value, callback) => {
+  edu: (rule, value, callback) => { // 额度是大于等于0的正整数
+    const r = new RegExp('^[0-9]*$')
+    if (value === '' || value === null) {
+      callback(new Error('额度不能为空'))
+    } else if (!r.test(value)) {
+      callback(new Error('请输入有效额度'))
+    } else {
+      callback()
+    }
+  },
+  exceptZeroNum: (rule, value, callback) => { // 不包括0的天数
+    const r = new RegExp('^[1-9]*$')
+    if (value === '' || value === null) {
+      callback(new Error('天数不能为空'))
+    } else if (!r.test(value)) {
+      callback(new Error('请输入有效天数'))
+    } else {
+      callback()
+    }
+  },
+  dayNum: (rule, value, callback) => { // 包括0的天数
     const r = new RegExp('^[0-9]*$')
     if (value === '' || value === null) {
       callback(new Error('天数不能为空'))
@@ -88,21 +134,23 @@ export default {
     }
   },
   lilv: (rule, value, callback) => { // 利率
-    const reg = new RegExp('^[0-9]+(.[0-9]{2})?$')
+    // const reg = new RegExp('^[0-9]+(.[0-9]{2})?$')
+    const reg = new RegExp('^[0-1]+(.[0-9]{1,4})?$') // 0-1
     if (value === '' || value === null) {
       callback(new Error('请输入利率'))
-    }else if(!reg.test(value)){
-      callback(new Error('请输入有效利率'))
+    } else if (!reg.test(value) || parseInt(value) > 1 || parseFloat(value) > 1) {
+      callback(new Error('请输入0-1之间有效的利率,,最多可输入四位小数'))
     } else {
       callback()
     }
   },
   feilv: (rule, value, callback) => { // 费率
-    const reg = new RegExp('^[0-9]+(.[0-9]{2})?$')
+    // const reg = new RegExp('^[0-9]+(.[0-9]{2})?$')
+    const reg = new RegExp('^[0-1]+(.[0-9]{1,4})?$')
     if (value === '' || value === null) {
       callback(new Error('请输入费率'))
-    }else if(!reg.test(value)){
-      callback(new Error('请输入有效费率'))
+    }else if(!reg.test(value) || parseInt(value)>1 || parseFloat(value)>1){
+      callback(new Error('请输入0-1之间有效费率,最多可输入四位小数'))
     } else {
       callback()
     }

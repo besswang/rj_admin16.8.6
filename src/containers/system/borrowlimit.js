@@ -47,7 +47,7 @@ class BlackUser extends Component {
 				money: [{required: true, validator: validate.money}],
 				// sort: [{required: true, validator:validate.sort}],
 				// moneyRate: [{required: true,validator:validate.moneyRate}],
-				overdueRate: [{required: true,validator:validate.overdueRate}],
+				overdueRate: [{required: true,validator:validate.lilv}],
 				serverMoney: [{required: true, validator: validate.serverMoney}],
 				// continueMoney: [{required: true, validator:validate.continueMoney}],
 				dayNumber: [{required: true,validator:validate.dayNumber}],

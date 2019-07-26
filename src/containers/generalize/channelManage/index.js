@@ -45,7 +45,7 @@ class Apply extends Component {
 			rules: {
 				channelName: [{required: true,message: '请输入渠道名称',trigger: 'blur'}],
 				daiName: [{required: true,message: '请输入超贷名称',trigger: 'blur'}],
-				firstMoney: [{required: true, validator: validate.moneyType}],
+				firstMoney: [{required: true, validator: validate.edu}],
 				price:[{required: true, validator: validate.moneyType}],
 				type: [{required: true,message: '请选择推广方式',trigger: 'blur'}],
 				machineScore: [{required: true, validator: validate.fen}],
@@ -206,8 +206,14 @@ class Apply extends Component {
 		console.log(e)
 	}
 	onChange(key, value) {
+		let v = null
+		if(value && (typeof value === 'string')){
+			v = value.trim()
+		}else{
+			v = value
+		}
 		this.setState({
-			form: Object.assign({}, this.state.form, { [key]: value })
+			form: Object.assign({}, this.state.form, { [key]: v })
 		})
 	}
 	render(){
@@ -252,7 +258,7 @@ class Apply extends Component {
 								<Input value={ form.daiName } onChange={ this.onChange.bind(this, 'daiName') } />
 							</Form.Item>
 							<Form.Item label="单价" prop="price">
-								<Input type="number" value={ form.price } onChange={ this.onChange.bind(this, 'price') } />
+								<Input type="number" value={ form.price } onChange={ this.onChange.bind(this, 'price') } append="元" />
 							</Form.Item>
 							<Form.Item label="推广方式" prop="type">
 								<SelectPicker
@@ -263,13 +269,13 @@ class Apply extends Component {
 								/>
 							</Form.Item>
 							<Form.Item label="机审分数" prop="machineScore">
-								<Input type="number" value={ form.machineScore } onChange={ this.onChange.bind(this, 'machineScore') } />
+								<Input type="number" value={ form.machineScore } onChange={ this.onChange.bind(this, 'machineScore') } append="分" />
 							</Form.Item>
 							<Form.Item label="人工审核分数" prop="userScore">
-								<Input type="number" value={ form.userScore } onChange={ this.onChange.bind(this, 'userScore') } />
+								<Input type="number" value={ form.userScore } onChange={ this.onChange.bind(this, 'userScore') } append="分" />
 							</Form.Item>
 							<Form.Item label="首借额度" prop="firstMoney">
-								<Input type="number" value={ form.firstMoney } onChange={ this.onChange.bind(this, 'firstMoney') } />
+								<Input type="number" value={ form.firstMoney } onChange={ this.onChange.bind(this, 'firstMoney') } append="元" />
 							</Form.Item>
 							<Form.Item label="备注" prop="remake">
 								<Input value={ form.remake } onChange={ this.onChange.bind(this, 'remake') } />

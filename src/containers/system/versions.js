@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
 import { pageAppversion, addAppversion, updateAppversion } from './actions'
 import MyPagination from '@components/MyPagination'
+import validate from '@global/validate'
 class BlackUser extends Component {
 	static propTypes = {
     list: PropTypes.object.isRequired,
@@ -32,9 +33,7 @@ class BlackUser extends Component {
 				updateContent:''
 			},
 			rules: {
-				versionId: [
-					{ required: true, message: '请输入版本号', trigger: 'blur' }
-				],
+				versionId: [{required: true, validator: validate.versionId}],
 				publisher: [
 					{ required: true, message: '请输入发布人', trigger: 'blur' }
 				],
@@ -116,8 +115,14 @@ class BlackUser extends Component {
     this.props.pageAppversion()
 	}
 	onChange(key, value) {
+		let v = null
+		if(value && (typeof value === 'string')){
+			v = value.trim()
+		}else{
+			v = value
+		}
 		this.setState({
-			form: Object.assign({}, this.state.form, { [key]: value })
+			form: Object.assign({}, this.state.form, { [key]: v })
 		})
 	}
 	openDialog = r => {

@@ -135,8 +135,14 @@ class Banner extends Component {
 		})
 	}
 	onChange(key, value) {
+		let v = null
+		if (value && (typeof value === 'string')) {
+			v = value.trim()
+		} else {
+			v = value
+		}
 		this.setState({
-			form: Object.assign({}, this.state.form, { [key]: value })
+			form: Object.assign({}, this.state.form, { [key]: v })
 		})
 	}
 	openDialog = () => {

@@ -26,7 +26,7 @@ class Apply extends Component {
 				type: '', // 类型,
 				machineScore: null, // 机审分数,
 				userScore: null, // 人工分数
-				firstMoney: null, // 首借额度
+				firstMoney: null, // 授信额度
 				remake: '', // 备注,
 				money: null, // 额度
 				defaultValue: 1,
@@ -57,16 +57,7 @@ class Apply extends Component {
 					}
 				}],
 				daiName: [{required: true,message: '请输入超贷名称',trigger: 'blur'}],
-				firstMoney:[{
-					required: true,
-					validator: (rule, value, callback) => {
-						if (value === '' || value === null) {
-							callback(new Error('请输入首借额度'))
-						} else {
-							callback()
-						}
-					}
-				}],
+				firstMoney: [{required: true, validator: validate.edu}],
 				price: [{
 						required:true,
 						validator: (rule, value, callback) => {
@@ -82,7 +73,7 @@ class Apply extends Component {
 				machineScore: [{required: true, validator: validate.fen}],
 				userScore: [{required: true, validator: validate.fen}],
 				remake: [{required: true,message: '请输入备注',trigger: 'blur'}],
-				money: [{required: true, validator: validate.moneyType}],
+				money: [{required: true, validator: validate.edu}],
 				// sort: [{required: true, validator:validate.sort}],
 				// moneyRate: [{required: true,validator:validate.moneyRate}],
 				overdueRate: [{required: true,validator:validate.lilv}],
@@ -99,8 +90,14 @@ class Apply extends Component {
 
 	}
 	onChange(key, value) {
+		let v = null
+		if(value && (typeof value === 'string')){
+			v = value.trim()
+		}else{
+			v = value
+		}
 		this.setState({
-			form: Object.assign({}, this.state.form, { [key]: value })
+			form: Object.assign({}, this.state.form, { [key]: v })
 		})
 	}
 	saveContent = e => {
@@ -130,7 +127,7 @@ class Apply extends Component {
 				<Form labelWidth="140" ref={ e => {this.form=e} } model={ form } rules={ rules }>
 					<h1 className="channeltitle">{ '渠道添加' }</h1>
 					<Layout.Row>
-						<Layout.Col span="12" xs="24" sm="24" md="12" lg="8">
+						<Layout.Col span="12" xs="24" sm="24" md="12" lg="10">
 							<Form.Item label="渠道名称" prop="channelName">
 								<Input value={ form.channelName } onChange={ this.onChange.bind(this, 'channelName') } />
 							</Form.Item>
@@ -138,7 +135,7 @@ class Apply extends Component {
 								<Input value={ form.daiName } onChange={ this.onChange.bind(this, 'daiName') } />
 							</Form.Item>
 							<Form.Item label="单价" prop="price">
-								<Input type="number" value={ form.price } onChange={ this.onChange.bind(this, 'price') } />
+								<Input type="number" value={ form.price } onChange={ this.onChange.bind(this, 'price') } append="元" />
 							</Form.Item>
 							<Form.Item label="推广方式" prop="type">
 								<SelectPicker
@@ -155,15 +152,15 @@ class Apply extends Component {
 								</Radio.Group>
 							</Form.Item>
 						</Layout.Col>
-						<Layout.Col span="12" xs="24" sm="24" md="12" lg="8">
+						<Layout.Col span="12" xs="24" sm="24" md="12" lg="10">
 							<Form.Item label="机审分数" prop="machineScore">
-								<Input type="number" value={ form.machineScore } onChange={ this.onChange.bind(this, 'machineScore') } />
+								<Input type="number" value={ form.machineScore } onChange={ this.onChange.bind(this, 'machineScore') } append="分" />
 							</Form.Item>
 							<Form.Item label="人工审核分数" prop="userScore">
-								<Input type="number" value={ form.userScore } onChange={ this.onChange.bind(this, 'userScore') } />
+								<Input type="number" value={ form.userScore } onChange={ this.onChange.bind(this, 'userScore') } append="分" />
 							</Form.Item>
 							<Form.Item label="授信额度" prop="firstMoney">
-								<Input type="number" value={ form.firstMoney } onChange={ this.onChange.bind(this, 'firstMoney') } />
+								<Input type="number" value={ form.firstMoney } onChange={ this.onChange.bind(this, 'firstMoney') } append="元" />
 							</Form.Item>
 							<Form.Item label="备注" prop="remake">
 								<Input value={ form.remake } onChange={ this.onChange.bind(this, 'remake') } />
@@ -172,9 +169,9 @@ class Apply extends Component {
 					</Layout.Row>
 					<h1 className="channeltitle">{ '额度添加' }</h1>
 					<Layout.Row>
-						<Layout.Col span="12" xs="24" sm="24" md="12" lg="8">
+						<Layout.Col span="12" xs="24" sm="24" md="12" lg="10">
 							<Form.Item label="额度" prop="money">
-								<Input type="number" value={ form.money } onChange={ this.onChange.bind(this,'money') } />
+								<Input type="number" value={ form.money } onChange={ this.onChange.bind(this,'money') } append="元" />
 							</Form.Item>
 							<Form.Item label="是否默认">
 								<Radio.Group value={ form.defaultValue } onChange={ this.onChange.bind(this,'defaultValue') }>
@@ -198,7 +195,7 @@ class Apply extends Component {
 								</Radio.Group>
 							</Form.Item>
 						</Layout.Col>
-						<Layout.Col span="12" xs="24" sm="24" md="12" lg="8">
+						<Layout.Col span="12" xs="24" sm="24" md="12" lg="10">
 							{/* <Form.Item label="借款年化利率（利息）" prop="moneyRate">
 								<Input value={ form.moneyRate } onChange={ this.onChange.bind(this,'moneyRate') } />
 							</Form.Item> */}
@@ -206,13 +203,13 @@ class Apply extends Component {
 								<Input value={ form.overdueRate } onChange={ this.onChange.bind(this,'overdueRate') } />
 							</Form.Item>
 							<Form.Item label="服务费" prop="serverMoney">
-								<Input type="number" value={ form.serverMoney } onChange={ this.onChange.bind(this,'serverMoney') } />
+								<Input type="number" value={ form.serverMoney } onChange={ this.onChange.bind(this,'serverMoney') } append="元" />
 							</Form.Item>
 							{/* <Form.Item label="延期金额" prop="continueMoney">
 								<Input type="number" value={ form.continueMoney } onChange={ this.onChange.bind(this,'continueMoney') } />
 							</Form.Item> */}
 							<Form.Item label="申请天数" prop="dayNumber">
-								<Input type="number" value={ form.dayNumber } onChange={ this.onChange.bind(this,'dayNumber') } />
+								<Input type="number" value={ form.dayNumber } onChange={ this.onChange.bind(this,'dayNumber') } append="天" />
 							</Form.Item>
 							<Form.Item label="逾期是否可以延期">
 								<Radio.Group value={ form.overdueType } onChange={ this.onChange.bind(this,'overdueType') }>

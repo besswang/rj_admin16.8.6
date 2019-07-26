@@ -36,6 +36,36 @@ class HighSetting extends Component {
 				thresholdscoreuser: [{required: true, validator: validate.fen}],
 				thresholdscore: [{required: true, validator: validate.fen}],
 				riskilencetime: [{required: true, validator: validate.dayNum}],
+				minage: [
+					{ required: true, message: '请输入最小年龄', trigger: 'blur' },
+					{ validator: (rule, value, callback) => {
+						const r = new RegExp('^[0-9]*$')
+						if (value === '') {
+							callback(new Error('请输入最小年龄'))
+						} else if (!r.test(value)) {
+							callback(new Error('请输入有效的年龄'))
+						} else if (value > this.state.form.maxage) {
+							callback(new Error('最小年龄不能大于最大年龄'))
+						} else {
+							callback()
+						}
+					} }
+				],
+				maxage: [
+					{ required: true, message: '请输入最大年龄', trigger: 'blur' },
+					{ validator: (rule, value, callback) => {
+						const r = new RegExp('^[0-9]*$')
+						if (value === '') {
+							callback(new Error('请输入最大年龄'))
+						} else if (!r.test(value)) {
+							callback(new Error('请输入有效的年龄'))
+						} else if (value < this.state.form.minage) {
+							callback(new Error('最大年龄不能小于最小年龄'))
+						} else {
+							callback()
+						}
+					} }
+				]
 			}
 		}
 	}
@@ -84,31 +114,8 @@ class HighSetting extends Component {
 			}
 		})
 	}
-	onChange1 = value => {
-		this.setState({
-			pay: value
-		})
-	}
-	removeDomain(item, e) {
-		var index = this.state.wechat.indexOf(item)
-
-		if (index !== -1) {
-			this.state.wechat.splice(index, 1)
-			this.forceUpdate()
-		}
-
-		e.preventDefault()
-	}
-	addDomain(e) {
-		e.preventDefault()
-
-		this.state.wechat.push('')
-
-		this.forceUpdate()
-	}
 	render() {
-		const { form, rules, wechat } = this.state
-		console.log(wechat)
+		const { form, rules } = this.state
 		return (
 			<div style={ {width:'60%'} }>
 				<Form labelWidth="120" model={ form } ref={ e => {this.form = e} } rules={ rules }>
@@ -135,31 +142,31 @@ class HighSetting extends Component {
 					</Form.Item>
 					<Form.Item label="年龄限制">
 						<div className="flex flex-direction_row">
-							<div>
+							<Form.Item labelWidth="0" prop="minage">
 								<Input type="number" value={ form.minage } onChange={ this.onChange.bind(this, 'minage') } />
-								<span className="info-text">{'年龄最小值'}</span>
-							</div>
+								{/* <span className="info-text">{'年龄最小值'}</span> */}
+							</Form.Item>
 							<span className="plr10">{'-'}</span>
-							<div>
+							<Form.Item labelWidth="0" prop="maxage">
 								<Input type="number" value={ form.maxage } onChange={ this.onChange.bind(this, 'maxage') } />
-								<span className="info-text">{'年龄最大值'}</span>
-							</div>
+								{/* <span className="info-text">{'年龄最大值'}</span> */}
+							</Form.Item>
 						</div>
 					</Form.Item>
 					<Form.Item label="逾期计算最高天数" prop="overhightday">
-						<Input type="number" value={ form.overhightday } onChange={ this.onChange.bind(this,'overhightday') } />
+						<Input type="number" value={ form.overhightday } onChange={ this.onChange.bind(this,'overhightday') } append="天" />
 					</Form.Item>
-					<Form.Item label="申请相隔时间(天为单位)" prop="">
-						<Input type="number" value={ form.beaparttime } onChange={ this.onChange.bind(this,'beaparttime') } />
+					<Form.Item label="申请相隔时间" prop="beaparttime">
+						<Input type="number" value={ form.beaparttime } onChange={ this.onChange.bind(this,'beaparttime') } append="天" />
 					</Form.Item>
 					<Form.Item label="风控分数人工审核门槛" prop="thresholdscoreuser">
-						<Input type="number" value={ form.thresholdscoreuser } onChange={ this.onChange.bind(this,'thresholdscoreuser') } />
+						<Input type="number" value={ form.thresholdscoreuser } onChange={ this.onChange.bind(this,'thresholdscoreuser') } append="分" />
 					</Form.Item>
 					<Form.Item label="风控分数机器审核门槛" prop="thresholdscore">
-						<Input type="number" value={ form.thresholdscore } onChange={ this.onChange.bind(this,'thresholdscore') } />
+						<Input type="number" value={ form.thresholdscore } onChange={ this.onChange.bind(this,'thresholdscore') } append="分" />
 					</Form.Item>
-					<Form.Item label="风控静默时间(天)" prop="riskilencetime">
-						<Input type="number" value={ form.riskilencetime } onChange={ this.onChange.bind(this,'riskilencetime') } />
+					<Form.Item label="风控静默时间" prop="riskilencetime">
+						<Input type="number" value={ form.riskilencetime } onChange={ this.onChange.bind(this,'riskilencetime') } append="天" />
 					</Form.Item>
 					<Form.Item label="老客是否调用">
 						<Switch
@@ -175,7 +182,6 @@ class HighSetting extends Component {
 						<Button type="primary" onClick={ this.saveContent }>{'确 定'}</Button>
 					</Form.Item>
 				</Form>
-				{/* <Button onClick={ () => {console.log(this.state.form)} }>{'obj'}</Button> */}
 			</div>
 		)
 	}
@@ -191,4 +197,3 @@ const mapDispatchToProps = dispatch => {
 	}
 }
 export default connect(mapDispatchToProps)(HighSetting)
-// export default HighSetting

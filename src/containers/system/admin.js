@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Loading, Table, Dialog,Form, Input, Radio } from 'element-react'
+import { Button, Loading, Table, Dialog,Form, Input, Radio, Switch } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -9,6 +9,7 @@ import MyPagination from '@components/MyPagination'
 import DisableBtn from '@components/DisableBtn'
 import Search from '@components/Search'
 import SelectPicker from '@components/SelectPicker'
+import validate from '@global/validate'
 // import filter from '@global/filter'
 class BlackUser extends Component {
 	static propTypes = {
@@ -25,6 +26,7 @@ class BlackUser extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			changePas: false, // 是否修改密码
 			dialogTitle:'',
 			adminDisabled: false,
 			rid: null,
@@ -38,6 +40,7 @@ class BlackUser extends Component {
 				distribution: 1, // 是否分配
 				password:''
 			},
+
 			rules: {
 				adminName: [
 					{ required: true, message: '请输入登陆手机号', trigger: 'blur' }
@@ -45,9 +48,7 @@ class BlackUser extends Component {
 				nickName: [
 					{ required: true, message: '请输入昵称', trigger: 'blur' }
 				],
-				password: [
-					{ required: true, message: '请输入密码', trigger: 'blur' }
-				],
+				password: [{required: true, validator: validate.password}],
 				roleId: [{
 					required: true,
 					validator: (rule, value, callback) => {
@@ -152,14 +153,20 @@ class BlackUser extends Component {
     this.props.pageAdmin()
 	}
 	onChange(key, value) {
+		let v = null
+		if(value && (typeof value === 'string')){
+			v = value.trim()
+		}else{
+			v = value
+		}
 		this.setState({
-			form: Object.assign({}, this.state.form, { [key]: value })
+			form: Object.assign({}, this.state.form, { [key]: v })
 		})
 	}
 	openDialog = r => {
 		this.form.resetFields()
 		this.setState({
-			dialogVisible: true
+			dialogVisible: true,
 		})
 		if (r === 'add') { //添加
 			this.setState({
@@ -179,6 +186,7 @@ class BlackUser extends Component {
 			})
 		} else { // 编辑
 			this.setState({
+				changePas: false,
 				dialogTitle: '编辑用户',
 				form: {
 					loginMode: r.loginMode,
@@ -187,7 +195,8 @@ class BlackUser extends Component {
 					nickName: r.nickName,
 					roleId: r.roleId,
 					adminState: r.adminState, // 用户状态
-					distribution: r.distribution // 是否分配
+					distribution: r.distribution, // 是否分配
+					password:''
 				},
 				id:r.id,
 				adminDisabled: true
@@ -198,16 +207,24 @@ class BlackUser extends Component {
 		e.preventDefault()
 		this.form.validate((valid) => {
 			if (valid) {
-				this.setState({
-					dialogVisible: false
-				})
 				if (this.state.id) {
-					const trans = Object.assign({},this.state.form,{id:this.state.id})
+					if(!this.state.changePas){
+						delete this.state.form.password
+					}
+					const pam = {}
+					for (const i in this.state.form) {
+						if (this.state.form[i]) {
+							pam[i] = this.state.form[i]
+						}
+					}
+					const trans = Object.assign({},pam,{id:this.state.id})
 					this.props.updateAdmin(trans)
 				} else {
 					this.props.addAdmin(this.state.form)
 				}
-
+				this.setState({
+					dialogVisible: false
+				})
 			} else {
 				console.log('error submit!!')
 				return false
@@ -217,9 +234,14 @@ class BlackUser extends Component {
 	onRadioChange(value) {
 		this.setState({ value })
 	}
+	onchange1 = val => {
+		this.setState({
+			changePas:val
+		})
+	}
 	render() {
 		const { list, btnLoading, roleList } = this.props
-		const { form, rules, dialogTitle, adminDisabled } = this.state
+		const { form, rules, dialogTitle, adminDisabled, changePas } = this.state
 		return (
 			<div>
 				<Search showRole showAdminName>
@@ -276,14 +298,23 @@ class BlackUser extends Component {
 									<SelectPicker value={ form.roleId } options={ roleList } onChange={ this.onChange.bind(this, 'roleId') } />
 								</Form.Item>
 							} */}
-							{
-								<Form.Item label="角色" prop="roleId">
-									<SelectPicker value={ form.roleId } clearable={ 1 } options={ roleList } onChange={ this.onChange.bind(this, 'roleId') } />
-								</Form.Item>
-							}
+							<Form.Item label="角色" prop="roleId">
+								<SelectPicker value={ form.roleId } clearable={ 1 } options={ roleList } onChange={ this.onChange.bind(this, 'roleId') } />
+							</Form.Item>
 							{/* form.roleId === rid && */}
 							{
-								form.loginMode === 'PASSWORD' &&
+								form.loginMode === 'PASSWORD' && this.state.id !== null &&
+								<Form.Item label="是否修改密码">
+									<Switch
+										value={ changePas }
+										onText=""
+										offText=""
+										onChange={ val => this.onchange1(val) }
+									/>
+								</Form.Item>
+							}
+							{
+								((changePas === true || this.state.id === null) && form.loginMode === 'PASSWORD') &&
 								<Form.Item label="密码" prop="password">
 									<Input value={ form.password } onChange={ this.onChange.bind(this, 'password') } />
 								</Form.Item>
