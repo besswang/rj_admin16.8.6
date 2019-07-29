@@ -5,9 +5,10 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { managelogin } from './action'
+import icon1 from '../../images/login-from-icon1.png'
+import icon2 from '../../images/login-from-icon2.png'
 import user from '../../images/user.png'
 import code from '../../images/code.png'
-import rightTitle from '../../images/hou-tai-20190729/right-title.png'
 import '@styles/login.less'
 class Login extends Component {
   static propTypes = {
@@ -191,21 +192,15 @@ class Login extends Component {
     return (
       <div className="login-con">
         <Layout.Row type="flex" justify="center" align="middle" className="row-bg">
-          <Layout.Col span="7" className="grid-content grid-left flex flex-direction_column justify-content_flex-justify">
-            <div className="top-title">
-              <h1 className="en-wel"><span className="border-bottom4">{'W'}</span>{'elcome'}</h1>
-              <h1 className="wel">{'及享用'}</h1>
+          <Layout.Col span="7" className="grid-content grid-left flex flex-direction_column justify-content_flex-center align-item_center">
+            <img className="icon1" src={ icon1 } alt=""/>
+            <div className="flex flex-direction_row borderb1 align-items_center">
+              <h1 className="wel">{'欢迎来到'}</h1>
+              <img className="icon2" src={ icon2 } alt=""/>
             </div>
-            <ul className="flex flex-direction_row justify-content_flex-justify bottom-title">
-              <li>{'后台管理'}</li>
-              <li>{'|'}</li>
-              <li>{'财务审核'}</li>
-              <li>{'|'}</li>
-              <li>{'数据报表'}</li>
-            </ul>
+            <h1 className="title">{'及享用后台登陆系统'}</h1>
           </Layout.Col>
-          <Layout.Col span="6" className="grid-content grid-right flex flex-direction_column">
-            <img className="title-logo" src={ rightTitle } alt=""/>
+          <Layout.Col span="6" className="grid-content grid-right flex flex-direction_column justify-content_flex-center align-item_center">
             <Form className="form-con" ref={ e => { this.form = e } } model={ form } rules={ rules }>
               <Form.Item prop="adminName">
                 <Input value={ form.adminName } onChange={ this.onChange.bind(this, 'adminName') } onBlur={ this.nameBlur } placeholder="请输入您的手机号/用户名" prepend={

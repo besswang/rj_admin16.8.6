@@ -139,6 +139,7 @@ export default {
   'findDelayRate': 'quotaDelay/findDelayRate', // 渠道管理-展期模式-列表 // // 待还款-还款-延期-延期天数
   'bindingRate': 'channel/bindingRate', // 渠道管理-展期模式-添加
   'deleteDelayRate': 'quotaDelay/deleteDelayRate', // 渠道管理-展期模式-删除
+  'updateDelayState': 'quotaDelay/updateDelayState', // 渠道管理-展期模式-启用/禁用
   'selectPromotionStatistics': 'order/selectPromotionStatistics', // 推广统计
   'selectChannelMember': 'user/selectChannelMember', // 渠道会员
   // select-渠道名称搜索

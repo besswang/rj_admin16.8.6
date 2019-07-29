@@ -31,7 +31,7 @@ class BlackUser extends Component {
 			dialogTitle: '',
 			id: null,
 			form: {
-				money: null,
+				money: null, // 额度
 				// defaultValue: 1,
 				state:1,
 				// sort:null,
@@ -44,7 +44,7 @@ class BlackUser extends Component {
 				dayNumber:null
 			},
 			rules: {
-				money: [{required: true, validator: validate.money}],
+				money: [{required: true, validator: validate.edu}],
 				// sort: [{required: true, validator:validate.sort}],
 				// moneyRate: [{required: true,validator:validate.moneyRate}],
 				overdueRate: [{required: true,validator:validate.lilv}],
@@ -145,7 +145,7 @@ class BlackUser extends Component {
 							{/* <Button type="danger" size="mini" onClick={ this.props.deleteQuota.bind(this, row.id, null) }>{'删除'}</Button> */}
 							{
 								this.props.history.location.pathname === '/system/borrowlimit' &&
-								<DisableBtn value={ row.state } result={ 0 } text={ ['启用','禁用'] } onClick={ this.props.updateQuota.bind(this,{state:row.state===1 ? 0:1,id:row.id}) }/>
+								<DisableBtn value={ row.state } result={ 0 } text={ ['启用','禁用'] } onClick={ this.props.updateQuota.bind(this,{state:row.state===1 ? 0:1,id:row.id}) } />
 							}
               {
 								this.props.history.location.pathname !== '/system/borrowlimit' &&
@@ -217,7 +217,7 @@ class BlackUser extends Component {
 				channelName:r.channelName,
 				id: r.id,
 				form: {
-					money: r.money,
+					money: r.money, // 额度
 					// defaultValue: r.defaultValue,
 					state:r.state,
 					// sort:r.sort,

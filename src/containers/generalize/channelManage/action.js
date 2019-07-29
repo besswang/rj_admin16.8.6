@@ -140,3 +140,41 @@ export const deleteDelayRate = (id,name) => {
     })
   }
 }
+
+// 渠道管理-展期模式-启用/禁用
+export const updateDelayState = (obj,name) => {
+  let text = null
+  if(obj.state === 1){
+    text = '禁用'
+  }else{
+    text = '启用'
+  }
+  return dispatch => {
+    MessageBox.confirm(`${ text }, 是否继续?`, '提示', {
+      type: 'warning'
+    }).then(async () => {
+      dispatch(requestPosts())
+      const data = await api.updateDelayStateApi(obj)
+      if (data.success) {
+        if (name) { // 推广管理-渠道管理-展期-启用/禁用
+          dispatch(findDelayRate({
+            channelName: name
+          }))
+        } else { // 系统管理-展期管理
+          dispatch(findAllDelayRate())
+        }
+        Message({
+          type: 'success',
+          message: data.msg
+        })
+      } else {
+        dispatch(failurePosts(data))
+      }
+    }).catch(() => {
+      Message({
+        type: 'info',
+        message: '已取消删除'
+      })
+    })
+  }
+}

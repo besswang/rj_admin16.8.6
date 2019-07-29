@@ -6,10 +6,11 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Link } from 'react-router-dom'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { findDelayRate,findAllDelayRate, bindingRate, deleteDelayRate } from './action'
+import { findDelayRate,findAllDelayRate, bindingRate, deleteDelayRate, updateDelayState } from './action'
 import MyPagination from '@components/MyPagination'
 import Search from '@components/Search'
 import validate from '@global/validate'
+import DisableBtn from '@components/DisableBtn'
 class Exhibition extends Component {
 	static propTypes = {
 		history: PropTypes.object.isRequired,
@@ -22,7 +23,8 @@ class Exhibition extends Component {
 		btnLoading: PropTypes.bool.isRequired,
 		bindingRate: PropTypes.func.isRequired,
 		deleteDelayRate: PropTypes.func.isRequired,
-		findAllDelayRate: PropTypes.func.isRequired
+		findAllDelayRate: PropTypes.func.isRequired,
+		updateDelayState: PropTypes.func.isRequired
 	}
 	constructor(props) {
 		super(props)
@@ -63,22 +65,28 @@ class Exhibition extends Component {
 					render: row => {
 						const y = <span className="theme-blue">{'启用'}</span>
 						const n = <span className="dis-red">{'禁用'}</span>
-						return row.status ? y:n
+						return row.status === 1 ? y:n
 					}
 				}, {
 						label: '操作',
-						width:80,
+						width:140,
 						fixed: 'right',
 						render: row => {
 							return (
 								<div>
 									{
 										this.props.history.location.pathname === '/system/exmessage' &&
+										<div>
 										<Button type="danger" size="mini" onClick={ this.props.deleteDelayRate.bind(this, row.id,null) }>{ '删除' }</Button>
+										<DisableBtn value={ row.status } result={ 0 } text={ ['启用','禁用'] } onClick={ this.props.updateDelayState.bind(this,{id:row.id,state:row.status ===1?0:1},null) } />
+										</div>
 									}
 									{
 										this.props.history.location.pathname !== '/system/exmessage' &&
+										<div>
 										<Button type="danger" size="mini" onClick={ this.props.deleteDelayRate.bind(this, row.id,row.channelName) }>{ '删除' }</Button>
+										<DisableBtn value={ row.status } result={ 0 } text={ ['启用','禁用'] } onClick={ this.props.updateDelayState.bind(this,{id:row.id,state:row.status ===1?0:1},row.channelName) } />
+										</div>
 									}
 								</div>
 							)
@@ -247,7 +255,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, findDelayRate, bindingRate, deleteDelayRate,findAllDelayRate }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, findDelayRate, bindingRate, deleteDelayRate,findAllDelayRate,updateDelayState }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Exhibition)

@@ -303,14 +303,19 @@ class BlackUser extends Component {
 							<Form.Item label="时间前提额" prop="frontMoney">
 								<Input type="frontMoney" value={ form.frontMoney } onChange={ this.onChange.bind(this, 'frontMoney') } />
 							</Form.Item>
-							<Form.Item label="时间后" prop="afterTime">
+							{
+								form.frontTime &&
+								<Form.Item label="时间后" prop="afterTime">
 								{/* <Input type="afterTime" value={ form.afterTime } onChange={ this.onChange.bind(this, 'afterTime') } /> */}
 								<TimePicker
 									onChange={ this.onChange.bind(this, 'afterTime') }
 									placeholder="选择时间"
+									selectableRange = { `${ timeDate.time(form.frontTime, 'hh:mm:ss') } - 20:30:00` }
 									value={ form.afterTime }
 								/>
-							</Form.Item>
+								</Form.Item>
+							}
+
 							<Form.Item label="时间后提额" prop="afterMoney">
 								<Input type="afterMoney" value={ form.afterMoney } onChange={ this.onChange.bind(this, 'afterMoney') } />
 							</Form.Item>

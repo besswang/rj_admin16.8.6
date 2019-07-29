@@ -8,8 +8,8 @@ process.env.NODE_ENV = 'production'
 // process.env.PUBLIC_URL = 'http://h5.huakodai.com'
 // process.env.PUBLIC_URL = 'http://qqter.chenxianshen.org.cn/'
 // process.env.PUBLIC_URL = 'http://cs.huakodai.com'
-// process.env.PUBLIC_URL = 'https://sdaff.hefengzhijia.cn'
-process.env.PUBLIC_URL = 'https://qqter.chenxianshen.org.cn'
+process.env.PUBLIC_URL = 'https://sdaff.hefengzhijia.cn'
+// process.env.PUBLIC_URL = 'https://qqter.chenxianshen.org.cn'
 
 
 // Makes the script crash on unhandled rejections instead of silently
