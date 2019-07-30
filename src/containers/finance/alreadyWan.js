@@ -24,12 +24,18 @@ class AlreadyWan extends Component {
 		super(props)
 		this.state = {
 			columns: [{
-					type: 'index'
-				}, {
+						label: '#',
+						width: 60,
+						render: (a, b, c) => {
+							return c + 1
+						}
+					}, {
 					label: '渠道名称',
+					width:100,
 					prop: 'channelName'
 				}, {
 					label: '新老客户',
+					width: 100,
 					prop: 'loanTerm', // 等于0 为新客  大于0 为老客
 					render: row => {
 						const data = filter.loanTerm(row.loanTerm)
@@ -37,30 +43,37 @@ class AlreadyWan extends Component {
 					}
 				}, {
 					label: '真实姓名',
+					width: 100,
 					prop: 'realName'
 				}, {
 					label: '米融分',
 					prop: 'riskNum'
 				}, {
 					label: '手机号码',
+					width: 100,
 					prop: 'phone'
 				}, {
 					label: '身份证号',
+					width: 100,
 					prop: 'idcardNumber'
 				}, {
 					label: '申请金额',
+					width: 100,
 					prop: 'applyMoney'
 				}, {
 					label: '申请期限',
+					width: 100,
 					prop: 'applyTerm'
 				}, {
 					label: '服务费',
 					prop: 'serviceMoney'
 				}, {
 					label: '已放金额', // 到账金额
+					width: 100,
 					prop: 'loanMoney'
 				}, {
 					label: '实还金额',
+					width: 100,
 					prop: 'realRepaymentMoney'
 				}, {
 					label: '实际还款日',
@@ -72,15 +85,19 @@ class AlreadyWan extends Component {
 					}
 				}, {
 					label: '延期费用',
+					width: 100,
 					prop: 'continuePayNumber'
 				}, {
 					label: '延期天数',
+					width: 100,
 					prop: 'continueDay'
 				}, {
 					label: '借款次数',
+					width: 100,
 					prop: 'loanTerm'
 				}, {
 					label: '放款客服',
+					width: 100,
 					prop: 'loanCustomer'
 				}, {
 					label: '申请时间',
@@ -92,6 +109,7 @@ class AlreadyWan extends Component {
 					}
 				}, {
 					label: '审核客服',
+					width: 100,
 					prop: 'examineCustomerName'
 				}, {
 					label: '审核时间',
@@ -111,12 +129,15 @@ class AlreadyWan extends Component {
 					}
 				}, {
 					label: '约定还款日',
+					width:120,
 					prop: 'repaymentDate'
 				}, {
 					label: '打款单号',
+					width: 100,
 					prop: 'loanNumber'
 				}, {
 					label: '打款方式',
+					width: 100,
 					prop: 'loanMode',
 					render: row => {
 						const data = filter.payType(row.loanMode)
@@ -124,6 +145,7 @@ class AlreadyWan extends Component {
 					}
 				}, {
 					label: '还款方式',
+					width: 100,
 					prop: 'repaymentType',
 					render: row => {
 						const data = filter.loanModeState(row.repaymentType)
@@ -131,12 +153,15 @@ class AlreadyWan extends Component {
 					}
 				}, {
 					label: '申请单号',
+					width: 100,
 					prop: 'orderNumber'
 				}, {
 					label: '银行名称',
+					width: 100,
 					prop: 'bankName'
 				}, {
 					label: '银行账号',
+					width: 100,
 					prop: 'bankNumber'
 				}, {
 					label: '操作',

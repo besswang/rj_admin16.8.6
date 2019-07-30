@@ -22,9 +22,12 @@ class AlreadyHuan extends Component {
 		super(props)
 		this.state = {
 			columns: [{
-					type: 'index',
-					fixed: 'left'
-				}, {
+						label: '#',
+						width: 60,
+						render: (a, b, c) => {
+							return c + 1
+						}
+					}, {
 					label: '还款类型',
 					prop: 'moneyType',
 					render: row => {

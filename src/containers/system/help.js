@@ -33,8 +33,8 @@ class HighSetting extends Component {
 				cappingmoneyl: [{required: true, validator: validate.moneyType}],
 				overhightday: [{required: true, validator: validate.dayNum}],
 				beaparttime: [{required: true, validator: validate.dayNum}],
-				thresholdscoreuser: [{required: true, validator: validate.fen}],
-				thresholdscore: [{required: true, validator: validate.fen}],
+				thresholdscoreuser: [{required: true, validator: validate.fen2}],
+				thresholdscore: [{required: true, validator: validate.fen2}],
 				riskilencetime: [{required: true, validator: validate.dayNum}],
 				minage: [
 					{ required: true, message: '请输入最小年龄', trigger: 'blur' },

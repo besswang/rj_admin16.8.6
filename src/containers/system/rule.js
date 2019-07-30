@@ -60,6 +60,7 @@ class BlackUser extends Component {
 			dialogVisible: false,
 			columns: [{
 					label: '借款金额',
+					width:100,
 					prop:'money',
 					// render: row => {
 					// 	return <div>{ '小于等于' }<Input value={ row.money } /></div>
@@ -73,9 +74,11 @@ class BlackUser extends Component {
 				// },
 				{
 					label: '提前多少天',
+					width:120,
 					prop: 'advanceDayNum'
 				}, {
 					label: '提前天数提额',
+					width:140,
 					prop: 'advanceMoney'
 				}, {
 					label: '时间前',
@@ -86,6 +89,7 @@ class BlackUser extends Component {
 					}
 				}, {
 					label: '时间前提额',
+					width:120,
 					prop: 'frontMoney'
 				}, {
 					label: '时间后',
@@ -96,9 +100,11 @@ class BlackUser extends Component {
 					}
 				}, {
 					label: '时间后提额',
+					width: 120,
 					prop: 'afterMoney'
 				} ,{
 					label: '其他时间提额',
+					width:140,
 					prop: 'otherMoney'
 				}, {
           label: '操作',

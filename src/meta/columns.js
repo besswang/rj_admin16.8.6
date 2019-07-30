@@ -1,9 +1,13 @@
 import timeDate from '@global/timeDate'
 import filter from '@global/filter'
 export const NORMAL_COLUMNS = [
-  {
-    type: 'index'
-  }, {
+{
+  label: '#',
+  width: 60,
+  render: (a, b, c) => {
+    return c + 1
+  }
+}, {
     label: '渠道名称',
     prop: 'name'
   }, {
@@ -24,6 +28,7 @@ export const NORMAL_COLUMNS = [
     }
   }, {
     label: '最后还款日期',
+    width: 160,
     prop: 'lasttime',
     render: row => {
       const date = timeDate.time(row.lasttime, 'yyyy-MM-dd hh:mm:ss')
@@ -36,7 +41,11 @@ export const NORMAL_COLUMNS = [
 ]
 export const TODAY_DITCH = [
   {
-    type: 'index'
+    label: '#',
+    width: 60,
+    render: (a, b, c) => {
+      return c + 1
+    }
   }, {
     label: '渠道名称',
     prop: 'daiName'
@@ -71,7 +80,11 @@ export const TODAY_DITCH = [
 ]
 export const ALL_DITCH = [
   {
-    type: 'index'
+    label: '#',
+    width: 60,
+    render: (a, b, c) => {
+      return c + 1
+    }
   }, {
     label: '渠道名称',
     prop: 'daiName'
@@ -109,7 +122,11 @@ export const ALL_DITCH = [
 ]
 export const COST_DITCH = [
   {
-    type: 'index'
+    label: '#',
+    width: 60,
+    render: (a, b, c) => {
+      return c + 1
+    }
   }, {
     label: '名称',
     prop: 'daiName'
@@ -138,7 +155,11 @@ export const COST_DITCH = [
 ]
 export const OVERDUE = [
   {
-    type: 'index'
+    label: '#',
+    width: 60,
+    render: (a, b, c) => {
+      return c + 1
+    }
   }, {
     label: '日期',
     prop: 'date',
@@ -198,7 +219,11 @@ export const OVERDUE = [
 ]
 export const CONSUME = [
   {
-    type: 'index'
+    label: '#',
+    width: 60,
+    render: (a, b, c) => {
+      return c + 1
+    }
   }, {
     label: '日期',
     prop: 'date',
@@ -208,33 +233,42 @@ export const CONSUME = [
     prop: 'costCount'
   }, {
     label: '短信条数',
+    width: 100,
     prop: 'message'
   }, {
     label: '短信金额',
+    width: 100,
     prop: 'messageAmount'
   }, {
     label: '身份人数',
+    width: 100,
     prop: 'idCard'
   }, {
     label: '身份金额',
+    width: 100,
     prop: 'idCardAmount'
   }, {
     label: '手机人数',
+    width: 100,
     prop: 'phone'
   }, {
     label: '手机金额',
+    width: 100,
     prop: 'phoneAmount'
   }, {
     label: 'A分控',
     subColumns: [
       {
         label:'首借人数',
+        width: 100,
         prop: 'newRiskA'
       }, {
         label: '复借人数',
+        width: 100,
         prop: 'fuRiskA'
       }, {
         label: '风控金额',
+        width: 100,
         prop: 'riskAmountA',
         render: row => {
           return row.riskAmountA === null ? 0 : row.riskAmountA
@@ -245,12 +279,15 @@ export const CONSUME = [
     label: 'B分控',
     subColumns: [{
       label: '首借人数',
+      width: 100,
       prop: 'newRiskB'
     }, {
       label: '复借人数',
+      width: 100,
       prop: 'fuRiskB'
     }, {
       label: '风控金额',
+      width: 100,
       prop: 'riskAmountB',
       render: row => {
         return row.riskAmountB === null ? 0 : row.riskAmountB
@@ -260,19 +297,26 @@ export const CONSUME = [
     label: 'AB分控',
     subColumns: [{
       label: '首借人数',
+      width: 100,
       prop: 'newRiskAB'
     }, {
       label: '复借人数',
+      width: 100,
       prop: 'fuRiskAB'
     }, {
       label: '风控金额',
+      width: 100,
       prop: 'riskAmountAB'
     }]
   }
 ]
 export const TURNOVER = [
   {
-    type: 'index'
+    label: '#',
+    width: 60,
+    render: (a, b, c) => {
+      return c + 1
+    }
   }, {
     label: '进账日期',
     prop: 'date'
@@ -303,8 +347,12 @@ export const TURNOVER = [
   }
 ]
 export const BANK = [{
-  type: 'index',
-}, {
+      label: '#',
+      width: 60,
+      render: (a, b, c) => {
+        return c + 1
+      }
+    }, {
   label: '银行卡号',
   prop: 'bankNumber'
 }, {
@@ -329,8 +377,12 @@ export const BANK = [{
   }
 }]
 export const ADDRESS = [{
-  type: 'index',
-}, {
+      label: '#',
+      width: 60,
+      render: (a, b, c) => {
+        return c + 1
+      }
+    }, {
   label: '姓名',
   prop: 'contact_name'
 }, {
@@ -342,8 +394,12 @@ export const ADDRESS = [{
 }]
 //通话记录
 export const CALL_LOG = [{
-  type: 'index',
-}, {
+      label: '#',
+      width: 60,
+      render: (a, b, c) => {
+        return c + 1
+      }
+    }, {
   label: '通讯号码',
   prop: 'peerNumber'
 }, {

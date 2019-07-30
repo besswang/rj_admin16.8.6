@@ -15,7 +15,7 @@ const list = (state = {
       return {...state, loading: true}
     case type.RECEIVE_POSTS:{
       let arr = null
-      if (action.posts.list){
+      if (action.posts.list && action.posts.list !== null){
         arr = action.posts.list
       }else{
         arr = []

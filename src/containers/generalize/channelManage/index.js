@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { Button, Table, Loading, Dialog, Form, Input, Radio } from 'element-react'
+import { Button, Table, Loading, Dialog, Form, Input, Radio, Message } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Link } from 'react-router-dom'
 import { sizeChange, currentChange, initSearch, menuActive } from '@redux/actions'
-import { selectChannel, insertChannel, updateChannel, prohibitChannel } from './action'
+import { selectChannel, insertChannel, updateChannel, prohibitChannel, selectRoleD } from './action'
 import MyPagination from '@components/MyPagination'
 import Search from '@components/Search'
 import SelectPicker from '@components/SelectPicker'
@@ -24,11 +24,17 @@ class Apply extends Component {
 		btnLoading: PropTypes.bool.isRequired,
 		insertChannel: PropTypes.func.isRequired,
 		updateChannel: PropTypes.func.isRequired,
-		prohibitChannel: PropTypes.func.isRequired
+		prohibitChannel: PropTypes.func.isRequired,
+		selectRoleD: PropTypes.func.isRequired,
+		loanRole: PropTypes.arrayOf(
+			PropTypes.object
+		)
 	}
 	constructor(props) {
 		super(props)
 		this.state = {
+			adminId: null,
+			dialogVisible2:false,
 			dialogTitle:'',
 			id: null,
 			form: {
@@ -54,12 +60,18 @@ class Apply extends Component {
 			},
 			dialogVisible: false,
 			columns: [{
-					type: 'index'
-				}, {
+						label: '#',
+						width: 60,
+						render: (a, b, c) => {
+							return c + 1
+						}
+					}, {
 					label: '渠道名称',
+					width: 100,
 					prop: 'channelName'
 				}, {
 					label: '超贷名称',
+					width: 100,
 					prop: 'daiName'
 				}, {
 					label: '推广链接',
@@ -69,25 +81,36 @@ class Apply extends Component {
 					// 	return <Button type="text" onClick={ this.copy.bind(this,row.extensionLink) }>{ row.extensionLink }</Button>
 					// }
 				}, {
+					label: '渠道查看链接',
+					prop: 'selectLink',
+					width: 280
+				}, {
 					label: '单价',
 					prop: 'price'
 				}, {
 					label: '推广方式',
+					width: 100,
 					prop: 'type'
-				}, {
-					label: '推广费用',
-					prop: 'money'
-				}, {
+				},
+				//  {
+				// 	label: '推广费用',
+				// 	prop: 'money'
+				// },
+				{
 					label: '机审分数',
+					width: 100,
 					prop: 'machineScore'
 				}, {
 					label: '人工审核分数',
+					width: 140,
 					prop: 'userScore'
 				}, {
 					label: '首借额度',
+					width: 100,
 					prop: 'firstMoney'
 				}, {
 					label: '风控类型',
+					width: 100,
 					prop: 'riskType',
 					render: row => {
 						if (row.riskType){
@@ -107,7 +130,7 @@ class Apply extends Component {
 					}
 				}, {
 						label: '操作',
-						width:210,
+						width:260,
 						fixed: 'right',
 						render: row => {
 							return (
@@ -117,9 +140,10 @@ class Apply extends Component {
 									<Link to={ {pathname:'/generalize/exhibition',state:{date:row.channelName}} } className="margin_right10">
 										<Button type="success" size="mini" onClick={ this.ditchType.bind(this, row.channelName) }>{'展期'}</Button>
 									</Link>
-									<Link to={ {pathname:'/generalize/channellimit',state:{date:row.channelName}} }>
+									<Link to={ {pathname:'/generalize/channellimit',state:{date:row.channelName}} } className="margin_right10">
 										<Button type="warning" size="mini" onClick={ this.ditchType.bind(this, row.channelName) }>{'额度'}</Button>
 									</Link>
+									<Button type="primary" size="mini" onClick={ this.openDialog2.bind(this, row.id) }>{'绑定'}</Button>
 								</div>
 							)
 						}
@@ -129,10 +153,12 @@ class Apply extends Component {
 	componentWillMount() {
 		this.props.initSearch()
 		this.props.menuActive(this.props.location.pathname)
+		// window.sessionStorage.clear()
 		window.sessionStorage.removeItem('channelName')
 	}
 	componentDidMount() {
 		this.props.selectChannel()
+		this.props.selectRoleD()
 	}
 	// copy = url => {
   //  // 执行浏览器复制
@@ -216,9 +242,35 @@ class Apply extends Component {
 			form: Object.assign({}, this.state.form, { [key]: v })
 		})
 	}
+	openDialog2 = id => {
+		this.setState({
+			dialogVisible2: true,
+			id:id
+		})
+	}
+	onChange2 = val => {
+		this.setState({
+			adminId:val
+		})
+	}
+	saveContent2 = () => {
+		console.log(this.state.adminId)
+		if (this.state.adminId !==null){
+			const data = Object.assign({},{id:this.state.id},{adminId:this.state.adminId})
+			this.props.updateChannel(data)
+		}else{
+			Message.warning('请选择贷超角色！')
+			return false
+		}
+		this.setState({
+			adminId:null,
+			dialogVisible2:false,
+			id:null
+		})
+	}
 	render(){
-		const { list, btnLoading } = this.props
-		const { dialogTitle, columns, dialogVisible, form, rules, id } = this.state
+		const { list, btnLoading, loanRole } = this.props
+		const { dialogTitle, columns, dialogVisible, form, rules, id, dialogVisible2, adminId } = this.state
 		return(
 			<div>
 				<Search showChannel>
@@ -293,17 +345,40 @@ class Apply extends Component {
 						<Button type="primary" onClick={ this.saveContent } loading={ btnLoading }>{'确 定'}</Button>
 					</Dialog.Footer>
 				</Dialog>
+				<Dialog
+					title={ '绑定' }
+					visible={ dialogVisible2 }
+					onCancel={ () => this.setState({ dialogVisible2: false }) }
+				>
+					<Dialog.Body>
+						<Form labelWidth="120" ref={ e => {this.form=e} } model={ form } rules={ rules }>
+							<Form.Item label="贷超角色" prop="type">
+								<SelectPicker
+									value={ adminId }
+									onChange={ val => this.onChange2(val) }
+									options={ loanRole }
+									clearable = { false }
+									placeholder={ '选择角色' }
+								/>
+							</Form.Item>
+						</Form>
+					</Dialog.Body>
+					<Dialog.Footer className="dialog-footer">
+						<Button onClick={ () => this.setState({ dialogVisible2: false }) }>{'取 消'}</Button>
+						<Button type="primary" onClick={ this.saveContent2 } loading={ btnLoading }>{'确 定'}</Button>
+					</Dialog.Footer>
+				</Dialog>
 			</div>
 		)
 	}
 }
 const mapStateToProps = state => {
-	const { list, btnLoading } = state
-	return { list, btnLoading }
+	const { list, btnLoading, loanRole } = state
+	return { list, btnLoading, loanRole }
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, menuActive, selectChannel, insertChannel, updateChannel, prohibitChannel}, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, menuActive, selectChannel, insertChannel, updateChannel, prohibitChannel, selectRoleD}, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Apply)

@@ -24,18 +24,24 @@ class AuditRefuse extends Component{
 		super(props)
 		this.state = {
 			columns: [{
-						type: 'index',
-						fixed: 'left'
-				}, {
+						label: '#',
+						width: 60,
+						fixed: 'left',
+						render: (a, b, c) => {
+							return c + 1
+						}
+					}, {
 					label: '订单号',
 					prop: 'orderNumber',
 					width: 100,
 					fixed: 'left'
 				},{
 					label: '渠道名称',
+					width: 100,
 					prop: 'channelName'
 				},{
 					label: '真实姓名',
+					width: 100,
 					prop: 'realName'
 				},
 				{
@@ -44,25 +50,31 @@ class AuditRefuse extends Component{
 				},
 				{
 					label: '手机号码',
+					width: 100,
 					prop: 'phone'
 				},
 				{
 					label: '身份证号',
+					width: 100,
 					prop: 'idcardNumber'
 				}, {
 					label: '申请金额',
+					width: 100,
 					prop: 'applyMoney'
 				}, {
 					label: '申请期限',
+					width: 100,
 					prop: 'applyTerm'
 				}, {
 					label: '服务费',
 					prop: 'serviceMoney'
 				}, {
 					label: '催款次数',
+					width: 100,
 					prop: 'loanTerm'
 				}, {
 					label: '新老客户',
+					width: 100,
 					prop: 'loanTerm',
 					render: row => {
 						const text = filter.loanTerm(row.loanTerm)
@@ -70,6 +82,7 @@ class AuditRefuse extends Component{
 					}
 				}, {
 					label: '申请时间',
+					width: 100,
 					prop: 'gmt',
 					render: row => {
 						const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
@@ -77,9 +90,11 @@ class AuditRefuse extends Component{
 					}
 				}, {
 					label: '审核客服',
+					width: 100,
 					prop: 'examineCustomerName'
 				}, {
 					label: '审核时间',
+					width: 100,
 					prop: 'examineDate',
 					render: row => {
 						const date = timeDate.time(row.examineDate, 'yyyy-MM-dd hh:mm:ss')
@@ -87,6 +102,7 @@ class AuditRefuse extends Component{
 					}
 				}, {
 					label: '拒绝时间',
+					width: 100,
 					prop: 'examineDate',
 					render: row => {
 						const date = timeDate.time(row.examineDate, 'yyyy-MM-dd hh:mm:ss')

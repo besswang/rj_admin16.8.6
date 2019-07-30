@@ -21,8 +21,12 @@ class Apply extends Component {
 		super(props)
 		this.state = {
 			columns: [{
-					type: 'index'
-				}, {
+						label: '#',
+						width: 60,
+						render: (a, b, c) => {
+							return c + 1
+						}
+					}, {
 					label: '日期',
 					prop: 'date'
 				}, {

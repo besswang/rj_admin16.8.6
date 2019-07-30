@@ -52,19 +52,25 @@ class WaitHuan extends Component {
 				{
 					type: 'selection'
 				}, {
-					type: 'index',
-					fixed: 'left'
+					label: '#',
+					width: 60,
+					render: (a, b, c) => {
+						return c + 1
+					}
 				}, {
 					label: '单号',
 					prop: 'orderNumber'
 				}, {
 					label: '备注信息',
+					width: 100,
 					prop: 'content'
 				}, {
 					label: '渠道名称',
+					width: 100,
 					prop: 'channelName'
 				}, {
 					label: '新老客户',
+					width: 100,
 					prop: 'loanTerm', // 等于0 为新客  大于0 为老客
 					render: row => {
 						const data = filter.loanTerm(row.loanTerm)
@@ -72,33 +78,41 @@ class WaitHuan extends Component {
 					}
 				}, {
 					label: '真实姓名',
+					width: 100,
 					prop: 'realName'
 				}, {
 					label: '米融分',
 					prop: 'riskNum'
 				}, {
 					label: '手机号码',
+					width: 100,
 					prop: 'phone'
 				}, {
 					label: '身份证号',
+					width: 100,
 					prop: 'idcardNumber'
 				}, {
 					label: '申请金额',
+					width: 100,
 					prop: 'applyMoney'
 				}, {
 					label: '申请期限',
+					width: 100,
 					prop: 'applyTerm'
 				}, {
 					label: '服务费',
 					prop: 'serviceMoney'
 				}, {
 					label: '已放金额', // 到账金额
+					width: 100,
 					prop: 'loanMoney'
 				}, {
 					label: '应还金额', // 到期应还金额
+					width: 100,
 					prop: 'repaymentMoney'
 				}, {
 					label: '借款次数',
+					width: 100,
 					prop: 'loanTerm'
 				}, {
 					label: '申请时间',
@@ -116,9 +130,11 @@ class WaitHuan extends Component {
 					}
 				}, {
 					label: '约定还款日',
+					width: 120,
 					prop: 'repaymentDate'
 				}, {
 					label: '打款方式',
+					width: 100,
 					prop: 'loanMode',
 					render: row => {
 						const t = filter.payType(row.loanMode)
@@ -126,6 +142,7 @@ class WaitHuan extends Component {
 					}
 				}, {
 					label: '订单类型',
+					width: 100,
 					prop: 'loanTerm', // 等于0 为新客  大于0 为老客
 					render: row => {
 						const data = filter.loanTer(row.loanTerm)
@@ -133,9 +150,11 @@ class WaitHuan extends Component {
 					}
 				}, {
 					label: '银行名称',
+					width: 100,
 					prop: 'bankName'
 				}, {
 					label: '银行卡号',
+					width: 100,
 					prop: 'bankNumber'
 				}, {
 					label: '操作',

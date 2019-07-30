@@ -49,8 +49,12 @@ class BlackUser extends Component {
 			id: null,
 			dialogVisible: false,
 			columns: [{
-					type: 'index'
-				}, {
+						label: '#',
+						width: 60,
+						render: (a, b, c) => {
+							return c + 1
+						}
+					}, {
 					label: '版本号',
 					prop: 'versionId'
 				}, {
@@ -58,12 +62,14 @@ class BlackUser extends Component {
 					prop: 'publisher'
 				}, {
 					label: '更新地址',
+					width: 200,
 					prop: 'updateAddress',
 					render: row => {
 						return <a className="theme-blue" href={ row.updateAddress } target="_blank" rel="noopener noreferrer">{ row.updateAddress }</a>
 					}
 				}, {
 					label: '是否必须更新',
+					width:140,
 					prop: 'isUpdate',
 					render: row => {
 						const y = <span className="theme-blue">{'是'}</span>
@@ -73,6 +79,7 @@ class BlackUser extends Component {
 					}
 				}, {
 					label: '手机类型',
+					width:100,
 					prop: 'phoneType'
 				}, {
 					label: '状态',

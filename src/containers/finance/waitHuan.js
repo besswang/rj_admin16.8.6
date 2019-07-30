@@ -1,6 +1,6 @@
 // 催收管理-个人对账
 import React, { Component } from 'react'
-import { Button, Loading, Table, Dialog, Form, Input, Tabs, Message } from 'element-react'
+import { Button, Loading, Table, Dialog, Form, Input, Tabs, Message, MessageBox } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -49,7 +49,7 @@ class WaitHuan extends Component {
 			serviceMoney: null, // 服务费
 			orderId: null,
 			loanDate: '', // 放款时间
-			repaymentDate: '', // 约定还款日
+			finalDate: '', // 约定还款日
 			dialogVisible: false,
 			form: {
 				repaymentType: 3, // 还款方式（3:线下支付宝，4：线下微信）
@@ -99,19 +99,26 @@ class WaitHuan extends Component {
 				}]
 			},
 			columns: [{
-					type: 'index',
-					fixed: 'left'
-				}, {
+						label: '#',
+						width: 60,
+						render: (a, b, c) => {
+							return c + 1
+						}
+					}, {
 					label: '申请单号',
+					width:100,
 					prop: 'orderNumber'
 				}, {
 					label: '渠道名称',
+					width: 100,
 					prop: 'channelName'
 				}, {
 					label: '真实姓名',
+					width: 100,
 					prop: 'realName'
 				}, {
 					label: '手机号码',
+					width: 100,
 					prop: 'phone'
 				},
 				// {
@@ -131,27 +138,47 @@ class WaitHuan extends Component {
 					prop: 'riskNum'
 				}, {
 					label: '风控类型',
-					prop: 'riskType'
+					width: 100,
+					prop: 'riskType',
+					render:row =>{ // 排序-米融B
+						if(row.riskType){
+							if(row.riskType === 'PAIXU'){
+								return '米融B'
+							} else if (row.riskType === 'RUIJING'){
+								return '米融A'
+							}else{
+								return ''
+							}
+						}else{
+							return ''
+						}
+					}
 				}, {
 					label: '申请期限',
+					width: 100,
 					prop: 'applyTerm'
 				}, {
 					label: '申请金额',
+					width: 100,
 					prop: 'applyMoney'
 				}, {
 					label: '服务费',
 					prop: 'serviceMoney'
 				}, {
 					label: '放款金额',
+					width: 100,
 					prop: 'loanMoney'
 				}, {
 					label: '应还金额',
+					width: 100,
 					prop: 'repaymentMoney'
 				}, {
 					label: '部分还款',
+					width: 100,
 					prop: 'reductionAmount'
 				}, {
 					label: '减免金额',
+					width: 100,
 					prop: '',
 					render: row => {
 						// 减免金额 = 应还金额 - 目前应还金额 - 部分还款
@@ -160,12 +187,14 @@ class WaitHuan extends Component {
 					}
 				}, {
 					label: '目前应还',
+					width: 100,
 					prop: 'realRepayMoney',
 					render: row =>{
 						return row.realRepayMoney === null ? 0 :row.realRepayMoney
 					}
 				}, {
 					label: '约定还款日',
+					width: 120,
 					prop: 'finalDate'
 				},{
 					label: '记录延期时间',
@@ -218,12 +247,15 @@ class WaitHuan extends Component {
 				// },
 				{
 					label: '银行名称',
+					width: 100,
 					prop: 'bankName'
 				}, {
 					label: '银行卡号',
+					width: 100,
 					prop: 'bankNumber'
 				}, {
 					label: '订单类型',
+					width: 100,
 					prop: 'loanTerm', // 等于0 为新客  大于0 为老客
 					render: row => {
 						const data = filter.loanTer(row.loanTerm)
@@ -231,12 +263,14 @@ class WaitHuan extends Component {
 					}
 				}, {
 					label: '续期订单',
+					width: 100,
 					prop: 'orderType',
 					render: row =>{
 						return filter.loanTyp(row.orderType)
 					}
 				}, {
 					label: '是否逾期',
+					width: 100,
 					prop: 'overType',
 					render: row =>{
 						return row.overType ? '是': '否'
@@ -301,6 +335,20 @@ class WaitHuan extends Component {
 		}
 	}
 	openDialog = obj => {
+		const time = new Date()
+		const t = timeDate.time(time, 'yyyy-MM-dd')
+		console.log(t)
+		console.log(obj.finalDate)
+		if (t > obj.finalDate) {
+			MessageBox.confirm('非常抱歉当前订单没有到还款日不能进行线下操作 请你联系技术人员，和让客户在APP操作还款或续期!', '提示', {
+				type: 'warning'
+			}).then(() => {
+
+			}).catch(() => {
+
+			})
+			return false
+		}
 		this.setState({
 			listObj: obj,
 			channelName: obj.channelName,
@@ -312,7 +360,7 @@ class WaitHuan extends Component {
 			reMoney: obj.applyMoney, // 延期金额
 			serviceMoney: obj.serviceMoney, // 服务费
 			loanDate: obj.loanDate, // 放款时间
-			repaymentDate: obj.repaymentDate, // 约定还款日
+			finalDate: obj.finalDate, // 约定还款日
 		})
 		this.tabClick('1')
 		this.form.resetFields()
@@ -386,7 +434,7 @@ class WaitHuan extends Component {
 	// }
 	render() {
 		const { list, btnLoading, dayList } = this.props
-		const { columns, dialogVisible, form, rules, orderNumber, realRepaymentMoney, applyMoney, serviceMoney, loanDate, repaymentDate, activeName, surplusMoney, reMoney, listObj } = this.state
+		const { columns, dialogVisible, form, rules, orderNumber, realRepaymentMoney, applyMoney, serviceMoney, loanDate, finalDate, activeName, surplusMoney, reMoney, listObj } = this.state
 		return (
 			<div>
 				<Search showSelect2 showLoanType showSelectClient showSelectTime>
@@ -431,7 +479,7 @@ class WaitHuan extends Component {
 								<li className="flex flex-direction_row justify-content_flex-justify ptb5">
 									<p>{'服务费:'}{ serviceMoney }</p>
 
-									<p>{'借款期限:'}{ timeDate.time(loanDate, 'yyyy-MM-dd hh:mm:ss') }{'-'}{ repaymentDate }</p>
+									<p>{'借款期限:'}{ timeDate.time(loanDate, 'yyyy-MM-dd hh:mm:ss') }{'-'}{ finalDate }</p>
 								</li>
 								<li className="flex flex-direction_row justify-content_flex-justify ptb5">
 									{/* 剩余应还=剩余应还-还款金额 */}

@@ -51,62 +51,81 @@ class Overdue extends Component{
 				{
 					type: 'selection'
 				}, {
-					type: 'index',
-					fixed: 'left'
-				},{
+					label: '#',
+					fixed:'left',
+					width: 60,
+					render: (a, b, c) => {
+						return c + 1
+					}
+				}, {
 					label: '订单号',
 					prop: 'orderNumber',
 					fixed: 'left'
 				},{
 					label: '渠道名称',
+					width: 100,
 					prop: 'channelName'
 				},
 				{
 					label: '真实姓名',
+					width: 100,
 					prop: 'realName'
 				},
 				{
 					label: '手机号码',
+					width: 100,
 					prop: 'phone'
 				},
 				{
 					label: '身份证号',
+					width: 100,
 					prop: 'idcardNumber'
 				}, {
 					label: '申请金额',
+					width: 100,
 					prop: 'applyMoney'
 				}, {
 					label: '申请期限',
+					width: 100,
 					prop: 'applyTerm'
 				}, {
 					label: '服务费',
 					prop: 'serviceMoney'
 				}, {
 					label: '到账金额',// 已放金额
+					width: 100,
 					prop: 'loanMoney'
 				}, {
 					label: '银行名称',
+					width: 100,
 					prop: 'bankName'
 				}, {
 					label: '银行账号',
+					width: 100,
 					prop: 'bankNumber'
 				}, {
 					label: '约定还款日',
+					width: 120,
 					prop: 'repaymentDate'
 				}, {
 					label: '应还金额',
+					width: 100,
 					prop: 'repaymentMoney'
 				}, {
 					label: '逾期天数',
+					width: 100,
 					prop: 'overdueNumber'
 				}, {
 					label: '逾期费用', // 逾期金额
+					width: 100,
 					prop: 'overdueMoney'
 				}, {
 					label: '借款次数',
+					width: 100,
 					prop: 'loanTerm'
 				}, {
 					label: '新老客户',
+					width: 100,
 					prop: 'loanTerm', // 等于0 为新客  大于0 为老客
 					render: row => {
 						const data = filter.loanTerm(row.loanTerm)
@@ -138,9 +157,11 @@ class Overdue extends Component{
 					}
 				}, {
 					label: '打款单号',
+					width: 100,
 					prop: 'loanNumber'
 				}, {
 					label: '打款方式',
+					width: 100,
 					prop: 'loanMode',
 					render: row => {
 						const t = filter.payType(row.loanMode)

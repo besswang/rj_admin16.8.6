@@ -34,9 +34,12 @@ class BlackUser extends Component {
 			dialogVisible: false,
 			treeDialogVisible: false,
 			columns: [{
-					type: 'index',
-					fixed: 'left'
-				}, {
+						label: '#',
+						width: 60,
+						render: (a, b, c) => {
+							return c + 1
+						}
+					}, {
 					label: '角色名称',
 					prop: 'roleName'
 				}, {

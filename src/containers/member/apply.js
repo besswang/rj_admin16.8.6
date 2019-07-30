@@ -48,7 +48,7 @@ class Apply extends Component {
 						}
 					}, {
 						label: '身份证认证',
-						width: 100,
+						width: 120,
 						prop: 'idcardType',
 						render: row => {
 							return this.textType(row.idcardType)
@@ -56,21 +56,21 @@ class Apply extends Component {
 					}, {
 						label: '个人信息认证',
 						prop: 'personalType',
-						width: 100,
+						width: 140,
 						render: row => {
 							return this.textType(row.personalType)
 						}
 					}, {
 						label: '运营商认证', // 手机认证
 						prop: 'mobileType',
-						width: 100,
+						width: 120,
 						render: row => {
 							return this.textType(row.mobileType)
 						}
 					}, {
 						label: '银行卡认证',
 						prop: 'bankType',
-						width: 100,
+						width: 120,
 						render: row => {
 							return this.textType(row.bankType)
 						}

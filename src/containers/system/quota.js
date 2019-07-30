@@ -54,9 +54,12 @@ class BlackUser extends Component {
 			id: null,
 			dialogVisible: false,
 			columns: [{
-					type: 'index',
-					fixed: 'left'
-				}, {
+						label: '#',
+						width: 60,
+						render: (a, b, c) => {
+							return c + 1
+						}
+					}, {
 					label: '借款次数',
 					prop: 'orderNumber'
 				}, {

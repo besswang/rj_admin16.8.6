@@ -32,13 +32,18 @@ class WaitFang extends Component {
 			loanType: 1,
 			dialogVisible: false,
 			columns: [{
-					type: 'index',
-					fixed: 'left'
-				}, {
+						label: '#',
+						width: 60,
+						render: (a, b, c) => {
+							return c + 1
+						}
+					}, {
 					label: '渠道名称',
+					width:100,
 					prop: 'channelName'
 				}, {
 					label: '新老客户',
+					width: 100,
 					prop: 'loanTerm', // 等于0 为新客  大于0 为老客
 					render: row => {
 						const data = filter.loanTerm(row.loanTerm)
@@ -46,33 +51,41 @@ class WaitFang extends Component {
 					}
 				}, {
 					label: '真实姓名',
+					width: 100,
 					prop: 'realName'
 				}, {
 					label: '米融分',
 					prop: 'riskNum'
 				}, {
 					label: '手机号码',
+					width: 100,
 					prop: 'phone'
 				}, {
 					label: '身份证号',
+					width: 100,
 					prop: 'idcardNumber'
 				}, {
 					label: '申请金额',
+					width: 100,
 					prop: 'applyMoney'
 				}, {
 					label: '申请期限',
+					width: 100,
 					prop: 'applyTerm'
 				}, {
 					label: '服务费',
 					prop: 'serviceMoney'
 				}, {
 					label: '待放金额',
+					width: 100,
 					prop: 'loanMoney'
 				}, {
 					label: '借款次数',
+					width: 100,
 					prop: 'loanTerm'
 				}, {
 					label: '申请时间',
+					width: 100,
 					prop: 'gmt',
 					render: row => {
 						const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
@@ -80,9 +93,11 @@ class WaitFang extends Component {
 					}
 				}, {
 					label: '审核客服',
+					width: 100,
 					prop: 'examineCustomerName'
 				}, {
 					label: '审核时间',
+					width: 100,
 					prop: 'examineDate',
 					render: row => {
 						const date = timeDate.time(row.examineDate, 'yyyy-MM-dd hh:mm:ss')
@@ -90,6 +105,7 @@ class WaitFang extends Component {
 					}
 				}, {
 					label: '打款状态',
+					width: 100,
 					prop: 'payStatus',
 					render: row => {
 						const data = filter.payStatus(row.payStatus)
@@ -97,12 +113,15 @@ class WaitFang extends Component {
 					}
 				}, {
 					label: '申请单号',
+					width: 100,
 					prop: 'orderNumber'
 				}, {
 					label: '银行名称',
+					width: 100,
 					prop: 'bankName'
 				}, {
 					label: '银行卡号',
+					width: 100,
 					prop: 'bankNumber'
 				}, {
 					label: '操作',

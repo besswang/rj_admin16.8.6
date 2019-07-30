@@ -61,7 +61,12 @@ class Welcome extends React.Component{
 			// 		this.props.history.push('/login')
 			// 	// },1000)
 			// }
-			Message.warning(res.msg)
+			// Message.warning(res.msg)
+			if(res.msg === '没有权限'){
+				console.log('没有权限')
+			}else{
+				Message.warning(res.msg)
+			}
 		}
 	}
 	render(){

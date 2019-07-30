@@ -58,8 +58,12 @@ class Apply extends Component {
 			},
 			dialogVisible: false,
 			columns: [{
-					type: 'index'
-				}, {
+						label: '#',
+						width: 60,
+						render: (a, b, c) => {
+							return c + 1
+						}
+					}, {
 					label: '展期期限',
 					prop: 'dayNum'
 				}, {

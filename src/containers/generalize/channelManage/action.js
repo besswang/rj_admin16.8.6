@@ -1,6 +1,24 @@
 import api from '@api/index'
 import { requestPosts, receivePosts, failurePosts, shouldFetchPosts, btnRequestPosts, btnReceivePosts, btnFailurePosts } from '@redux/actions'
 import { MessageBox, Message } from 'element-react'
+import * as type from '@redux/actionTypes'
+// 存储贷超角色列表
+const saveLoanRole = data => ({
+  type: type.SAVE_LOAN_ROLE,
+  data
+})
+export const selectRoleD = () => {
+  return async dispatch => {
+    dispatch(requestPosts())
+    const data = await api.selectRoleDApi()
+    if (data.success) {
+      dispatch(saveLoanRole(data.data))
+    } else {
+      dispatch(failurePosts(data))
+    }
+  }
+}
+
 // 渠道管理
 export const selectChannel = () => {
   return async (dispatch, getState) => {
@@ -9,6 +27,7 @@ export const selectChannel = () => {
     const data = await api.selectChannelApi(searchAll)
     if (data.success) {
       dispatch(receivePosts(data.data))
+      // window.sessionStorage.setItem('userScoreLimit', data.data.userScoreLimit)
     } else {
       dispatch(failurePosts(data))
     }
@@ -93,12 +112,12 @@ export const findAllDelayRate = () => {
   }
 }
 // 渠道管理-展期模式-添加
-export const bindingRate = (obj,type) => {
+export const bindingRate = (obj,t) => {
   return async dispatch => {
     dispatch(btnRequestPosts())
     const data = await api.bindingRateApi(obj)
     if (data.success) {
-      if(type===1){
+      if(t===1){
         dispatch(findAllDelayRate())
       }else{
         dispatch(findDelayRate({ channelName: obj.channelName }))

@@ -65,9 +65,12 @@ class BlackUser extends Component {
 			id: null,
 			dialogVisible: false,
 			columns: [{
-					type: 'index',
-					fixed: 'left'
-				}, {
+						label: '#',
+						width: 60,
+						render: (a, b, c) => {
+							return c + 1
+						}
+					}, {
 					label: '用户账号',
 					prop: 'adminName'
 				}, {
@@ -103,7 +106,8 @@ class BlackUser extends Component {
 						return row.distribution === 1 ? y : n
 					}
 				}, {
-          label: '操作',
+					label: '操作',
+					width:240,
           render: row => {
             return (
 							<div>

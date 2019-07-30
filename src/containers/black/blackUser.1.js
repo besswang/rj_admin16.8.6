@@ -25,9 +25,12 @@ class BlackUser extends Component {
 		this.state = {
 			d:[],
 			columns: [{
-					type: 'index',
-					fixed: 'left'
-				}, {
+						label: '#',
+						width: 60,
+						render: (a, b, c) => {
+							return c + 1
+						}
+					}, {
 					label: '真实姓名',
 					prop: 'realName'
 				}, {

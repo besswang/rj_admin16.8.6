@@ -54,10 +54,15 @@ class BlackUser extends Component {
 			},
 			dialogVisible: false,
 			columns: [{
-					type: 'index',
-					fixed: 'left'
-				}, {
+						label: '#',
+						width: 60,
+						fixed:'left',
+						render: (a, b, c) => {
+							return c + 1
+						}
+					}, {
 					label: '渠道名称',
+					width:100,
 					prop: 'channelName',
 					fixed: 'left',
 					render: row => {
@@ -70,6 +75,7 @@ class BlackUser extends Component {
 					fixed: 'left'
 				}, {
 					label: '申请天数',
+					width: 100,
 					prop: 'dayNumber'
 				},
 				// {
@@ -98,6 +104,7 @@ class BlackUser extends Component {
 				// },
 				{
 					label: '是否开启延期功能',
+					width: 160,
 					prop: 'delayType',
 					render: row => {
 						const y = <span className="theme-blue">{'开'}</span>
@@ -107,6 +114,7 @@ class BlackUser extends Component {
 					}
 				}, {
 					label: '逾期是否可以延期',
+					width:160,
 					prop: 'overdueType',
 					render: row => {
 						const y = <span className="theme-blue">{'开'}</span>
@@ -121,6 +129,7 @@ class BlackUser extends Component {
 				// },
 				{
 					label: '逾期利率',
+					width: 100,
 					prop: 'overdueRate'
 				}, {
 					label: '服务费',

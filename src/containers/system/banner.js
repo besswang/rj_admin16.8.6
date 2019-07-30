@@ -37,9 +37,12 @@ class Banner extends Component {
 			dialogVisible2: false,
 			dialogImageUrl: '',
 			columns: [{
-					type: 'index',
-					fixed: 'left'
-				}, {
+						label: '#',
+						width: 60,
+						render: (a, b, c) => {
+							return c + 1
+						}
+					}, {
 					label: '图片',
 					prop: 'imgUrl',
 					align: 'center',

@@ -37,9 +37,13 @@ class Mlist extends Component{
 				maxScore:'' // 最大分控分
 			},
 			columns: [{
-						type: 'index',
-						fixed: 'left'
-				}, {
+						label: '#',
+						width: 60,
+						fixed:'left',
+						render: (a, b, c) => {
+							return c + 1
+						}
+					}, {
 					label: '渠道名称',
 					prop: 'channelName',
 					width:100,
@@ -59,13 +63,14 @@ class Mlist extends Component{
 					width:112
 				},{
 					label: '授信额度',
+					width: 100,
 					prop: 'loanQuota'
 				}, {
 					label: '米融分',
 					prop: 'thresholdScore'
 				}, {
 					label:'身份证认证',
-					width:100,
+					width:120,
 					prop: 'idcardType',
 					render: row => {
 						return this.textType(row.idcardType)
@@ -73,21 +78,21 @@ class Mlist extends Component{
 				}, {
 					label: '个人信息认证',
 					prop: 'personalType',
-					width: 100,
+					width: 140,
 					render: row => {
 						return this.textType(row.personalType)
 					}
 				}, {
 					label: '运营商认证', // 手机认证
 					prop: 'mobileType',
-					width: 100,
+					width: 120,
 					render: row => {
 						return this.textType(row.mobileType)
 					}
 				}, {
 					label: '银行卡认证',
 					prop: 'bankType',
-					width: 100,
+					width: 120,
 					render: row => {
 						return this.textType(row.bankType)
 					}
@@ -120,6 +125,7 @@ class Mlist extends Component{
 				// }
 				, {
 					label: '借款次数',
+					width: 100,
 					prop: 'loanNum'
 				}, {
 					label: '注册时间',
@@ -134,9 +140,11 @@ class Mlist extends Component{
 					prop: 'loginIp'
 				}, {
 					label: '登陆次数',
+					width: 100,
 					prop: 'loanNum'
 				},{
 					label: '手机机型',
+					width: 100,
 					prop: 'appType'
 				},{
 				 	label: '黑名单',

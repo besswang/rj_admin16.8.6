@@ -25,8 +25,12 @@ class Ditch extends Component {
     this.state = {
       columns: [
         {
-          type: 'index'
-				}, {
+          label: '#',
+          width: 60,
+          render: (a, b, c) => {
+            return c + 1
+          }
+        }, {
 					label: '日期',
           prop: 'date',
           width:150
@@ -76,7 +80,8 @@ class Ditch extends Component {
           //   }
           // }
 				}, {
-				  label: '0分申请人数',
+          label: '0分申请人数',
+          width:140,
 				  prop: 'zeroCount'
 				}, {
 				  label: '0分申请率',

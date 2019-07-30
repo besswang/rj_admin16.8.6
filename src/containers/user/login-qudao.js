@@ -199,19 +199,6 @@ class Login extends Component {
     return (
       <div className="login-con">
         <Layout.Row type="flex" justify="center" align="middle" className="row-bg">
-          <Layout.Col span="7" className="grid-content grid-left flex flex-direction_column justify-content_flex-justify">
-            <div className="top-title">
-              <h1 className="en-wel"><span className="border-bottom4">{'W'}</span>{'elcome'}</h1>
-              <h1 className="wel">{'及享用'}</h1>
-            </div>
-            <ul className="flex flex-direction_row justify-content_flex-justify bottom-title">
-              <li>{'后台管理'}</li>
-              <li>{'|'}</li>
-              <li>{'财务审核'}</li>
-              <li>{'|'}</li>
-              <li>{'数据报表'}</li>
-            </ul>
-          </Layout.Col>
           <Layout.Col span="6" className="grid-content grid-right flex flex-direction_column justify-content_flex-center align-item_center">
             <img className="title-logo" src={ rightTitle } alt=""/>
             <Form className="form-con" ref={ e => { this.form = e } } model={ form } rules={ rules }>

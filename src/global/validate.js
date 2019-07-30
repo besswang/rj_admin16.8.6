@@ -1,6 +1,6 @@
 export default {
   money: (rule, value, callback) => {
-    const reg = new RegExp('^[0-9]+(.[0-9]{2})?$')
+    const reg = new RegExp('^[0-9]+(.[0-9]{1})?$')
     if (value === '' || value === null) {
       callback(new Error('请输入额度'))
     } else if(!reg.test(value)){
@@ -17,7 +17,7 @@ export default {
     }
   },
   serverMoney: (rule, value, callback) => {
-    const reg = new RegExp('^[0-9]+(.[0-9]{2})?$')
+    const reg = new RegExp('^[0-9]+(.[0-9]{1})?$')
     if (value === '' || value === null) {
       callback(new Error('请输入服务费'))
     } else if(!reg.test(value)){
@@ -51,7 +51,7 @@ export default {
     }
   },
   overdueRate: (rule, value, callback) => {
-    const reg = new RegExp('^[0-9]+(.[0-9]{2})?$')
+    const reg = new RegExp('^[0-9]+(.[0-9]{1})?$')
     if (value === '' || value === null) {
       callback(new Error('请输入逾期利率'))
     } else if(!reg.test(value)){
@@ -97,7 +97,17 @@ export default {
     const r = new RegExp('^[0-9]*$')
     if (value === '' || value === null) {
       callback(new Error('分数不能为空'))
-    } else if(!r.test(value)){
+    } else if(!r.test(value) || parseInt(value) < 550 ){
+      callback(new Error('请输入有效分数,大于或等于550的正整数'))
+    } else {
+      callback()
+    }
+  },
+  fen2: (rule, value, callback) => {
+    const r = new RegExp('^[0-9]*$')
+    if (value === '' || value === null) {
+      callback(new Error('分数不能为空'))
+    } else if (!r.test(value)) {
       callback(new Error('请输入有效分数'))
     } else {
       callback()
@@ -105,10 +115,10 @@ export default {
   },
   edu: (rule, value, callback) => { // 额度是大于等于0的正整数
     const r = new RegExp('^[0-9]*$')
-    const r2 = new RegExp('^(0.|[2-9][0-9]*)$')
+    // const r2 = new RegExp('^(0.|[2-9][0-9]*)$') // 用3000的时候会报错
     if (value === '' || value === null) {
       callback(new Error('额度不能为空'))
-    } else if (r2.test(value) || !r.test(value)) {
+    } else if (!r.test(value)) {
       callback(new Error('请输入有效额度，大于或等于0的正整数'))
     } else {
       callback()
@@ -135,31 +145,31 @@ export default {
     }
   },
   lilv: (rule, value, callback) => { // 利率
-    // const reg = new RegExp('^[0-9]+(.[0-9]{2})?$')
+    // const reg = new RegExp('^[0-9]+(.[0-9]{1})?$')
     const reg = new RegExp('^[0-1]+(.[0-9]{1,4})?$') // 0-1
-    const r2 = new RegExp('^(0.|[2-9][0-9]*)$')
+  // const r2 = new RegExp('^(0.|[2-9][0-9]*)$') // 用3000的时候会报错
     if (value === '' || value === null) {
       callback(new Error('请输入利率'))
-    } else if (!reg.test(value) || parseInt(value) > 1 || parseFloat(value) > 1 || r2.test(value)) {
+    } else if (!reg.test(value) || parseInt(value) > 1 || parseFloat(value) > 1) {
       callback(new Error('请输入0-1之间有效的利率,,最多可输入四位小数'))
     } else {
       callback()
     }
   },
   feilv: (rule, value, callback) => { // 费率
-    // const reg = new RegExp('^[0-9]+(.[0-9]{2})?$')
+    // const reg = new RegExp('^[0-9]+(.[0-9]{1})?$')
     const reg = new RegExp('^[0-1]+(.[0-9]{1,4})?$')
-    const r2 = new RegExp('^(0.|[2-9][0-9]*)$')
+    // const r2 = new RegExp('^(0.|[2-9][0-9]*)$') // 用3000的时候会报错
     if (value === '' || value === null) {
       callback(new Error('请输入费率'))
-    }else if(!reg.test(value) || parseInt(value)>1 || parseFloat(value)>1 || r2.test(value)){
+    }else if(!reg.test(value) || parseInt(value)>1 || parseFloat(value)>1){
       callback(new Error('请输入0-1之间有效费率,最多可输入四位小数'))
     } else {
       callback()
     }
   },
   moneyType: (rule, value, callback) => {
-    const reg = new RegExp('^[0-9]+(.[0-9]{2})?$')
+    const reg = new RegExp('^[0-9]+(.[0-9]{1})?$')
     if (value === '' || value === null) {
       callback(new Error('请输入金额'))
     }else if(!reg.test(value)){

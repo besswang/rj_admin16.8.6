@@ -125,8 +125,12 @@ class RepayInside extends Component {
       default:
         this.setState({
           columns: [{
-            type: 'index'
-          },{
+                label: '#',
+                width: 60,
+                render: (a, b, c) => {
+                  return c + 1
+                }
+              }, {
             label:'渠道名称',
             prop: 'daiName',
 

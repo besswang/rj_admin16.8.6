@@ -43,9 +43,13 @@ class Exhibition extends Component {
 			},
 			dialogVisible: false,
 			columns: [{
-					type: 'index',
-					fixed:'left'
-				}, {
+						label: '#',
+						fixed:'left',
+						width: 60,
+						render: (a, b, c) => {
+							return c + 1
+						}
+					}, {
 					label: '渠道名称',
 					prop: 'channelName',
 					fixed: 'left',

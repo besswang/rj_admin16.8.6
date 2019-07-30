@@ -23,7 +23,6 @@ class RepayMent extends Component {
     this.state = {
       column:[
         {
-          // type:'index'
           label: '#',
           width: 60,
           render: (a,b,c) => {
@@ -35,9 +34,11 @@ class RepayMent extends Component {
           width:120
         }, {
           label: '应还单数',
+          width: 100,
           prop: 'shouldReturnNum'
         }, {
           label: '实还单数',
+          width: 100,
           // prop: 'alreadyReturnNum', //   全额单数+续期单数
           render: row => {
             if (row.fullRepaymentNum !== null && row.renewNum !== null) {
@@ -49,6 +50,7 @@ class RepayMent extends Component {
           }
         }, {
           label: '未还单数',
+          width: 100,
           // prop: 'noReturnNum', // 应还单数- 实还单数
           render: row => {
             if (row.fullRepaymentNum !== null && row.renewNum !== null) {
@@ -81,6 +83,7 @@ class RepayMent extends Component {
           }
         }, {
           label: '全额单数', // 全额还款单数
+          width: 100,
           prop: 'fullRepaymentNum'
         }, {
           label: '全额率', // 全额还款率
@@ -95,6 +98,7 @@ class RepayMent extends Component {
           }
         }, {
           label: '续期单数',
+          width: 100,
           prop: 'renewNum'
         }, {
           label: '续期率',
@@ -109,6 +113,7 @@ class RepayMent extends Component {
           }
         }, {
           label: '复借单数',
+          width: 100,
           prop: 'moreBorrowNum'
         }, {
           label: '复借率',
@@ -126,12 +131,15 @@ class RepayMent extends Component {
           subColumns: [
             {
               label: '应还单数',
+              width: 100,
               prop: 'newShouldReturnNum'
             }, {
               label: '已还单数',
+              width: 100,
               prop: 'newAlreadyReturnNum'
             }, {
               label: '未还单数',
+              width: 100,
               // prop: 'newNoReturnNum',
               render: row => {
                 if (row.newShouldReturnNum !== null && row.newAlreadyReturnNum !== null) {
@@ -159,12 +167,15 @@ class RepayMent extends Component {
           subColumns: [
             {
               label: '应还单数',
+              width: 100,
               prop: 'xuShouldReturnNum'
             }, {
               label: '已还单数',
+              width: 100,
               prop: 'xuAlreadyReturnNum'
             }, {
               label: '未还单数',
+              width: 100,
               // prop: 'xuNoReturnNum',
               render: row => {
                 if (row.xuShouldReturnNum !== null && row.xuAlreadyReturnNum !== null) {
@@ -192,15 +203,18 @@ class RepayMent extends Component {
           subColumns: [
             {
               label: '应还单数',
+              width: 100,
               prop: 'fuShouldReturnNum',
               render: row => {
                 return row.fuShouldReturnNum ? row.fuAlreadyReturnNum:0
               }
             }, {
               label: '已还单数',
+              width: 100,
               prop: 'fuAlreadyReturnNum'
             }, {
               label: '未还单数',
+              width: 100,
               // prop: 'fuNoReturnNum',
               render: row => {
                 if (row.fuShouldReturnNum !== null && row.fuAlreadyReturnNum !== null) {

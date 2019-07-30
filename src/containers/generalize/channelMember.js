@@ -23,8 +23,12 @@ class Apply extends Component {
 		super(props)
 		this.state = {
 			columns: [{
-				type: 'index'
-			}, {
+						label: '#',
+						width: 60,
+						render: (a, b, c) => {
+							return c + 1
+						}
+					}, {
 				label: '渠道名称',
 				prop: 'channelName'
 			}, {
@@ -66,7 +70,7 @@ class Apply extends Component {
 				}
 			}, {
 				label: '身份证认证',
-				width: 100,
+				width: 120,
 				prop: 'idcardType',
 				render: row => {
 					return this.textType(row.idcardType)
@@ -74,21 +78,21 @@ class Apply extends Component {
 			}, {
 				label: '个人信息认证',
 				prop: 'idcardType',
-				width: 100,
+				width: 140,
 				render: row => {
 					return this.textType(row.idcardType)
 				}
 			}, {
 				label: '银行卡认证',
 				prop: 'bankType',
-				width: 100,
+				width: 120,
 				render: row => {
 					return this.textType(row.idcardType)
 				}
 			}, {
 				label: '运营商认证', // 手机认证
 				prop: 'mobileType',
-				width: 100,
+				width: 120,
 				render: row => {
 					return this.textType(row.idcardType)
 				}

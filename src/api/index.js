@@ -133,5 +133,6 @@ export default {
   selectOtherConfigApi: () => Fetch(jk.selectOtherConfig, {method: 'get'}),
   updateGlobalConfigssApi: params => Fetch(jk.updateGlobalConfigss, {method: 'put', body: params}),
   updateDelayStateApi: params => Fetch(jk.updateDelayState, {method: 'get', data:params}),
+  selectRoleDApi: () => Fetch(jk.selectRoleD, {method: 'get'}),
 }
 

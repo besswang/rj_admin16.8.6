@@ -32,9 +32,12 @@ class Audit extends Component{
 		// })
 		this.state = {
 			columns: [{
-						type: 'index',
-						fixed: 'left'
-				}, {
+						label: '#',
+						width: 60,
+						render: (a, b, c) => {
+							return c + 1
+						}
+					}, {
 					label: '订单号',
 					prop: 'orderNumber',
 					width: 100,

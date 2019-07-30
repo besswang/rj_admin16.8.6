@@ -34,9 +34,12 @@ class Backup extends Component {
 			countryId:null,
 			id:null,
 			columns: [{
-					type: 'index',
-					fixed: 'left'
-				}, {
+						label: '#',
+						width: 60,
+						render: (a, b, c) => {
+							return c + 1
+						}
+					}, {
 					label: '地区',
 					prop: 'areaname'
 				}, {
