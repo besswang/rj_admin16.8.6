@@ -12,7 +12,7 @@ import DetailBtn from '@components/DetailBtn'
 import timeDate from '@global/timeDate'
 import { dmlist } from '@meta/details'
 import filter from '@global/filter'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 class Mlist extends Component{
 	static propTypes = {
 		location: PropTypes.object.isRequired,
@@ -173,9 +173,9 @@ class Mlist extends Component{
 									text={ ['启用','禁用'] }
 								/>
 								<DetailBtn linkTo={ dmlist } row={ row } />
-								<Link to={ '/member/report' } className="margin_left15">
+								{/* <Link to={ '/member/report' } className="margin_left15">
 									<Button type="text" size="small" onClick={ this.props.saveList.bind(this,row) }>{ '报告' }</Button>
-								</Link>
+								</Link> */}
 							</div>
 						)
 					}

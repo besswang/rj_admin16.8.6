@@ -96,3 +96,18 @@ export const selectReport = posts => {
     console.log(data)
   }
 }
+// 短信详情
+export const selectUserSms = posts => {
+  return async (dispatch, getState) => {
+    dispatch(requestPosts())
+    const searchAll = shouldFetchPosts(getState())
+    const trans = Object.assign({}, searchAll, posts)
+    const data = await api.selectUserSmsApi(trans)
+    if (data.success) {
+      dispatch(receivePosts(data.data))
+    } else {
+      dispatch(failurePosts(data))
+    }
+    console.log(data)
+  }
+}

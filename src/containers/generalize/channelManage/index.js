@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Link } from 'react-router-dom'
 import { sizeChange, currentChange, initSearch, menuActive } from '@redux/actions'
-import { selectChannel, insertChannel, updateChannel, prohibitChannel, selectRoleD } from './action'
+import { selectChannel, insertChannel, updateChannel, prohibitChannel, selectRoleD, updateChannelById } from './action'
 import MyPagination from '@components/MyPagination'
 import Search from '@components/Search'
 import SelectPicker from '@components/SelectPicker'
@@ -26,6 +26,7 @@ class Apply extends Component {
 		updateChannel: PropTypes.func.isRequired,
 		prohibitChannel: PropTypes.func.isRequired,
 		selectRoleD: PropTypes.func.isRequired,
+		updateChannelById: PropTypes.func.isRequired,
 		loanRole: PropTypes.arrayOf(
 			PropTypes.object
 		)
@@ -37,11 +38,11 @@ class Apply extends Component {
 			dialogVisible2:false,
 			dialogTitle:'',
 			id: null,
+			generType:'',
 			form: {
 				channelName: '', // 渠道名称,
 				daiName: '', // 贷超名称,
 				price: null, // 单价,
-				type: '', // 类型,
 				machineScore: null, // 机审分数,
 				userScore: null, // 人工分数
 				firstMoney: null, // 首借额度
@@ -53,9 +54,8 @@ class Apply extends Component {
 				daiName: [{required: true,message: '请输入超贷名称',trigger: 'blur'}],
 				firstMoney: [{required: true, validator: validate.edu}],
 				price:[{required: true, validator: validate.moneyType}],
-				type: [{required: true,message: '请选择推广方式',trigger: 'blur'}],
-				machineScore: [{required: true, validator: validate.fen}],
-				userScore: [{required: true, validator: validate.fen}],
+				machineScore: [{required: true, validator: validate.machfen}],
+				userScore: [{required: true, validator: validate.userfen}],
 				remake: [{required: true,message: '请输入备注',trigger: 'blur'}]
 			},
 			dialogVisible: false,
@@ -180,6 +180,7 @@ class Apply extends Component {
 		this.props.selectChannel()
 	}
 	openDialog = obj => {
+		console.log(obj.type)
 		this.setState({
 			dialogVisible: true
 		})
@@ -190,14 +191,13 @@ class Apply extends Component {
 				id: null
 			})
 		} else {
-			console.log(obj)
 			this.setState({
 				dialogTitle:'编辑',
+				generType:obj.type,
 				form:{
 					channelName: obj.channelName,
 					daiName: obj.daiName,
 					price: obj.price,
-					type: obj.type,
 					machineScore: obj.machineScore,
 					userScore: obj.userScore,
 					firstMoney: obj.firstMoney,
@@ -210,11 +210,10 @@ class Apply extends Component {
 	}
 	saveContent = e => {
 		e.preventDefault()
-		console.log(this.state.form)
 		this.form.validate((valid) => {
 			if (valid) {
 				if(this.state.id){// 编辑
-					const data = Object.assign({},this.state.form,{id:this.state.id})
+					const data = Object.assign({},this.state.form,{id:this.state.id},{type:this.state.generType})
 					this.props.updateChannel(data)
 				}else{//添加
 					this.props.insertChannel(this.state.form)
@@ -227,9 +226,6 @@ class Apply extends Component {
 				return false
 			}
 		})
-	}
-	selectType = e => {
-		console.log(e)
 	}
 	onChange(key, value) {
 		let v = null
@@ -254,23 +250,27 @@ class Apply extends Component {
 		})
 	}
 	saveContent2 = () => {
-		console.log(this.state.adminId)
 		if (this.state.adminId !==null){
 			const data = Object.assign({},{id:this.state.id},{adminId:this.state.adminId})
-			this.props.updateChannel(data)
+			this.props.updateChannelById(data)
+			this.setState({
+				adminId: null,
+				dialogVisible2: false,
+				id: null
+			})
 		}else{
 			Message.warning('请选择贷超角色！')
 			return false
 		}
+	}
+	onChange3 = val => {
 		this.setState({
-			adminId:null,
-			dialogVisible2:false,
-			id:null
+			generType:val
 		})
 	}
 	render(){
 		const { list, btnLoading, loanRole } = this.props
-		const { dialogTitle, columns, dialogVisible, form, rules, id, dialogVisible2, adminId } = this.state
+		const { dialogTitle, columns, dialogVisible, form, rules, id, dialogVisible2, adminId, generType } = this.state
 		return(
 			<div>
 				<Search showChannel>
@@ -312,10 +312,11 @@ class Apply extends Component {
 							<Form.Item label="单价" prop="price">
 								<Input type="number" value={ form.price } onChange={ this.onChange.bind(this, 'price') } append="元" />
 							</Form.Item>
-							<Form.Item label="推广方式" prop="type">
+							<Form.Item label="推广方式">
 								<SelectPicker
-									stringValue={ form.type }
-									onChange={ this.onChange.bind(this, 'type') }
+									stringValue={ generType }
+									onChange={ v => this.onChange3(v) }
+									clearable={ 1 }
 									optionsArr={ PROMOTION_TYPE }
 									placeholder={ '选择方式' }
 								/>
@@ -351,13 +352,13 @@ class Apply extends Component {
 					onCancel={ () => this.setState({ dialogVisible2: false }) }
 				>
 					<Dialog.Body>
-						<Form labelWidth="120" ref={ e => {this.form=e} } model={ form } rules={ rules }>
-							<Form.Item label="贷超角色" prop="type">
+						<Form labelWidth="120">
+							<Form.Item label="贷超角色">
 								<SelectPicker
 									value={ adminId }
 									onChange={ val => this.onChange2(val) }
 									options={ loanRole }
-									clearable = { false }
+									clearable = { 1 }
 									placeholder={ '选择角色' }
 								/>
 							</Form.Item>
@@ -378,7 +379,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, menuActive, selectChannel, insertChannel, updateChannel, prohibitChannel, selectRoleD}, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, menuActive, selectChannel, insertChannel, updateChannel, prohibitChannel, selectRoleD, updateChannelById}, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Apply)

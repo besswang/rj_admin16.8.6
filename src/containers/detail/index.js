@@ -5,13 +5,14 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { initSearch } from '@redux/actions'
-import { selectIdCardByUserId, emergency, bankInfo, selectReportMail, selectReport, selectPhoneDateByUserId } from './action'
+import { selectIdCardByUserId, emergency, bankInfo, selectReportMail, selectReport, selectPhoneDateByUserId, selectUserSms } from './action'
 import Detailtable from '@components/detailTable'
-import { BANK, ADDRESS, CALL_LOG } from '@meta/columns'
+import { BANK, ADDRESS, CALL_LOG, NOTE } from '@meta/columns'
 import '@styles/detail.less'
 import timeDate from '@global/timeDate'
 import filter from '@global/filter'
 import api from '@api/index'
+import Report from '../member/mlist/report'
 class Detail extends Component{
   static propTypes = {
     history: PropTypes.object.isRequired,
@@ -26,7 +27,8 @@ class Detail extends Component{
     selectReport: PropTypes.func.isRequired,
     initSearch: PropTypes.func.isRequired,
     areaLoading: PropTypes.bool,
-    selectPhoneDateByUserId: PropTypes.func.isRequired
+    selectPhoneDateByUserId: PropTypes.func.isRequired,
+    selectUserSms: PropTypes.func.isRequired,
   }
   constructor(props) {
       super(props)
@@ -112,6 +114,10 @@ class Detail extends Component{
       case '7': // 通话记录
         this.props.initSearch()
         this.props.selectReport({userId:userId})
+        break
+      case '8': // 短信详情
+        this.props.initSearch()
+        this.props.selectUserSms({userId:userId})
         break
       default:
         return ''
@@ -344,6 +350,12 @@ class Detail extends Component{
           <Tabs.Pane label="通话记录" name="7">
             <Detailtable columns={ CALL_LOG } num={ 2 } userId={ userId }/>
           </Tabs.Pane>
+          <Tabs.Pane label="短信详情" name="8">
+            <Detailtable columns={ NOTE } num={ 3 } userId={ userId }/>
+          </Tabs.Pane>
+          <Tabs.Pane label="报告" name="9">
+            <Report />
+          </Tabs.Pane>
         </Tabs>
         <Dialog
 				visible={ dialogVisible }
@@ -362,7 +374,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({ selectIdCardByUserId, emergency, bankInfo, initSearch, selectReportMail, selectReport,selectPhoneDateByUserId }, dispatch)
+		...bindActionCreators({ selectIdCardByUserId, emergency, bankInfo, initSearch, selectReportMail, selectReport,selectPhoneDateByUserId, selectUserSms }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Detail)

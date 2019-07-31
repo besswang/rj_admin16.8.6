@@ -9,34 +9,34 @@ export const NORMAL_COLUMNS = [
   }
 }, {
     label: '渠道名称',
-    prop: 'name'
+    prop: 'channelName'
   }, {
     label: '真实姓名',
-    prop: 'realname'
+    prop: 'realName'
   }, {
     label: '手机号码',
-    prop: 'tel'
+    prop: 'phone'
   }, {
     label: '身份证号',
-    prop: 'idcard'
+    prop: 'idcardNumber'
   }, {
     label: '注册时间',
-    prop: 'time',
+    prop: 'gmt',
     render: row => {
-      const date = timeDate.time(row.time, 'yyyy-MM-dd hh:mm:ss')
+      const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
       return date
     }
   }, {
     label: '最后还款日期',
     width: 160,
-    prop: 'lasttime',
-    render: row => {
-      const date = timeDate.time(row.lasttime, 'yyyy-MM-dd hh:mm:ss')
-      return date
-    }
+    prop: 'realRepaymentDate',
+    // render: row => {
+    //   const date = timeDate.time(row.lasttime, 'yyyy-MM-dd hh:mm:ss')
+    //   return date
+    // }
   }, {
     label: '借款次数',
-    prop: 'num'
+    prop: 'loanNum'
   },
 ]
 export const TODAY_DITCH = [
@@ -415,4 +415,20 @@ export const CALL_LOG = [{
   label: '通话地点',
   prop: 'location'
 }]
-
+//通话记录
+export const NOTE = [{
+  label: '#',
+  width: 60,
+  render: (a, b, c) => {
+    return c + 1
+  }
+}, {
+  label: '时间',
+  prop: 'strDate'
+}, {
+  label: '手机号',
+  prop: 'strAddress'
+}, {
+  label: '内容',
+  prop: 'strBody'
+}]

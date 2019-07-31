@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { selectReportMail, selectReport } from '@containers/detail/action'
+import { selectReportMail, selectReport, selectUserSms } from '@containers/detail/action'
 import MyPagination from './MyPagination'
 class Detailtable extends Component {
   static propTypes = {
@@ -15,15 +15,18 @@ class Detailtable extends Component {
     sizeChange: PropTypes.func.isRequired,
     currentChange: PropTypes.func.isRequired,
     selectReportMail: PropTypes.func.isRequired,
-    selectReport: PropTypes.func.isRequired
+    selectReport: PropTypes.func.isRequired,
+    selectUserSms: PropTypes.func.isRequired,
   }
   sizeChange = e => {
     this.props.sizeChange(e)
     const { num, userId } = this.props
     if(num === 1){
       this.props.selectReportMail({userId:userId})
-    } else {
+    } else if(num ===2) {
       this.props.selectReport({userId:userId})
+    }else{
+      this.props.selectUserSms({userId:userId})
     }
   }
   onCurrentChange = e => {
@@ -32,8 +35,10 @@ class Detailtable extends Component {
     const { num, userId } = this.props
     if(num === 1){
       this.props.selectReportMail({userId:userId})
-    } else {
+    } else if(num === 2) {
       this.props.selectReport({userId:userId})
+    }else{
+      this.props.selectUserSms({userId:userId})
     }
 	}
   render() {
@@ -64,7 +69,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, selectReportMail, selectReport }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, selectReportMail, selectReport, selectUserSms }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Detailtable)

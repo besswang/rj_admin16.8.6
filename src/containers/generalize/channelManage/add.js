@@ -70,8 +70,8 @@ class Apply extends Component {
 					}
 				],
 				type: [{required: true,message: '请选择推广方式',trigger: 'blur'}],
-				machineScore: [{required: true, validator: validate.fen}],
-				userScore: [{required: true, validator: validate.fen}],
+				machineScore: [{required: true, validator: validate.machfen}],
+				userScore: [{required: true, validator: validate.userfen}],
 				remake: [{required: true,message: '请输入备注',trigger: 'blur'}],
 				money: [{required: true, validator: validate.edu}],
 				// sort: [{required: true, validator:validate.sort}],

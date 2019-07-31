@@ -38,19 +38,21 @@ class BlackUser extends Component {
 				money: null, // 小于等于多少金额
 				advanceDayNum: null, //提前多少天
 				advanceMoney: null, //提前天数提额
-				frontTime: null, //时间前
+				// frontTime: null, //时间前
 				frontMoney: null, //时间前提额
-				afterTime: null, // 时间后
+				// afterTime: null, // 时间后
 				afterMoney: null, //时间后提额
 				otherMoney: null, //其他时间提额
 			},
+			frontTime: null, //时间前
+			afterTime: null, // 时间后
 			rules: {
 				money:  [{required: true, validator: validate.moneyType}],
 				advanceDayNum: [{required: true, validator: validate.dayNum}],
 				advanceMoney: [{required: true, validator: validate.moneyType}],
-				frontTime: [{ type: 'date', required: true, message: '请选择日期', trigger: 'change' }],
+				// frontTime: [{ type: 'date', required: true, message: '请选择日期', trigger: 'change' }],
 				frontMoney: [{required: true, validator: validate.moneyType}],
-				afterTime: [{ type: 'date', required: true, message: '请选择日期', trigger: 'change' }],
+				// afterTime: [{ type: 'date', required: true, message: '请选择日期', trigger: 'change' }],
 				afterMoney: [{required: true, validator: validate.moneyType}],
 				otherMoney: [{required: true, validator: validate.moneyType}]
 			},
@@ -138,6 +140,16 @@ class BlackUser extends Component {
     this.props.findAllLiftingAmount()
 	}
 	onChange(key, value) {
+		console.log(value)
+		// let ti = null
+		// const time = new Date()
+		// const t = timeDate.time(time, 'yyyy-MM-dd')
+		// if(key === 'afterTime'){
+		// 	ti = new Date(t+' '+value)
+		// 	this.setState({
+		// 		form: Object.assign({}, this.state.form,{afterTime:ti})
+		// 	})
+		// }
 		this.setState({
 			form: Object.assign({}, this.state.form, { [key]: value })
 		})
@@ -177,15 +189,19 @@ class BlackUser extends Component {
 		} else { // 编辑
 			const t1 = timeDate.time(r.frontTime, 'hh:mm:ss')
 			const t2 = timeDate.time(r.afterTime, 'hh:mm:ss')
+			const time = new Date()
+			const t = timeDate.time(time, 'yyyy-MM-dd')
 			this.setState({
 				dialogTitle: '编辑',
+				afterTime: new Date(t + ' ' + t2),
+				frontTime: new Date(t + ' ' + t1), //时间前
 				form: {
 					money: r.money,
 					advanceDayNum: parseInt(r.advanceDayNum), //提前多少天
 					advanceMoney: r.advanceMoney, //提前天数提额
-					frontTime: new Date('2019-07-01 '+t1), //时间前
+					// frontTime: new Date(t+' '+t1), //时间前
 					frontMoney: r.frontMoney, //时间前提额
-					afterTime: new Date('2019-07-01 ' + t2), // 时间后
+					// afterTime: new Date(t+' '+t2), // 时间后
 					afterMoney: r.afterMoney, //时间后提额
 					otherMoney: r.otherMoney //其他时间提额
 				},
@@ -195,20 +211,29 @@ class BlackUser extends Component {
 	}
 	saveContent = e => {
 		e.preventDefault()
-		console.log(this.state.form)
 		this.form.validate((valid) => {
 			if (valid) {
-				this.setState({
-					dialogVisible: false
-				})
-				console.log(this.state.id)
-				if (this.state.id) { // editor
-					const trans = Object.assign({},this.state.form,{id:this.state.id})
-					this.props.updateLiftingAmount(trans)
-				} else { // add
-					this.props.addLiftingAmount(this.state.form)
+				if (this.state.afterTime || this.state.afterTime !== null || this.state.frontTime || this.state.frontTime!==null) {
+					if (this.state.frontTime <= this.state.afterTime){
+						this.setState({
+							dialogVisible: false
+						})
+						const tran = Object.assign({},this.state.form,{frontTime:this.state.frontTime},{afterTime:this.state.afterTime})
+						if (this.state.id) { // editor
+							const trans = Object.assign({}, tran, {id: this.state.id})
+							this.props.updateLiftingAmount(trans)
+						} else { // add
+							this.props.addLiftingAmount(tran)
+						}
+					}else{
+						Message.warning('时间前要早于时间后')
+						this.setState({
+							afterTime:null
+						})
+					}
+				}else{
+					Message.warning('请选择时间')
 				}
-
 			} else {
 				console.log('error submit!!')
 				return false
@@ -245,6 +270,25 @@ class BlackUser extends Component {
 	onChange2(key, value) {
 		this.setState({
 			form2: Object.assign({}, this.state.form2, { [key]: value })
+		})
+	}
+	onChange3 = v => {
+		const time = new Date()
+		const t = timeDate.time(time, 'yyyy-MM-dd')
+		const ss = timeDate.time(v, 'hh:mm:ss')
+		let aft = null
+		if(v){
+			aft = new Date(t + ' ' + ss)
+		}else{
+			aft = null
+		}
+		this.setState({
+			afterTime:aft
+		})
+	}
+	onChange4 = v => {
+		this.setState({
+			frontTime:v
 		})
 	}
 	render() {
@@ -298,26 +342,27 @@ class BlackUser extends Component {
 							<Form.Item label="提前天数提额" prop="advanceMoney">
 								<Input type="advanceMoney" value={ form.advanceMoney } onChange={ this.onChange.bind(this, 'advanceMoney') } />
 							</Form.Item>
-							<Form.Item label="时间前" prop="frontTime">
+							<Form.Item label="时间前">
 								{/* <Input type="frontTime" value={ form.frontTime } onChange={ this.onChange.bind(this, 'frontTime') } /> */}
 								<TimePicker
-									onChange={ this.onChange.bind(this, 'frontTime') }
+									onChange={ val => this.onChange4(val) }
 									placeholder="选择时间"
-									value={ form.frontTime }
+									value={ this.state.frontTime }
 								/>
 							</Form.Item>
 							<Form.Item label="时间前提额" prop="frontMoney">
 								<Input type="frontMoney" value={ form.frontMoney } onChange={ this.onChange.bind(this, 'frontMoney') } />
 							</Form.Item>
 							{
-								form.frontTime &&
+								this.state.frontTime &&
 								<Form.Item label="时间后" prop="afterTime">
 								{/* <Input type="afterTime" value={ form.afterTime } onChange={ this.onChange.bind(this, 'afterTime') } /> */}
 								<TimePicker
-									onChange={ this.onChange.bind(this, 'afterTime') }
+									onChange={ val => this.onChange3(val) }
 									placeholder="选择时间"
-									selectableRange = { `${ timeDate.time(form.frontTime, 'hh:mm:ss') } - 20:30:00` }
-									value={ form.afterTime }
+									// ${ new Date(t+' 23:59:59') }
+									selectableRange = { `${ timeDate.time(this.state.frontTime, 'hh:mm:ss') } - 23:59:59` }
+									value={ this.state.afterTime }
 								/>
 								</Form.Item>
 							}

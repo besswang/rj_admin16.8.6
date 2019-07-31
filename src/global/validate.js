@@ -1,6 +1,6 @@
 export default {
   money: (rule, value, callback) => {
-    const reg = new RegExp('^[0-9]+(.[0-9]{1})?$')
+    const reg = new RegExp('^[0-9]+(.[0-9]{1,2})?$')
     if (value === '' || value === null) {
       callback(new Error('请输入额度'))
     } else if(!reg.test(value)){
@@ -17,7 +17,7 @@ export default {
     }
   },
   serverMoney: (rule, value, callback) => {
-    const reg = new RegExp('^[0-9]+(.[0-9]{1})?$')
+    const reg = new RegExp('^[0-9]+(.[0-9]{1,2})?$')
     if (value === '' || value === null) {
       callback(new Error('请输入服务费'))
     } else if(!reg.test(value)){
@@ -51,7 +51,7 @@ export default {
     }
   },
   overdueRate: (rule, value, callback) => {
-    const reg = new RegExp('^[0-9]+(.[0-9]{1})?$')
+    const reg = new RegExp('^[0-9]+(.[0-9]{1,2})?$')
     if (value === '' || value === null) {
       callback(new Error('请输入逾期利率'))
     } else if(!reg.test(value)){
@@ -93,17 +93,31 @@ export default {
       callback()
     }
   },
-  fen: (rule, value, callback) => {
+  userfen: (rule, value, callback) => {
     const r = new RegExp('^[0-9]*$')
+    const adminInfo = JSON.parse(window.sessionStorage.getItem('adminInfo'))
+    console.log(adminInfo.userScoreLimit) //人工分数限制
     if (value === '' || value === null) {
       callback(new Error('分数不能为空'))
-    } else if(!r.test(value) || parseInt(value) < 550 ){
-      callback(new Error('请输入有效分数,大于或等于550的正整数'))
+    } else if (!r.test(value) || parseInt(value) < parseInt(adminInfo.userScoreLimit)) {
+      callback(new Error(`请输入有效分数,大于或等于${ adminInfo.userScoreLimit }的正整数`))
     } else {
       callback()
     }
   },
-  fen2: (rule, value, callback) => {
+  machfen: (rule, value, callback) => {
+    const r = new RegExp('^[0-9]*$')
+    const adminInfo = JSON.parse(window.sessionStorage.getItem('adminInfo'))
+    console.log(adminInfo.machineScoreLimit) // 机器分数限制
+    if (value === '' || value === null) {
+      callback(new Error('分数不能为空'))
+    } else if (!r.test(value) || parseInt(value) < parseInt(adminInfo.machineScoreLimit)) {
+      callback(new Error(`请输入有效分数,大于或等于${ adminInfo.machineScoreLimit }的正整数`))
+    } else {
+      callback()
+    }
+  },
+  helpfen: (rule, value, callback) => {
     const r = new RegExp('^[0-9]*$')
     if (value === '' || value === null) {
       callback(new Error('分数不能为空'))
@@ -145,7 +159,7 @@ export default {
     }
   },
   lilv: (rule, value, callback) => { // 利率
-    // const reg = new RegExp('^[0-9]+(.[0-9]{1})?$')
+    // const reg = new RegExp('^[0-9]+(.[0-9]{1,2})?$')
     const reg = new RegExp('^[0-1]+(.[0-9]{1,4})?$') // 0-1
   // const r2 = new RegExp('^(0.|[2-9][0-9]*)$') // 用3000的时候会报错
     if (value === '' || value === null) {
@@ -157,7 +171,7 @@ export default {
     }
   },
   feilv: (rule, value, callback) => { // 费率
-    // const reg = new RegExp('^[0-9]+(.[0-9]{1})?$')
+    // const reg = new RegExp('^[0-9]+(.[0-9]{1,2})?$')
     const reg = new RegExp('^[0-1]+(.[0-9]{1,4})?$')
     // const r2 = new RegExp('^(0.|[2-9][0-9]*)$') // 用3000的时候会报错
     if (value === '' || value === null) {
@@ -169,7 +183,7 @@ export default {
     }
   },
   moneyType: (rule, value, callback) => {
-    const reg = new RegExp('^[0-9]+(.[0-9]{1})?$')
+    const reg = new RegExp('^[0-9]+(.[0-9]{1,2})?$')
     if (value === '' || value === null) {
       callback(new Error('请输入金额'))
     }else if(!reg.test(value)){

@@ -16,6 +16,7 @@ export default {
   'selectEmergencyByUserId': 'emergency/selectEmergencyByUserId', // 会员详情-紧急联系人
   'selectBankByUserId': 'bank/selectBankByUserId', // 会员详情-银行卡信息
   'selectReportMail': 'phone/selectReportMail', // 会员详情-通讯录
+  'selectUserSms': 'phone/selectUserSms', // 会员详情-短信详情
   'selectReport': 'phone/selectReport', // 通话记录
   'updateUserType': 'user/updateUserType', // 修改用户禁用状态
   'addUserBlack': 'user/addUserBlack', // 添加黑名单
@@ -136,6 +137,7 @@ export default {
   'insertChannel': 'channel/insertChannel', // 渠道管理-添加
   'updateChannel': 'channel/updateChannel', // 渠道管理-编辑
   'selectRoleD': 'role/selectRoleD', // 渠道管理-操作-绑定
+  'updateChannelById': 'updateChannelById', //渠道管理-操作-绑定-保存
   'prohibitChannel': 'channel/prohibitChannel', // 渠道管理-禁用
   'findDelayRate': 'quotaDelay/findDelayRate', // 渠道管理-展期模式-列表 // // 待还款-还款-延期-延期天数
   'bindingRate': 'channel/bindingRate', // 渠道管理-展期模式-添加

@@ -7,6 +7,7 @@ const saveLoanRole = data => ({
   type: type.SAVE_LOAN_ROLE,
   data
 })
+// 渠道管理-绑定
 export const selectRoleD = () => {
   return async dispatch => {
     dispatch(requestPosts())
@@ -18,7 +19,19 @@ export const selectRoleD = () => {
     }
   }
 }
-
+// 渠道管理-绑定-保存
+export const updateChannelById = obj => {
+  return async dispatch => {
+    dispatch(btnRequestPosts())
+    const data = await api.updateChannelByIdApi(obj)
+    if (data.success) {
+      dispatch(selectChannel())
+      dispatch(btnReceivePosts(data.msg))
+    } else {
+      dispatch(btnFailurePosts(data.msg))
+    }
+  }
+}
 // 渠道管理
 export const selectChannel = () => {
   return async (dispatch, getState) => {
