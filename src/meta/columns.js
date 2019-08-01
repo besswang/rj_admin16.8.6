@@ -425,6 +425,10 @@ export const NOTE = [{
 }, {
   label: '时间',
   prop: 'strDate'
+  // render: row => {
+  //   const date = timeDate.time(row.strDate, 'yyyy-MM-dd hh:mm:ss')
+  //   return date
+  // }
 }, {
   label: '手机号',
   prop: 'strAddress'

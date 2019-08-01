@@ -56,11 +56,11 @@ class Mlist extends Component{
 				},{
 					label: '手机号码',
 					prop: 'phone',
-					width:128
+					width:130
 				},{
 					label: '身份证号',
 					prop: 'idNumber',
-					width:112
+					width:200
 				},{
 					label: '授信额度',
 					width: 100,
@@ -130,14 +130,15 @@ class Mlist extends Component{
 				}, {
 					label: '注册时间',
 					prop: 'gmt',
-					width:120,
+					width:200,
 					render: row => {
 						const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
 						return date
 					}
 				}, {
 					label: '登陆IP',
-					prop: 'loginIp'
+					prop: 'loginIp',
+					width:240,
 				}, {
 					label: '登陆次数',
 					width: 100,
@@ -168,7 +169,7 @@ class Mlist extends Component{
 							<div className="flex flex-direction_row">
 								<DisableBtn
 									value={ row.type }
-									result={ 0 }
+									result={ 1 }
 									onClick={ this.updateUserType.bind(this, row) }
 									text={ ['启用','禁用'] }
 								/>

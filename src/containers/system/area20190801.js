@@ -214,7 +214,7 @@ class Backup extends Component {
 	}
 	render() {
 		const { list } = this.props
-		const { province, provinceId, btnLoading, selectBtnLoading } = this.state
+		const { province, city, area, country, provinceId, cityId , areaId, countryId, btnLoading, selectBtnLoading } = this.state
 		return (
 			<div>
 				<Select
@@ -230,7 +230,7 @@ class Backup extends Component {
 						})
 					}
 				</Select>
-				{/* { city.length>0 && provinceId !=='' && provinceId !==null &&
+				{ city.length>0 && provinceId !=='' && provinceId !==null &&
 					<Select
 						onChange={ e => this.onChangeCity(e) }
 						value={ cityId }
@@ -243,8 +243,8 @@ class Backup extends Component {
 							})
 						}
 					</Select>
-				} */}
-				{/* {
+				}
+				{
 					area.length > 0 && cityId !== '' && cityId !== null && provinceId !== null &&
 					<Select
 						onChange={ e => this.onChangeArea(e) }
@@ -258,8 +258,8 @@ class Backup extends Component {
 							})
 						}
 					</Select>
-				} */}
-				{/* { country.length>0 && areaId !=='' && areaId !== null && provinceId !==null &&
+				}
+				{ country.length>0 && areaId !=='' && areaId !== null && provinceId !==null &&
 					<Select
 						onChange={ e => this.onChangeCountry(e) }
 						value={ countryId }
@@ -272,7 +272,7 @@ class Backup extends Component {
 							})
 						}
 					</Select>
-				} */}
+				}
 				<Button className="margin_left15" onClick={ this.updateAreaState.bind(this, 0) } type="warning" loading={ btnLoading }>{ '禁用' }</Button>
 				<Button className="margin_left15" onClick={ this.updateAreaState.bind(this, 1, null) } type="primary" loading={ selectBtnLoading }>{ '启用' }</Button>
 
