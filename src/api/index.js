@@ -135,6 +135,7 @@ export default {
   updateDelayStateApi: params => Fetch(jk.updateDelayState, {method: 'get', data:params}),
   selectRoleDApi: () => Fetch(jk.selectRoleD, {method: 'get'}),
   updateChannelByIdApi: params => Fetch(jk.updateChannelById, {method: 'get', data:params}),
-  selectUserSmsApi: params => Fetch(jk.selectUserSms, {method: 'get', data:params})
+  selectUserSmsApi: params => Fetch(jk.selectUserSms, {method: 'get', data:params}),
+  selectPresentationByUserIdApi: params => Fetch(jk.selectPresentationByUserId, {method: 'get', data:params})
 }
 

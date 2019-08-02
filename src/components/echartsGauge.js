@@ -1,41 +1,52 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 // 引入 ECharts 主模块
 var echarts = require('echarts')
 export default class EchartsGauge extends Component {
+	static propTypes = {
+		gaugeData: PropTypes.array
+	}
     constructor(props) {
         super(props)
         this.state = {
-
+			data: props.gaugeData
         }
     }
     componentWillMount() {
 
     }
     componentDidMount() {
-        this.gaugeChart()
-    }
+		this.gaugeChart()
+	}
+	componentWillReceiveProps(nextProps) { // 父组件重传props时就会调用这个方法
+		this.setState({
+			data: nextProps.gaugeData
+		})
+	}
 	gaugeChart = () => {
 	    // 基于准备好的dom，初始化echarts实例
 	    var gaugeChart = echarts.init(document.getElementById('gauge'))
 	    // 绘制图表
 	    gaugeChart.setOption({
 	        series: [{
-	            name: '业务指标',
 	            type: 'gauge',
 	            splitNumber: 20,
-	            data: [{
-	                value: 28,
-	                name: '较低风险'
-	            }, {
-	                value: 55,
-	                name: '中度风险'
-	            }, {
-	                value: 80,
-	                name: '中高风险'
-	            }, {
-	                value: 100,
-	                name: '高风险'
-	            }],
+				data: this.state.data,
+				// [{
+	            //     value: 28,
+	            //     name: '较低风险'
+				// }
+				// , {
+	            //     value: 55,
+	            //     name: '中度风险'
+	            // }, {
+	            //     value: 80,
+	            //     name: '中高风险'
+	            // }, {
+	            //     value: 100,
+	            //     name: '高风险'
+				// }
+				// ],
 	            axisLine: {
 	                lineStyle: {
 	                    color: [
@@ -76,7 +87,7 @@ export default class EchartsGauge extends Component {
 	                show: false // 不显示指针
 	            },
 	            title: {
-	                color: '#13ce66'
+	                color: this.state.data[0].color
 	            },
 	            detail: {
 	                offsetCenter: [0, 0],

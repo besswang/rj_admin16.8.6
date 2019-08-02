@@ -5,14 +5,14 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { initSearch } from '@redux/actions'
-import { selectIdCardByUserId, emergency, bankInfo, selectReportMail, selectReport, selectPhoneDateByUserId, selectUserSms } from './action'
+import { selectIdCardByUserId, emergency, bankInfo, selectReportMail, selectReport, selectPhoneDateByUserId, selectUserSms,selectPresentationByUserId } from './action'
 import Detailtable from '@components/detailTable'
 import { BANK, ADDRESS, CALL_LOG, NOTE } from '@meta/columns'
 import '@styles/detail.less'
 import timeDate from '@global/timeDate'
 import filter from '@global/filter'
 import api from '@api/index'
-import Report from '../member/mlist/report'
+import ReportDetail from '../member/mlist/report'
 class Detail extends Component{
   static propTypes = {
     history: PropTypes.object.isRequired,
@@ -29,6 +29,7 @@ class Detail extends Component{
     areaLoading: PropTypes.bool,
     selectPhoneDateByUserId: PropTypes.func.isRequired,
     selectUserSms: PropTypes.func.isRequired,
+    selectPresentationByUserId: PropTypes.func.isRequired
   }
   constructor(props) {
       super(props)
@@ -53,7 +54,7 @@ class Detail extends Component{
         linkUrl: this.props.location.state.url,
         listInfo:this.props.listInfo,
         activeName: '1',
-        userId: null
+        userId: this.props.listInfo.userId ? this.props.listInfo.userId : this.props.listInfo.id
       })
     } else {
       const s = JSON.parse(window.sessionStorage.getItem('locationState'))
@@ -63,6 +64,7 @@ class Detail extends Component{
         title: s.title,
         linkUrl: s.url,
         listInfo:r,
+        userId: r.userId ? r.userId : r.id,
         activeName: window.sessionStorage.getItem('activeName')
       })
     }
@@ -88,9 +90,9 @@ class Detail extends Component{
   }
   tabChange = (e) => {
     window.sessionStorage.setItem('activeName',e)
-    this.setState({
-      userId: this.state.listInfo.userId ? this.state.listInfo.userId : this.state.listInfo.id
-    })
+    // this.setState({
+    //   userId: this.state.listInfo.userId ? this.state.listInfo.userId : this.state.listInfo.id
+    // })
     // const userId = this.state.listInfo.userId ? this.state.listInfo.userId : this.state.listInfo.id
     const { userId } = this.state
     switch (e) {
@@ -118,6 +120,9 @@ class Detail extends Component{
       case '8': // 短信详情
         this.props.initSearch()
         this.props.selectUserSms({userId:userId})
+        break
+      case '9': // 报告
+        this.props.selectPresentationByUserId({userId:userId})
         break
       default:
         return ''
@@ -255,18 +260,27 @@ class Detail extends Component{
                   <p>{'身份证信息'}</p>
                 </li>
                 <li className="flex flex-direction_row info-li">
-                  <div className="photo">
-                    <img src = { `data:image/jpeg;base64,${ idCardInfo.idcardFrontPhoto }` } alt="" onClick={ this.openDialog.bind(this,`data:image/jpeg;base64,${ idCardInfo.idcardFrontPhoto }`) } />
-                    <p>{'身份证正面'}</p>
-                  </div>
-                  <div className="photo">
-                    <img src={ `data:image/jpeg;base64,${ idCardInfo.idcardBackPhoto }` } alt="" onClick={ this.openDialog.bind(this,`data:image/jpeg;base64,${ idCardInfo.idcardBackPhoto }`) } />
-                    <p>{'身份证反面'}</p>
-                  </div>
-                  <div className="photo">
-                    <img src={ `data:image/jpeg;base64,${ idCardInfo.livingPhoto }` } alt="" onClick={ this.openDialog.bind(this,`data:image/jpeg;base64,${ idCardInfo.livingPhoto }`) } />
-                    <p>{'人脸照片'}</p>
-                  </div>
+                  {
+                    idCardInfo.idcardFrontPhoto &&
+                    <div className="photo">
+                      <img src = { `data:image/jpeg;base64,${ idCardInfo.idcardFrontPhoto }` } alt="" onClick={ this.openDialog.bind(this,`data:image/jpeg;base64,${ idCardInfo.idcardFrontPhoto }`) } />
+                      <p>{'身份证正面'}</p>
+                    </div>
+                  }
+                  {
+                    idCardInfo.idcardBackPhoto &&
+                    <div className="photo">
+                      <img src={ `data:image/jpeg;base64,${ idCardInfo.idcardBackPhoto }` } alt="" onClick={ this.openDialog.bind(this,`data:image/jpeg;base64,${ idCardInfo.idcardBackPhoto }`) } />
+                      <p>{'身份证反面'}</p>
+                    </div>
+                  }
+                  {
+                    idCardInfo.livingPhoto &&
+                    <div className="photo">
+                      <img src={ `data:image/jpeg;base64,${ idCardInfo.livingPhoto }` } alt="" onClick={ this.openDialog.bind(this,`data:image/jpeg;base64,${ idCardInfo.livingPhoto }`) } />
+                      <p>{'人脸照片'}</p>
+                    </div>
+                  }
                 </li>
                 <li className="flex flex-direction_row info-li">
                   <p>{'姓名：'}{ idCardInfo.realName }</p>
@@ -354,7 +368,7 @@ class Detail extends Component{
             <Detailtable columns={ NOTE } num={ 3 } userId={ userId }/>
           </Tabs.Pane>
           <Tabs.Pane label="报告" name="9">
-            <Report />
+            <ReportDetail />
           </Tabs.Pane>
         </Tabs>
         <Dialog
@@ -374,7 +388,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({ selectIdCardByUserId, emergency, bankInfo, initSearch, selectReportMail, selectReport,selectPhoneDateByUserId, selectUserSms }, dispatch)
+		...bindActionCreators({ selectIdCardByUserId, emergency, bankInfo, initSearch, selectReportMail, selectReport,selectPhoneDateByUserId, selectUserSms, selectPresentationByUserId }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Detail)

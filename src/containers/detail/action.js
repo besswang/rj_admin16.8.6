@@ -1,7 +1,7 @@
 import api from '@api/index'
 import { requestPosts, receivePosts, failurePosts, saveIdCardInfo, shouldFetchPosts,areaRequestPosts,areaReceivePosts,areaFailurePosts } from '@redux/actions'
 import { Message } from 'element-react'
-
+import * as type from '@redux/actionTypes'
 // 身份证信息
 export const selectIdCardByUserId = id => {
   return async dispatch => {
@@ -109,5 +109,31 @@ export const selectUserSms = posts => {
       dispatch(failurePosts(data))
     }
     console.log(data)
+  }
+}
+// 报告
+// 请求loading的开始状态
+const reportRequestPosts = () => ({
+  type: type.REPORT_REQUEST_POSTS
+})
+// 请求成功后的存储方法
+const reportReceivePosts = data => ({
+  type: type.REPORT_RECEIVE_POSTS,
+  data
+})
+// 请求失败后的方法
+const reportFailurePosts = data => ({
+  type: type.REPORT_FAILURE_POSTS,
+  data
+})
+export const selectPresentationByUserId = obj => {
+  return async dispatch => {
+    dispatch(reportRequestPosts())
+    const data = await api.selectPresentationByUserIdApi(obj)
+    if (data.success) {
+      dispatch(reportReceivePosts(data.data))
+    } else {
+      dispatch(reportFailurePosts(data))
+    }
   }
 }
