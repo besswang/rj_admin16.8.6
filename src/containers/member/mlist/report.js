@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom'
 import Echartgauge from '@components/echartsGauge'
 import EchartsBarLeft from '@components/echartsBarLeft'
 import EchartsBarRight from '@components/echartsBarRight'
+import phoneb from '../../../images/phoneb.png'
 class Report extends Component{
 	static propTypes = {
 		reportDate: PropTypes.object
@@ -24,8 +25,15 @@ class Report extends Component{
 	componentDidMount() {
 
 	}
+	textFn = val => {
+		if(val === '0'){
+			return <span className="dis-red">{'否'}</span>
+		}else{
+			return <span className="theme-green">{'是'}</span>
+		}
+	}
 	render() {
-		const { userInfo, lastTime, gaugeEchart } = this.props.reportDate
+		const { userInfo, lastTime, gaugeEchart,allTimes, barLeft1, barLeft2, barRight,lbs } = this.props.reportDate
 		return (
 			<div>
 				<ul className="flex flex-direction_row justify-content_flex-justify section1">
@@ -39,10 +47,9 @@ class Report extends Component{
 						</Link>
 					</li>
 				</ul>
-				<section className="flex flex-direction_row section2">
-					<Layout.Row gutter="10" style={ {width:'100%'} }>
+				<Layout.Row gutter="10" className="section2">
 					<Layout.Col xs="24" sm="24" md="24" lg="12">
-					<div className="flex_1 sec2 sec2-left">
+					<div className="sec2 sec2-left">
 						<h1 className="title">{'基本信息概况'}</h1>
 						<div className="flex flex-direction_row sec2-left-bottom">
 							<ul className="flex_1 left-bot-left">
@@ -82,7 +89,6 @@ class Report extends Component{
 										} placement="left"
 									>
 										<i className="el-icon-information col5" />
-										{/* <Button>{'看看'}</Button> */}
 									</Tooltip>
 								</li>
 							</ul>
@@ -95,25 +101,132 @@ class Report extends Component{
 						</ul>
 					</div>
 					</Layout.Col>
-					</Layout.Row>
-				</section>
+				</Layout.Row>
 				<section className="section3">
 					<h1 className="title">{'信贷行为'}</h1>
 					<Layout.Row gutter="10">
 						<Layout.Col xs="24" sm="24" md="12" lg="9">
+						{
+							barLeft1.length > 0 &&
 							<EchartsBarLeft />
+						}
 						</Layout.Col>
 						<Layout.Col xs="24" sm="24" md="12" lg="9">
+						{
+							barRight.length > 0 &&
 							<EchartsBarRight />
+						}
 						</Layout.Col>
 						<Layout.Col xs="24" sm="24" md="12" lg="6" className="sec3-right">
-							<p>{'总申请借款平台数: '}<span>{'1'}</span></p>
-							<p>{'总借款平台数: '}<span>{'2'}</span></p>
-							<p>{'总还款平台数: '}<span>{'1'}</span></p>
-							<p>{'还款笔数: '}<span>{'3'}{'笔'}</span></p>
+							<p>{'总申请借款平台数: '}<span>{ barLeft1[0] }</span></p>
+							<p>{'总借款平台数: '}<span>{ barLeft2[0] }</span></p>
+							<p>{'总还款平台数: '}<span>{ barRight[0] }</span></p>
+							<p>{'还款笔数: '}<span>{ allTimes }{'笔'}</span></p>
 						</Layout.Col>
 					</Layout.Row>
+				</section>
+				<section className="section4">
+					<h1 className="title">{'LBS画像'}</h1>
+					<hr style={ {height:'1px',background:'#bfbfbf',border:'none'} }/>
+					<Layout.Row gutter="10" className="sec4-con">
+						{
+							lbs.proxyIp !== null &&
+							<Layout.Col xs="24" sm="24" md="12" lg="6">
+								<p>{'是否使用代理IP: '}{ this.textFn(lbs.proxyIp) }</p>
+								<p>{'是否在不良区域申请: '}{ this.textFn(lbs.badArea) }</p>
+							</Layout.Col>
+						}
+						<Layout.Col xs="24" sm="24" md="12" lg="6">
+						{
+							lbs.badIp !== null &&
+							<p>{'是否命中不良IP: '}{ this.textFn(lbs.badIp) }</p>
+						}
+							<p>{'设备关联IP网段数量: '}{lbs.sum}</p>
+						</Layout.Col>
+						<Layout.Col xs="24" sm="24" md="12" lg="6">
+							{
+								lbs.badStation !==null &&
+								<p>{'是否命中不良基站: '}{this.textFn(lbs.badStation)}</p>
+							}
+							<p>{'常用IP归属地: '}{lbs.place}</p>
+						</Layout.Col>
+						{
+							lbs.wifimac !==null &&
+							<Layout.Col xs="24" sm="24" md="12" lg="6">
+								<p>{'是否命中不良wifi-mac: '}{this.textFn(lbs.wifimac)}</p>
+							</Layout.Col>
+						}
+					</Layout.Row>
+				</section>
+				<section className="section6">
+					<h1 className="title">{'关联信息'}</h1>
+					<div className="subhead">
+						<h4 className="sec6-subhead-title">{'移动设备情况'}</h4>
+						<span className="sec6-subhead-info"><a>{'*'}</a>{'该用户共使用'}<span className="sec6-subhead-num">{'2'}</span>{'个设备，下方仅展示设备的最新信息'}</span>
+					</div>
+					<div className="sec6-con">
+						<Layout.Row gutter="10" className="sec6-list">
+							<Layout.Col xs="24" sm="24" md="12" lg="8" className="sec6-left">
+								<div className="flex flex-direction_row align-items_center">
+									<div className="sec6-img">
+										<img className="phoneb" src={ phoneb } alt=""/>
+									</div>
+									<ul className="sec6-left-info">
+										<li className="sec6-left-title">{'iPhone 6'}</li>
+										<li className="sec6-phone-info"><span>{'设备ID: '}</span>{'97_21e85eb9-7cef-4710-81cb-9d2ffd920e64'}</li>
+									</ul>
+								</div>
+							</Layout.Col>
+							<Layout.Col xs="24" sm="24" md="12" lg="16" className="sec6-right">
+								<div className="flex flex-direction_row justify-content_flex-justify align-items_center sec6-right">
+									<ul>
+										<li><span>{'最近使用时间: '}</span>{'2019-08-05'}</li>
+										<li><span className="origin">{'设备使用用户数:'}</span>{'1'}</li>
+									</ul>
+									<ul>
+										<li><span>{'设备使用代理: '}</span>{'否'}</li>
+										<li><span>{'网络类型:'}</span>{'WiFi'}</li>
+									</ul>
+									<ul>
+										<li><span>{'设备越狱（root）: '}</span>{'否'}</li>
+										<li>{'是否安装作弊软件: '}{'否'}</li>
+										<li>{'借贷App安装数量: '}{'6'}</li>
+									</ul>
+								</div>
+							</Layout.Col>
+						</Layout.Row>
 
+						<Layout.Row gutter="10" className="sec6-list">
+							<Layout.Col xs="24" sm="24" md="12" lg="8" className="sec6-left">
+								<div className="flex flex-direction_row align-items_center">
+									<div className="sec6-img">
+										<img className="phoneb" src={ phoneb } alt=""/>
+									</div>
+									<ul className="sec6-left-info">
+										<li className="sec6-left-title">{'iPhone 6'}</li>
+										<li className="sec6-phone-info"><span>{'设备ID: '}</span>{'97_21e85eb9-7cef-4710-81cb-9d2ffd920e64'}</li>
+									</ul>
+								</div>
+							</Layout.Col>
+							<Layout.Col xs="24" sm="24" md="12" lg="16" className="sec6-right">
+								<div className="flex flex-direction_row justify-content_flex-justify align-items_center sec6-right">
+									<ul>
+										<li><span>{'最近使用时间: '}</span>{'2019-08-05'}</li>
+										<li><span className="origin">{'设备使用用户数:'}</span>{'1'}</li>
+									</ul>
+									<ul>
+										<li><span>{'设备使用代理: '}</span>{'否'}</li>
+										<li><span>{'网络类型:'}</span>{'WiFi'}</li>
+									</ul>
+									<ul>
+										<li><span>{'设备越狱（root）: '}</span>{'否'}</li>
+										<li>{'是否安装作弊软件: '}{'否'}</li>
+										<li>{'借贷App安装数量: '}{'6'}</li>
+									</ul>
+								</div>
+							</Layout.Col>
+						</Layout.Row>
+					</div>
 				</section>
 			</div>
 		)

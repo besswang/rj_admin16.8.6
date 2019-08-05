@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-// import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 // 引入 ECharts 主模块
 var echarts = require('echarts')
 // 详情-报告-信贷行为-左边
-export default class EchartsBarLeft extends Component {
-	// static propTypes = {
-	// 	gaugeData: PropTypes.array
-	// }
+class EchartsBarLeft extends Component {
+	static propTypes = {
+		reportDate: PropTypes.object
+	}
     constructor(props) {
         super(props)
         this.state = {
@@ -29,10 +30,16 @@ export default class EchartsBarLeft extends Component {
 	    var barLeftChart = echarts.init(document.getElementById('barLeft'))
 	    // 绘制图表
 	    barLeftChart.setOption({
-			tooltip : {
-				trigger: 'axis',
-				axisPointer : { // 坐标轴指示器，坐标轴触发有效
-					type : 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+			color: ['#1296db', '#1abddd'],
+			label:{
+				show:true,
+				position: 'top'
+			},
+			emphasis: {
+				label: {
+					show: true,
+					position: 'top',
+					fontSize: 14
 				}
 			},
 			legend: {
@@ -44,22 +51,20 @@ export default class EchartsBarLeft extends Component {
 					data: ['总计', '近6月', '近3月', '近1月']
 				}
 			],
-			yAxis : [
-				{
-					type : 'value'
-				}
-			],
+			yAxis: {
+				show: false
+			},
 			series : [
 				{
 					name:'申请借款',
 					type:'bar',
-					data:[320, 332, 301, 334]
+					data: this.props.reportDate.barLeft1
 				},
 				{
 					name:'借款',
 					type:'bar',
 					stack: '广告',
-					data:[120, 132, 101, 134]
+					data: this.props.reportDate.barLeft2
 				}
 			]
 	    })
@@ -70,3 +75,8 @@ export default class EchartsBarLeft extends Component {
         )
     }
 }
+const mapStateToProps = state => {
+	const { reportDate } = state
+	return { reportDate }
+}
+export default connect(mapStateToProps)(EchartsBarLeft)

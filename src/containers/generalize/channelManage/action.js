@@ -79,7 +79,7 @@ export const updateChannel = obj => {
 
 // 渠道管理-禁用
 export const prohibitChannel = obj => {
-  const t = obj.state === 0 ? '禁用' : '启用'
+  const t = obj.state === 1 ? '禁用' : '启用'
   return dispatch => {
     MessageBox.confirm(`${ t }该渠道会员, 是否继续?`, '提示', {
       type: 'warning'

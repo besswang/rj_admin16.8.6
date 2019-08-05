@@ -35,7 +35,7 @@ class Exhibition extends Component {
 			form: {
 				dayNum: null, // 展期期限,
 				delayRate: null, // 展期费率,
-				status: true, // 状态
+				status: 1, // 状态
 			},
 			rules: {
 				dayNum:[{required: true, validator: validate.exceptZeroNum}],
@@ -82,14 +82,14 @@ class Exhibition extends Component {
 										this.props.history.location.pathname === '/system/exmessage' &&
 										<div>
 										<Button type="danger" size="mini" onClick={ this.props.deleteDelayRate.bind(this, row.id,null) }>{ '删除' }</Button>
-										<DisableBtn value={ row.status } result={ 0 } text={ ['启用','禁用'] } onClick={ this.props.updateDelayState.bind(this,{id:row.id,state:row.status ===1?0:1},null) } />
+										<DisableBtn value={ row.status } result={ 0 } text={ ['启用','禁用'] } onClick={ this.props.updateDelayState.bind(this,{id:row.id,state:row.status},null) } />
 										</div>
 									}
 									{
 										this.props.history.location.pathname !== '/system/exmessage' &&
 										<div>
 										<Button type="danger" size="mini" onClick={ this.props.deleteDelayRate.bind(this, row.id,row.channelName) }>{ '删除' }</Button>
-										<DisableBtn value={ row.status } result={ 0 } text={ ['启用','禁用'] } onClick={ this.props.updateDelayState.bind(this,{id:row.id,state:row.status ===1?0:1},row.channelName) } />
+										<DisableBtn value={ row.status } result={ 0 } text={ ['启用','禁用'] } onClick={ this.props.updateDelayState.bind(this,{id:row.id,state:row.status},row.channelName) } />
 										</div>
 									}
 								</div>
@@ -238,8 +238,8 @@ class Exhibition extends Component {
 							</Form.Item>
 							<Form.Item label="状态">
 								<Radio.Group value={ form.status } onChange={ this.onChange.bind(this, 'status') } >
-									<Radio value>{'启用'}</Radio>
-									<Radio value={ false }>{'禁用'}</Radio>
+									<Radio value={ 1 }>{'启用'}</Radio>
+									<Radio value={ 0 }>{'禁用'}</Radio>
 								</Radio.Group>
 							</Form.Item>
 						</Form>
