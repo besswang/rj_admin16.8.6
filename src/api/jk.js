@@ -18,6 +18,7 @@ export default {
   'selectReportMail': 'phone/selectReportMail', // 会员详情-通讯录
   'selectUserSms': 'phone/selectUserSms', // 会员详情-短信详情
   'selectPresentationByUserId': 'idCard/selectPresentationByUserId', // 报告
+  'selectLoginDate': 'loginDate/selectLoginDate', // 手机设备
   'selectReport': 'phone/selectReport', // 通话记录
   'updateUserType': 'user/updateUserType', // 修改用户禁用状态
   'addUserBlack': 'user/addUserBlack', // 添加黑名单

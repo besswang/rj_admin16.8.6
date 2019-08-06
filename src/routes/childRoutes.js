@@ -58,7 +58,7 @@ import Borrowlimit from '@containers/system/borrowlimit'
 import Help from '@containers/system/help'
 import Banner from '@containers/system/banner'
 import Quota from '@containers/system/quota' // 提额管理
-import Rule from '@containers/system/rule' // 提额规则设置
+// import Rule from '@containers/system/rule' // 提额规则设置
 import Versions from '@containers/system/versions'
 import Recharge from '@containers/system/recharge' // 系统充值
 import HighSetting from '@containers/system/highSetting' // 系统高级设置
@@ -327,7 +327,7 @@ export const CHILD_ROUTES = [
         exact: true,
         component: Banner
       }, {
-        name: '提额管理',
+        name: '提额规则设置', // 提额管理
         path: '/system/quota',
         exact: true,
         component: Quota
@@ -336,12 +336,14 @@ export const CHILD_ROUTES = [
         path: '/system/versions',
         exact: true,
         component: Versions
-      }, {
-        name: '提额规则设置',
-        path: '/system/rule',
-        exact: true,
-        component: Rule
-      }, {
+      },
+      // {
+      //   name: '提额规则设置',
+      //   path: '/system/rule',
+      //   exact: true,
+      //   component: Rule
+      // },
+      {
         name: '系统充值',
         path: '/system/recharge',
         exact: true,

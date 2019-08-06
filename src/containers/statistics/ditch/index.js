@@ -35,22 +35,28 @@ class Ditch extends Component {
           prop: 'date',
           width:150
 				}, {
-				  label: '注册人数',
+          label: '注册人数',
+          width:100,
 				  prop: 'userCount'
 				}, {
-				  label: '个人信息',
+          label: '个人信息',
+          width: 100,
 				  prop: 'emergencyCount'
 				}, {
-				  label: '身份认证',
+          label: '身份认证',
+          width: 100,
 				  prop: 'idCardCount'
 				}, {
-				  label: '手机认证',
+          label: '手机认证',
+          width: 100,
 				  prop: 'phoneDateCount'
 				}, {
-				  label: '银行认证',
+          label: '银行认证',
+          width: 100,
 				  prop: 'bankAuthenticationCount'
 				}, {
-				  label: '申请单数',
+          label: '申请单数',
+          width: 100,
           prop: 'orderCount'
 				}, {
           label: '申请率',
@@ -65,7 +71,8 @@ class Ditch extends Component {
           //   }
           // }
 				}, {
-				  label: '放款人数',
+          label: '放款人数',
+          width: 100,
 				  prop: 'orderStateCount'
 				}, {
           label: '放款率',
@@ -84,7 +91,8 @@ class Ditch extends Component {
           width:140,
 				  prop: 'zeroCount'
 				}, {
-				  label: '0分申请率',
+          label: '0分申请率',
+          width: 120,
           prop: 'zeroRate',
           render: row => {
             console.log()

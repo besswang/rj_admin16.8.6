@@ -147,7 +147,11 @@ class Mlist extends Component{
 					label: '手机机型',
 					width: 100,
 					prop: 'appType'
-				},{
+				}, {
+					label: '风控等级',
+					width: 100,
+					prop: 'riskGrade'
+				}, {
 				 	label: '黑名单',
 					fixed:'right',
 					 render: row => {
@@ -169,7 +173,7 @@ class Mlist extends Component{
 							<div className="flex flex-direction_row">
 								<DisableBtn
 									value={ row.type }
-									result={ 1 }
+									result={ 0 }
 									onClick={ this.updateUserType.bind(this, row) }
 									text={ ['启用','禁用'] }
 								/>

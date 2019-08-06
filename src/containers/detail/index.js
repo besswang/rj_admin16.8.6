@@ -42,6 +42,7 @@ class Detail extends Component{
         listInfo: {},
         activeName: '1',
         mobileData:'',
+        phoneInfo:{}, // 手机设备
         btnLoading: false
       }
   }
@@ -88,6 +89,26 @@ class Detail extends Component{
       Message.warning(res.msg)
     }
   }
+  selectLoginDate = async (obj) => {
+    const res = await api.selectLoginDateApi(obj)
+    console.log(res.data)
+    if (res.success) {
+      this.setState({
+        phoneInfo: {
+          one: res.data.arrFingerMark !== null ? res.data.arrFingerMark[0] : '', // 设备号
+          arrPhoneType: res.data.arrPhoneType !== null ? res.data.arrPhoneType:'', // 型号
+          simulator: res.data.simulator ? '是' : '否', //模拟器
+          arrAddress: res.data.arrAddress !== null ? res.data.arrAddress : '', //定位地址
+          arrFingerMark: res.data.arrFingerMark !== null ? res.data.arrFingerMark : '', //手机关联设备
+          arrPhone: res.data.arrPhone !== null ? res.data.arrPhone : '', //设备关联手机
+          ci1: res.data.arrFingerMark !== null ? res.data.arrFingerMark.length:0,
+          ci2: res.data.arrPhone !== null ? res.data.arrPhone.length : 0
+        }
+      })
+    }else{
+      Message.warning(res.msg)
+    }
+  }
   tabChange = (e) => {
     window.sessionStorage.setItem('activeName',e)
     // this.setState({
@@ -124,6 +145,9 @@ class Detail extends Component{
       case '9': // 报告
         this.props.selectPresentationByUserId({userId:userId})
         break
+      case '10': // 手机设备
+        this.selectLoginDate({userId:userId})
+        break
       default:
         return ''
     }
@@ -152,7 +176,7 @@ class Detail extends Component{
 	}
 	render(){
     const { idCardInfo, list } = this.props
-    const { name, title, linkUrl, listInfo, activeName, userId, dialogVisible, dialogImageUrl, btnLoading } = this.state
+    const { name, title, linkUrl, listInfo, activeName, userId, dialogVisible, dialogImageUrl, btnLoading, phoneInfo } = this.state
 		return(
 			<div>
 				<Breadcrumb separator="/" className="margin-bottom15">
@@ -369,6 +393,16 @@ class Detail extends Component{
           </Tabs.Pane>
           <Tabs.Pane label="报告" name="9">
             <ReportDetail />
+          </Tabs.Pane>
+          <Tabs.Pane label="手机设备" name="10" className="tab10">
+            <ul className="flex flex-direction_column tab10-ul">
+              <li><span>{'设备号: '}</span>{ phoneInfo.one }</li>
+              <li><span>{'型号: '}</span>{phoneInfo.arrPhoneType}</li>
+              <li><span>{'模拟器: '}</span>{ phoneInfo.simulator }</li>
+              <li><span>{'定位地址: '}</span>{ phoneInfo.arrAddress }</li>
+              <li><span>{'手机关联设备: '}</span><i>{phoneInfo.ci1}{'次'}</i>{ phoneInfo.arrFingerMark }</li>
+              <li><span>{'设备关联手机: '}</span><i>{phoneInfo.ci2}{'次'}</i>{ phoneInfo.arrPhone }</li>
+            </ul>
           </Tabs.Pane>
         </Tabs>
         <Dialog

@@ -29,6 +29,7 @@ class AlreadyHuan extends Component {
 						}
 					}, {
 					label: '还款类型',
+					width:140,
 					prop: 'moneyType',
 					render: row => {
 						const text = filter.moneyType(row.moneyType)
@@ -36,6 +37,7 @@ class AlreadyHuan extends Component {
 					}
 				}, {
 					label: '支付方式',
+					width: 140,
 					prop: 'payType',
 					render: row => {
 						const text = filter.payType(row.payType)
@@ -43,14 +45,16 @@ class AlreadyHuan extends Component {
 					}
 				}, {
 					label: '支付单号',
+					width: 180,
 					prop: 'payNumber'
 				}, {
 					label: '申请单号',
+					width: 180,
 					prop: 'orderNumber'
 				}, {
 					label: '约定还款日',
+					width: 120,
 					prop: 'appointmentDate',
-					width:120,
 					render: row => {
 						const date = timeDate.time(row.appointmentDate, 'yyyy-MM-dd hh:mm:ss')
 						return date
@@ -65,24 +69,31 @@ class AlreadyHuan extends Component {
 					}
 				}, {
 					label: '申请金额',
+					width: 100,
 					prop: 'applyMoney'
 				}, {
 					label: '已放金额', // 到账金额
+					width: 100,
 					prop: 'loanMoney'
 				}, {
 					label: '用户姓名',
+					width: 100,
 					prop: 'realName'
 				}, {
 					label: '用户手机',
+					width: 130,
 					prop: 'phone'
 				}, {
 					label: '应还金额',
+					width: 100,
 					prop: 'shouldMoney'
 				}, {
 					label: '实还金额',
+					width: 100,
 					prop: 'money'
 				}, {
 					label: '放款客服',
+					width: 100,
 					prop: 'loanCustomer'
 				}]
 		}

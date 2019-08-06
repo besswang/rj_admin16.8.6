@@ -29,24 +29,31 @@ class Self extends Component {
 						}
 					}, {
 					label: '申请单号',
+					width:180,
 					prop: 'orderNumber'
 				}, {
 					label: '真实姓名',
+					width: 100,
 					prop: 'realName'
 				}, {
 					label: '手机号码',
+					width: 130,
 					prop: 'phone'
 				}, {
 					label: '身份证号',
+					width: 180,
 					prop: 'idCard'
 				}, {
 					label: '借款金额',
+					width: 100,
 					prop: 'applyMoney'
 				}, {
 					label: '应还金额',
+					width: 100,
 					prop: 'realRepaymentMoney' // 到期应还金额
 				}, {
 					label: '支付方式',
+					width: 100,
 					prop: 'payType', // 默认 0 支付宝 1微信 2 银行卡 3 线下
 					render: row => {
 						 const data = filter.loanModeState(row.payType)
@@ -54,9 +61,11 @@ class Self extends Component {
 					}
 				}, {
 					label: '催收催回金额',
+					width: 140,
 					prop: 'realMoney'
 				}, {
 					label: '逾期天数',
+					width: 100,
 					prop: 'overdueNumber'
 				}, {
 					label: '分单时间',
@@ -76,9 +85,11 @@ class Self extends Component {
 					}
 				}, {
 					label: '催回催收人',
+					width: 120,
 					prop: 'customerName'
 				}, {
 					label: '订单类型',
+					width: 100,
 					prop: 'loanType', // 默认  0 正常 1 延期   2逾期
 					render: row => {
 						const data = filter.loanTyp(row.loanType)

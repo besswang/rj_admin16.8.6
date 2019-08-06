@@ -33,7 +33,7 @@ class Report extends Component{
 		}
 	}
 	render() {
-		const { userInfo, lastTime, gaugeEchart,allTimes, barLeft1, barLeft2, barRight,lbs } = this.props.reportDate
+		const { userInfo, lastTime, gaugeEchart,allTimes, barLeft1, barLeft2, barRight,lbs, devicesList, userFeatures } = this.props.reportDate
 		return (
 			<div>
 				<ul className="flex flex-direction_row justify-content_flex-justify section1">
@@ -93,11 +93,26 @@ class Report extends Component{
 								</li>
 							</ul>
 						</div>
-						<ul className="sec2-right-bottom">
-							<li><Tooltip effect="dark" content="命中法院失信明单">{'法院失信'}</Tooltip></li>
+						<ul className="sec2-right-bottom flex flex-direction_row flex-wrap">
+						{
+							userFeatures.map(item => {
+								return (
+									<li key={ item.id } className={ item.time !== '' ? item.color:'height46' }>
+										<Tooltip effect="dark" content={ item.tooltip }>
+											<p className="center sec2-right-name">{ item.text }</p>
+											{
+												item.time !== '' &&
+												<p className="center sec2-right-time">{ item.time }</p>
+											}
+										</Tooltip>
+									</li>
+								)
+							})
+						}
+							{/* <li><Tooltip effect="dark" content="命中法院失信明单">{'法院失信'}</Tooltip></li>
 							<li className="tag1"><Tooltip effect="dark" content="命中有网贷失信明单">{'网贷失信'}</Tooltip></li>
 							<li className="tag2"><Tooltip effect="dark" content="有盾云慧眼系统识别出该用户有过活体攻击行为">{'活体攻击'}</Tooltip></li>
-							<li className="tag3"><Tooltip effect="dark" content="命中有盾疑似团伙欺诈名单库">{'疑似欺诈团伙'}</Tooltip></li>
+							<li className="tag3"><Tooltip effect="dark" content="命中有盾疑似团伙欺诈名单库">{'疑似欺诈团伙'}</Tooltip></li> */}
 						</ul>
 					</div>
 					</Layout.Col>
@@ -162,70 +177,58 @@ class Report extends Component{
 					<h1 className="title">{'关联信息'}</h1>
 					<div className="subhead">
 						<h4 className="sec6-subhead-title">{'移动设备情况'}</h4>
-						<span className="sec6-subhead-info"><a>{'*'}</a>{'该用户共使用'}<span className="sec6-subhead-num">{'2'}</span>{'个设备，下方仅展示设备的最新信息'}</span>
+						<span className="sec6-subhead-info"><a>{'*'}</a>{'该用户共使用'}<span className="sec6-subhead-num">{ devicesList.length }</span>{'个设备，下方仅展示设备的最新信息'}</span>
 					</div>
 					<div className="sec6-con">
-						<Layout.Row gutter="10" className="sec6-list">
-							<Layout.Col xs="24" sm="24" md="12" lg="8" className="sec6-left">
-								<div className="flex flex-direction_row align-items_center">
-									<div className="sec6-img">
-										<img className="phoneb" src={ phoneb } alt=""/>
-									</div>
-									<ul className="sec6-left-info">
-										<li className="sec6-left-title">{'iPhone 6'}</li>
-										<li className="sec6-phone-info"><span>{'设备ID: '}</span>{'97_21e85eb9-7cef-4710-81cb-9d2ffd920e64'}</li>
-									</ul>
-								</div>
-							</Layout.Col>
-							<Layout.Col xs="24" sm="24" md="12" lg="16" className="sec6-right">
-								<div className="flex flex-direction_row justify-content_flex-justify align-items_center sec6-right">
-									<ul>
-										<li><span>{'最近使用时间: '}</span>{'2019-08-05'}</li>
-										<li><span className="origin">{'设备使用用户数:'}</span>{'1'}</li>
-									</ul>
-									<ul>
-										<li><span>{'设备使用代理: '}</span>{'否'}</li>
-										<li><span>{'网络类型:'}</span>{'WiFi'}</li>
-									</ul>
-									<ul>
-										<li><span>{'设备越狱（root）: '}</span>{'否'}</li>
-										<li>{'是否安装作弊软件: '}{'否'}</li>
-										<li>{'借贷App安装数量: '}{'6'}</li>
-									</ul>
-								</div>
-							</Layout.Col>
-						</Layout.Row>
-
-						<Layout.Row gutter="10" className="sec6-list">
-							<Layout.Col xs="24" sm="24" md="12" lg="8" className="sec6-left">
-								<div className="flex flex-direction_row align-items_center">
-									<div className="sec6-img">
-										<img className="phoneb" src={ phoneb } alt=""/>
-									</div>
-									<ul className="sec6-left-info">
-										<li className="sec6-left-title">{'iPhone 6'}</li>
-										<li className="sec6-phone-info"><span>{'设备ID: '}</span>{'97_21e85eb9-7cef-4710-81cb-9d2ffd920e64'}</li>
-									</ul>
-								</div>
-							</Layout.Col>
-							<Layout.Col xs="24" sm="24" md="12" lg="16" className="sec6-right">
-								<div className="flex flex-direction_row justify-content_flex-justify align-items_center sec6-right">
-									<ul>
-										<li><span>{'最近使用时间: '}</span>{'2019-08-05'}</li>
-										<li><span className="origin">{'设备使用用户数:'}</span>{'1'}</li>
-									</ul>
-									<ul>
-										<li><span>{'设备使用代理: '}</span>{'否'}</li>
-										<li><span>{'网络类型:'}</span>{'WiFi'}</li>
-									</ul>
-									<ul>
-										<li><span>{'设备越狱（root）: '}</span>{'否'}</li>
-										<li>{'是否安装作弊软件: '}{'否'}</li>
-										<li>{'借贷App安装数量: '}{'6'}</li>
-									</ul>
-								</div>
-							</Layout.Col>
-						</Layout.Row>
+					{
+						devicesList.length>0 &&
+						devicesList.map((item,index) => {
+							return (
+								<Layout.Row key={ item.device_id } gutter="10" className="sec6-list flex flex-direction_row align-items_center justify-content_flex-center">
+									<Layout.Col xs="24" sm="24" md="12" lg="8" className="sec6-left">
+										<div className="flex flex-direction_row align-items_center">
+											<div className="sec6-img">
+												<img className="phoneb" src={ phoneb } alt=""/>
+											</div>
+											<ul className="sec6-left-info">
+												<li className="sec6-left-title">{ item.device_name }</li>
+												<li className="sec6-phone-info"><span>{'设备ID: '}</span>{ item.device_id }</li>
+											</ul>
+										</div>
+									</Layout.Col>
+									<Layout.Col xs="24" sm="24" md="12" lg="16">
+										<div className="flex flex-direction_row align-items_center sec6-right">
+											<ul className="sec6-right-ul flex_1">
+												<li><span>{'最近使用时间: '}</span>{ item.device_last_use_date }</li>
+												<li><span className="orange">{'设备使用用户数: '}</span>{ item.device_link_id_count }{'人'}</li>
+											</ul>
+											<ul className="sec6-right-ul flex_1">
+											{
+												item.device_detail.is_using_proxy_port &&
+												<li><span>{'设备使用代理: '}</span>{ this.textFn(item.device_detail.is_using_proxy_port) }</li>
+											}
+												<li><span>{'网络类型: '}</span>{ item.device_detail.network_type }</li>
+											</ul>
+											<ul className="sec6-right-ul flex_1">
+												{
+													item.device_detail.is_rooted &&
+													<li><span>{'设备越狱（root）: '}</span>{ this.textFn(item.device_detail.is_rooted) }</li>
+												}
+												{
+													item.device_detail.cheats_device &&
+													<li><span className="orange">{'是否安装作弊软件: '}</span>{this.textFn(item.device_detail.cheats_device)}</li>
+												}
+												{
+													item.device_detail.app_instalment_count &&
+													<li><span className="orange">{'借贷App安装数量: '}</span>{ item.device_detail.app_instalment_count }</li>
+												}
+											</ul>
+										</div>
+									</Layout.Col>
+								</Layout.Row>
+							)
+						})
+					}
 					</div>
 				</section>
 			</div>

@@ -60,6 +60,7 @@ class Overdue extends Component{
 				}, {
 					label: '订单号',
 					prop: 'orderNumber',
+					width:180,
 					fixed: 'left'
 				},{
 					label: '渠道名称',

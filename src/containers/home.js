@@ -56,7 +56,8 @@ class Home extends Component {
 	render() {
 		const time = new Date()
 		const { children } = this.props
-		const { recharge, consume, consumeLowerLimit, residue } = this.state
+		// const { recharge, consume, consumeLowerLimit, residue } = this.state
+		const { recharge, consume, residue } = this.state
 		return (
 			<div className="flex flex-direction_column">
 				<div className="header">
@@ -79,7 +80,7 @@ class Home extends Component {
 					<li>{'总充值'}{recharge}{'¥'}</li>
 					<li>{'已消费'}{consume}{'¥'}</li>
 					<li>{'剩余'}{residue}{'¥'}</li>
-					<li>{`提醒${ consumeLowerLimit }¥`}</li>
+					{/* <li>{`提醒${ consumeLowerLimit }¥`}</li> */}
 				</ul>
 			</div>
 		)

@@ -94,7 +94,10 @@ p {
   -webkit-justify-content: center;
   justify-content: center;
 }
-
+/* flex-折行 */
+.flex-wrap{
+  flex-wrap: wrap;
+}
 .justify-content_flex-end {
   -webkit-box-pack: end;
   -ms-flex-pack: end;

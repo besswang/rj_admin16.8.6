@@ -30,9 +30,11 @@ class Apply extends Component {
 						}
 					}, {
 				label: '渠道名称',
+				width:180,
 				prop: 'channelName'
 			}, {
 				label: '姓名',
+				width:120,
 				prop: 'realName',
 				render: row => {
 					if (row.realName === null){
@@ -54,6 +56,7 @@ class Apply extends Component {
 				}
 			}, {
 				label: '手机号码',
+				width:160,
 				prop: 'phone',
 				render: row => {
 					if (row.phone){
@@ -62,6 +65,7 @@ class Apply extends Component {
 				}
 			}, {
 				label: '身份号码',
+				width:180,
 				prop: 'idcardNumber',
 				render: row => {
 					if (row.idcardNumber){
@@ -98,9 +102,11 @@ class Apply extends Component {
 				}
 			}, {
 				label: '收款银行',
+				width:140,
 				prop: 'bankName'
 			},{
 				label: '注册时间',
+				width:180,
 				prop: 'gmt',
 				render: row => {
 					const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
@@ -108,6 +114,7 @@ class Apply extends Component {
 				}
 			}, {
 				label: '申请状态',
+				width:100,
 				prop: 'loanType',
 				render: row => {
 					return filter.loanTyp(row.loanType)

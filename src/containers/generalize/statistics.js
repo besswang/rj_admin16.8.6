@@ -28,6 +28,7 @@ class Apply extends Component {
 						}
 					}, {
 					label: '日期',
+					width:120,
 					prop: 'date'
 				}, {
 					label: 'UV',
@@ -40,12 +41,15 @@ class Apply extends Component {
 					}
 				}, {
 					label: '登陆APP人数',
+					width:120,
 					prop: 'loginCount'
 				}, {
 					label: '登陆APP比例',
+					width: 130,
 					prop: 'loginRate'
 				}, {
 					label: '资料完成人数',
+					width:140,
 					prop: 'completedCount'
 				}, {
 					label: '申请人数',

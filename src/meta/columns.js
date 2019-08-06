@@ -157,63 +157,82 @@ export const OVERDUE = [
   {
     label: '#',
     width: 60,
+    fixed: 'left',
     render: (a, b, c) => {
       return c + 1
     }
   }, {
     label: '日期',
     prop: 'date',
+    fixed: 'left',
     width: 120
   }, {
     label: '应还单数',
+    width:100,
     prop: 'shouldRepaidNum'
   }, {
     label: '首逾率',
+    width:100,
     prop: 'oneOverdueRate'
   }, {
     label: '再逾率',
+    width: 100,
     prop: 'towOverdueRate'
   }, {
     label: '逾期总单数',
+    width: 110,
     prop: 'allOverdueNum'
   }, {
     label: '新客逾期单数',
+    width: 130,
     prop: 'newCustomerOverdueNum'
   }, {
     label: '老客逾期单数',
+    width: 130,
     prop: 'oldCustomerOverdueNum'
   }, {
     label: '逾期1-3天单数',
+    width:130,
     prop: 'oneThreeNum'
   }, {
     label: '逾期1-3天回款率',
+    width: 150,
     prop: 'oneThreeReturnRate'
   }, {
     label: '逾期4-7天单数',
+    width: 140,
     prop: 'fourSevenNum'
   }, {
     label: '逾期4-7天已还单数',
+    width: 160,
     prop: 'fourSevenReturnNum'
   }, {
     label: '逾期4-7天回款率',
+    width: 150,
     prop: 'fourSevenReturnRate'
   }, {
     label: '逾期8-15天单数',
+    width: 150,
     prop: 'eightFifteenNum'
   }, {
     label: '逾期8-15天已还单数',
+    width: 170,
     prop: 'eightFifteenReturnNum'
   }, {
     label: '逾期8-15天回款率',
+    width: 160,
     prop: 'eightFifteenReturnRate'
   }, {
     label: '逾期15+天单数',
+    width: 140,
     prop: 'fifteenMoreNum'
   }, {
     label: '逾期15+天已还单数',
+    width: 170,
     prop: 'fifteenMoreReturnNum'
   }, {
     label: '逾期15+天回款率',
+    width: 150,
     prop: 'fifteenMoreReturnRate'
   }
 ]

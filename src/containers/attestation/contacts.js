@@ -29,31 +29,40 @@ class BlackUser extends Component {
 							return c + 1
 						}
 				}, {
-				  label: '手机号码',
+					label: '手机号码',
+					width:130,
 				  prop: 'phone'
 				}, {
 					label: '真实姓名',
+					width: 100,
 					prop: 'realName'
 				}, {
 					label: '亲属关系',
+					width: 100,
 					prop: 'relatives'
 				}, {
-				  label: '亲属姓名',
+					label: '亲属姓名',
+					width:100,
 				  prop: 'relativesName'
 				}, {
-				  label: '亲属电话',
+					label: '亲属电话',
+					width: 130,
 				  prop: 'relativesPhone'
 				}, {
-				  label: '社会关系',
+					label: '社会关系',
+					width:100,
 				  prop: 'sociology'
 				}, {
-				  label: '社会姓名',
+					label: '社会姓名',
+					width: 100,
 				  prop: 'sociologyName'
 				}, {
-				  label: '社会联系人电话',
+					label: '社会联系人电话',
+					width:140,
 				  prop: 'sociologyPhone'
 				}, {
-				  label: '认证时间',
+					label: '认证时间',
+					width:200,
 					prop: 'gmt',
 					render: row => {
 						const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')

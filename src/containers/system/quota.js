@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
 import { pageuserQuota, adduserquota, updateuserquota, deleteuserquota } from './actions'
 import MyPagination from '@components/MyPagination'
+import validate from '@global/validate'
 class BlackUser extends Component {
 	static propTypes = {
     list: PropTypes.object.isRequired,
@@ -28,26 +29,8 @@ class BlackUser extends Component {
 				money: null,
 			},
 			rules: {
-				orderNumber: [{
-					required: true,
-					validator: (rule, value, callback) => {
-						if (value === '' || value === null) {
-							callback(new Error('请输入借款次数'))
-						} else {
-							callback()
-						}
-					}
-				}],
-				money: [{
-					required: true,
-					validator: (rule, value, callback) => {
-						if (value === '' || value === null) {
-							callback(new Error('请输入提额额度'))
-						} else {
-							callback()
-						}
-					}
-				}]
+				orderNumber:[{required: true, validator: validate.ci}],
+				money: [{required: true, validator: validate.edu}]
 			},
 			value: 1,
 			sort: null,

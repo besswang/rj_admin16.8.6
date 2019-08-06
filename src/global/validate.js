@@ -127,6 +127,16 @@ export default {
       callback()
     }
   },
+  ci: (rule, value, callback) => { // 次数是大于等于0的正整数
+    const r = new RegExp('^[0-9]*$')
+    if (value === '' || value === null) {
+      callback(new Error('次数不能为空'))
+    } else if (!r.test(value)) {
+      callback(new Error('请输入有效次数，大于或等于0的正整数'))
+    } else {
+      callback()
+    }
+  },
   edu: (rule, value, callback) => { // 额度是大于等于0的正整数
     const r = new RegExp('^[0-9]*$')
     // const r2 = new RegExp('^(0.|[2-9][0-9]*)$') // 用3000的时候会报错

@@ -1,15 +1,18 @@
 import * as type from '../actionTypes'
 import { Notification } from 'element-react'
+import { features } from '@meta/details'
 //初始化列表数据 详情-报告
 const initReport ={
-  userInfo:{},
-  lastTime:'',
-  gaugeEchart:[],
-  barLeft1:[],
-  barLeft2: [],
-  barRight:[],
+  userInfo:{}, // 基本信息
+  lastTime:'', // 更新日期
+  gaugeEchart:[], // 模型
+  barLeft1: [], // 申请借款
+  barLeft2: [], // 借款
+  barRight:[], // 还款
   allTimes:'',// 还款笔数
-  lbs: {} // LBS画像
+  lbs: {}, // LBS画像
+  devicesList:[], // 关联信息
+  userFeatures:[] // 用户特征
 }
 const reportDate = (state = initReport, action) => {
   switch (action.type) {
@@ -18,16 +21,18 @@ const reportDate = (state = initReport, action) => {
         userInfo:{},
         lastTime:'',
         gaugeEchart:[],
-        barLeft1: [],// 申请借款
-        barLeft2: [],// 借款
-        barRight: [],// 还款
+        barLeft1: [],
+        barLeft2: [],
+        barRight: [],
         allTimes:'',
         lbs:{},
+        devicesList:[],
         loading: true
       }
     case type.REPORT_RECEIVE_POSTS: {
       let color = ''
       const v = parseInt(action.data.body.score_detail.score)
+      const arr = action.data.body.user_features
       if(v>=0 && v<=30){
         color = '#13ce66'
       }else if(v>30 && v<=50){
@@ -44,6 +49,16 @@ const reportDate = (state = initReport, action) => {
         lbsProfile = action.data.body.request_info.LBS_profile
       }else{
         lbsProfile = null
+      }
+      if(arr.length>0){
+        for (const i in features){
+          for(const j in arr){
+            console.log(arr[j])
+            if (features[i].id === arr[j].user_feature_type){
+              features[i].time = arr[j].last_modified_date
+            }
+          }
+        }
       }
       return {...state,
         userInfo:action.data.body.id_detail,
@@ -62,6 +77,8 @@ const reportDate = (state = initReport, action) => {
           place: deviceSummary.ip_owner_place, // 常用IP归属地
           wifimac: lbsProfile !== null ? lbsProfile.use_bad_wifimac : null, // 是否命中不良wifi-mac
         },
+        devicesList: action.data.body.devices_list,
+        userFeatures: features,
         loading: false
       }
     }
