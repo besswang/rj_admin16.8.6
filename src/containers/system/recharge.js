@@ -160,10 +160,12 @@ class BlackUser extends Component {
 		return (
 			<div>
 				<Search showTime>
-					<div>
+					<Form.Item>
 						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+					</Form.Item>
+					<Form.Item>
 						<Button className="margin-bottom15" type="primary" onClick={ this.openDialog.bind(this,'add') }>{'充值'}</Button>
-					</div>
+					</Form.Item>
 				</Search>
 				<Loading loading={ list.loading }>
 					<Table

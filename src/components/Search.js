@@ -29,7 +29,7 @@ class Search extends Component {
     realName: PropTypes.string,
     time: PropTypes.array,
     regTime: PropTypes.array,
-    children: PropTypes.object.isRequired,
+    children: PropTypes.array.isRequired,
     selectSubreddit: PropTypes.func.isRequired,
     selectSearchText: PropTypes.func.isRequired,
     saveRealName: PropTypes.func.isRequired,
@@ -272,11 +272,11 @@ class Search extends Component {
             />
           </Form.Item>
         }
-        <Form.Item>
+        {/* <Form.Item> */}
           {
             this.props.children
           }
-        </Form.Item>
+        {/* </Form.Item> */}
       </Form>
       </div>
     )

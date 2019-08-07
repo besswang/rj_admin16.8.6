@@ -96,11 +96,11 @@ class Detail extends Component{
       this.setState({
         phoneInfo: {
           one: res.data.arrFingerMark !== null ? res.data.arrFingerMark[0] : '', // 设备号
-          arrPhoneType: res.data.arrPhoneType !== null ? res.data.arrPhoneType:'', // 型号
+          arrPhoneType: res.data.arrPhoneType !== null ? res.data.arrPhoneType.join(' , '):'', // 型号
           simulator: res.data.simulator ? '是' : '否', //模拟器
-          arrAddress: res.data.arrAddress !== null ? res.data.arrAddress : '', //定位地址
-          arrFingerMark: res.data.arrFingerMark !== null ? res.data.arrFingerMark : '', //手机关联设备
-          arrPhone: res.data.arrPhone !== null ? res.data.arrPhone : '', //设备关联手机
+          arrAddress: res.data.arrAddress !== null ? res.data.arrAddress.join(' , ') : '', //定位地址
+          arrFingerMark: res.data.arrFingerMark !== null ? res.data.arrFingerMark.join(' , ') : '', //手机关联设备
+          arrPhone: res.data.arrPhone !== null ? res.data.arrPhone.join(' , ') : '', //设备关联手机
           ci1: res.data.arrFingerMark !== null ? res.data.arrFingerMark.length:0,
           ci2: res.data.arrPhone !== null ? res.data.arrPhone.length : 0
         }

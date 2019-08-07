@@ -249,10 +249,12 @@ class BlackUser extends Component {
 		return (
 			<div>
 				<Search showRole showAdminName>
-					<div>
+					<Form.Item>
 						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+					</Form.Item>
+					<Form.Item>
 						<Button type="primary" onClick={ this.openDialog.bind(this,'add') }>{'添加'}</Button>
-					</div>
+					</Form.Item>
 				</Search>
 				<Loading loading={ list.loading }>
 					<Table

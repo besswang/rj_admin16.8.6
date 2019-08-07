@@ -152,6 +152,19 @@ class Mlist extends Component{
 					width: 100,
 					prop: 'riskGrade'
 				}, {
+					label: '风控建议',
+					width: 100,
+					prop: 'toExamine',
+					render: row => {
+						const y = <span className="theme-blue">{'通过'}</span>
+						const n = <span className="dis-red">{'不通过'}</span>
+						if (row.toExamine){
+							return row.toExamine === 'noPass' ? n : y
+						}else{
+							return ''
+						}
+					}
+				}, {
 				 	label: '黑名单',
 					fixed:'right',
 					 render: row => {
@@ -277,7 +290,7 @@ class Mlist extends Component{
 		return (
 			<div>
 				<Search showSelect1 showTime>
-					<div>
+					{/* <div> */}
 						<Form.Item>
 							<Input value={ form.minScore } onChange={ this.onChange.bind(this, 'minScore') } placeholder="请输入分控分(最小)" />
 						</Form.Item>
@@ -291,7 +304,7 @@ class Mlist extends Component{
 						<Form.Item>
 							<Button onClick={ this.props.exportUser } type="primary">{'导出列表'}</Button>
 						</Form.Item>
-					</div>
+					{/* </div> */}
 				</Search>
 
 				<Loading loading={ list.loading }>

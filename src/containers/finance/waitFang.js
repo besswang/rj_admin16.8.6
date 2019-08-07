@@ -201,7 +201,10 @@ class WaitFang extends Component {
 		return (
 			<div>
 				<Search showSelect2>
-					<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+					<Form.Item>
+						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+					</Form.Item>
+					<Form.Item />
 				</Search>
 				<Loading loading={ list.loading }>
 					<Table

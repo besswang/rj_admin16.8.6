@@ -287,10 +287,12 @@ class BlackUser extends Component {
 				{
 					this.props.history.location.pathname === '/system/borrowlimit' &&
 					<Search showChannel showState>
-						<div>
+						<Form.Item>
 							<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+						</Form.Item>
+						<Form.Item>
 							<Button className="margin-bottom15" type="primary" onClick={ this.openDialog.bind(this,'add') }>{'添加'}</Button>
-						</div>
+						</Form.Item>
 					</Search>
 				}
 				{	this.props.history.location.pathname !== '/system/borrowlimit' &&

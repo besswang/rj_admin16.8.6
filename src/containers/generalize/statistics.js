@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Table, Loading } from 'element-react'
+import { Button, Table, Loading,Form } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -91,7 +91,10 @@ class Apply extends Component {
 		return(
 			<div>
 				<Search showChannel showTime>
-					<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+					<Form.Item>
+						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+					</Form.Item>
+					<Form.Item />
 				</Search>
 				<Loading loading={ list.loading }>
 					<Table

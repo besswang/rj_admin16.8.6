@@ -1,6 +1,6 @@
 // 报表统计-渠道统计
 import React, { Component } from 'react'
-import { Table, Button, Loading } from 'element-react'
+import { Table, Button, Loading, Form } from 'element-react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -156,7 +156,10 @@ class Ditch extends Component {
     return (
       <div>
         <Search showTime>
-          <Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+          <Form.Item>
+            <Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+          </Form.Item>
+          <Form.Item />
         </Search>
         <Loading loading={ list.loading }>
           <Table

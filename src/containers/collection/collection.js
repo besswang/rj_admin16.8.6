@@ -249,7 +249,10 @@ class Collection extends Component {
 		return (
 			<div>
 				<Search showSelect2 showColl showSelectClient showSelectTime>
-					<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+					<Form.Item>
+						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+					</Form.Item>
+					<Form.Item />
 				</Search>
 				<Loading loading={ list.loading }>
 					<Table

@@ -268,11 +268,15 @@ class WaitHuan extends Component {
 		return (
 			<div>
 				<Search showSelect2 showColl showSelectClient showAllotType showSelectTime2>
-					<div>
+					<Form.Item>
 						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+					</Form.Item>
+					<Form.Item>
 						<Button type="primary" onClick={ this.openDialog2.bind(this) }>{'批量分配'}</Button>
+					</Form.Item>
+					<Form.Item>
 						<Button type="warning" onClick={ this.cancelAllot.bind(this) }>{'取消分配'}</Button>
-					</div>
+					</Form.Item>
 				</Search>
 
 				<Loading loading={ list.loading }>

@@ -14,6 +14,25 @@ const initReport ={
   devicesList:[], // 关联信息
   userFeatures:[] // 用户特征
 }
+const deepCopy = o => {
+    let n = null
+    if (o instanceof Array) {
+        n = []
+        for (let i = 0; i < o.length; ++i) {
+            n[i] = deepCopy(o[i])
+        }
+        return n
+
+    } else if (o instanceof Object) {
+        n = {}
+        for (const i in o) {
+            n[i] = deepCopy(o[i])
+        }
+        return n
+    } else {
+        return o
+    }
+}
 const reportDate = (state = initReport, action) => {
   switch (action.type) {
     case type.REPORT_REQUEST_POSTS:
@@ -50,15 +69,19 @@ const reportDate = (state = initReport, action) => {
       }else{
         lbsProfile = null
       }
+      const xrr = deepCopy(features)
+      let yrr = []
       if(arr.length>0){
-        for (const i in features){
+        for (const i in xrr){
           for(const j in arr){
-            console.log(arr[j])
-            if (features[i].id === arr[j].user_feature_type){
-              features[i].time = arr[j].last_modified_date
+            if (xrr[i].id === arr[j].user_feature_type){
+              xrr[i].time = arr[j].last_modified_date
             }
           }
+          yrr.push(xrr[i])
         }
+      }else{
+        yrr = features
       }
       return {...state,
         userInfo:action.data.body.id_detail,
@@ -78,7 +101,7 @@ const reportDate = (state = initReport, action) => {
           wifimac: lbsProfile !== null ? lbsProfile.use_bad_wifimac : null, // 是否命中不良wifi-mac
         },
         devicesList: action.data.body.devices_list,
-        userFeatures: features,
+        userFeatures: yrr,
         loading: false
       }
     }

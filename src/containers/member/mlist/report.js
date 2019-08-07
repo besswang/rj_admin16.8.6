@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 import Echartgauge from '@components/echartsGauge'
 import EchartsBarLeft from '@components/echartsBarLeft'
 import EchartsBarRight from '@components/echartsBarRight'
-import phoneb from '../../../images/phoneb.png'
+import phoneb from '@images/phoneb.png'
 class Report extends Component{
 	static propTypes = {
 		reportDate: PropTypes.object
@@ -18,12 +18,6 @@ class Report extends Component{
 		this.state = {
 
 		}
-	}
-	componentWillMount() {
-
-	}
-	componentDidMount() {
-
 	}
 	textFn = val => {
 		if(val === '0'){

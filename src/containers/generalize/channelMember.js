@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Table, Loading } from 'element-react'
+import { Button, Table, Loading, Form } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -81,24 +81,24 @@ class Apply extends Component {
 				}
 			}, {
 				label: '个人信息认证',
-				prop: 'idcardType',
+				prop: 'personalType',
 				width: 140,
 				render: row => {
-					return this.textType(row.idcardType)
+					return this.textType(row.personalType)
 				}
 			}, {
 				label: '银行卡认证',
 				prop: 'bankType',
 				width: 120,
 				render: row => {
-					return this.textType(row.idcardType)
+					return this.textType(row.bankType)
 				}
 			}, {
 				label: '运营商认证', // 手机认证
 				prop: 'mobileType',
 				width: 120,
 				render: row => {
-					return this.textType(row.idcardType)
+					return this.textType(row.mobileType)
 				}
 			}, {
 				label: '收款银行',
@@ -117,7 +117,13 @@ class Apply extends Component {
 				width:100,
 				prop: 'loanType',
 				render: row => {
-					return filter.loanTyp(row.loanType)
+					const y = <span className="theme-blue">{'已申请'}</span>
+					const n = <span className="dis-red">{'未申请'}</span>
+					if (row.loanType !== null){
+						return row.loanType === 0 ? n : y
+					}else{
+						return ''
+					}
 				}
 			}]
 		}
@@ -154,7 +160,10 @@ class Apply extends Component {
 		return(
 			<div>
 				<Search showChannel>
-					<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+					<Form.Item>
+						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+					</Form.Item>
+					<Form.Item />
 				</Search>
 				<Loading loading={ list.loading }>
 					<Table

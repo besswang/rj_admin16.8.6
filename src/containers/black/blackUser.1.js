@@ -1,6 +1,6 @@
 // 财务管理-已完成
 import React, { Component } from 'react'
-import { Button, Loading, Table, Upload, Message } from 'element-react'
+import { Button, Loading, Table, Upload, Message,Form } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -179,11 +179,15 @@ class BlackUser extends Component {
 					accept=".csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 				/>
 				<Search showSelect2>
-					<div>
-					 	<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+					<Form.Item>
+						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
+					</Form.Item>
+					<Form.Item>
 						<Button onClick={ this.props.download } type="primary">{'模版下载'}</Button>
+					</Form.Item>
+					<Form.Item>
 						<Button onClick={ this.up } type="primary">{'上传'}</Button>
-					</div>
+					</Form.Item>
 				</Search>
 				<Upload
 					className = "margin-bottom15"

@@ -274,13 +274,15 @@ class Apply extends Component {
 		return(
 			<div>
 				<Search showChannel>
-					<div>
+					<Form.Item>
 						<Button onClick={ this.handleSearch } type="primary" className="margin_right10">{'搜索'}</Button>
+
 						{/* <Button type="primary" onClick={ this.openDialog.bind(this,'add') }>{'添加'}</Button> */}
 						<Link to={ {pathname:'/generalize/add'} }>
 							<Button type="primary">{'添加'}</Button>
 						</Link>
-					</div>
+					</Form.Item>
+					<Form.Item />
 				</Search>
 				<Loading loading={ list.loading }>
 					<Table

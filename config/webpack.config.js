@@ -286,7 +286,8 @@ module.exports = function(webpackEnv) {
         '@global': path.join(__dirname, '../src/global'),
         '@meta': path.join(__dirname, '../src/meta'),
         '@redux': path.join(__dirname, '../src/redux'),
-        '@styles': path.join(__dirname, '../src/styles')
+        '@styles': path.join(__dirname, '../src/styles'),
+        '@images': path.join(__dirname, '../src/images')
       },
       plugins: [
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding
