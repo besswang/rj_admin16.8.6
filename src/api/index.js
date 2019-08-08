@@ -4,12 +4,6 @@ import Fetch from '../fetch/index'
 // import Fetch from '../fetch/easyMock'
 // yapi mock 模拟数据
 // import Fetch from '../fetch/yapiMock'
-// {
-//   "code": "SUCCESS",
-//   "data": null,
-//   "msg": "成功",
-//   "success": true
-// }
 import jk from './jk'
 export default {
   manageloginApi: params => Fetch(jk.managelogin, {method: 'post', body: params}),

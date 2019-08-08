@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Dropdown } from 'element-react'
+// import { Dropdown } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -35,11 +35,14 @@ class Header extends Component {
       })
     // }
 	}
-  handleCommand = async e => {
-    if(e === '0'){
+  // handleCommand = async e => {
+  //   if(e === '0'){
+  //     this.props.logout(this.props.history)
+  //     // this.props.history.push('/login')
+  //   }
+  // }
+  handleCommand = async () => {
       this.props.logout(this.props.history)
-      // this.props.history.push('/login')
-    }
   }
   render() {
     // const { adminName } = this.props.user
@@ -53,15 +56,16 @@ class Header extends Component {
           <span>{'欢迎'}{ adminName }</span>
         </li>
         <li>
-          <Dropdown onCommand={ this.handleCommand } menu={ (
+          <span onClick={ this.handleCommand }>{'退出'}</span>
+          {/* <Dropdown onCommand={ this.handleCommand } menu={ (
             <Dropdown.Menu>
-              {/* <Dropdown.Item command="1">{'修改'}<i className="el-icon-edit el-icon--right" /></Dropdown.Item> */}
+              <Dropdown.Item command="1">{'修改'}<i className="el-icon-edit el-icon--right" /></Dropdown.Item>
               <Dropdown.Item command="0">{'退出'}</Dropdown.Item>
             </Dropdown.Menu>
             ) }
           >
             <span className="el-dropdown-link">{'设置'}<i className="el-icon-caret-bottom el-icon--right" /></span>
-          </Dropdown>
+          </Dropdown> */}
         </li>
       </ul>
     )

@@ -7,7 +7,6 @@ import { bindActionCreators } from 'redux'
 import { managelogin } from './action'
 import user from '../../images/user.png'
 import code from '../../images/code.png'
-import rightTitle from '../../images/hou-tai-20190729/right-title.png'
 import '@styles/login.less'
 class Login extends Component {
   static propTypes = {
@@ -198,9 +197,13 @@ class Login extends Component {
     const { btnLoading } = this.props
     return (
       <div className="login-con">
+        <div className="title-con">
+          <h1 className="title">{ '及享用渠道登录后台' }</h1>
+          <p className="info">{'BACKSTAGE MANAGEMENT DEPARTMENT'}</p>
+        </div>
         <Layout.Row type="flex" justify="center" align="middle" className="row-bg">
-          <Layout.Col span="6" className="grid-content grid-right flex flex-direction_column justify-content_flex-center align-item_center">
-            <img className="title-logo" src={ rightTitle } alt=""/>
+          <Layout.Col span="6" className="grid-content grid-right flex flex-direction_column">
+            <h1 className="wel">{'欢迎登录!'}</h1>
             <Form className="form-con" ref={ e => { this.form = e } } model={ form } rules={ rules }>
               <Form.Item prop="adminName">
                 <Input value={ form.adminName } onChange={ this.onChange.bind(this, 'adminName') } onBlur={ this.nameBlur } placeholder="请输入您的手机号/用户名" prepend={

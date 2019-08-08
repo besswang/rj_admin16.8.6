@@ -4,58 +4,34 @@
   background-image: url('../images/qu-dao-20190729/loginbg.jpg');
   background-repeat: no-repeat;
   background-size: cover;
+  position: relative;
+  .title-con{
+    position: absolute;
+    text-align: center;
+    top:15%;
+    left:50%;
+    // margin-left:-160px;
+    transform: translate(-50%, -15%);
+    .title{
+      color:#fff;
+      font-weight: 700;
+    }
+    .info{
+      color:#908f8f;
+    }
+  }
   .row-bg{
     height:100vh;
     .grid-content {
       height: 50vh;
       color:#fff;
     }
-    .grid-left{
-      background-image: url('../images/hou-tai-20190729/login-form-bg.jpg');
-      background-repeat: no-repeat;
-      background-size: cover;
-      padding:2%;
-      font-size:16px;
-      border-radius: 6px 0 0 6px;
-      height:44vh;
-      .bottom-title{
-        font-size:14px;
-        line-height:14px;
-      }
-      .top-title{
-        .border-bottom4 {
-          border-bottom: 4px solid #fff;
-          padding-bottom:6px;
-        }
-        .en-wel{
-          font-size:60px;
-          padding-bottom:8px;
-        }
-        .wel {
-          padding: 10px 0;
-        }
-      }
-      .icon2 {
-        width: 20px;
-        height: 20px;
-        padding:0 10px;
-      }
-      .title{
-        padding:15px 0;
-      }
-    }
     .grid-right{
       background:white;
-      -moz-box-shadow:-6px 6px 20px #333333;
-      -webkit-box-shadow:-6px 6px 20px #333333;
-      box-shadow:-6px 6px 20px #333333;
-      border-radius: 6px;
-      .title-logo{
-        display:block;
-        margin:0 auto;
-        width:60%;
-        padding:0 20% 10% 20%;
-        position: relative;
+      .wel{
+        color:#919dad;
+        font-size:22px;
+        padding:18% 8%;
       }
       .form-con{
         padding:0 8%;

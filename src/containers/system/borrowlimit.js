@@ -328,7 +328,7 @@ class BlackUser extends Component {
 					<Dialog.Body>
 						<Form labelWidth="140" ref={ e => {this.form=e} } model={ form } rules={ rules }>
 							<Form.Item label="额度" prop="money">
-								<Input type="number" value={ form.money } onChange={ this.onChange.bind(this,'money') } />
+								<Input type="number" value={ form.money } onChange={ this.onChange.bind(this,'money') } append="元" />
 							</Form.Item>
 							{/* <Form.Item label="是否默认">
 								<Radio.Group value={ form.defaultValue } onChange={ this.onChange.bind(this,'defaultValue') }>
@@ -361,16 +361,16 @@ class BlackUser extends Component {
 								<Input value={ form.moneyRate } onChange={ this.onChange.bind(this,'moneyRate') } />
 							</Form.Item> */}
 							<Form.Item label="逾期利率" prop="overdueRate">
-								<Input value={ form.overdueRate } onChange={ this.onChange.bind(this,'overdueRate') } />
+								<Input value={ form.overdueRate } onChange={ this.onChange.bind(this,'overdueRate') } append="%" />
 							</Form.Item>
 							<Form.Item label="服务费" prop="serverMoney">
-								<Input type="number" value={ form.serverMoney } onChange={ this.onChange.bind(this,'serverMoney') } />
+								<Input type="number" value={ form.serverMoney } onChange={ this.onChange.bind(this,'serverMoney') } append="元" />
 							</Form.Item>
 							{/* <Form.Item label="延期金额" prop="continueMoney">
 								<Input type="number" value={ form.continueMoney } onChange={ this.onChange.bind(this,'continueMoney') } />
 							</Form.Item> */}
 							<Form.Item label="申请天数" prop="dayNumber">
-								<Input type="number" value={ form.dayNumber } onChange={ this.onChange.bind(this,'dayNumber') } />
+								<Input type="number" value={ form.dayNumber } onChange={ this.onChange.bind(this,'dayNumber') } append="天" />
 							</Form.Item>
 						</Form>
 					</Dialog.Body>

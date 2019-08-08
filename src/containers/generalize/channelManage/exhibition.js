@@ -61,7 +61,7 @@ class Exhibition extends Component {
 					label: '展期期限',
 					prop: 'dayNum'
 				}, {
-					label: '展期费率',
+					label: '展期费率(%)',
 					prop: 'delayRate'
 				}, {
 					label: '状态',

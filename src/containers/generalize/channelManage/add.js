@@ -200,7 +200,7 @@ class Apply extends Component {
 								<Input value={ form.moneyRate } onChange={ this.onChange.bind(this,'moneyRate') } />
 							</Form.Item> */}
 							<Form.Item label="逾期利率" prop="overdueRate">
-								<Input value={ form.overdueRate } onChange={ this.onChange.bind(this,'overdueRate') } />
+								<Input value={ form.overdueRate } onChange={ this.onChange.bind(this,'overdueRate') } append="%" />
 							</Form.Item>
 							<Form.Item label="服务费" prop="serverMoney">
 								<Input type="number" value={ form.serverMoney } onChange={ this.onChange.bind(this,'serverMoney') } append="元" />

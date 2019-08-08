@@ -80,8 +80,8 @@ class Home extends Component {
 					<li>{'总充值'}{recharge}{'¥'}</li>
 					<li>{'已消费'}{consume}{'¥'}</li>
 					<li>{'剩余'}{residue}{'¥'}</li>
-					{/* <li>{`提醒${ consumeLowerLimit }¥`}</li> */}
 				</ul>
+				{/* <li>{`提醒${ consumeLowerLimit }¥`}</li> */}
 			</div>
 		)
 	}

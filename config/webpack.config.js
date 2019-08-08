@@ -68,7 +68,7 @@ module.exports = function(webpackEnv) {
     ? publicPath.slice(0, -1)
     // : isEnvDevelopment && 'http://47.94.142.215:8081'
     // : isEnvDevelopment && 'http://localhost:8081'
-    // : isEnvDevelopment && 'http://h5.huakodai.com'
+    //: isEnvDevelopment && 'http://h5.huakodai.com'
     // : isEnvDevelopment && 'http://qqter.chenxianshen.org.cn/'
     // : isEnvDevelopment && 'http://cs.huakodai.com'
     : isEnvDevelopment && 'https://sdaff.hefengzhijia.cn'
