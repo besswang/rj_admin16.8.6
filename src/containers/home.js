@@ -8,7 +8,7 @@ import { withRouter } from 'react-router-dom'
 import api from '@api/index'
 import { Message } from 'element-react'
 import { MessageBox } from 'element-react'
-import num from '@global/num'
+// import num from '@global/num'
 class Home extends Component {
 	static propTypes = {
 		history: PropTypes.object.isRequired,
@@ -33,8 +33,8 @@ class Home extends Component {
 		const res = await api.selectGlobalValueApi()
 		if(res.success){
 			// const result = parseFloat(res.data.recharge) - parseFloat(res.data.consume)
-			const result = num.minus(res.data.recharge, res.data.consume)
-			if (result <= res.data.consumeLowerLimit){
+			// const result = num.minus(res.data.recharge, res.data.consume)
+			if (res.data.balance <= res.data.consumeLowerLimit) {
 				MessageBox.confirm('余额即将不足', '提示', {
 					type: 'warning'
 				}).then(() => {
@@ -47,7 +47,7 @@ class Home extends Component {
 				recharge: res.data.recharge,
 				consume: res.data.consume,
 				consumeLowerLimit: res.data.consumeLowerLimit,
-				residue:result
+				residue: res.data.balance
 			})
 		}else{
 			Message.error(res.msg)
@@ -75,7 +75,7 @@ class Home extends Component {
 				</ul>
 				<ul className="footer flex flex-direction_row">
 					<li>{ '©2019' }</li>
-					<li>{'系统名称 梦想借后台管理系统'}</li>
+					<li>{'系统名称 pizza后台管理系统'}</li>
 					<li>{'消费环境开启状态'}</li>
 					<li>{'总充值'}{recharge}{'¥'}</li>
 					<li>{'已消费'}{consume}{'¥'}</li>
