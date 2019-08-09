@@ -1,5 +1,7 @@
 import 'whatwg-fetch'
-import { Message } from 'element-react'
+import {
+  Message
+} from 'element-react'
 // import qs from 'qs'
 //参考： https: //www.2cto.com/kf/201809/778497.html
 // 处理promise和fetch的兼容性以及引入
@@ -24,7 +26,7 @@ const formatUrl = obj => {
  * @param url    (String) 接口URL
  * @param option (Object) 参数对象，包括method(请求方式，不填默认'get')，headers(设置请求头，选填)，data(请求参数，所有请求方式均适用)
  */
-const Fetch = (url, option = {}) => {
+const FetchDown = (url, option = {}) => {
   // 设置请求超时的时间，默认10秒
   const timeout = option.timeout || 30000
   option.headers = option.headers || headers
@@ -87,7 +89,7 @@ function addTimeout(fetchPromise, timeout) {
       //   return response
       // })
       // .then(parseJSON)
-      .then(response => response.json())
+      // .then(response => response.json())
       .then(response => {
         // 将状态码添加到返回结果中，以备后用
         // response.status = status
@@ -99,10 +101,33 @@ function addTimeout(fetchPromise, timeout) {
         } else {
           // 否则以正确值返回
           console.log('2')
-          if (response.msg === '请先登录'){
+          // const blob = new Blob([response.data],{type:'application/vnd.ms-excel'})
+          // const u = window.URL.createObjectURL(blob)
+          // console.log(blob)
+          // console.log(u)
+          // return false
+          response.blob().then(blob => {
+            //模拟a链接得原理下载该文件，无返回值（res）
+            console.log('666')
+            const a = document.createElement('a')
+            const u = window.URL.createObjectURL(blob)
+            console.log(u)
+            // const filename = response.headers.get('Content-Disposition')
+            const filename = response.headers.get('Content-Disposition').split('filename=')[1].split('.')
+            console.log(filename)
+            // a.download = filename
+            // a.href = u
+            a.setAttribute('download', `${ decodeURI(filename[0]) }.${ filename[1] }`)
+            // a.setAttribute('download',filename)
+            a.setAttribute('href', u)
+            a.click()
+            window.URL.revokeObjectURL(u)
+          })
+
+          if (response.msg === '请先登录') {
             Message.warning('请重新登陆')
             setTimeout(() => {
-                window.location.href = '/'
+              window.location.href = '/'
             }, 1000)
             return false
           }
@@ -117,4 +142,4 @@ function addTimeout(fetchPromise, timeout) {
   })
 }
 
-export default Fetch
+export default FetchDown

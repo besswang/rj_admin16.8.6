@@ -7,7 +7,7 @@ class Example extends Component {
 	  // dispatch: PropTypes.func.isRequired
   }
   constructor(props) {
-      super(props)
+    super(props)
   }
 	componentWillMount() {
 	  // console.log(this.props)

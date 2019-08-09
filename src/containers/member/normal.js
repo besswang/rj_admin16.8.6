@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch, registerTime, menuActive } from '@redux/actions'
-import { normalSearch, endPayTime } from './actions'
+import { normalSearch, endPayTime, exportUserNoLoan } from './actions'
 import Time from '@components/Settime'
 import MyPagination from '@components/MyPagination'
 import { NORMAL_COLUMNS } from '@meta/columns'
@@ -20,7 +20,8 @@ class Apply extends Component{
 		registerTime: PropTypes.func.isRequired,
 		endPayTime: PropTypes.func.isRequired,
 		normalSearch: PropTypes.func.isRequired,
-		menuActive: PropTypes.func.isRequired
+		menuActive: PropTypes.func.isRequired,
+		exportUserNoLoan: PropTypes.func.isRequired,
 	}
 	componentWillMount() {
 		this.props.initSearch()
@@ -69,6 +70,9 @@ class Apply extends Component{
 					<Form.Item>
 						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
 					</Form.Item>
+					<Form.Item>
+						<Button onClick={ this.props.exportUserNoLoan } type="primary">{'导出列表'}</Button>
+					</Form.Item>
 				</Form>
 				<Loading loading={ list.loading }>
 					<Table
@@ -94,7 +98,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, normalSearch, registerTime, endPayTime, menuActive}, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, normalSearch, registerTime, endPayTime, menuActive, exportUserNoLoan}, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Apply)

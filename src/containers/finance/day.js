@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { selectTheDayLoan, insertRemarks, distributionsCuiShou } from './actions'
+import { selectTheDayLoan, insertRemarks, distributionsCuiShou, exportTheDayLoan } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
 import filter from '@global/filter'
@@ -22,7 +22,8 @@ class WaitHuan extends Component {
 		selectTheDayLoan: PropTypes.func.isRequired,
 		insertRemarks: PropTypes.func.isRequired,
 		collList: PropTypes.array,
-		distributionsCuiShou: PropTypes.func.isRequired
+		distributionsCuiShou: PropTypes.func.isRequired,
+		exportTheDayLoan: PropTypes.func.isRequired,
   }
 	constructor(props) {
 		super(props)
@@ -277,6 +278,9 @@ class WaitHuan extends Component {
 					<Form.Item>
 						<Button type="warning" onClick={ this.cancelAllot.bind(this) }>{'取消分配'}</Button>
 					</Form.Item>
+					<Form.Item>
+						<Button onClick={ this.props.exportTheDayLoan } type="primary">{'导出列表'}</Button>
+					</Form.Item>
 				</Search>
 
 				<Loading loading={ list.loading }>
@@ -345,7 +349,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, selectTheDayLoan, insertRemarks, distributionsCuiShou }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, selectTheDayLoan, insertRemarks, distributionsCuiShou, exportTheDayLoan }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(WaitHuan)

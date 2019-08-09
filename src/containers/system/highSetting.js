@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Switch, Button, Form, Message, Radio, Checkbox, Input } from 'element-react'
+import { Button, Form, Message, Radio, Checkbox, Input } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -205,7 +205,7 @@ class HighSetting extends Component {
 							<Checkbox label="银行卡" name="type" />
 						</Checkbox.Group>
 					</Form.Item>
-					<Form.Item label="测试开关">
+					{/* <Form.Item label="测试开关">
 						<Switch
 							value = { form.testswitch }
 							onText=""
@@ -214,7 +214,7 @@ class HighSetting extends Component {
 							offValue={ 'false' }
 							onChange={ this.onChange.bind(this, 'testswitch') }
 						/>
-					</Form.Item>
+					</Form.Item> */}
 					<Form.Item>
 						<Button type="primary" onClick={ this.saveContent }>{'确 定'}</Button>
 					</Form.Item>

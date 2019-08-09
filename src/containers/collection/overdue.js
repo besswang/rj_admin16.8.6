@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { selectOverdueByParam, addUserBlack, removeUserBlack, updateOrderCuishou } from './actions'
+import { selectOverdueByParam, addUserBlack, removeUserBlack, updateOrderCuishou, exportOverdue } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
 import DisableBtn from '@components/DisableBtn'
@@ -25,7 +25,8 @@ class Overdue extends Component{
 		removeUserBlack: PropTypes.func.isRequired,
 		collList: PropTypes.array,
 		btnLoading: PropTypes.bool.isRequired,
-		updateOrderCuishou: PropTypes.func.isRequired
+		updateOrderCuishou: PropTypes.func.isRequired,
+		exportOverdue: PropTypes.func.isRequired,
   }
 	constructor(props) {
 		super(props)
@@ -279,6 +280,7 @@ class Overdue extends Component{
 			Message.warning('请勾选订单')
 		}
 	}
+
 	render() {
 		const { list, collList, btnLoading } = this.props
 		const { form, rules, dialogVisible } = this.state
@@ -293,6 +295,9 @@ class Overdue extends Component{
 					</Form.Item>
 					<Form.Item>
 						<Button type="warning" onClick={ this.cancelAllot.bind(this) }>{'取消分配'}</Button>
+					</Form.Item>
+					<Form.Item>
+						<Button onClick={ this.props.exportOverdue } type="primary">{'导出列表'}</Button>
 					</Form.Item>
 				</Search>
 				<Loading loading={ list.loading }>
@@ -342,7 +347,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, selectOverdueByParam, addUserBlack, removeUserBlack, updateOrderCuishou }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, selectOverdueByParam, addUserBlack, removeUserBlack, updateOrderCuishou, exportOverdue }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Overdue)

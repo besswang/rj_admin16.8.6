@@ -36,3 +36,18 @@ export const normalSearch = () => {
     console.log(data)
   }
 }
+
+// 用户管理-注册未申请-导出
+export const exportUserNotApply = () => {
+  return async (dispatch, getState) => {
+    const searchAll = shouldFetchPosts(getState())
+    await api.exportUserNotApplyApi(searchAll)
+  }
+}
+// 用户管理-正常还款未借-导出
+export const exportUserNoLoan = () => {
+  return async (dispatch, getState) => {
+    const searchAll = shouldFetchPosts(getState())
+    await api.exportUserNoLoanApi(searchAll)
+  }
+}

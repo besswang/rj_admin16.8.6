@@ -153,5 +153,10 @@ export default {
   'selectAllAdmin': 'admin/selectAllAdmin', // 根据角色id查询多个用户
   // footer
   'selectGlobalValue': 'selectGlobalValue',
-  'insertRotationChart': 'rotationChart/insertRotationChart' // 增加banner图
+  'insertRotationChart': 'rotationChart/insertRotationChart', // 增加banner图
+  'exportUser': 'user/exportUser', // 用户管理-会员列表-导出
+  'exportUserNotApply': 'user/exportUserNotApply', // 用户管理-注册未申请-导出
+  'exportUserNoLoan': 'user/exportUserNoLoan', //用户管理-正常还款未借-导出
+  'exportTheDayLoan': 'order/exportTheDayLoan', // 还款计划-当日到期-导出
+  'exportOverdue': 'order/exportOverdue', // 催收管理-逾期列表-导出
 }

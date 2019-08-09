@@ -124,6 +124,10 @@ class WaitFang extends Component {
 					width: 100,
 					prop: 'bankNumber'
 				}, {
+					label: '打款失败信息',
+					width: 140,
+					prop: 'failureMessage'
+				}, {
 					label: '操作',
 					fixed: 'right',
 					width:180,

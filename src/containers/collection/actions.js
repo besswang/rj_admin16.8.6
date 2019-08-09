@@ -114,3 +114,10 @@ export const insertRemarks = (obj) => {
     }
   }
 }
+// 催收管理-逾期列表-导出
+export const exportOverdue = () => {
+  return async (dispatch, getState) => {
+    const searchAll = shouldFetchPosts(getState())
+    await api.exportOverdueApi(searchAll)
+  }
+}

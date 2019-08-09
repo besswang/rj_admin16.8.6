@@ -25,7 +25,7 @@ export default {
     const num1Digits = (num1.toString().split('.')[1] || '').length
     const num2Digits = (num2.toString().split('.')[1] || '').length
     const baseNum = Math.pow(10, Math.max(num1Digits, num2Digits))
-    return (times(num1, baseNum) - times(num2, baseNum)) / baseNum
+    return (times(num1, baseNum) - times(num2, baseNum)) / baseNum *10
   },
   // js浮点数的加减乘除解决方案-加法
   plus (num1, num2) {

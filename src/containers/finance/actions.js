@@ -224,3 +224,11 @@ export const findAllDelayRate = name => {
     }
   }
 }
+
+// 还款计划-当日到期-导出
+export const exportTheDayLoan = () => {
+  return async (dispatch, getState) => {
+    const searchAll = shouldFetchPosts(getState())
+    await api.exportTheDayLoanApi(searchAll)
+  }
+}

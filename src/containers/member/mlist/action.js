@@ -95,24 +95,29 @@ export const updateUserType = subreddit => {
 }
 
 // 导出
-const formdate = (state) => {
-  const params = state.searchAll
-  const arr = []
-  for (var name in params) {
-    if (params[name]) {
-      arr.push(encodeURIComponent(name) + '=' + encodeURIComponent(params[name]))
-    }
-  }
-  return arr.join('&')
-}
+// const formdate = (state) => {
+//   const params = state.searchAll
+//   const arr = []
+//   for (var name in params) {
+//     if (params[name]) {
+//       arr.push(encodeURIComponent(name) + '=' + encodeURIComponent(params[name]))
+//     }
+//   }
+//   return arr.join('&')
+// }
+// 用户管理-会员列表-导出
 export const exportUser = () => {
-  return (dispatch, getState) => {
-    const data = formdate(getState())
-    const url = `${ process.env.PUBLIC_URL }/api/user/exportUser?${ data }`
-    console.log(url)
-		const a = document.createElement('a')
-		a.setAttribute('download', '')
-		a.setAttribute('href', url)
-		a.click()
+  // return (dispatch, getState) => {
+  //   const data = formdate(getState())
+  //   const url = `${ process.env.PUBLIC_URL }/api/user/exportUser?${ data }`
+  //   console.log(url)
+	// 	const a = document.createElement('a')
+	// 	a.setAttribute('download', '')
+	// 	a.setAttribute('href', url)
+	// 	a.click()
+  // }
+  return async (dispatch, getState) => {
+    const searchAll = shouldFetchPosts(getState())
+    await api.exportUserApi(searchAll)
   }
 }

@@ -1,5 +1,6 @@
 // api文件存放接口文件夹,测试线
 import Fetch from '../fetch/index'
+import FetchDown from '../fetch/fetchDownload'
 // easy mock 模拟数据
 // import Fetch from '../fetch/easyMock'
 // yapi mock 模拟数据
@@ -138,5 +139,15 @@ export default {
   selectUserSmsApi: params => Fetch(jk.selectUserSms, {method: 'get', data:params}),
   selectPresentationByUserIdApi: params => Fetch(jk.selectPresentationByUserId, {method: 'get', data:params}),
   selectLoginDateApi: params => Fetch(jk.selectLoginDate, {method: 'get', data:params}),
+    // 'exportUser': 'user/exportUser', // 用户管理-会员列表-导出
+    // 'exportUserNotApply': 'user/exportUserNotApply', // 用户管理-注册未申请-导出
+    // 'exportUserNoLoan': 'user/exportUserNoLoan', //用户管理-正常还款未借-导出
+    // 'exportTheDayLoan': 'order/exportTheDayLoan', // 还款计划-当日到期-导出
+    // 'exportOverdue': 'order/exportOverdue', // 催收管理-逾期列表-导出
+  exportUserApi: params => FetchDown(jk.exportUser, {method: 'post', body:params}),
+  exportUserNotApplyApi: params => FetchDown(jk.exportUserNotApply, {method: 'post', body:params}),
+  exportUserNoLoanApi: params => FetchDown(jk.exportUserNoLoan, {method: 'post', body:params}),
+  exportTheDayLoanApi: params => FetchDown(jk.exportTheDayLoan, {method: 'post', body:params}),
+  exportOverdueApi: params => FetchDown(jk.exportOverdue, {method: 'post', body:params}),
 }
 
