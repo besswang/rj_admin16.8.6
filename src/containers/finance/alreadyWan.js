@@ -12,6 +12,7 @@ import filter from '@global/filter'
 import DetailBtn from '@components/DetailBtn'
 import { dalreadyWan } from '@meta/details'
 import timeDate from '@global/timeDate'
+import * as math from 'mathjs'
 class AlreadyWan extends Component {
 	static propTypes = {
     list: PropTypes.object.isRequired,
@@ -86,7 +87,15 @@ class AlreadyWan extends Component {
 				}, {
 					label: '延期费用',
 					width: 100,
-					prop: 'continuePayNumber'
+					prop: 'continuePayNumber',
+					render: row => {
+						// delay_rate单次延期费率 * delay_num单次延期天数 * apply_money申请金额
+						if (row.delayRate && row.delayNum && row.applyMoney) {
+							return math.round(row.delayRate * row.delayNum * row.applyMoney, 2)
+						}else{
+							return 0
+						}
+					}
 				}, {
 					label: '延期天数',
 					width: 100,
@@ -174,7 +183,7 @@ class AlreadyWan extends Component {
 		}
 	}
 	componentWillMount() {
-    this.props.initSearch()
+		this.props.initSearch()
   }
   componentDidMount() {
     this.props.selectOrderCompleted()

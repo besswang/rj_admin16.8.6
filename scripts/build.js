@@ -4,15 +4,15 @@
 process.env.BABEL_ENV = 'production'
 process.env.NODE_ENV = 'production'
 // process.env.PUBLIC_URL = 'http://47.94.142.215:8081'
-//process.env.PUBLIC_URL = 'https://qqter.chenxianshen.org.cn'
+// process.env.PUBLIC_URL = 'https://qqter.chenxianshen.org.cn'
 // process.env.PUBLIC_URL = 'http://h5.huakodai.com'
 // process.env.PUBLIC_URL = 'http://qqter.chenxianshen.org.cn/'
 // process.env.PUBLIC_URL = 'http://cs.huakodai.com'
 // process.env.PUBLIC_URL = 'https://hefengqb.qidianshenghuo.com.cn'
 // process.env.PUBLIC_URL = 'https://mxjqingjie.imxiaomang.com.cn'
 // process.env.PUBLIC_URL = 'https://qqter.anwangfei.cn'
-process.env.PUBLIC_URL = 'https://pizzaqb.zhengxingmeirong.net.cn'
-// process.env.PUBLIC_URL = 'https://qutorpsqb.qichegongzhuang.cn'
+// process.env.PUBLIC_URL = 'https://pizzaqb.zhengxingmeirong.net.cn'
+ process.env.PUBLIC_URL = 'https://qutorpsqb.qichegongzhuang.cn'
 
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will

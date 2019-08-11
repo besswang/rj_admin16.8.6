@@ -74,9 +74,9 @@ module.exports = function(webpackEnv) {
     // : isEnvDevelopment && 'http://cs.huakodai.com'
     // : isEnvDevelopment && 'https://hefengqb.qidianshenghuo.com.cn'
     // : isEnvDevelopment && 'https://mxjqingjie.imxiaomang.com.cn'
-    //: isEnvDevelopment && 'https://qqter.anwangfei.cn'
-    : isEnvDevelopment && 'https://pizzaqb.zhengxingmeirong.net.cn'
-    // : isEnvDevelopment && 'https://qutorpsqb.qichegongzhuang.cn'
+    // : isEnvDevelopment && 'https://qqter.anwangfei.cn'
+    // : isEnvDevelopment && 'https://pizzaqb.zhengxingmeirong.net.cn'
+    : isEnvDevelopment && 'https://qutorpsqb.qichegongzhuang.cn'
   // Get environment variables to inject into our app.
   const env = getClientEnvironment(publicUrl)
 

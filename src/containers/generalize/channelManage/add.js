@@ -28,21 +28,9 @@ class Apply extends Component {
 				userScore: null, // 人工分数
 				firstMoney: null, // 授信额度
 				remake: '', // 备注,
-				money: null, // 额度
-				defaultValue: 1,
-				state:1,
-				// sort:null, // 排序
-				delayType:1,
-				overdueType:1,
-				// moneyRate: '', // 借款年化利率（利息）
-				overdueRate: '', // 逾期利率
-				serverMoney: null, // 逾期服务费
-				// continueMoney:null,
-				dayNumber:null, // 申请天数
 				riskType: 'RUIJING'
 			},
 			rules: {
-				// channelName: [{required: true,message: '请输入渠道名称',trigger: 'blur'}],
 				channelName:[{
 					required:true,
 					validator: (rule, value, callback) => {
@@ -73,13 +61,7 @@ class Apply extends Component {
 				machineScore: [{required: true, validator: validate.machfen}],
 				userScore: [{required: true, validator: validate.userfen}],
 				remake: [{required: true,message: '请输入备注',trigger: 'blur'}],
-				money: [{required: true, validator: validate.edu}],
-				// sort: [{required: true, validator:validate.sort}],
-				// moneyRate: [{required: true,validator:validate.moneyRate}],
-				overdueRate: [{required: true,validator:validate.lilv}],
-				serverMoney: [{required: true, validator: validate.moneyType}],
-				// continueMoney: [{required: true, validator:validate.continueMoney}],
-				dayNumber: [{required: true,validator:validate.dayNum}]
+				money: [{required: true, validator: validate.edu}]
 			}
 		}
 	}
@@ -167,7 +149,7 @@ class Apply extends Component {
 							</Form.Item>
 						</Layout.Col>
 					</Layout.Row>
-					<h1 className="channeltitle">{ '额度添加' }</h1>
+					{/* <h1 className="channeltitle">{ '额度添加' }</h1>
 					<Layout.Row>
 						<Layout.Col span="12" xs="24" sm="24" md="12" lg="10">
 							<Form.Item label="额度" prop="money">
@@ -185,9 +167,6 @@ class Apply extends Component {
 									<Radio value="0">{'禁用'}</Radio>
 								</Radio.Group>
 							</Form.Item>
-							{/* <Form.Item label="排序" prop="sort">
-								<Input type="number" value={ form.sort } onChange={ this.onChange.bind(this,'sort') } />
-							</Form.Item> */}
 							<Form.Item label="是否开启延期功能">
 								<Radio.Group value={ form.delayType } onChange={ this.onChange.bind(this,'delayType') }>
 									<Radio value="1">{'开'}</Radio>
@@ -196,18 +175,12 @@ class Apply extends Component {
 							</Form.Item>
 						</Layout.Col>
 						<Layout.Col span="12" xs="24" sm="24" md="12" lg="10">
-							{/* <Form.Item label="借款年化利率（利息）" prop="moneyRate">
-								<Input value={ form.moneyRate } onChange={ this.onChange.bind(this,'moneyRate') } />
-							</Form.Item> */}
 							<Form.Item label="逾期利率" prop="overdueRate">
 								<Input value={ form.overdueRate } onChange={ this.onChange.bind(this,'overdueRate') } append="%" />
 							</Form.Item>
 							<Form.Item label="服务费" prop="serverMoney">
 								<Input type="number" value={ form.serverMoney } onChange={ this.onChange.bind(this,'serverMoney') } append="元" />
 							</Form.Item>
-							{/* <Form.Item label="延期金额" prop="continueMoney">
-								<Input type="number" value={ form.continueMoney } onChange={ this.onChange.bind(this,'continueMoney') } />
-							</Form.Item> */}
 							<Form.Item label="申请天数" prop="dayNumber">
 								<Input type="number" value={ form.dayNumber } onChange={ this.onChange.bind(this,'dayNumber') } append="天" />
 							</Form.Item>
@@ -218,7 +191,7 @@ class Apply extends Component {
 								</Radio.Group>
 							</Form.Item>
 						</Layout.Col>
-					</Layout.Row>
+					</Layout.Row> */}
 					<Layout.Row>
 						<Layout.Col span="12" xs="24" sm="24" md="12" lg="8">
 							<Form.Item></Form.Item>
