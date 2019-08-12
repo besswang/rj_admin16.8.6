@@ -11,8 +11,8 @@ module.exports = function (app) {
       //target: 'http://h5.huakodai.com', // 小赢花渠道后台
       // target: 'https://mxjqingjie.imxiaomang.com.cn', // 梦想借后台
       // target: 'https://qqter.anwangfei.cn', // 梦想借渠道后台
-      // target: 'https://pizzaqb.zhengxingmeirong.net.cn', // pizza后台
-      target: 'https://qutorpsqb.qichegongzhuang.cn', // pizza渠道
+      target: 'https://pizzaqb.zhengxingmeirong.net.cn', // pizza后台
+      // target: 'https://qutorpsqb.qichegongzhuang.cn', // pizza渠道
       secure: false,
       changeOrigin: true,
       pathRewrite: {

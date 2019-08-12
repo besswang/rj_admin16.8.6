@@ -100,15 +100,14 @@ function addTimeout(fetchPromise, timeout) {
           return false
         } else {
           // 否则以正确值返回
-          console.log('2')
           // const blob = new Blob([response.data],{type:'application/vnd.ms-excel'})
           // const u = window.URL.createObjectURL(blob)
           // console.log(blob)
           // console.log(u)
           // return false
+
           response.blob().then(blob => {
             //模拟a链接得原理下载该文件，无返回值（res）
-            console.log('666')
             const a = document.createElement('a')
             const u = window.URL.createObjectURL(blob)
             console.log(u)

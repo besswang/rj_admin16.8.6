@@ -128,6 +128,7 @@ class RepayMent extends Component {
           }
         }, {
           label: '首借',
+          headerAlign:'center',
           subColumns: [
             {
               label: '应还单数',
@@ -164,6 +165,7 @@ class RepayMent extends Component {
           ]
         }, {
           label: '续期',
+          headerAlign: 'center',
           subColumns: [
             {
               label: '应还单数',
@@ -200,6 +202,7 @@ class RepayMent extends Component {
           ]
         }, {
           label: '复借',
+          headerAlign: 'center',
           subColumns: [
             {
               label: '应还单数',

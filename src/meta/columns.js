@@ -276,6 +276,7 @@ export const CONSUME = [
     prop: 'phoneAmount'
   }, {
     label: 'A分控',
+    headerAlign: 'center',
     subColumns: [
       {
         label:'首借人数',
@@ -296,6 +297,7 @@ export const CONSUME = [
     ]
   }, {
     label: 'B分控',
+    headerAlign: 'center',
     subColumns: [{
       label: '首借人数',
       width: 100,
@@ -314,6 +316,7 @@ export const CONSUME = [
     }]
   }, {
     label: 'AB分控',
+    headerAlign: 'center',
     subColumns: [{
       label: '首借人数',
       width: 100,

@@ -159,4 +159,5 @@ export default {
   'exportUserNoLoan': 'user/exportUserNoLoan', //用户管理-正常还款未借-导出
   'exportTheDayLoan': 'order/exportTheDayLoan', // 还款计划-当日到期-导出
   'exportOverdue': 'order/exportOverdue', // 催收管理-逾期列表-导出
+  'selectChannelByName': 'selectChannelByName', // 根据渠道名查渠道
 }

@@ -26,9 +26,12 @@ class Apply extends Component {
 			this.state = {
 				columns: [
 					{
-						type:'index'
-					},
-					{
+						label: '#',
+						width: 60,
+						render: (a, b, c) => {
+							return c + 1
+						}
+					},{
 						label: '渠道名称',
 						prop: 'channelName'
 					},

@@ -1,6 +1,7 @@
 import api from '@api/index'
 import { MessageBox, Message } from 'element-react'
-import { requestPosts, receivePosts, failurePosts, shouldFetchPosts } from '@redux/actions'
+import { requestPosts, receivePosts, failurePosts, shouldFetchPosts} from '@redux/actions'
+// btnRequestPosts, btnReceivePosts, btnFailurePosts
 // 会员管理-会员列表
 export const handelSearch = form => {
   return async (dispatch, getState) => {
@@ -117,6 +118,7 @@ export const exportUser = () => {
 	// 	a.click()
   // }
   return async (dispatch, getState) => {
+    // dispatch(btnRequestPosts())
     const searchAll = shouldFetchPosts(getState())
     await api.exportUserApi(searchAll)
   }

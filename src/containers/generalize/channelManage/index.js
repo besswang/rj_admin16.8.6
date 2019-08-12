@@ -76,14 +76,20 @@ class Apply extends Component {
 				}, {
 					label: '推广链接',
 					prop: 'extensionLink',
-					width:280
+					width:280,
+					render: row => {
+						return (<div className="flex"><a className="theme-blue flex_1" href={ row.extensionLink } target="_blank" rel="noopener noreferrer">{ row.extensionLink }</a></div>)
+					}
 					// render: row =>{
 					// 	return <Button type="text" onClick={ this.copy.bind(this,row.extensionLink) }>{ row.extensionLink }</Button>
 					// }
 				}, {
 					label: '渠道查看链接',
 					prop: 'selectLink',
-					width: 280
+					width: 280,
+					render: row => {
+						return (<div className="flex"><a className="theme-blue flex_1" href={ row.selectLink } target="_blank" rel="noopener noreferrer">{ row.selectLink }</a></div>)
+					}
 				}, {
 					label: '单价',
 					prop: 'price'

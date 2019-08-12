@@ -66,17 +66,19 @@ module.exports = function(webpackEnv) {
   // Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
   const publicUrl = isEnvProduction
     ? publicPath.slice(0, -1)
+
     // : isEnvDevelopment && 'http://47.94.142.215:8081'
     // : isEnvDevelopment && 'http://localhost:8081'
     // : isEnvDevelopment && 'https://qqter.chenxianshen.org.cn'
     //: isEnvDevelopment && 'http://h5.huakodai.com'
     // : isEnvDevelopment && 'http://qqter.chenxianshen.org.cn/'
     // : isEnvDevelopment && 'http://cs.huakodai.com'
-    // : isEnvDevelopment && 'https://hefengqb.qidianshenghuo.com.cn'
-    // : isEnvDevelopment && 'https://mxjqingjie.imxiaomang.com.cn'
+    //: isEnvDevelopment && 'https://hefengqb.qidianshenghuo.com.cn'
+    //: isEnvDevelopment && 'https://mxjqingjie.imxiaomang.com.cn'
     // : isEnvDevelopment && 'https://qqter.anwangfei.cn'
-    // : isEnvDevelopment && 'https://pizzaqb.zhengxingmeirong.net.cn'
-    : isEnvDevelopment && 'https://qutorpsqb.qichegongzhuang.cn'
+    : isEnvDevelopment && 'https://pizzaqb.zhengxingmeirong.net.cn'
+    // : isEnvDevelopment && 'https://qutorpsqb.qichegongzhuang.cn'
+
   // Get environment variables to inject into our app.
   const env = getClientEnvironment(publicUrl)
 

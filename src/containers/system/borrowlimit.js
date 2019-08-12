@@ -62,7 +62,7 @@ class BlackUser extends Component {
 						}
 					}, {
 					label: '渠道名称',
-					width:100,
+					width:140,
 					prop: 'channelName',
 					fixed: 'left',
 					render: row => {

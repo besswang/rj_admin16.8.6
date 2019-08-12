@@ -21,7 +21,11 @@ class Loan extends Component {
     this.state = {
       column:[
         {
-          type:'index'
+          label: '#',
+          width: 60,
+          render: (a, b, c) => {
+            return c + 1
+          }
         }, {
           label:'日期',
           prop: 'date'

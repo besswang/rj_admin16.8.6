@@ -27,7 +27,8 @@ class Mlist extends Component{
 		removeUserBlack: PropTypes.func.isRequired,
 		saveList: PropTypes.func.isRequired,
 		menuActive: PropTypes.func.isRequired,
-		tabAdd: PropTypes.func.isRequired
+		tabAdd: PropTypes.func.isRequired,
+		// btnLoading: PropTypes.bool.isRequired
 	}
 	constructor(props) {
 		super(props)

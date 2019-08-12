@@ -99,10 +99,10 @@ export default {
     console.log(adminInfo.userScoreLimit) //人工分数限制
     if (value === '' || value === null) {
       callback(new Error('分数不能为空'))
-    // } else if (!r.test(value) || parseInt(value) < parseInt(adminInfo.userScoreLimit)) {
-    } else if (!r.test(value)) {
-      // callback(new Error(`请输入有效分数,大于或等于${ adminInfo.userScoreLimit }的正整数`))
-      callback(new Error('请输入有效分数,大于或等于0的正整数'))
+    } else if (!r.test(value) || parseInt(value) < parseInt(adminInfo.userScoreLimit)) {
+    // } else if (!r.test(value)) {
+      callback(new Error(`请输入有效分数,大于或等于${ adminInfo.userScoreLimit }的正整数`))
+      // callback(new Error('请输入有效分数,大于或等于0的正整数'))
     } else {
       callback()
     }
@@ -113,10 +113,10 @@ export default {
     console.log(adminInfo.machineScoreLimit) // 机器分数限制
     if (value === '' || value === null) {
       callback(new Error('分数不能为空'))
-    // } else if (!r.test(value) || parseInt(value) < parseInt(adminInfo.machineScoreLimit)) {
-    } else if (!r.test(value)) {
-      // callback(new Error(`请输入有效分数,大于或等于${ adminInfo.machineScoreLimit }的正整数`))
-      callback(new Error('请输入有效分数,大于或等于0的正整数'))
+    } else if (!r.test(value) || parseInt(value) < parseInt(adminInfo.machineScoreLimit)) {
+    // } else if (!r.test(value)) {
+      callback(new Error(`请输入有效分数,大于或等于${ adminInfo.machineScoreLimit }的正整数`))
+      // callback(new Error('请输入有效分数,大于或等于0的正整数'))
     } else {
       callback()
     }

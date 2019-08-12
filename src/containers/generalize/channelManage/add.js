@@ -1,6 +1,6 @@
 // 推广管理-渠道管理-展期模式
 import React, { Component } from 'react'
-import { Button, Breadcrumb, Form, Input, Layout, Radio } from 'element-react'
+import { Button, Breadcrumb, Form, Input, Layout, Radio, Message } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -10,7 +10,8 @@ import { insertChannel } from './action'
 import SelectPicker from '@components/SelectPicker'
 import { PROMOTION_TYPE } from '@meta/select'
 import validate from '@global/validate'
-class Apply extends Component {
+import api from '@api/index'
+class Add extends Component {
 	static propTypes = {
 		history: PropTypes.object.isRequired,
 		menuActive: PropTypes.func.isRequired,
@@ -19,6 +20,7 @@ class Apply extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			showName:false,
 			form: {
 				channelName: '', // 渠道名称,
 				daiName: '', // 贷超名称,
@@ -87,14 +89,35 @@ class Apply extends Component {
 		console.log(this.state.form)
 		this.form.validate((valid) => {
 			if (valid) {
-				console.log(this.state.form)
-				this.props.insertChannel(this.state.form, this.props.history)
+				if(this.state.showName){
+					this.props.insertChannel(this.state.form, this.props.history)
+				}else{
+					Message.warning('渠道名称已存在,不能添加重复的渠道名称')
+				}
 			} else {
 				console.log('error submit!!')
 				return false
 			}
 		})
 	}
+	nameBlur = () => {
+    if (this.state.form.channelName !== '') {
+      this.selectAdminLoginByName()
+    }
+	}
+	selectAdminLoginByName = async () => {
+    const res = await api.selectChannelByNameApi({channelName:this.state.form.channelName})
+    if(!res.success){
+			Message.warning(res.msg)
+			this.setState({
+				showName:false
+			})
+    }else{
+			this.setState({
+				showName: true
+			})
+		}
+  }
 	render(){
 		const { form, rules } = this.state
 		return(
@@ -111,7 +134,7 @@ class Apply extends Component {
 					<Layout.Row>
 						<Layout.Col span="12" xs="24" sm="24" md="12" lg="10">
 							<Form.Item label="渠道名称" prop="channelName">
-								<Input value={ form.channelName } onChange={ this.onChange.bind(this, 'channelName') } />
+								<Input value={ form.channelName } onChange={ this.onChange.bind(this, 'channelName') } onBlur={ this.nameBlur }/>
 							</Form.Item>
 							<Form.Item label="贷超名称" prop="daiName">
 								<Input value={ form.daiName } onChange={ this.onChange.bind(this, 'daiName') } />
@@ -210,13 +233,9 @@ class Apply extends Component {
 		)
 	}
 }
-const mapStateToProps = state => {
-	// const { } = state
-	// return { }
-}
 const mapDispatchToProps = dispatch => {
 	return {
 		...bindActionCreators({ menuActive, insertChannel }, dispatch)
 	}
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Apply)
+export default connect(null,mapDispatchToProps)(Add)

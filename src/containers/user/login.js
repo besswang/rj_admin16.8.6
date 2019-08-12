@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux'
 import { managelogin } from './action'
 import user from '../../images/user.png'
 import code from '../../images/code.png'
+import rightTitle from '../../images/hou-tai-20190729/right-title.png'
 import '@styles/login.less'
 class Login extends Component {
   static propTypes = {
@@ -197,14 +198,23 @@ class Login extends Component {
     const { btnLoading } = this.props
     return (
       <div className="login-con">
-        <div className="title-con">
-          <h1 className="title">{ 'pizza渠道登录后台' }</h1>
-          {/* 小赢花花,及享用,梦想借,pizza */}
-          <p className="info">{'BACKSTAGE MANAGEMENT DEPARTMENT'}</p>
-        </div>
         <Layout.Row type="flex" justify="center" align="middle" className="row-bg">
-          <Layout.Col span="6" className="grid-content grid-right flex flex-direction_column">
-            <h1 className="wel">{'欢迎登录!'}</h1>
+          <Layout.Col span="7" className="grid-content grid-left flex flex-direction_column justify-content_flex-justify">
+            <div className="top-title">
+              <h1 className="en-wel"><span className="border-bottom4">{'W'}</span>{'elcome'}</h1>
+              <h1 className="wel">{'pizza'}</h1>
+              {/* 及享用  小赢花花 梦想借 pizza*/}
+            </div>
+            <ul className="flex flex-direction_row justify-content_flex-justify bottom-title">
+              <li>{'后台管理'}</li>
+              <li>{'|'}</li>
+              <li>{'财务审核'}</li>
+              <li>{'|'}</li>
+              <li>{'数据报表'}</li>
+            </ul>
+          </Layout.Col>
+          <Layout.Col span="6" className="grid-content grid-right flex flex-direction_column justify-content_flex-center align-item_center">
+            <img className="title-logo" src={ rightTitle } alt=""/>
             <Form className="form-con" ref={ e => { this.form = e } } model={ form } rules={ rules }>
               <Form.Item prop="adminName">
                 <Input value={ form.adminName } onChange={ this.onChange.bind(this, 'adminName') } onBlur={ this.nameBlur } placeholder="请输入您的手机号/用户名" prepend={

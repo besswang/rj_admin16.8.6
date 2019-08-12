@@ -31,17 +31,21 @@ class Apply extends Component {
 					width:120,
 					prop: 'date'
 				}, {
+					label: 'PV',
+					prop: 'pv'
+				}, {
 					label: 'UV',
 					prop: 'uv'
 				}, {
 					label: '注册人数',
+					width:100,
 					prop: 'userCount',
 					render: row => {
 						return row.userCount === null ? 0 : row.userCount
 					}
 				}, {
 					label: '登陆APP人数',
-					width:120,
+					width:140,
 					prop: 'loginCount'
 				}, {
 					label: '登陆APP比例',
@@ -53,16 +57,24 @@ class Apply extends Component {
 					prop: 'completedCount'
 				}, {
 					label: '申请人数',
+					width: 100,
 					prop: 'applicantsCount'
 				}, {
 					label: '申请比例',
+					width: 100,
 					prop: 'applicantsRate'
 				}, {
 					label: '放款人数',
+					width: 100,
 					prop: 'orderStateCount'
 				}, {
 					label: '放款比例',
+					width: 100,
 					prop: 'orderStateRate'
+				}, {
+					label: '获客成本',
+					width: 100,
+					prop: 'moneyTotal'
 				}
 			]
 		}
