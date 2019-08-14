@@ -5,7 +5,8 @@ const dayList = (state = [], action) => {
     case type.SAVE_DAY_LIST:
       {
         const data = action.data.filter(item => {
-          item['label'] = `${ item.channelName } - 期限${ item.dayNum } 天 - 费率${ item.delayRate }`
+          // item['label'] = `${ item.channelName } - 期限${ item.dayNum } 天 - 费率${ item.delayRate }`
+          item['label'] = `期限${ item.dayNum } 天 - 费率${ item.delayRate }`
           return item
         })
         return data

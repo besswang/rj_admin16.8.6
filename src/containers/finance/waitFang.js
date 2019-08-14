@@ -39,7 +39,7 @@ class WaitFang extends Component {
 						}
 					}, {
 					label: '渠道名称',
-					width:100,
+					width:120,
 					prop: 'channelName'
 				}, {
 					label: '新老客户',
@@ -58,19 +58,19 @@ class WaitFang extends Component {
 					prop: 'riskNum'
 				}, {
 					label: '手机号码',
-					width: 100,
+					width: 140,
 					prop: 'phone'
 				}, {
 					label: '身份证号',
-					width: 100,
+					width: 200,
 					prop: 'idcardNumber'
 				}, {
 					label: '申请金额',
-					width: 100,
+					width: 120,
 					prop: 'applyMoney'
 				}, {
 					label: '申请期限',
-					width: 100,
+					width: 180,
 					prop: 'applyTerm'
 				}, {
 					label: '服务费',
@@ -85,7 +85,7 @@ class WaitFang extends Component {
 					prop: 'loanTerm'
 				}, {
 					label: '申请时间',
-					width: 100,
+					width: 180,
 					prop: 'gmt',
 					render: row => {
 						const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
@@ -97,7 +97,7 @@ class WaitFang extends Component {
 					prop: 'examineCustomerName'
 				}, {
 					label: '审核时间',
-					width: 100,
+					width: 180,
 					prop: 'examineDate',
 					render: row => {
 						const date = timeDate.time(row.examineDate, 'yyyy-MM-dd hh:mm:ss')
@@ -113,15 +113,15 @@ class WaitFang extends Component {
 					}
 				}, {
 					label: '申请单号',
-					width: 100,
+					width: 200,
 					prop: 'orderNumber'
 				}, {
 					label: '银行名称',
-					width: 100,
+					width: 180,
 					prop: 'bankName'
 				}, {
 					label: '银行卡号',
-					width: 100,
+					width: 200,
 					prop: 'bankNumber'
 				}, {
 					label: '打款失败信息',
@@ -220,7 +220,6 @@ class WaitFang extends Component {
 					/>
 				</Loading>
         <MyPagination
-          total={ list.total }
           onSizeChange={ this.sizeChange }
           onCurrentChange={ this.onCurrentChange }
         />

@@ -5,10 +5,11 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { pageRepaymentCount } from './actions'
+import { pageRepaymentCount } from '../actions'
 import MyPagination from '@components/MyPagination'
 import Search from '@components/Search'
 import num from '@global/num'
+import { Link } from 'react-router-dom'
 class RepayMent extends Component {
   static propTypes = {
     list: PropTypes.object.isRequired,
@@ -240,6 +241,20 @@ class RepayMent extends Component {
               }
             }
           ]
+        }, {
+          label: '操作',
+          prop: 'operate',
+          width:100,
+          fixed:'right',
+          render: row => {
+            return (
+              <div>
+                  <Link to={ {pathname:'/statistics/repayday'} }>
+                  <Button onClick={ this.ditchType.bind(this, row.date) } type="primary" size="mini">{'当天'}</Button>
+                  </Link>
+              </div>
+            )
+          }
         }
       ]
     }
@@ -249,6 +264,9 @@ class RepayMent extends Component {
   }
   componentDidMount() {
     this.props.pageRepaymentCount()
+  }
+  ditchType = (time) => {
+    window.sessionStorage.setItem('theDay', time)
   }
   handleSearch = e => {
     e.preventDefault()
@@ -266,7 +284,7 @@ class RepayMent extends Component {
     const { list } = this.props
     return (
       <div>
-        <Search showTime>
+        <Search showTime showChannel>
           <Form.Item>
             <Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
           </Form.Item>
@@ -282,7 +300,6 @@ class RepayMent extends Component {
           />
         </Loading>
         <MyPagination
-          total={ list.total }
           onSizeChange={ this.sizeChange }
           onCurrentChange={ this.onCurrentChange }
         />

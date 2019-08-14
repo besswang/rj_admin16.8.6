@@ -10,9 +10,13 @@ export default class OrderTable extends Component {
     this.state = {
       column:[
         {
-          label:'序号',
-          type:'index'
-        },{
+          label: '#',
+          width: 60,
+          fixed: 'left',
+          render: (a, b, c) => {
+            return c + 1
+          }
+        }, {
           label:'日期',
           prop: 'theDate'
         },{

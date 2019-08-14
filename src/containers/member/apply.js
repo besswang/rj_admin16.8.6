@@ -46,6 +46,7 @@ class Apply extends Component {
 					{
 						label: '注册时间',
 						prop: 'gmt',
+						width:180,
 						render: row => {
 							const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
 							return date
@@ -135,7 +136,6 @@ class Apply extends Component {
 					/>
 				</Loading>
 				<MyPagination
-					total={ list.total }
 					onSizeChange={ this.sizeChange }
 					onCurrentChange={ this.onCurrentChange }
 				/>

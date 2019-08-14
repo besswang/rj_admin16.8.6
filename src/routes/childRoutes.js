@@ -17,7 +17,9 @@ import Overdue from '@containers/statistics/overdue'
 // 报表统计-放款统计
 import Loan from '@containers/statistics/loan'
 // 报表统计-还款统计
-import Repayment from '@containers/statistics/repayment'
+import Repayment from '@containers/statistics/repayment/index'
+// 报表统计-还款统计-当天
+import Repayday from '@containers/statistics/repayment/repayDay'
 // 报表统计-还款统计-查看
 import Repayinside from '@containers/statistics/repayinside'
 // 报表统计-消耗费用
@@ -461,5 +463,18 @@ export const CHILD_ROUTES = [
     component: Report,
     hideInMenu: true,
     childSingle: true
+  }, {
+    // 报表统计-还款统计-当天
+    id: 106,
+    pid: 0,
+    state: 0,
+    state1: '1',
+    superState: 0,
+    name: '还款统计/当天',
+    path: '/statistics/repayday',
+    exact: true,
+    hideInMenu: true,
+    childSingle: true,
+    component: Repayday
   }
 ]

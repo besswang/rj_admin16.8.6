@@ -33,6 +33,7 @@ export default {
   'pageOverdueCount': 'reportForm/pageOverdueCount', // 逾期统计
   'pageLoanCount': 'reportForm/pageLoanCount', // 放款统计
   'pageRepaymentCount': 'reportForm/pageRepaymentCount', // 还款统计
+  'pageRepaymentCountByDay': 'reportForm/pageRepaymentCountByDay', // 还款统计-当天
   'pageCostCount': 'reportForm/pageCostCount', // 消耗费用
   'pageInoutCount': 'reportForm/pageInoutCount', // 进出账
   'selectDataCheckCount': 'reportForm/selectDataCheckCount', // 数据看版
@@ -160,4 +161,5 @@ export default {
   'exportTheDayLoan': 'order/exportTheDayLoan', // 还款计划-当日到期-导出
   'exportOverdue': 'order/exportOverdue', // 催收管理-逾期列表-导出
   'selectChannelByName': 'selectChannelByName', // 根据渠道名查渠道
+  'selectTotal': 'user/selectTotal'
 }

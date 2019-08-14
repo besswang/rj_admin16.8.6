@@ -41,10 +41,11 @@ class Audit extends Component{
 					}, {
 					label: '订单号',
 					prop: 'orderNumber',
+					width:200,
 					fixed: 'left'
 				}, {
 					label: '渠道名称',
-					width: 100,
+					width: 120,
 					prop: 'channelName'
 				}, {
 					label: '真实姓名',
@@ -55,11 +56,11 @@ class Audit extends Component{
 					prop: 'riskNum'
 				}, {
 					label: '手机号码',
-					width: 100,
+					width: 140,
 					prop: 'phone'
 				}, {
 					label: '身份证号',
-					width: 100,
+					width: 200,
 					prop: 'idcardNumber'
 				}, {
 					label: '申请金额',
@@ -86,7 +87,7 @@ class Audit extends Component{
 					}
 				}, {
 					label: '申请时间',
-					width: 100,
+					width: 180,
 					prop: 'gmt',
 					render: row => {
 						const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
@@ -168,7 +169,6 @@ class Audit extends Component{
 					/>
 				</Loading>
 				<MyPagination
-					total={ list.total }
 					onSizeChange={ this.sizeChange }
 					onCurrentChange={ this.onCurrentChange }
 				/>

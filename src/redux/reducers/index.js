@@ -243,7 +243,7 @@ const searchAll = (state = search, action) => {
     case type.SELECT_SEARCH_TEXT:
       return { ...state, typeName: action.text, pageNum:1 }
     case type.SIZE_CHANGE:
-      return { ...state, pageSize: action.size, pageNum:1 }
+      return { ...state, pageSize: action.size }
     case type.CURRENT_CHANGE:
       return { ...state, pageNum: action.pageNum }
     case type.CLEAR_SEARCH_ALL:

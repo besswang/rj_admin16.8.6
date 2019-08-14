@@ -150,5 +150,7 @@ export default {
   exportTheDayLoanApi: params => FetchDown(jk.exportTheDayLoan, {method: 'post', body:params}),
   exportOverdueApi: params => FetchDown(jk.exportOverdue, {method: 'post', body:params}),
   selectChannelByNameApi: params => Fetch(jk.selectChannelByName, {method: 'get', data:params}),
+  selectTotalApi: params => Fetch(jk.selectTotal, {method: 'post', body:params}),
+  pageRepaymentCountByDayApi: params => Fetch(jk.pageRepaymentCountByDay, {method: 'post', body:params}),
 }
 

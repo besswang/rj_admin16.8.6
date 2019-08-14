@@ -61,11 +61,11 @@ class Overdue extends Component{
 				}, {
 					label: '订单号',
 					prop: 'orderNumber',
-					width:180,
+					width:200,
 					fixed: 'left'
 				},{
 					label: '渠道名称',
-					width: 100,
+					width: 120,
 					prop: 'channelName'
 				},
 				{
@@ -75,12 +75,12 @@ class Overdue extends Component{
 				},
 				{
 					label: '手机号码',
-					width: 100,
+					width: 140,
 					prop: 'phone'
 				},
 				{
 					label: '身份证号',
-					width: 100,
+					width: 200,
 					prop: 'idcardNumber'
 				}, {
 					label: '申请金额',
@@ -99,15 +99,15 @@ class Overdue extends Component{
 					prop: 'loanMoney'
 				}, {
 					label: '银行名称',
-					width: 100,
+					width: 160,
 					prop: 'bankName'
 				}, {
 					label: '银行账号',
-					width: 100,
+					width: 200,
 					prop: 'bankNumber'
 				}, {
 					label: '约定还款日',
-					width: 120,
+					width: 180,
 					prop: 'repaymentDate'
 				}, {
 					label: '应还金额',
@@ -136,7 +136,7 @@ class Overdue extends Component{
 				}, {
 					label: '申请时间',
 					prop: 'gmt',
-					width: 120,
+					width: 180,
 					render: row => {
 						const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
 						return date
@@ -144,7 +144,7 @@ class Overdue extends Component{
 				}, {
 					label: '审核时间',
 					prop: 'examineDate',
-					width: 120,
+					width: 180,
 					render: row => {
 						const date = timeDate.time(row.examineDate, 'yyyy-MM-dd hh:mm:ss')
 						return date
@@ -152,14 +152,14 @@ class Overdue extends Component{
 				}, {
 					label: '放款时间',
 					prop: 'loanDate',
-					width:120,
+					width:180,
 					render: row => {
 						const date = timeDate.time(row.loanDate, 'yyyy-MM-dd hh:mm:ss')
 						return date
 					}
 				}, {
 					label: '打款单号',
-					width: 100,
+					width: 200,
 					prop: 'loanNumber'
 				}, {
 					label: '打款方式',
@@ -313,7 +313,6 @@ class Overdue extends Component{
 				</Loading>
 
         <MyPagination
-          total={ list.total }
           onSizeChange={ this.sizeChange }
           onCurrentChange={ this.onCurrentChange }
         />

@@ -1,6 +1,6 @@
 // 催收管理-个人对账
 import React, { Component } from 'react'
-import { Button, Loading, Table, Dialog, Form, Input, Tabs, Message, MessageBox } from 'element-react'
+import { Button, Loading, Table, Dialog, Form, Input, Tabs, Message, MessageBox, Radio } from 'element-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -51,6 +51,7 @@ class WaitHuan extends Component {
 			loanDate: '', // 放款时间
 			finalDate: '', // 约定还款日
 			dialogVisible: false,
+			type: '', //线下  ONDERLINE，线上 ONLINE
 			form: {
 				repaymentType: 3, // 还款方式（3:线下支付宝，4：线下微信）
 				repaymentMoney:null, // 还款金额
@@ -106,11 +107,11 @@ class WaitHuan extends Component {
 						}
 					}, {
 					label: '申请单号',
-					width:100,
+					width:200,
 					prop: 'orderNumber'
 				}, {
 					label: '渠道名称',
-					width: 100,
+					width: 120,
 					prop: 'channelName'
 				}, {
 					label: '真实姓名',
@@ -118,7 +119,7 @@ class WaitHuan extends Component {
 					prop: 'realName'
 				}, {
 					label: '手机号码',
-					width: 100,
+					width: 140,
 					prop: 'phone'
 				},
 				// {
@@ -135,6 +136,7 @@ class WaitHuan extends Component {
 				// },
 				{
 					label: '米融分',
+					width:120,
 					prop: 'riskNum'
 				}, {
 					label: '风控类型',
@@ -247,11 +249,11 @@ class WaitHuan extends Component {
 				// },
 				{
 					label: '银行名称',
-					width: 100,
+					width: 180,
 					prop: 'bankName'
 				}, {
 					label: '银行卡号',
-					width: 100,
+					width: 200,
 					prop: 'bankNumber'
 				}, {
 					label: '订单类型',
@@ -361,6 +363,7 @@ class WaitHuan extends Component {
 			serviceMoney: obj.serviceMoney, // 服务费
 			loanDate: obj.loanDate, // 放款时间
 			finalDate: obj.finalDate, // 约定还款日
+			type:''
 		})
 		this.tabClick('1')
 		this.form.resetFields()
@@ -371,22 +374,27 @@ class WaitHuan extends Component {
 		this.form.validate((valid) => {
 			if (valid) {
 				const obj = {}
-				const { activeName, form, orderId } = this.state
+				const { activeName, form, orderId, type, delayNumber, delayRate, reMoney } = this.state
+				if (type === ''){
+					Message.warning('请选择线下还是线上！')
+					return false
+				}
 				for(const a in form){
 					if (form[a]){
 						obj[a] = form[a]
 					}
 				}
+
 				const adminObj = JSON.parse(window.sessionStorage.getItem('adminInfo'))
-				const { delayNumber, delayRate, reMoney } = this.state
 				const data = Object.assign({}, obj, {orderId:orderId},{adminName:adminObj.adminName})
 				if(activeName === '1'){ // 还款
-					this.props.updateStateComplete(data)
+				 	const huan = Object.assign({}, data,{type:type})
+					this.props.updateStateComplete(huan)
 				} else if (activeName === '2') { // 延期
-					const trans = Object.assign({},data,{delayNumber:delayNumber},{delayRate:delayRate},{reMoney:reMoney})
-					this.props.updateStateDelay(trans)
+				 	const trans = Object.assign({},data,{delayNumber:delayNumber},{delayRate:delayRate},{reMoney:reMoney},{type:type})
+				 	this.props.updateStateDelay(trans)
 				} else { // 减免
-					this.props.updateStateReduction(data)
+				 	this.props.updateStateReduction(data)
 				}
 				this.setState({
 					dialogVisible: false
@@ -432,9 +440,14 @@ class WaitHuan extends Component {
 	// 		})
 	// 	}
 	// }
+	onTypeChange = v => {
+		this.setState({
+			type:v
+		})
+	}
 	render() {
 		const { list, btnLoading, dayList } = this.props
-		const { columns, dialogVisible, form, rules, orderNumber, realRepaymentMoney, applyMoney, serviceMoney, loanDate, finalDate, activeName, surplusMoney, reMoney, listObj } = this.state
+		const { columns, dialogVisible, form, rules, orderNumber, realRepaymentMoney, applyMoney, serviceMoney, loanDate, finalDate, activeName, surplusMoney, reMoney, listObj, type } = this.state
 		return (
 			<div>
 				<Search showSelect2 showLoanType showSelectClient showSelectTime>
@@ -453,7 +466,6 @@ class WaitHuan extends Component {
 					/>
 				</Loading>
         <MyPagination
-          total={ list.total }
           onSizeChange={ this.sizeChange }
           onCurrentChange={ this.onCurrentChange }
         />
@@ -586,6 +598,15 @@ class WaitHuan extends Component {
 							<Form.Item label="单号" prop="payNumber">
 								<Input value={ form.payNumber } onChange={ this.onChange.bind(this, 'payNumber') } />
 							</Form.Item>
+							{
+								activeName !== '3' &&
+								<Form.Item label="">
+									<Radio.Group value={ type } onChange={ e=> this.onTypeChange(e) } >
+										<Radio value={ 'ONDERLINE' }>{'线下'}</Radio>
+										<Radio value={ 'ONLINE' }>{'线上'}</Radio>
+									</Radio.Group>
+								</Form.Item>
+							}
 						</Form>
 					</Dialog.Body>
 					<Dialog.Footer className="dialog-footer">

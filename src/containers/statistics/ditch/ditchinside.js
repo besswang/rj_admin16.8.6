@@ -137,7 +137,6 @@ class Ditchinside extends Component {
           </Tabs.Pane>
         </Tabs>
         <MyPagination
-          total={ list.total }
           onSizeChange={ this.sizeChange }
           onCurrentChange={ this.onCurrentChange }
         />

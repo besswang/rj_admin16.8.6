@@ -34,7 +34,7 @@ class Home extends Component {
 		if(res.success){
 			// const result = parseFloat(res.data.recharge) - parseFloat(res.data.consume)
 			// const result = num.minus(res.data.recharge, res.data.consume)
-			if (res.data.balance <= res.data.consumeLowerLimit) {
+			if (parseInt(res.data.balance) <= res.data.consumeLowerLimit) {
 				MessageBox.confirm('余额即将不足', '提示', {
 					type: 'warning'
 				}).then(() => {

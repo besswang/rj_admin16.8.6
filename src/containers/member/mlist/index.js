@@ -47,7 +47,7 @@ class Mlist extends Component{
 					}, {
 					label: '渠道名称',
 					prop: 'channelName',
-					width:100,
+					width:120,
 					fixed: 'left'
 				}, {
 					label: '真实姓名',
@@ -57,7 +57,7 @@ class Mlist extends Component{
 				},{
 					label: '手机号码',
 					prop: 'phone',
-					width:130
+					width:140
 				},{
 					label: '身份证号',
 					prop: 'idNumber',
@@ -139,7 +139,7 @@ class Mlist extends Component{
 				}, {
 					label: '登陆IP',
 					prop: 'loginIp',
-					width:240,
+					width:160,
 				}, {
 					label: '登陆次数',
 					width: 100,
@@ -318,7 +318,6 @@ class Mlist extends Component{
 					/>
 				</Loading>
 				<MyPagination
-					total={ list.total }
 					onSizeChange={ this.sizeChange }
 					onCurrentChange={ this.onCurrentChange }
 				/>

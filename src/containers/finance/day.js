@@ -60,6 +60,7 @@ class WaitHuan extends Component {
 					}
 				}, {
 					label: '单号',
+					width:200,
 					prop: 'orderNumber'
 				}, {
 					label: '备注信息',
@@ -67,7 +68,7 @@ class WaitHuan extends Component {
 					prop: 'content'
 				}, {
 					label: '渠道名称',
-					width: 100,
+					width: 120,
 					prop: 'channelName'
 				}, {
 					label: '新老客户',
@@ -79,18 +80,19 @@ class WaitHuan extends Component {
 					}
 				}, {
 					label: '真实姓名',
-					width: 100,
+					width: 120,
 					prop: 'realName'
 				}, {
 					label: '米融分',
+					width:100,
 					prop: 'riskNum'
 				}, {
 					label: '手机号码',
-					width: 100,
+					width: 160,
 					prop: 'phone'
 				}, {
 					label: '身份证号',
-					width: 100,
+					width: 200,
 					prop: 'idcardNumber'
 				}, {
 					label: '申请金额',
@@ -98,7 +100,7 @@ class WaitHuan extends Component {
 					prop: 'applyMoney'
 				}, {
 					label: '申请期限',
-					width: 100,
+					width: 180,
 					prop: 'applyTerm'
 				}, {
 					label: '服务费',
@@ -118,20 +120,20 @@ class WaitHuan extends Component {
 				}, {
 					label: '申请时间',
 					prop: 'gmt',
-					width:120,
+					width:180,
 					render: row => {
 						return timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
 					}
 				}, {
 					label: '放款时间',
 					prop: 'loanDate',
-					width: 120,
+					width: 180,
 					render: row => {
 						return timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
 					}
 				}, {
 					label: '约定还款日',
-					width: 120,
+					width: 180,
 					prop: 'repaymentDate'
 				}, {
 					label: '打款方式',
@@ -151,11 +153,11 @@ class WaitHuan extends Component {
 					}
 				}, {
 					label: '银行名称',
-					width: 100,
+					width: 140,
 					prop: 'bankName'
 				}, {
 					label: '银行卡号',
-					width: 100,
+					width: 200,
 					prop: 'bankNumber'
 				}, {
 					label: '操作',
@@ -295,7 +297,6 @@ class WaitHuan extends Component {
 					/>
 				</Loading>
         <MyPagination
-          total={ list.total }
           onSizeChange={ this.sizeChange }
           onCurrentChange={ this.onCurrentChange }
         />

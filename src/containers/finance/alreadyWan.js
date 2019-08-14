@@ -32,7 +32,7 @@ class AlreadyWan extends Component {
 						}
 					}, {
 					label: '渠道名称',
-					width:100,
+					width:120,
 					prop: 'channelName'
 				}, {
 					label: '新老客户',
@@ -44,18 +44,19 @@ class AlreadyWan extends Component {
 					}
 				}, {
 					label: '真实姓名',
-					width: 100,
+					width: 120,
 					prop: 'realName'
 				}, {
 					label: '米融分',
+					width:100,
 					prop: 'riskNum'
 				}, {
 					label: '手机号码',
-					width: 100,
+					width: 140,
 					prop: 'phone'
 				}, {
 					label: '身份证号',
-					width: 100,
+					width: 200,
 					prop: 'idcardNumber'
 				}, {
 					label: '申请金额',
@@ -79,7 +80,7 @@ class AlreadyWan extends Component {
 				}, {
 					label: '实际还款日',
 					prop: 'realRepaymentDate',
-					width: 120,
+					width: 180,
 					render: row => {
 						const date = timeDate.time(row.realRepaymentDate, 'yyyy-MM-dd hh:mm:ss')
 						return date
@@ -111,7 +112,7 @@ class AlreadyWan extends Component {
 				}, {
 					label: '申请时间',
 					prop: 'upt',
-					width: 120,
+					width: 180,
 					render: row => {
 						const date = timeDate.time(row.upt, 'yyyy-MM-dd hh:mm:ss')
 						return date
@@ -123,7 +124,7 @@ class AlreadyWan extends Component {
 				}, {
 					label: '审核时间',
 					prop: 'examineDate',
-					width: 120,
+					width: 180,
 					render: row => {
 						const date = timeDate.time(row.examineDate, 'yyyy-MM-dd hh:mm:ss')
 						return date
@@ -131,18 +132,18 @@ class AlreadyWan extends Component {
 				}, {
 					label: '放款时间',
 					prop: 'loanDate',
-					width: 120,
+					width: 180,
 					render: row => {
 						const date = timeDate.time(row.loanDate, 'yyyy-MM-dd hh:mm:ss')
 						return date
 					}
 				}, {
 					label: '约定还款日',
-					width:120,
-					prop: 'repaymentDate'
+					width:140,
+					prop: 'finalDate'
 				}, {
 					label: '打款单号',
-					width: 100,
+					width: 200,
 					prop: 'loanNumber'
 				}, {
 					label: '打款方式',
@@ -162,15 +163,15 @@ class AlreadyWan extends Component {
 					}
 				}, {
 					label: '申请单号',
-					width: 100,
+					width: 200,
 					prop: 'orderNumber'
 				}, {
 					label: '银行名称',
-					width: 100,
+					width: 140,
 					prop: 'bankName'
 				}, {
 					label: '银行账号',
-					width: 100,
+					width: 200,
 					prop: 'bankNumber'
 				}, {
 					label: '操作',
@@ -220,7 +221,6 @@ class AlreadyWan extends Component {
 					/>
 				</Loading>
         <MyPagination
-          total={ list.total }
           onSizeChange={ this.sizeChange }
           onCurrentChange={ this.onCurrentChange }
         />

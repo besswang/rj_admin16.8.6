@@ -15,12 +15,15 @@ export const NORMAL_COLUMNS = [
     prop: 'realName'
   }, {
     label: '手机号码',
+    width:140,
     prop: 'phone'
   }, {
     label: '身份证号',
+    width:200,
     prop: 'idcardNumber'
   }, {
     label: '注册时间',
+    width:180,
     prop: 'gmt',
     render: row => {
       const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
@@ -28,7 +31,7 @@ export const NORMAL_COLUMNS = [
     }
   }, {
     label: '最后还款日期',
-    width: 160,
+    width: 180,
     prop: 'realRepaymentDate',
     // render: row => {
     //   const date = timeDate.time(row.lasttime, 'yyyy-MM-dd hh:mm:ss')
@@ -249,6 +252,7 @@ export const CONSUME = [
     width:120
   }, {
     label: '总费用',
+    width:120,
     prop: 'costCount'
   }, {
     label: '短信条数',

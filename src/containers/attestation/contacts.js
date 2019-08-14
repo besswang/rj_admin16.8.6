@@ -46,7 +46,7 @@ class BlackUser extends Component {
 				  prop: 'relativesName'
 				}, {
 					label: '亲属电话',
-					width: 130,
+					width: 140,
 				  prop: 'relativesPhone'
 				}, {
 					label: '社会关系',
@@ -70,6 +70,7 @@ class BlackUser extends Component {
 					}
 				}, {
 					label: '状态',
+					width:100,
 					prop: 'personalType',
 					render: row => {
 						const text = filter.personalType(row.personalType)
@@ -123,7 +124,6 @@ class BlackUser extends Component {
 					/>
 				</Loading>
         <MyPagination
-          total={ list.total }
           onSizeChange={ this.sizeChange }
           onCurrentChange={ this.onCurrentChange }
         />

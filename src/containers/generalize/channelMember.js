@@ -5,10 +5,11 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch, menuActive } from '@redux/actions'
 import { selectChannelMember } from './actions'
-import MyPagination from '@components/MyPagination'
+import MyPagination from '@components/MyPagination20190813'
 import Search from '@components/Search'
 import timeDate from '@global/timeDate'
 import filter from '@global/filter'
+// import api from '@api/index'
 class Apply extends Component {
 	static propTypes = {
 		location: PropTypes.object.isRequired,
@@ -22,6 +23,7 @@ class Apply extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			total:null,
 			columns: [{
 						label: '#',
 						width: 60,
@@ -130,6 +132,7 @@ class Apply extends Component {
 	}
 	componentWillMount() {
 		this.props.initSearch()
+		// this.props.selectTotal()
 		this.props.menuActive(this.props.location.pathname)
 	}
 	componentDidMount() {
@@ -155,6 +158,16 @@ class Apply extends Component {
 		this.props.currentChange(e)
 		this.props.selectChannelMember()
 	}
+	// selectTotal = async () => {
+	// 	const res = await api.selectTotal({pageNum:1,pageSize:10})
+	// 	if (res.success) {
+	// 		this.setState({
+	// 			total: Number(res.data)
+	// 		})
+	// 	} else {
+	// 		Message.warning(res.msg)
+	// 	}
+	// }
 	render(){
 		const { list } = this.props
 		return(

@@ -45,10 +45,22 @@ export const pageRepaymentCount = () => {
     } else {
       dispatch(failurePosts(data))
     }
-    console.log(data)
   }
 }
-
+// 报表统计-还款统计-当天
+export const pageRepaymentCountByDay = () => {
+  return async (dispatch, getState) => {
+    dispatch(requestPosts())
+    const searchAll = shouldFetchPostsDate(getState())
+    const trans = Object.assign({}, searchAll, {date:window.sessionStorage.getItem('theDay')})
+    const data = await api.pageRepaymentCountByDayApi(trans)
+    if (data.success) {
+      dispatch(receivePosts(data.data))
+    } else {
+      dispatch(failurePosts(data))
+    }
+  }
+}
 // 报表统计-消耗费用
 export const pageCostCount = () => {
   return async (dispatch, getState) => {

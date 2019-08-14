@@ -12,8 +12,14 @@ export default class AllTable extends Component {
         border
         stripe
       >
-        <Table.Column label="序号" type="index" />
+        <Table.Column label="#" width={ 60 } render={
+          (a,b,c) => {
+            return c
+          }
+        }
+        />
         <Table.Column label="渠道名称" prop="channelName" />
+        <Table.Column label="UV" prop="uv"/>
         <Table.Column label="日注册量" prop="userCount"/>
         <Table.Column label="日申请量" prop="orderCount"/>
         <Table.Column label="日申请率" prop="orderRate" />

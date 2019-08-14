@@ -12,8 +12,14 @@ export default class CostTable extends Component {
         border
         stripe
       >
-        <Table.Column label="序号" type="index" />
+        <Table.Column label="#" width={ 60 } render={
+          (a,b,c) => {
+            return c
+          }
+        }
+        />
         <Table.Column label="渠道名称" prop="channelName" />
+        <Table.Column label="UV" prop="uv"/>
         <Table.Column label="日注册量" prop="userCount" />
         <Table.Column label="日结算量" prop="userPreCount" />
         <Table.Column label="累计结算量" prop="userAllCount" />

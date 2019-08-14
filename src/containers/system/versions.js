@@ -62,7 +62,7 @@ class BlackUser extends Component {
 					prop: 'publisher'
 				}, {
 					label: '更新地址',
-					width: 200,
+					width: 240,
 					prop: 'updateAddress',
 					render: row => {
 						return <a className="theme-blue" href={ row.updateAddress } target="_blank" rel="noopener noreferrer">{ row.updateAddress }</a>
@@ -203,7 +203,6 @@ class BlackUser extends Component {
 					/>
 				</Loading>
         <MyPagination
-          total={ list.total }
           onSizeChange={ this.sizeChange }
           onCurrentChange={ this.onCurrentChange }
         />

@@ -44,7 +44,7 @@ class Collection extends Component {
 					prop: 'content'
 				}, {
 					label: '渠道名称',
-					width: 100,
+					width: 120,
 					prop: 'channelName'
 				}, {
 					label: '真实姓名',
@@ -52,11 +52,11 @@ class Collection extends Component {
 					prop: 'realName'
 				}, {
 					label: '手机号码',
-					width: 100,
+					width: 160,
 					prop: 'phone'
 				}, {
 					label: '身份证号',
-					width: 100,
+					width: 200,
 					prop: 'idcardNumber'
 				}, {
 					label: '申请金额',
@@ -64,7 +64,7 @@ class Collection extends Component {
 					prop: 'applyMoney'
 				}, {
 					label: '申请期限',
-					width: 100,
+					width: 180,
 					prop: 'applyTerm'
 				}, {
 					label: '服务费',
@@ -75,15 +75,15 @@ class Collection extends Component {
 					prop: 'loanMoney'
 				}, {
 					label: '银行名称',
-					width: 100,
+					width: 160,
 					prop: 'bankName'
 				}, {
 					label: '银行账号',
-					width: 100,
+					width: 200,
 					prop: 'bankNumber'
 				}, {
 					label: '约定还款日',
-					width: 120,
+					width: 180,
 					prop: 'repaymentDate'
 				}, {
 					label: '应还金额',
@@ -115,7 +115,7 @@ class Collection extends Component {
 				}, {
 					label: '申请时间',
 					prop: 'gmt',
-					width: 120,
+					width: 180,
 					render: row => {
 						const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
 						return date
@@ -123,7 +123,7 @@ class Collection extends Component {
 				}, {
 					label: '审核时间',
 					prop: 'examineDate',
-					width: 120,
+					width: 180,
 					render: row => {
 						const date = timeDate.time(row.examineDate, 'yyyy-MM-dd hh:mm:ss')
 						return date
@@ -131,14 +131,14 @@ class Collection extends Component {
 				}, {
 					label: '放款时间',
 					prop: 'loanDate',
-					width: 120,
+					width: 180,
 					render: row => {
 						const date = timeDate.time(row.loanDate, 'yyyy-MM-dd hh:mm:ss')
 						return date
 					}
 				}, {
 					label: '打款单号',
-					width: 100,
+					width: 200,
 					prop: 'loanNumber'
 				}, {
 					label: '打款方式',
@@ -157,7 +157,7 @@ class Collection extends Component {
 					prop: ''
 				}, {
 					label: '申请单号',
-					width: 100,
+					width: 200,
 					prop: 'orderNumber'
 				}, {
 				 	label: '黑名单',
@@ -264,7 +264,6 @@ class Collection extends Component {
 					/>
 				</Loading>
         <MyPagination
-          total={ list.total }
           onSizeChange={ this.sizeChange }
           onCurrentChange={ this.onCurrentChange }
         />

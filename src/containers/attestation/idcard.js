@@ -32,7 +32,8 @@ class BlackUser extends Component {
 					label: '真实姓名',
 					prop: 'realName'
 				}, {
-				  label: '身份证号',
+					label: '身份证号',
+					width:200,
 				  prop: 'idNumber'
 				}, {
 					label: '性别',
@@ -43,6 +44,7 @@ class BlackUser extends Component {
 				}, {
 					label: '认证时间',
 					prop: 'gmt',
+					width:200,
 					render: row => {
 						const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
 						return date
@@ -102,7 +104,6 @@ class BlackUser extends Component {
 					/>
 				</Loading>
         <MyPagination
-          total={ list.total }
           onSizeChange={ this.sizeChange }
           onCurrentChange={ this.onCurrentChange }
         />

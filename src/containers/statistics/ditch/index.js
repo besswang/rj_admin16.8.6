@@ -35,6 +35,9 @@ class Ditch extends Component {
           prop: 'date',
           width:150
 				}, {
+				  label: 'UV',
+				  prop: 'uv'
+				}, {
           label: '注册人数',
           width:100,
 				  prop: 'userCount'
@@ -60,6 +63,7 @@ class Ditch extends Component {
           prop: 'orderCount'
 				}, {
           label: '申请率',
+          width:100,
           prop: 'orderRate'
           // render: (row) => {
           //   // 申请率 = 申请单数/注册人数
@@ -171,7 +175,6 @@ class Ditch extends Component {
           />
         </Loading>
         <MyPagination
-          total={ list.total }
           onSizeChange={ this.sizeChange }
           onCurrentChange={ this.onCurrentChange }
         />

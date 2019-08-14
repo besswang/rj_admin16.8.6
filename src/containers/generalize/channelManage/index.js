@@ -67,7 +67,7 @@ class Apply extends Component {
 						}
 					}, {
 					label: '渠道名称',
-					width: 100,
+					width: 120,
 					prop: 'channelName'
 				}, {
 					label: '超贷名称',
@@ -125,6 +125,7 @@ class Apply extends Component {
 					}
 				}, {
 					label: '备注',
+					width:120,
 					prop: 'remake'
 				}, {
 					label: '状态',
@@ -300,7 +301,6 @@ class Apply extends Component {
 					/>
 				</Loading>
 				<MyPagination
-					total={ list.total }
 					onSizeChange={ this.sizeChange }
 					onCurrentChange={ this.onCurrentChange }
 				/>

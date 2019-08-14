@@ -12,8 +12,14 @@ export default class TodayTable extends Component {
         border
         stripe
       >
-        <Table.Column label="序号" type="index" />
+        <Table.Column label="#" width={ 60 } render={
+          (a,b,c) => {
+            return c
+          }
+        }
+        />
         <Table.Column label="渠道名称" prop="channelName" />
+        <Table.Column label="UV" prop="uv"/>
         <Table.Column label="注册人数" prop="userCount"/>
         <Table.Column label="个人信息" prop="emergencyCount"/>
         <Table.Column label="身份认证" prop="idCardCount"/>

@@ -30,22 +30,28 @@ class BlackUser extends Component {
 							return c + 1
 						}
 				}, {
-				  label: '手机号码',
+					label: '手机号码',
+					width:140,
 				  prop: 'phone'
 				}, {
 					label: '真实姓名',
+					width:100,
 					prop: 'realName'
 				}, {
-				  label: '银行卡号',
+					label: '银行卡号',
+					width:200,
 				  prop: 'bankNumber'
 				}, {
 					label: '开户银行',
+					width:160,
 					prop: 'bank'
 				}, {
 					label: '预留号码',
+					width:140,
 					prop: 'reservePhone'
 				}, {
 					label: '认证时间',
+					width:200,
 					prop: 'gmt',
 					render: row => {
 						const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
@@ -53,6 +59,7 @@ class BlackUser extends Component {
 					}
 				}, {
 					label: '状态',
+					width:100,
 					prop: 'bankAuthType',
 					render: row => {
 						const text = filter.personalType(row.bankAuthType)
@@ -106,7 +113,6 @@ class BlackUser extends Component {
 					/>
 				</Loading>
         <MyPagination
-          total={ list.total }
           onSizeChange={ this.sizeChange }
           onCurrentChange={ this.onCurrentChange }
         />

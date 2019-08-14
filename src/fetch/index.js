@@ -93,12 +93,12 @@ function addTimeout(fetchPromise, timeout) {
         // response.status = status
         // 如果返回码在300到900之间，将以错误返回，如果需要对错误统一处理，可以放在下面判断中
         if (/^[3-9]\d{2}$/.test(response.status) || response.code === 400) {
-          console.log('1')
+          // console.log('1')
           reject(response)
           return false
         } else {
           // 否则以正确值返回
-          console.log('2')
+          // console.log('2')
           if (response.msg === '请先登录'){
             Message.warning('请重新登陆')
             setTimeout(() => {
@@ -111,7 +111,7 @@ function addTimeout(fetchPromise, timeout) {
       })
       .catch(error => {
         // 请求出错则报错 Fetch Error: ***
-        console.log('3')
+        // console.log('3')
         console.log('Fetch Error:', error)
       })
   })

@@ -29,7 +29,7 @@ class Self extends Component {
 						}
 					}, {
 					label: '申请单号',
-					width:180,
+					width:200,
 					prop: 'orderNumber'
 				}, {
 					label: '真实姓名',
@@ -37,11 +37,11 @@ class Self extends Component {
 					prop: 'realName'
 				}, {
 					label: '手机号码',
-					width: 130,
+					width: 140,
 					prop: 'phone'
 				}, {
 					label: '身份证号',
-					width: 180,
+					width: 200,
 					prop: 'idCard'
 				}, {
 					label: '借款金额',
@@ -70,7 +70,7 @@ class Self extends Component {
 				}, {
 					label: '分单时间',
 					prop: 'fendanDate',
-					width: 120,
+					width: 180,
 					render: row => {
 						const date = timeDate.time(row.fendanDate, 'yyyy-MM-dd hh:mm:ss')
 						return date
@@ -78,7 +78,7 @@ class Self extends Component {
 				}, {
 					label: '催回时间',
 					prop: 'realRepaymentDate',
-					width: 120,
+					width: 180,
 					render: row => {
 						const date = timeDate.time(row.realRepaymentDate, 'yyyy-MM-dd hh:mm:ss')
 						return date
@@ -136,7 +136,6 @@ class Self extends Component {
 					/>
 				</Loading>
         <MyPagination
-          total={ list.total }
           onSizeChange={ this.sizeChange }
           onCurrentChange={ this.onCurrentChange }
         />

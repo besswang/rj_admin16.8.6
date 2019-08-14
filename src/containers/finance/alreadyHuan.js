@@ -45,15 +45,15 @@ class AlreadyHuan extends Component {
 					}
 				}, {
 					label: '支付单号',
-					width: 180,
+					width: 200,
 					prop: 'payNumber'
 				}, {
 					label: '申请单号',
-					width: 180,
+					width: 200,
 					prop: 'orderNumber'
 				}, {
 					label: '约定还款日',
-					width: 120,
+					width: 180,
 					prop: 'appointmentDate',
 					render: row => {
 						const date = timeDate.time(row.appointmentDate, 'yyyy-MM-dd hh:mm:ss')
@@ -62,7 +62,7 @@ class AlreadyHuan extends Component {
 				}, {
 					label: '实际还款日',
 					prop: 'realDate',
-					width:120,
+					width:180,
 					render: row => {
 						const date = timeDate.time(row.realDate, 'yyyy-MM-dd hh:mm:ss')
 						return date
@@ -77,7 +77,7 @@ class AlreadyHuan extends Component {
 					prop: 'loanMoney'
 				}, {
 					label: '用户姓名',
-					width: 100,
+					width: 120,
 					prop: 'realName'
 				}, {
 					label: '用户手机',
@@ -136,7 +136,6 @@ class AlreadyHuan extends Component {
 					/>
 				</Loading>
         <MyPagination
-          total={ list.total }
           onSizeChange={ this.sizeChange }
           onCurrentChange={ this.onCurrentChange }
         />

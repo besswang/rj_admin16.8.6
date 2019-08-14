@@ -33,11 +33,11 @@ class AuditRefuse extends Component{
 					}, {
 					label: '订单号',
 					prop: 'orderNumber',
-					width: 100,
+					width: 200,
 					fixed: 'left'
 				},{
 					label: '渠道名称',
-					width: 100,
+					width: 120,
 					prop: 'channelName'
 				},{
 					label: '真实姓名',
@@ -46,16 +46,17 @@ class AuditRefuse extends Component{
 				},
 				{
 					label: '米融分',
+					width:100,
 					prop: 'riskNum'
 				},
 				{
 					label: '手机号码',
-					width: 100,
+					width: 140,
 					prop: 'phone'
 				},
 				{
 					label: '身份证号',
-					width: 100,
+					width: 200,
 					prop: 'idcardNumber'
 				}, {
 					label: '申请金额',
@@ -82,7 +83,7 @@ class AuditRefuse extends Component{
 					}
 				}, {
 					label: '申请时间',
-					width: 100,
+					width: 180,
 					prop: 'gmt',
 					render: row => {
 						const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
@@ -94,7 +95,7 @@ class AuditRefuse extends Component{
 					prop: 'examineCustomerName'
 				}, {
 					label: '审核时间',
-					width: 100,
+					width: 180,
 					prop: 'examineDate',
 					render: row => {
 						const date = timeDate.time(row.examineDate, 'yyyy-MM-dd hh:mm:ss')
@@ -102,12 +103,16 @@ class AuditRefuse extends Component{
 					}
 				}, {
 					label: '拒绝时间',
-					width: 100,
+					width: 180,
 					prop: 'examineDate',
 					render: row => {
 						const date = timeDate.time(row.examineDate, 'yyyy-MM-dd hh:mm:ss')
 						return date
 					}
+				},{
+					label:'失败信息',
+					width:200,
+					prop: 'failureMessage'
 				}, {
 					label: '操作',
 					fixed: 'right',
@@ -171,7 +176,6 @@ class AuditRefuse extends Component{
 					/>
 				</Loading>
 				<MyPagination
-					total={ list.total }
 					onSizeChange={ this.sizeChange }
 					onCurrentChange={ this.onCurrentChange }
 				/>

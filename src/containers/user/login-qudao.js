@@ -198,7 +198,7 @@ class Login extends Component {
     return (
       <div className="login-con">
         <div className="title-con">
-          <h1 className="title">{ 'pizza渠道登录后台' }</h1>
+          <h1 className="title">{ '及享用渠道登录后台' }</h1>
           {/* 小赢花花,及享用,梦想借,pizza */}
           <p className="info">{'BACKSTAGE MANAGEMENT DEPARTMENT'}</p>
         </div>
