@@ -152,5 +152,10 @@ export default {
   selectChannelByNameApi: params => Fetch(jk.selectChannelByName, {method: 'get', data:params}),
   selectTotalApi: params => Fetch(jk.selectTotal, {method: 'post', body:params}),
   pageRepaymentCountByDayApi: params => Fetch(jk.pageRepaymentCountByDay, {method: 'post', body:params}),
+  deductionFeeApi: params => Fetch(jk.deductionFee, {method: 'get', data:params}),
+  exportCollectionApi: params => FetchDown(jk.exportCollection, {method: 'post', body:params}),
+  exportThePersionApi: params => FetchDown(jk.exportThePersion, {method: 'post', body:params}),
+  exportPendingRepayApi: params => FetchDown(jk.exportPendingRepay, {method: 'post', body:params}),
+  exportOrderCompletedApi: params => FetchDown(jk.exportOrderCompleted, {method: 'post', body:params}),
 }
 

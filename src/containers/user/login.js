@@ -203,7 +203,7 @@ class Login extends Component {
             <div className="top-title">
               <h1 className="en-wel"><span className="border-bottom4">{'W'}</span>{'elcome'}</h1>
               <h1 className="wel">{'梦想借'}</h1>
-              {/* 及享用  小赢花花 梦想借 pizza*/}
+              {/* 及享用  小赢花花 梦想借 pizza,牛肉干*/}
             </div>
             <ul className="flex flex-direction_row justify-content_flex-justify bottom-title">
               <li>{'后台管理'}</li>

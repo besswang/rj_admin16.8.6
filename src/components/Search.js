@@ -62,7 +62,8 @@ class Search extends Component {
     isTheDay:PropTypes.number,
     isState: PropTypes.number,
     payTypeId: PropTypes.number,
-    changePayTypeId: PropTypes.func.isRequired
+    changePayTypeId: PropTypes.func.isRequired,
+    name: PropTypes.string
   }
   componentWillMount() {
     // 查询表单的初始化
@@ -260,6 +261,7 @@ class Search extends Component {
             <Time
               value={ time }
               onChange={ val => this.props.saveTime(val) }
+              placeholder={ this.props.name }
             />
           </Form.Item>
         }

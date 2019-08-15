@@ -80,12 +80,13 @@ class BlackUser extends Component {
 	openDialog = r => {
 		this.form.resetFields()
 		this.setState({
-			dialogVisible: true
+			dialogVisible: true,
+			voucher:''
 		})
 	}
 	saveContent = e => {
 		e.preventDefault()
-		console.log(this.state.voucher)
+		// console.log(this.state.voucher)
 		// Notification({
 		// 	title: '成功',
 		// 	message: '这是一条成功的提示消息',
@@ -97,11 +98,13 @@ class BlackUser extends Component {
 					Message.warning('请上传支付凭证')
 					return false
 				}
+				this.props.list.loading = true
 				this.props.addRecharge({rechargeMoney:this.state.form.rechargeMoney,voucher:this.state.voucher})
 				this.setState({
 					dialogVisible: false
 				})
 			} else {
+				this.props.list.loading = false
 				console.log('error submit!!')
 				return false
 			}

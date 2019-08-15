@@ -14,7 +14,7 @@ export default class TodayTable extends Component {
       >
         <Table.Column label="#" width={ 60 } render={
           (a,b,c) => {
-            return c
+            return c+1
           }
         }
         />

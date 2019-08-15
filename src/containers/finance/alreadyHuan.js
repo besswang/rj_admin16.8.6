@@ -120,7 +120,7 @@ class AlreadyHuan extends Component {
 		const { list } = this.props
 		return (
 			<div>
-				<Search showLoanMode showSelect3 showTime>
+				<Search showLoanMode showSelect3 showTime name={ '选择约定还款日期范围' }>
 					<Form.Item>
 						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
 					</Form.Item>

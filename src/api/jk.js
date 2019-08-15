@@ -161,5 +161,10 @@ export default {
   'exportTheDayLoan': 'order/exportTheDayLoan', // 还款计划-当日到期-导出
   'exportOverdue': 'order/exportOverdue', // 催收管理-逾期列表-导出
   'selectChannelByName': 'selectChannelByName', // 根据渠道名查渠道
-  'selectTotal': 'user/selectTotal'
+  'selectTotal': 'user/selectTotal',
+  'deductionFee': 'order/deductionFee', // 还款计划-待还款-代扣
+  'exportCollection': 'order/exportCollection', //催收管理-催收列表-导出
+  'exportThePersion': 'order/exportThePersion', //催收管理-个人对帐-导出
+  'exportPendingRepay': 'order/exportPendingRepay', // 还款计划-待还款-导出
+  'exportOrderCompleted': 'order/exportOrderCompleted', // 还款计划-已完成-导出
 }

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { selectOrderCompleted } from './actions'
+import { selectOrderCompleted,exportOrderCompleted } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
 import filter from '@global/filter'
@@ -19,7 +19,8 @@ class AlreadyWan extends Component {
     sizeChange: PropTypes.func.isRequired,
     currentChange: PropTypes.func.isRequired,
     initSearch: PropTypes.func.isRequired,
-		selectOrderCompleted: PropTypes.func.isRequired
+		selectOrderCompleted: PropTypes.func.isRequired,
+		exportOrderCompleted: PropTypes.func.isRequired,
   }
 	constructor(props) {
 		super(props)
@@ -209,7 +210,9 @@ class AlreadyWan extends Component {
 					<Form.Item>
 						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
 					</Form.Item>
-					<Form.Item />
+					<Form.Item>
+						<Button onClick={ this.props.exportOrderCompleted } type="primary">{'导出列表'}</Button>
+					</Form.Item>
 				</Search>
 				<Loading loading={ list.loading }>
 					<Table
@@ -235,7 +238,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, selectOrderCompleted }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, selectOrderCompleted,exportOrderCompleted }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AlreadyWan)

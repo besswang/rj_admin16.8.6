@@ -121,3 +121,17 @@ export const exportOverdue = () => {
     await api.exportOverdueApi(searchAll)
   }
 }
+// 催收管理-催收列表-导出
+export const exportCollection = () => {
+  return async (dispatch, getState) => {
+    const searchAll = shouldFetchPosts(getState())
+    await api.exportCollectionApi(searchAll)
+  }
+}
+// 催收管理-个人对帐-导出
+export const exportThePersion = () => {
+  return async (dispatch, getState) => {
+    const searchAll = shouldFetchPosts(getState())
+    await api.exportThePersionApi(searchAll)
+  }
+}

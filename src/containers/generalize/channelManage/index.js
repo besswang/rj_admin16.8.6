@@ -220,7 +220,18 @@ class Apply extends Component {
 		this.form.validate((valid) => {
 			if (valid) {
 				if(this.state.id){// 编辑
-					const data = Object.assign({},this.state.form,{id:this.state.id},{type:this.state.generType})
+					const pam = {}
+					const { form } = this.state
+					for (const i in form) {
+						if (form['riskType'] === 'PAIXU') {
+							form['machineScore'] = null
+							form['userScore'] = null
+						}
+						if (form[i]){
+							pam[i] = form[i]
+						}
+					}
+					const data = Object.assign({},pam,{id:this.state.id},{type:this.state.generType})
 					this.props.updateChannel(data)
 				}else{//添加
 					this.props.insertChannel(this.state.form)
@@ -329,12 +340,17 @@ class Apply extends Component {
 									placeholder={ '选择方式' }
 								/>
 							</Form.Item>
-							<Form.Item label="机审分数" prop="machineScore">
-								<Input type="number" value={ form.machineScore } onChange={ this.onChange.bind(this, 'machineScore') } append="分" />
-							</Form.Item>
-							<Form.Item label="人工审核分数" prop="userScore">
-								<Input type="number" value={ form.userScore } onChange={ this.onChange.bind(this, 'userScore') } append="分" />
-							</Form.Item>
+							{
+								form.riskType === 'RUIJING' &&
+								<div>
+									<Form.Item label="机审分数" prop="machineScore">
+										<Input type="number" value={ form.machineScore } onChange={ this.onChange.bind(this, 'machineScore') } append="分" />
+									</Form.Item>
+									<Form.Item label="人工审核分数" prop="userScore">
+										<Input type="number" value={ form.userScore } onChange={ this.onChange.bind(this, 'userScore') } append="分" />
+									</Form.Item>
+								</div>
+							}
 							<Form.Item label="首借额度" prop="firstMoney">
 								<Input type="number" value={ form.firstMoney } onChange={ this.onChange.bind(this, 'firstMoney') } append="元" />
 							</Form.Item>

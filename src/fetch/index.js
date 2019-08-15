@@ -25,8 +25,8 @@ const formatUrl = obj => {
  * @param option (Object) 参数对象，包括method(请求方式，不填默认'get')，headers(设置请求头，选填)，data(请求参数，所有请求方式均适用)
  */
 const Fetch = (url, option = {}) => {
-  // 设置请求超时的时间，默认10秒
-  const timeout = option.timeout || 30000
+  // 设置请求超时的时间，默认50秒
+  const timeout = option.timeout || 50000
   option.headers = option.headers || headers
   // option.headers['token'] = `${window.sessionStorage.getItem('token')}`
   option.method = (option.method || 'get').toLocaleLowerCase()
@@ -60,6 +60,7 @@ function addTimeout(fetchPromise, timeout) {
   // 请求超时的Promise
   var timeoutPromise = new Promise((resolve, reject) => {
     timeoutFn = function () {
+      // Message.warning('请求超时，请重试')
       reject(new Error('请求超时，请重试'))
       // reject({
       //   code: 'timeOut',
@@ -112,6 +113,7 @@ function addTimeout(fetchPromise, timeout) {
       .catch(error => {
         // 请求出错则报错 Fetch Error: ***
         // console.log('3')
+        Message.warning('fetch请求出错')
         console.log('Fetch Error:', error)
       })
   })

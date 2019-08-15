@@ -38,7 +38,7 @@ class Add extends Component {
 					validator: (rule, value, callback) => {
 						const usern = /^[a-zA-Z0-9_]{1,}$/
 						if (value === '' || value === null) {
-							callback(new Error('请输入首借额度'))
+							callback(new Error('请输入渠道名称'))
 						} else if (!value.match(usern)) {
 							callback(new Error('渠道名称只能由字母数字组成'))
 						} else {
@@ -86,11 +86,21 @@ class Add extends Component {
 	}
 	saveContent = e => {
 		e.preventDefault()
-		console.log(this.state.form)
 		this.form.validate((valid) => {
 			if (valid) {
 				if(this.state.showName){
-					this.props.insertChannel(this.state.form, this.props.history)
+					const pam = {}
+					const { form } = this.state
+					for (const i in form) {
+						if (form['riskType'] === 'PAIXU') {
+							form['machineScore'] = null
+							form['userScore'] = null
+						}
+						if (form[i]){
+							pam[i] = form[i]
+						}
+					}
+					this.props.insertChannel(pam, this.props.history)
 				}else{
 					Message.warning('渠道名称已存在,不能添加重复的渠道名称')
 				}
@@ -158,12 +168,18 @@ class Add extends Component {
 							</Form.Item>
 						</Layout.Col>
 						<Layout.Col span="12" xs="24" sm="24" md="12" lg="10">
+						{
+							form.riskType === 'RUIJING' &&
 							<Form.Item label="机审分数" prop="machineScore">
 								<Input type="number" value={ form.machineScore } onChange={ this.onChange.bind(this, 'machineScore') } append="分" />
 							</Form.Item>
+						}
+						{
+							form.riskType === 'RUIJING' &&
 							<Form.Item label="人工审核分数" prop="userScore">
 								<Input type="number" value={ form.userScore } onChange={ this.onChange.bind(this, 'userScore') } append="分" />
 							</Form.Item>
+						}
 							<Form.Item label="授信额度" prop="firstMoney">
 								<Input type="number" value={ form.firstMoney } onChange={ this.onChange.bind(this, 'firstMoney') } append="元" />
 							</Form.Item>

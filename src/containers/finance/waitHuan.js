@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sizeChange, currentChange, initSearch } from '@redux/actions'
-import { selectPendingRepay, updateStateComplete, updateStateDelay, findAllDelayRate, updateStateReduction } from './actions'
+import { selectPendingRepay, updateStateComplete, updateStateDelay, findAllDelayRate, updateStateReduction,deductionFee,exportPendingRepay } from './actions'
 import Search from '@components/Search'
 import MyPagination from '@components/MyPagination'
 import filter from '@global/filter'
@@ -17,6 +17,7 @@ import { dwaitHuan } from '@meta/details'
 import api from '@api/index'
 import SelectDay from '@components/SelectDay'
 import validate from '@global/validate'
+import * as math from 'mathjs'
 class WaitHuan extends Component {
 	static propTypes = {
 		list: PropTypes.object.isRequired,
@@ -31,11 +32,16 @@ class WaitHuan extends Component {
 		updateStateReduction: PropTypes.func.isRequired,
 		dayList: PropTypes.arrayOf(
 			PropTypes.object.isRequired
-		)
+		),
+		deductionFee: PropTypes.func.isRequired,
+		exportPendingRepay: PropTypes.func.isRequired,
   }
 	constructor(props) {
 		super(props)
 		this.state = {
+			xuDay:'', // 下期应还日
+			xuMoney:0, // 续期金额
+			dialogVisible2:false,
 			listObj:{},
 			channelName:'',
 			delayNumber: null, // 延期天数
@@ -51,7 +57,25 @@ class WaitHuan extends Component {
 			loanDate: '', // 放款时间
 			finalDate: '', // 约定还款日
 			dialogVisible: false,
-			type: '', //线下  ONDERLINE，线上 ONLINE
+			realName:'',// 姓名
+			phone:'',// 手机号码
+			// type: '', //线下  ONDERLINE，线上 ONLINE
+			form2:{
+				delayId: null, // 延期选择天数id
+			},
+			type: 1, // 代扣方式 1：到期还款 2:到期续期
+			rules2:{
+				delayId: [{
+					required: true,
+					validator: (rule, value, callback) => {
+						if (value === '' || value === null) {
+							callback(new Error('请选择延期天数'))
+						} else {
+							callback()
+						}
+					}
+				}],
+			},
 			form: {
 				repaymentType: 3, // 还款方式（3:线下支付宝，4：线下微信）
 				repaymentMoney:null, // 还款金额
@@ -280,12 +304,15 @@ class WaitHuan extends Component {
 				}, {
 					label: '操作',
 					fixed: 'right',
-					width:180,
+					width:200,
 					render: row => {
 							return (
 								<div className="flex flex-direction_row">
 									<Button className="margin_right10" type="primary" size="mini" onClick={ this.openDialog.bind(this,row) }>
 										{'还款'}
+									</Button>
+									<Button className="margin_right10" type="success" size="mini" onClick={ this.openDialog2.bind(this,row) }>
+										{'代扣'}
 									</Button>
 									<DetailBtn linkTo={ dwaitHuan } row={ row } />
 								</div>
@@ -308,6 +335,19 @@ class WaitHuan extends Component {
 		}
 		window.sessionStorage.setItem('locationState', JSON.stringify(sess))
 		// this.props.findAllDelayRate()
+		this.getNewData('2019-08-09', 2)
+	}
+	getNewData = (dateTemp, days) => {
+		const dateT = dateTemp.split('-')
+		const nDate = new Date(dateT[1] + '-' + dateT[2] + '-' + dateT[0]) //转换为MM-DD-YYYY格式
+		const millSeconds = Math.abs(nDate) + (days * 24 * 60 * 60 * 1000)
+		const rDate = new Date(millSeconds)
+		const year = rDate.getFullYear()
+		let month = rDate.getMonth() + 1
+		if (month < 10) month = '0' + month
+		let date = rDate.getDate()
+		if (date < 10) date = '0' + date
+		return (year + '-' + month + '-' + date)
 	}
   handleSearch = e => {
     e.preventDefault()
@@ -322,26 +362,37 @@ class WaitHuan extends Component {
     this.props.selectPendingRepay()
 	}
 	onChange(key, value) {
-		console.log(key)
-		console.log(value)
 		this.setState({
 			form: Object.assign({}, this.state.form, { [key]: value })
 		})
 		if (key === 'dayValue'){
 			const day = this.props.dayList.filter(item => item.id === value)
+			const reM = math.round(day[0].delayRate * this.state.applyMoney * day[0].dayNum, 2)
 			this.setState({
 				delayRate: day[0].delayRate,
-				reMoney: day[0].delayRate * this.state.applyMoney,
+				reMoney: reM,
 				delayNumber: day[0].dayNum
+			})
+		}
+	}
+	onChange2(key, value) {
+		this.setState({
+			form2: Object.assign({}, this.state.form2, { [key]: value })
+		})
+		if (key === 'delayId') {
+			const day = this.props.dayList.filter(item => item.id === value)
+			const reM = math.round(day[0].delayRate * this.state.applyMoney * day[0].dayNum, 2)
+			const xuD = this.getNewData(this.state.finalDate, day[0].dayNum)
+			this.setState({
+				xuMoney: reM,
+				xuDay: xuD
 			})
 		}
 	}
 	openDialog = obj => {
 		const time = new Date()
 		const t = timeDate.time(time, 'yyyy-MM-dd')
-		console.log(t)
-		console.log(obj.finalDate)
-		if (t > obj.finalDate) {
+		if (t < obj.finalDate) {
 			MessageBox.confirm('非常抱歉当前订单没有到还款日不能进行线下操作 请你联系技术人员，和让客户在APP操作还款或续期!', '提示', {
 				type: 'warning'
 			}).then(() => {
@@ -363,7 +414,7 @@ class WaitHuan extends Component {
 			serviceMoney: obj.serviceMoney, // 服务费
 			loanDate: obj.loanDate, // 放款时间
 			finalDate: obj.finalDate, // 约定还款日
-			type:''
+			// type:''
 		})
 		this.tabClick('1')
 		this.form.resetFields()
@@ -374,11 +425,11 @@ class WaitHuan extends Component {
 		this.form.validate((valid) => {
 			if (valid) {
 				const obj = {}
-				const { activeName, form, orderId, type, delayNumber, delayRate, reMoney } = this.state
-				if (type === ''){
-					Message.warning('请选择线下还是线上！')
-					return false
-				}
+				const { activeName, form, orderId, delayNumber, delayRate, reMoney } = this.state
+				// if (type === ''){
+				// 	Message.warning('请选择线下还是线上！')
+				// 	return false
+				// }
 				for(const a in form){
 					if (form[a]){
 						obj[a] = form[a]
@@ -388,14 +439,41 @@ class WaitHuan extends Component {
 				const adminObj = JSON.parse(window.sessionStorage.getItem('adminInfo'))
 				const data = Object.assign({}, obj, {orderId:orderId},{adminName:adminObj.adminName})
 				if(activeName === '1'){ // 还款
-				 	const huan = Object.assign({}, data,{type:type})
-					this.props.updateStateComplete(huan)
+				 	// const huan = Object.assign({}, data,{type:type})
+					this.props.updateStateComplete(data)
 				} else if (activeName === '2') { // 延期
-				 	const trans = Object.assign({},data,{delayNumber:delayNumber},{delayRate:delayRate},{reMoney:reMoney},{type:type})
+					 // const trans = Object.assign({},data,{delayNumber:delayNumber},{delayRate:delayRate},{reMoney:reMoney},{type:type})
+					const trans = Object.assign({},data,{delayNumber:delayNumber},{delayRate:delayRate},{reMoney:reMoney})
 				 	this.props.updateStateDelay(trans)
 				} else { // 减免
 				 	this.props.updateStateReduction(data)
 				}
+				this.setState({
+					dialogVisible: false
+				})
+			} else {
+				console.log('error submit!!')
+				return false
+			}
+		})
+	}
+	saveContent2 = e => { // 代扣
+		e.preventDefault()
+		// console.log(this.state.form2)
+		this.form2.validate((valid) => {
+			if (valid) {
+				const { form2, orderId, type } = this.state
+				const obj = {}
+				for(const a in form2){
+					if (type === 1){
+						form2['delayId'] = null
+					}
+					if(form2[a]){
+						obj[a] = form2[a]
+					}
+				}
+				const data = Object.assign({}, obj, {orderId:orderId},{type:type})
+				this.props.deductionFee(data)
 				this.setState({
 					dialogVisible: false
 				})
@@ -445,16 +523,53 @@ class WaitHuan extends Component {
 			type:v
 		})
 	}
+	openDialog2 = obj => {
+		const time = new Date()
+		const t = timeDate.time(time, 'yyyy-MM-dd')
+		if (t < obj.finalDate) {
+			MessageBox.confirm('非常抱歉当前订单没有到还款日不能进行线下操作 请你联系技术人员，和让客户在APP操作还款或续期!', '提示', {
+				type: 'warning'
+			}).then(() => {
+
+			}).catch(() => {
+
+			})
+			return false
+		}
+		this.setState({
+			listObj: obj,
+			channelName: obj.channelName,
+			dialogVisible2: true,
+			orderId: obj.id,
+			orderNumber: obj.orderNumber, // 订单号
+			realRepaymentMoney: obj.realRepaymentMoney, // 应还金额
+			applyMoney: obj.applyMoney, // 借款金额
+			reMoney: obj.applyMoney, // 延期金额
+			serviceMoney: obj.serviceMoney, // 服务费
+			loanDate: obj.loanDate, // 放款时间
+			finalDate: obj.finalDate, // 约定还款日
+			realName: obj.realName,
+			phone:obj.phone,
+			type: 1,
+			xuMoney:0,
+			xuDay:obj.finalDate
+		})
+		this.form2.resetFields()
+		this.findRepaymentMoney(obj.id)
+		this.props.findAllDelayRate(obj.channelName)
+	}
 	render() {
 		const { list, btnLoading, dayList } = this.props
-		const { columns, dialogVisible, form, rules, orderNumber, realRepaymentMoney, applyMoney, serviceMoney, loanDate, finalDate, activeName, surplusMoney, reMoney, listObj, type } = this.state
+		const { columns, dialogVisible, form, rules, orderNumber, realRepaymentMoney, applyMoney, serviceMoney, loanDate, finalDate, activeName, surplusMoney, reMoney, listObj, dialogVisible2, form2, rules2,realName,phone,xuMoney,type, xuDay } = this.state
 		return (
 			<div>
 				<Search showSelect2 showLoanType showSelectClient showSelectTime>
 					<Form.Item>
 						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
 					</Form.Item>
-					<Form.Item />
+					<Form.Item>
+						<Button onClick={ this.props.exportPendingRepay } type="primary">{'导出列表'}</Button>
+					</Form.Item>
 				</Search>
 				<Loading loading={ list.loading }>
 					<Table
@@ -501,7 +616,7 @@ class WaitHuan extends Component {
 									<p className="red">{'剩余应还:'}{ surplusMoney-form.repaymentMoney }
 										{this.valiNum(surplusMoney-form.repaymentMoney)}
 									</p>
-									{/* 延期天数中的百分比 * 借款金额 = 延期金额 */}
+									{/* 延期天数中的百分比 * 借款金额*天数 = 延期金额 */}
 									{
 										activeName === '2' &&
 										<p>{'延期金额:'}{ reMoney }</p>
@@ -598,7 +713,7 @@ class WaitHuan extends Component {
 							<Form.Item label="单号" prop="payNumber">
 								<Input value={ form.payNumber } onChange={ this.onChange.bind(this, 'payNumber') } />
 							</Form.Item>
-							{
+							{/* {
 								activeName !== '3' &&
 								<Form.Item label="">
 									<Radio.Group value={ type } onChange={ e=> this.onTypeChange(e) } >
@@ -606,12 +721,64 @@ class WaitHuan extends Component {
 										<Radio value={ 'ONLINE' }>{'线上'}</Radio>
 									</Radio.Group>
 								</Form.Item>
-							}
+							} */}
 						</Form>
 					</Dialog.Body>
 					<Dialog.Footer className="dialog-footer">
 						<Button onClick={ () => this.setState({ dialogVisible: false }) }>{'取 消'}</Button>
 						<Button type="primary" onClick={ this.saveContent } loading={ btnLoading }>{'确 定'}</Button>
+					</Dialog.Footer>
+				</Dialog>
+				<Dialog
+					title="代扣"
+					visible={ dialogVisible2 }
+					onCancel={ () => this.setState({ dialogVisible2: false }) }
+				>
+					<Dialog.Body>
+							<ul className="flex flex-direction_row">
+								<li style={ {width:'36%'} }>
+									<p className="ptb5">{'订单号: '}{ orderNumber }</p>
+									<p className="ptb5">{'借款金额: '}{ applyMoney }</p>
+								</li>
+								<li className="flex_1">
+									<p className="ptb5">{'姓名: '}{realName}</p>
+									<p className="ptb5">{'服务费: '}{ serviceMoney }</p>
+								</li>
+								<li className="flex_1">
+									<p className="ptb5">{'手机号码: '}{phone}</p>
+									<p className="ptb5">{'应还金额: '}{ realRepaymentMoney }</p>
+								</li>
+							</ul>
+							<p className="ptb5">{'借款期限: '}{ timeDate.time(loanDate, 'yyyy-MM-dd hh:mm:ss') }{'-'}{ finalDate }</p>
+							<p className="red ptb5">{'剩余应还: '}{ surplusMoney-form.repaymentMoney }
+								{this.valiNum(surplusMoney-form.repaymentMoney)}
+							</p>
+						<Form labelWidth="110" ref={ e => {this.form2=e} } model={ form2 } rules={ rules2 }>
+							<Form.Item label="代扣方式">
+								<Radio.Group value={ type } onChange={ e => this.onTypeChange(e) }>
+									<Radio value={ 1 }>{'到期还款'}</Radio>
+									<Radio value={ 2 }>{'到期续期'}</Radio>
+								</Radio.Group>
+							</Form.Item>
+							{
+								type === 2 &&
+								<div>
+									<Form.Item label="延期天数" prop="delayId">
+										<SelectDay value={ form2.delayId } options={ dayList } onChange={ this.onChange2.bind(this, 'delayId') }/>
+									</Form.Item>
+									<Form.Item label="续期金额">
+										{ xuMoney }
+									</Form.Item>
+									<Form.Item label="下期应还日">
+										{ xuDay }
+									</Form.Item>
+								</div>
+							}
+						</Form>
+					</Dialog.Body>
+					<Dialog.Footer className="dialog-footer">
+						<Button onClick={ () => this.setState({ dialogVisible2: false }) }>{'取 消'}</Button>
+						<Button type="primary" onClick={ this.saveContent2 } loading={ btnLoading }>{'确 定'}</Button>
 					</Dialog.Footer>
 				</Dialog>
 			</div>
@@ -625,7 +792,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({sizeChange, currentChange, initSearch, selectPendingRepay, updateStateComplete, updateStateDelay,findAllDelayRate, updateStateReduction }, dispatch)
+		...bindActionCreators({sizeChange, currentChange, initSearch, selectPendingRepay, updateStateComplete, updateStateDelay,findAllDelayRate, updateStateReduction, deductionFee,exportPendingRepay }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(WaitHuan)

@@ -3,11 +3,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { DateRangePicker } from 'element-react'
 // let timeref = null
-const Settime = ({value, onChange, t}) => (
+const Settime = ({value, onChange,placeholder, t}) => (
 	<DateRangePicker
 		value={ value }
 		isShowTime
-		placeholder="选择日期范围"
+		placeholder={ placeholder ? placeholder:'选择日期范围' }
 		align="right"
 		ref={ e => { t = e } }
 		onChange={ e => onChange(e) }
@@ -50,5 +50,6 @@ Settime.propTypes = {
 	value: PropTypes.array,
 	onChange: PropTypes.func,
 	t: PropTypes.func,
+	placeholder: PropTypes.string
 }
 export default Settime

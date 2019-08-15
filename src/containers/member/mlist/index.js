@@ -212,13 +212,13 @@ class Mlist extends Component{
 
 	}
 	componentDidMount() {
+		this.props.handelSearch()
 		const sess = {
 			name: '用户信息',
 			title: '会员列表',
 			url: '/member/mlist'
 		}
 		window.sessionStorage.setItem('locationState', JSON.stringify(sess))
-		this.props.handelSearch()
 		this.props.tabAdd({
 			name: '会员列表',
 			url: '/member/mlist'

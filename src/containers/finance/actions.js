@@ -109,6 +109,19 @@ export const updateStateComplete = obj => {
     }
   }
 }
+//还款计划-待还款-代扣
+export const deductionFee = obj => {
+  return async dispatch => {
+    dispatch(btnRequestPosts())
+    const data = await api.deductionFeeApi(obj)
+    if (data.success) {
+      dispatch(selectPendingRepay())
+      dispatch(btnReceivePosts(data.msg))
+    } else {
+      dispatch(btnFailurePosts(data.msg))
+    }
+  }
+}
 // 待还款-延期
 export const updateStateDelay = obj => {
   return async dispatch => {
@@ -230,5 +243,19 @@ export const exportTheDayLoan = () => {
   return async (dispatch, getState) => {
     const searchAll = shouldFetchPosts(getState())
     await api.exportTheDayLoanApi(searchAll)
+  }
+}
+// 还款计划-待还款-导出
+export const exportPendingRepay = () => {
+  return async (dispatch, getState) => {
+    const searchAll = shouldFetchPosts(getState())
+    await api.exportPendingRepayApi(searchAll)
+  }
+}
+// 还款计划-已完成-导出
+export const exportOrderCompleted = () => {
+  return async (dispatch, getState) => {
+    const searchAll = shouldFetchPosts(getState())
+    await api.exportOrderCompletedApi(searchAll)
   }
 }
