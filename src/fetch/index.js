@@ -113,7 +113,7 @@ function addTimeout(fetchPromise, timeout) {
       .catch(error => {
         // 请求出错则报错 Fetch Error: ***
         // console.log('3')
-        Message.warning('fetch请求出错')
+        // Message.warning('fetch请求出错')
         console.log('Fetch Error:', error)
       })
   })

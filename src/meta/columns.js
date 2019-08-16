@@ -33,10 +33,10 @@ export const NORMAL_COLUMNS = [
     label: '最后还款日期',
     width: 180,
     prop: 'realRepaymentDate',
-    // render: row => {
-    //   const date = timeDate.time(row.lasttime, 'yyyy-MM-dd hh:mm:ss')
-    //   return date
-    // }
+    render: row => {
+      const date = timeDate.time(row.realRepaymentDate, 'yyyy-MM-dd hh:mm:ss')
+      return date
+    }
   }, {
     label: '借款次数',
     prop: 'loanNum'

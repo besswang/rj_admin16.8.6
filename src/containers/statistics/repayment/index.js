@@ -210,7 +210,7 @@ class RepayMent extends Component {
               width: 100,
               prop: 'fuShouldReturnNum',
               render: row => {
-                return row.fuShouldReturnNum ? row.fuAlreadyReturnNum:0
+                return row.fuShouldReturnNum ? row.fuShouldReturnNum : 0
               }
             }, {
               label: '已还单数',

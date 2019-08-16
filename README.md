@@ -66,3 +66,13 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+src
+├── assets          // 资源目录 图片，样式，iconfont
+├── components      // 全局通用组件目录
+├── config          // 项目配置，拦截器，开关
+├── plugins         // 插件相关，生成路由、请求、store 等实例，并挂载 Vue 实例
+├── directives      // 拓展指令集合
+├── routes          // 路由配置
+├── service         // 服务层
+├── utils           // 工具类
+└── views           // 视图层

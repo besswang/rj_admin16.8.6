@@ -96,7 +96,16 @@ class Audit extends Component{
 				}, {
 					label: '审核建议',
 					width: 100,
-					prop: ''
+					prop: 'toExamine',
+					render: row => {
+						const y = <span className="theme-blue">{'通过'}</span>
+						const n = <span className="dis-red">{'不通过'}</span>
+						if (row.toExamine){
+							return row.toExamine === 'noPass' ? n : y
+						}else{
+							return ''
+						}
+					}
 				}, {
 					label: '操作',
 					fixed: 'right',
