@@ -121,7 +121,7 @@ class Self extends Component {
 		const { list } = this.props
 		return (
 			<div>
-				<Search showSelect2 showColl>
+				<Search showSelect2 showSomeColl>
 					<Form.Item>
 						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
 					</Form.Item>

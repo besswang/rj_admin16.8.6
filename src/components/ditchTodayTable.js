@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Table } from 'element-react'
 import PropTypes from 'prop-types'
-// import num from '../global/num'
+import num from '../global/num'
 export default class TodayTable extends Component {
   render() {
     const [ ...arrObj ] = this.props.data
@@ -18,7 +18,7 @@ export default class TodayTable extends Component {
           }
         }
         />
-        <Table.Column label="渠道名称" prop="channelName" />
+        <Table.Column label="渠道名称" prop="channelName" width={ 140 }/>
         <Table.Column label="UV" prop="uv"/>
         <Table.Column label="注册人数" prop="userCount"/>
         <Table.Column label="个人信息" prop="emergencyCount"/>
@@ -26,32 +26,35 @@ export default class TodayTable extends Component {
         <Table.Column label="手机认证" prop="phoneDateCount"/>
         <Table.Column label="银行认证" prop="bankAuthenticationCount"/>
         <Table.Column label="申请单数" prop="orderCount"/>
-        <Table.Column label="申请率" prop="orderRate"/>
-        {/* render = {
+        {/* prop = "orderRate" */}
+        {/* <Table.Column label="申请率" prop="orderRate" /> */}
+        <Table.Column label="申请率" render = {
           (row) => {
-            if (row.apply && row.register) {
+            if (row.orderCount && row.userCount) {
               // 申请率 = 申请单数 / 注册人数
-              const applynum = parseInt(row.apply) / parseInt(row.register)
-              // return (this.toDecimal(applynum))
-              return (num.toDecimal(applynum))
+              const applynum = parseInt(row.orderCount) / parseInt(row.userCount)
+              return (num.toDecimal(applynum*100))
             } else {
               return ('0.00%')
             }
           }
-        } */}
+        }
+        />
+
         <Table.Column label="放款人数" prop="orderStateCount"/>
-        <Table.Column label="放款率" prop="orderStateRate" />
-        {/* render = {
+        {/* prop = "orderStateRate" */}
+        <Table.Column label="放款率" render = {
           (row) => {
-            if (row.loanNum && row.register) {
+            if (row.orderStateCount && row.userCount) {
               // 放款率 = 放款人数 / 注册人数
-              const loanNumnum = parseInt(row.loanNum) / parseInt(row.register)
-              return (num.toDecimal(loanNumnum))
+              const loanNumnum = parseInt(row.orderStateCount) / parseInt(row.userCount)
+              return (num.toDecimal(loanNumnum*100))
             } else {
               return ('0.00%')
             }
           }
-        } */}
+        }
+        />
       </Table>
     )
   }

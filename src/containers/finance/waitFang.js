@@ -39,7 +39,7 @@ class WaitFang extends Component {
 						}
 					}, {
 					label: '渠道名称',
-					width:120,
+					width:140,
 					prop: 'channelName'
 				}, {
 					label: '新老客户',
@@ -55,6 +55,7 @@ class WaitFang extends Component {
 					prop: 'realName'
 				}, {
 					label: '米融分',
+					width:100,
 					prop: 'riskNum'
 				}, {
 					label: '手机号码',
@@ -125,7 +126,7 @@ class WaitFang extends Component {
 					prop: 'bankNumber'
 				}, {
 					label: '打款失败信息',
-					width: 140,
+					width: 200,
 					prop: 'failureMessage'
 				}, {
 					label: '操作',

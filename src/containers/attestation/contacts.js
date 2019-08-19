@@ -30,7 +30,7 @@ class BlackUser extends Component {
 						}
 				}, {
 					label: '手机号码',
-					width:130,
+					width:140,
 				  prop: 'phone'
 				}, {
 					label: '真实姓名',
@@ -54,7 +54,7 @@ class BlackUser extends Component {
 				  prop: 'sociology'
 				}, {
 					label: '社会姓名',
-					width: 100,
+					width: 120,
 				  prop: 'sociologyName'
 				}, {
 					label: '社会联系人电话',

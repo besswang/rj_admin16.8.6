@@ -286,7 +286,7 @@ class Overdue extends Component{
 		const { form, rules, dialogVisible } = this.state
 		return (
 			<div>
-				<Search showSelect2 showColl showSelectClient showSelectTime>
+				<Search showSelect2 showSomeColl showSelectClient showSelectTime>
 					<Form.Item>
 						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
 					</Form.Item>

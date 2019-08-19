@@ -12,6 +12,8 @@ import MyPagination from '@components/MyPagination'
 import filter from '@global/filter'
 import SelectPicker from '@components/SelectPicker'
 import timeDate from '@global/timeDate'
+import DetailBtn from '@components/DetailBtn'
+import { dCurrentDay } from '@meta/details'
 class WaitHuan extends Component {
 	static propTypes = {
 		btnLoading: PropTypes.bool.isRequired,
@@ -161,6 +163,7 @@ class WaitHuan extends Component {
 					prop: 'bankNumber'
 				}, {
 					label: '操作',
+					width:160,
 					fixed: 'right',
 					render: row => {
 							return (
@@ -168,6 +171,7 @@ class WaitHuan extends Component {
 									<Button className="margin_right10" type="primary" size="mini" onClick={ this.openDialog.bind(this, row) }>
 										{'备注'}
 									</Button>
+									<DetailBtn linkTo={ dCurrentDay } row={ row } />
 								</div>
 							)
 					}

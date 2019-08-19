@@ -68,6 +68,7 @@ class RepayMent extends Component {
           }
         }, {
           label: '还款率',
+          width: 100,
           // prop: 'repaymentRate', // 还款率 = 实还单数 /应还单数
           render: row => {
             if (row.fullRepaymentNum !== null && row.renewNum !== null) {
@@ -88,6 +89,7 @@ class RepayMent extends Component {
           prop: 'fullRepaymentNum'
         }, {
           label: '全额率', // 全额还款率
+          width:100,
           prop: 'fullRepaymentRate', // 全额还款单数/应还单数
           render: row => {
             if (row.fullRepaymentNum && row.shouldReturnNum) {
@@ -103,6 +105,7 @@ class RepayMent extends Component {
           prop: 'renewNum'
         }, {
           label: '续期率',
+          width: 100,
           prop: 'renewRate', // 续期单数/应还单数
           render: row => {
             if (row.renewNum && row.shouldReturnNum) {
@@ -115,16 +118,27 @@ class RepayMent extends Component {
         }, {
           label: '复借单数',
           width: 100,
-          prop: 'moreBorrowNum'
-        }, {
-          label: '复借率',
-          prop: 'moreBorrowRate', // 复借单数/应还单数
           render: row => {
-            if (row.moreBorrowNum && row.shouldReturnNum) {
-              const n = parseInt(row.moreBorrowNum) / parseInt(row.shouldReturnNum)
-              return (num.toDecimal(n*100))
-            } else {
-              return ('0.00%')
+            // 结果= 复借单数+续期单数
+            if (row.moreBorrowNum !== null || row.renewNum !== null){
+              return row.moreBorrowNum + row.renewNum
+            }else{
+              return 0
+            }
+          }
+        }, {
+          label: '复借率', // 复借单数/应还单数
+          render: row => {
+            if (row.moreBorrowNum !== null || row.renewNum !== null) {
+              const a = row.moreBorrowNum + row.renewNum
+              if (a && row.shouldReturnNum) {
+                const n = parseInt(a) / parseInt(row.shouldReturnNum)
+                return (num.toDecimal(n * 100))
+              } else {
+                return ('0.00%')
+              }
+            }else{
+              return '0.00%'
             }
           }
         }, {
@@ -153,6 +167,7 @@ class RepayMent extends Component {
               }
             }, {
               label: '还款率',
+              width: 100,
               prop: 'newRepaymentRate', // 已还单数（首借）/应还单数（首借）
               render: row => {
                 if (row.newAlreadyReturnNum && row.newShouldReturnNum) {

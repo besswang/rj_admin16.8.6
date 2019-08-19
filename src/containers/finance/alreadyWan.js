@@ -172,7 +172,7 @@ class AlreadyWan extends Component {
 					prop: 'bankName'
 				}, {
 					label: '银行账号',
-					width: 200,
+					width: 220,
 					prop: 'bankNumber'
 				}, {
 					label: '操作',

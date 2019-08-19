@@ -3,12 +3,13 @@ import { Form, Input } from 'element-react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
-import { selectSubreddit, selectSearchText,saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType, selectAllChannel,selectChannel, allRoles, changeRole, changeAdminName, changeLoanType, changeColl, changeAllot,changeState, changePayTypeId } from '@redux/actions'
+import { selectSubreddit, selectSearchText,saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType, selectAllChannel,selectChannel, allRoles, changeRole, changeAdminName, changeLoanType, changeColl, changeAllot,changeState, changePayTypeId, selectAdminByCui } from '@redux/actions'
 import SelectPicker from '@components/SelectPicker'
 import Time from '@components/Settime'
 import { MLIST_SELECT, AUDIT_SELECT, AUDIT_SELECT_LESS, CUSTOMER_SELECT, TIME_SELECT, TIME_SELECT_LESS, LOAN_TYPE, LOAN_MODE,ALLOT_TYPE, STATE_TYPE } from '@meta/select'
 class Search extends Component {
   static propTypes = {
+    showSomeColl: PropTypes.bool,
     showRealName: PropTypes.bool,
     showSelectClient: PropTypes.bool,
     showSelectTime: PropTypes.bool,
@@ -63,7 +64,8 @@ class Search extends Component {
     isState: PropTypes.number,
     payTypeId: PropTypes.number,
     changePayTypeId: PropTypes.func.isRequired,
-    name: PropTypes.string
+    name: PropTypes.string,
+    selectAdminByCui: PropTypes.func.isRequired,
   }
   componentWillMount() {
     // 查询表单的初始化
@@ -72,14 +74,20 @@ class Search extends Component {
       this.props.selectAllChannel()
     }
     if(this.props.showRole){
+      // 选择角色
       this.props.allRoles()
     }
     if (this.props.showColl){
+      // 查询角色下当前的催收人员
       this.props.allRoles(true)
+    }
+    if(this.props.showSomeColl){
+      // 查询角色id是3和4的数据
+      this.props.selectAdminByCui()
     }
   }
   render() {
-    const { typeId, typeName, realName, time, regTime, newClient, selectTime, showSelectClient, showSelectTime, showSelectTime2, showTime, showSelect1, showSelect2, showSelect3, showLoanType, showLoanMode, showBeginTime,showAllotType,showState, showRealName, showChannel, channelList,channelName, roleList, showRole, roleId, showAdminName, adminName, loanType,showColl, neiCuiId, collList, isTheDay, payTypeId, isState } = this.props
+    const { typeId, typeName, realName, time, regTime, newClient, selectTime, showSelectClient, showSelectTime, showSelectTime2, showTime, showSelect1, showSelect2, showSelect3, showLoanType, showLoanMode, showBeginTime,showAllotType,showState, showRealName, showChannel, channelList,channelName, roleList, showRole, roleId, showAdminName, adminName, loanType,showColl, neiCuiId, collList, isTheDay, payTypeId, isState, showSomeColl } = this.props
     return (
       <div>
       <Form inline>
@@ -169,8 +177,19 @@ class Search extends Component {
             />
           </Form.Item>
         }
-        {
+        { // 显示角色id3的数据
           showColl &&
+          <Form.Item>
+            <SelectPicker
+              value={ neiCuiId }
+              onChange={ e => this.props.changeColl(e) }
+              options={ collList }
+              placeholder={ '选择催收人员' }
+            />
+          </Form.Item>
+        }
+        {// 显示角色id3和4的数据
+          showSomeColl &&
           <Form.Item>
             <SelectPicker
               value={ neiCuiId }
@@ -294,7 +313,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({ selectSubreddit, selectSearchText, saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType,selectAllChannel ,selectChannel, allRoles, changeRole, changeAdminName, changeLoanType, changeColl, changeAllot,changeState, changePayTypeId }, dispatch)
+		...bindActionCreators({ selectSubreddit, selectSearchText, saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType,selectAllChannel ,selectChannel, allRoles, changeRole, changeAdminName, changeLoanType, changeColl, changeAllot,changeState, changePayTypeId, selectAdminByCui }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Search)

@@ -67,14 +67,14 @@ module.exports = function(webpackEnv) {
   const publicUrl = isEnvProduction
     ? publicPath.slice(0, -1)
 
-    // : isEnvDevelopment && 'http://47.94.142.215:8081'
+    //: isEnvDevelopment && 'http://47.94.142.215:8081'
     // : isEnvDevelopment && 'http://localhost:8081'
-    //: isEnvDevelopment && 'https://qqter.chenxianshen.org.cn'
+    : isEnvDevelopment && 'https://qqter.chenxianshen.org.cn'
     //: isEnvDevelopment && 'http://h5.huakodai.com'
     // : isEnvDevelopment && 'http://qqter.chenxianshen.org.cn/'
     // : isEnvDevelopment && 'http://cs.huakodai.com'
     //: isEnvDevelopment && 'https://hefengqb.qidianshenghuo.com.cn'
-    : isEnvDevelopment && 'https://mxjqingjie.imxiaomang.com.cn'
+    //: isEnvDevelopment && 'https://mxjqingjie.imxiaomang.com.cn'
     //: isEnvDevelopment && 'https://qqter.anwangfei.cn'
     //: isEnvDevelopment && 'https://pizzaqb.zhengxingmeirong.net.cn'
     //: isEnvDevelopment && 'https://qutorpsqb.qichegongzhuang.cn'

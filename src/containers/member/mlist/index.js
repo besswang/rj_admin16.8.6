@@ -68,6 +68,7 @@ class Mlist extends Component{
 					prop: 'loanQuota'
 				}, {
 					label: '米融分',
+					width:100,
 					prop: 'thresholdScore'
 				}, {
 					label:'身份证认证',

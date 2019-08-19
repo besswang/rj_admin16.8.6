@@ -45,7 +45,7 @@ class AlreadyHuan extends Component {
 					}
 				}, {
 					label: '支付单号',
-					width: 200,
+					width: 220,
 					prop: 'payNumber'
 				}, {
 					label: '申请单号',
@@ -81,7 +81,7 @@ class AlreadyHuan extends Component {
 					prop: 'realName'
 				}, {
 					label: '用户手机',
-					width: 130,
+					width: 140,
 					prop: 'phone'
 				}, {
 					label: '应还金额',

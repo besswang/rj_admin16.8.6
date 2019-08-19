@@ -65,6 +65,15 @@ export const dwaitHuan = {
   },
   text: text
 }
+export const dCurrentDay = {
+  pathname: pathname,
+  state: {
+    name: applyInfo,
+    title: '当日到期',
+    url: '/finance/day'
+  },
+  text: text
+}
 export const dalreadyWan = {
   pathname: pathname,
   state: {

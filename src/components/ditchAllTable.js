@@ -18,11 +18,11 @@ export default class AllTable extends Component {
           }
         }
         />
-        <Table.Column label="渠道名称" prop="channelName" />
+        <Table.Column label="渠道名称" prop="channelName" width={ 120 } />
         <Table.Column label="UV" prop="uv"/>
-        <Table.Column label="日注册量" prop="userCount"/>
-        <Table.Column label="日申请量" prop="orderCount"/>
-        <Table.Column label="日申请率" prop="orderRate" />
+        <Table.Column label="日注册量" prop="userCount" width={ 100 } />
+        <Table.Column label="日申请量" prop="orderCount" width={ 100 } />
+        <Table.Column label="日申请率" prop="orderRate" width={ 100 } />
         {/* render = {
           (row) => {
             // 日申请率 = 日申请量/日注册量
@@ -55,11 +55,11 @@ export default class AllTable extends Component {
             }
           }
         /> */}
-        <Table.Column label="放款人数" prop="orderStateCount" />
+        <Table.Column label="放款人数" prop="orderStateCount" width={ 100 } />
         <Table.Column label="放款率" prop="orderStateCount" />
-        <Table.Column label="总注册量" prop="userTotalCount"/>
-        <Table.Column label="总申请量" prop="orderTotalCount"/>
-        <Table.Column label="总申请率" prop="orderTotalRate" />
+        <Table.Column label="总注册量" prop="userTotalCount" width={ 100 } />
+        <Table.Column label="总申请量" prop="orderTotalCount" width={ 100 } />
+        <Table.Column label="总申请率" prop="orderTotalRate" width={ 100 } />
         {/* render={
           (row) => {
             // 总申请率 = 总申请量/总注册量
@@ -91,8 +91,8 @@ export default class AllTable extends Component {
             }
           }
         /> */}
-        <Table.Column label="总放款人数" prop="orderTotalStateCount" />
-        <Table.Column label="总放款率" prop="orderTotalStateRate" />
+        <Table.Column label="总放款人数" prop="orderTotalStateCount" width={ 120 } />
+        <Table.Column label="总放款率" prop="orderTotalStateRate" width={ 100 } />
       </Table>
     )
   }

@@ -230,7 +230,7 @@ export const allRoles = coll => {
     const data = await api.allRolesApi()
     if (data.success) {
       if(coll){
-        const obj = data.data.filter(item => item.roleName === '催收员')
+        const obj = data.data.filter(item => item.roleName === 'nei催')
         if (obj[0]) {
           dispatch(selectAllAdmin(obj[0].id))
         }
@@ -259,6 +259,15 @@ export const selectAllAdmin = id => {
     }
   }
 }
+export const selectAdminByCui = () => {
+  return async dispatch => {
+    const data = await api.selectAdminByCuiApi()
+    if (data.success) {
+      dispatch(saveCollList(data.data))
+    }
+  }
+}
+
 export const changeAllot = data => ({
   type: type.SELECT_ALLOT_TYPE,
   data

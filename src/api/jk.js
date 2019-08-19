@@ -167,4 +167,5 @@ export default {
   'exportThePersion': 'order/exportThePersion', //催收管理-个人对帐-导出
   'exportPendingRepay': 'order/exportPendingRepay', // 还款计划-待还款-导出
   'exportOrderCompleted': 'order/exportOrderCompleted', // 还款计划-已完成-导出
+  'selectAdminByCui': 'admin/selectAdminByCui' //角色id是3和4的催收员列表
 }

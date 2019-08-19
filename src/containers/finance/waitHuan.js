@@ -277,7 +277,7 @@ class WaitHuan extends Component {
 					prop: 'bankName'
 				}, {
 					label: '银行卡号',
-					width: 200,
+					width: 220,
 					prop: 'bankNumber'
 				}, {
 					label: '订单类型',
@@ -693,8 +693,9 @@ class WaitHuan extends Component {
 										<Input type="number" value={ form.overdueReductionMoney } onChange={ this.onChange.bind(this, 'overdueReductionMoney') } />
 									</Form.Item>
 									<Form.Item label="逾期">
-											<p>{ listObj.realOverdueMoney-form.overdueReductionMoney }</p>
-											{this.valiNum(listObj.realOverdueMoney-form.overdueReductionMoney)}
+											{/* <p>{ listObj.realOverdueMoney-form.overdueReductionMoney }</p>
+											{this.valiNum(listObj.realOverdueMoney-form.overdueReductionMoney)} */}
+											<p>{ listObj.overdueRealMoney !== null ? listObj.overdueRealMoney : 0 }</p>
 									</Form.Item>
 								</div>
 							}

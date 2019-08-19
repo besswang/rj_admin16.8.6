@@ -27,7 +27,7 @@ class Home extends Component {
 
   }
 	componentDidMount() {
-		this.selectGlobalValue()
+		// this.selectGlobalValue()
 	}
 	selectGlobalValue = async () => {
 		const res = await api.selectGlobalValueApi()
@@ -57,7 +57,7 @@ class Home extends Component {
 		const time = new Date()
 		const { children } = this.props
 		// const { recharge, consume, consumeLowerLimit, residue } = this.state
-		const { recharge, consume, residue } = this.state
+		// const { recharge, consume, residue } = this.state
 		return (
 			<div className="flex flex-direction_column">
 				<div className="header">
@@ -73,14 +73,14 @@ class Home extends Component {
 						</div>
 					</li>
 				</ul>
-				<ul className="footer flex flex-direction_row">
+				{/* <ul className="footer flex flex-direction_row">
 					<li>{ '©2019' }</li>
-					<li>{'系统名称 梦想借后台管理系统'}</li>
+					<li>{'系统名称 小赢花花后台管理系统'}</li>
 					<li>{'消费环境开启状态'}</li>
 					<li>{'总充值'}{recharge}{'¥'}</li>
 					<li>{'已消费'}{consume}{'¥'}</li>
 					<li>{'剩余'}{residue}{'¥'}</li>
-				</ul>
+				</ul> */}
 				{/* <li>{`提醒${ consumeLowerLimit }¥`}</li> */}
 			</div>
 		)
