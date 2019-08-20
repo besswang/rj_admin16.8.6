@@ -35,6 +35,10 @@ class AlreadyHuan extends Component {
 						const text = filter.moneyType(row.moneyType)
 						return text
 					}
+				},{
+					label:'米融分',
+					width:100,
+					prop: 'riskNum'
 				}, {
 					label: '支付方式',
 					width: 140,

@@ -31,6 +31,7 @@ class Overdue extends Component{
 	constructor(props) {
 		super(props)
 		this.state = {
+			showAllBtn:false, // 批量分配/取消分配的按钮开关
 			ids:[],
 			dialogVisible:false,
 			form:{
@@ -67,18 +68,19 @@ class Overdue extends Component{
 					label: '渠道名称',
 					width: 120,
 					prop: 'channelName'
-				},
-				{
+				}, {
+					label: '米融分',
+					width: 100,
+					prop: 'riskNum'
+				}, {
 					label: '真实姓名',
 					width: 100,
 					prop: 'realName'
-				},
-				{
+				}, {
 					label: '手机号码',
 					width: 140,
 					prop: 'phone'
-				},
-				{
+				}, {
 					label: '身份证号',
 					width: 200,
 					prop: 'idcardNumber'
@@ -200,6 +202,16 @@ class Overdue extends Component{
 	}
 	componentWillMount() {
 		this.props.initSearch()
+		const obj = JSON.parse(window.sessionStorage.getItem('adminInfo'))
+		if (obj.roleId === 3 || obj.roleId === 4) {
+			this.setState({
+				showAllBtn:false
+			})
+		}else{
+			this.setState({
+				showAllBtn:true
+			})
+		}
   }
   componentDidMount() {
 		this.props.selectOverdueByParam()
@@ -283,19 +295,25 @@ class Overdue extends Component{
 
 	render() {
 		const { list, collList, btnLoading } = this.props
-		const { form, rules, dialogVisible } = this.state
+		const { form, rules, dialogVisible, showAllBtn } = this.state
 		return (
 			<div>
 				<Search showSelect2 showSomeColl showSelectClient showSelectTime>
 					<Form.Item>
 						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
 					</Form.Item>
-					<Form.Item>
-						<Button type="primary" onClick={ this.openDialog.bind(this) }>{'批量分配'}</Button>
-					</Form.Item>
-					<Form.Item>
-						<Button type="warning" onClick={ this.cancelAllot.bind(this) }>{'取消分配'}</Button>
-					</Form.Item>
+					{
+						showAllBtn &&
+						<Form.Item>
+							<Button type="primary" onClick={ this.openDialog.bind(this) }>{'批量分配'}</Button>
+						</Form.Item>
+					}
+					{
+						showAllBtn &&
+						<Form.Item>
+							<Button type="warning" onClick={ this.cancelAllot.bind(this) }>{'取消分配'}</Button>
+						</Form.Item>
+					}
 					<Form.Item>
 						<Button onClick={ this.props.exportOverdue } type="primary">{'导出列表'}</Button>
 					</Form.Item>

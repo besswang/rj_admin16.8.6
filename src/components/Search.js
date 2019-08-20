@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Input } from 'element-react'
+import { Form, Input, AutoComplete } from 'element-react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
@@ -67,6 +67,12 @@ class Search extends Component {
     name: PropTypes.string,
     selectAdminByCui: PropTypes.func.isRequired,
   }
+  constructor(props) {
+    super(props)
+    this.state = {
+      value:''
+    }
+  }
   componentWillMount() {
     // 查询表单的初始化
     this.props.initSearch()
@@ -86,8 +92,24 @@ class Search extends Component {
       this.props.selectAdminByCui()
     }
   }
+  querySearch = (queryString, cb) => {
+    const restaurants = this.props.channelList
+    this.props.selectChannel(queryString)
+    const results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
+    // 调用 callback 返回建议列表的数据
+    cb(results)
+  }
+
+  createFilter = queryString => {
+    return (restaurant) => {
+      return (restaurant.channelName.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
+    }
+  }
+  clearFn = () => {
+    this.props.selectChannel('')
+  }
   render() {
-    const { typeId, typeName, realName, time, regTime, newClient, selectTime, showSelectClient, showSelectTime, showSelectTime2, showTime, showSelect1, showSelect2, showSelect3, showLoanType, showLoanMode, showBeginTime,showAllotType,showState, showRealName, showChannel, channelList,channelName, roleList, showRole, roleId, showAdminName, adminName, loanType,showColl, neiCuiId, collList, isTheDay, payTypeId, isState, showSomeColl } = this.props
+    const { typeId, typeName, realName, time, regTime, newClient, selectTime, showSelectClient, showSelectTime, showSelectTime2, showTime, showSelect1, showSelect2, showSelect3, showLoanType, showLoanMode, showBeginTime,showAllotType,showState, showRealName, showChannel, channelName, roleList, showRole, roleId, showAdminName, adminName, loanType,showColl, neiCuiId, collList, isTheDay, payTypeId, isState, showSomeColl } = this.props
     return (
       <div>
       <Form inline>
@@ -113,7 +135,7 @@ class Search extends Component {
             />
           </Form.Item>
         }
-        {
+        {/* {
           showChannel &&
           <Form.Item>
             <SelectPicker
@@ -121,6 +143,19 @@ class Search extends Component {
               onChange={ e => this.props.selectChannel(e) }
               options={ channelList }
               placeholder={ '选择渠道名称' }
+            />
+          </Form.Item>
+        } */}
+        {
+          showChannel &&
+          <Form.Item>
+            <AutoComplete
+              placeholder="选择渠道名称"
+              value={ channelName }
+              fetchSuggestions={ this.querySearch.bind(this) }
+              onSelect={ e => this.props.selectChannel(e.channelName) }
+              icon={ 'close' }
+              onIconClick={ this.clearFn }
             />
           </Form.Item>
         }

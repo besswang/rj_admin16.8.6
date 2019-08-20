@@ -277,11 +277,15 @@ const idCardInfo = (state = {}, action) => {
 const channelList = (state = [], action) => {
     switch (action.type) {
       case type.SAVE_CHANNEL_NAME:{
-        // const data = action.data.filter(item => {
-        //   item['value'] = item.channelName
-        //   return item
-        // })
-        return action.data
+        if (action.data.length>0){
+          const data = action.data.filter(item => {
+            item['value'] = item.channelName
+            return item
+          })
+          return data
+        }else{
+          return []
+        }
       }
 
       default:

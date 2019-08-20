@@ -48,11 +48,20 @@ class Audit extends Component{
 					width: 120,
 					prop: 'channelName'
 				}, {
+					label: '新老客户',
+					width: 100,
+					prop: 'loanTerm',
+					render: row => {
+						const text = filter.loanTerm(row.loanTerm)
+						return text
+					}
+				}, {
 					label: '真实姓名',
 					width: 100,
 					prop: 'realName'
 				}, {
 					label: '米融分',
+					width:100,
 					prop: 'riskNum'
 				}, {
 					label: '手机号码',
@@ -78,16 +87,8 @@ class Audit extends Component{
 					width: 100,
 					prop: 'loanTerm'
 				}, {
-					label: '新老客户',
-					width: 100,
-					prop: 'loanTerm',
-					render: row => {
-						const text = filter.loanTerm(row.loanTerm)
-						return text
-					}
-				}, {
 					label: '申请时间',
-					width: 180,
+					width: 190,
 					prop: 'gmt',
 					render: row => {
 						const date = timeDate.time(row.gmt, 'yyyy-MM-dd hh:mm:ss')
