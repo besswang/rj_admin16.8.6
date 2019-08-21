@@ -392,15 +392,19 @@ class WaitHuan extends Component {
 	openDialog = obj => {
 		const time = new Date()
 		const t = timeDate.time(time, 'yyyy-MM-dd')
-		if (t < obj.finalDate) {
-			MessageBox.confirm('非常抱歉当前订单没有到还款日不能进行线下操作 请你联系技术人员，和让客户在APP操作还款或续期!', '提示', {
-				type: 'warning'
-			}).then(() => {
+		const adm = JSON.parse(window.sessionStorage.getItem('adminInfo'))
+		console.log(adm.rePay)
+		if (adm.rePay === false) {
+			if (t < obj.finalDate) {
+				MessageBox.confirm('非常抱歉当前订单没有到还款日不能进行线下操作 请你联系技术人员，和让客户在APP操作还款或续期!', '提示', {
+					type: 'warning'
+				}).then(() => {
 
-			}).catch(() => {
+				}).catch(() => {
 
-			})
-			return false
+				})
+				return false
+			}
 		}
 		this.setState({
 			listObj: obj,

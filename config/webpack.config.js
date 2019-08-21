@@ -72,7 +72,7 @@ module.exports = function(webpackEnv) {
     //: isEnvDevelopment && 'https://qqter.chenxianshen.org.cn'
     //: isEnvDevelopment && 'http://h5.huakodai.com'
     // : isEnvDevelopment && 'http://qqter.chenxianshen.org.cn/'
-    // : isEnvDevelopment && 'http://cs.huakodai.com'
+    //: isEnvDevelopment && 'http://cs.huakodai.com'
     : isEnvDevelopment && 'https://hefengqb.qidianshenghuo.com.cn'
     //: isEnvDevelopment && 'https://mxjqingjie.imxiaomang.com.cn'
     //: isEnvDevelopment && 'https://qqter.anwangfei.cn'
