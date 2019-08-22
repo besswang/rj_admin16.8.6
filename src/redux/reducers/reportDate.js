@@ -106,8 +106,8 @@ const reportDate = (state = initReport, action) => {
       }
     }
     case type.REPORT_FAILURE_POSTS: {
-      Notification.warning(action.posts.msg)
-      return {...state, loading: false}
+      Notification.warning(action.data.msg)
+      return {...state, userFeatures:[], loading: false}
     }
     default:
       return state

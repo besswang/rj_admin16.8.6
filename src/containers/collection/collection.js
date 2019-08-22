@@ -107,7 +107,7 @@ class Collection extends Component {
 					width: 100,
 					prop: 'loanTerm', // 等于0 为新客  大于0 为老客
 					render: row => {
-						if(parseInt(row.Loading) === 0){
+						if (parseInt(row.loanTerm) === 0) {
 							return '新客'
 						}else{
 							return '老客'

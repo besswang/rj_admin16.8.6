@@ -133,6 +133,7 @@ export const selectPresentationByUserId = obj => {
     if (data.success) {
       dispatch(reportReceivePosts(data.data))
     } else {
+      console.log(data)
       dispatch(reportFailurePosts(data))
     }
   }
