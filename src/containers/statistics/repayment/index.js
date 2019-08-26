@@ -128,6 +128,7 @@ class RepayMent extends Component {
           }
         }, {
           label: '复借率', // 复借单数/应还单数
+          width:100,
           render: row => {
             if (row.moreBorrowNum !== null || row.renewNum !== null) {
               const a = row.moreBorrowNum + row.renewNum
@@ -205,6 +206,7 @@ class RepayMent extends Component {
               }
             }, {
               label: '还款率',
+              width:100,
               prop: 'xuRepaymentRate', // 已还单数（续期）/应还单数（续期）
               render: row => {
                 if (row.xuAlreadyReturnNum && row.xuShouldReturnNum) {
@@ -245,6 +247,7 @@ class RepayMent extends Component {
               }
             }, {
               label: '还款率',
+              width:100,
               prop: 'fuRepaymentRate', // 已还单数（续期）/应还单数（续期）
               render: row => {
                 if (row.fuAlreadyReturnNum && row.fuShouldReturnNum) {

@@ -198,8 +198,8 @@ class Login extends Component {
     return (
       <div className="login-con">
         <div className="title-con">
-          <h1 className="title">{ '小赢花花渠道登录后台' }</h1>
-          {/* 小赢花花,及享用,梦想借,pizza,牛肉干,加油站 */}
+          <h1 className="title">{ '及享用渠道登录后台' }</h1>
+          {/* 小赢花花,及享用,梦想借,pizza,牛肉干,加油站,百花果 */}
           <p className="info">{'BACKSTAGE MANAGEMENT DEPARTMENT'}</p>
         </div>
         <Layout.Row type="flex" justify="center" align="middle" className="row-bg">

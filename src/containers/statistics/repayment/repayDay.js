@@ -69,6 +69,7 @@ class RepayMent extends Component {
         }, {
           label: '还款率',
           // prop: 'repaymentRate', // 还款率 = 实还单数 /应还单数
+          width:100,
           render: row => {
             if (row.fullRepaymentNum !== null && row.renewNum !== null) {
               const x = parseInt(row.fullRepaymentNum) + parseInt(row.renewNum)
@@ -89,6 +90,7 @@ class RepayMent extends Component {
         }, {
           label: '全额率', // 全额还款率
           prop: 'fullRepaymentRate', // 全额还款单数/应还单数
+          width:100,
           render: row => {
             if (row.fullRepaymentNum && row.shouldReturnNum) {
               const n = parseInt(row.fullRepaymentNum) / parseInt(row.shouldReturnNum)
@@ -103,6 +105,7 @@ class RepayMent extends Component {
           prop: 'renewNum'
         }, {
           label: '续期率',
+          width:100,
           prop: 'renewRate', // 续期单数/应还单数
           render: row => {
             if (row.renewNum && row.shouldReturnNum) {
@@ -125,6 +128,7 @@ class RepayMent extends Component {
           }
         }, {
           label: '复借率', // 复借单数/应还单数
+          width:100,
           render: row => {
             if (row.moreBorrowNum !== null || row.renewNum !== null) {
               const a = row.moreBorrowNum + row.renewNum
@@ -165,6 +169,7 @@ class RepayMent extends Component {
             }, {
               label: '还款率',
               prop: 'newRepaymentRate', // 已还单数（首借）/应还单数（首借）
+              width:100,
               render: row => {
                 if (row.newAlreadyReturnNum && row.newShouldReturnNum) {
                   const n = parseInt(row.newAlreadyReturnNum) / parseInt(row.newShouldReturnNum)
@@ -201,6 +206,7 @@ class RepayMent extends Component {
               }
             }, {
               label: '还款率',
+              width:100,
               prop: 'xuRepaymentRate', // 已还单数（续期）/应还单数（续期）
               render: row => {
                 if (row.xuAlreadyReturnNum && row.xuShouldReturnNum) {
@@ -221,7 +227,7 @@ class RepayMent extends Component {
               width: 100,
               prop: 'fuShouldReturnNum',
               render: row => {
-                return row.fuShouldReturnNum ? row.fuAlreadyReturnNum:0
+                return row.fuShouldReturnNum ? row.fuShouldReturnNum : 0
               }
             }, {
               label: '已还单数',
@@ -241,6 +247,7 @@ class RepayMent extends Component {
               }
             }, {
               label: '还款率',
+              width:100,
               prop: 'fuRepaymentRate', // 已还单数（续期）/应还单数（续期）
               render: row => {
                 if (row.fuAlreadyReturnNum && row.fuShouldReturnNum) {

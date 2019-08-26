@@ -1,10 +1,44 @@
 .section{
   margin-bottom:20px;
-  width:100%;
+  width:calc(100% - 50px);
   .title {
     font-size: 14px;
     font-weight: 600;
     margin-bottom: 10px;
+  }
+  .sec-bg{
+    text-align: center;
+    border-radius: 4px;
+    color:#fff;
+    margin-bottom:15px;
+    -moz-box-shadow:2px 2px 5px #d4d3d4;
+    -webkit-box-shadow:2px 2px 5px #d4d3d4;
+    box-shadow:2px 2px 5px #d4d3d4;
+    .icon{
+      font-size:54px;
+      padding:20px;
+    }
+    .money{
+      font-size:30px;
+      font-weight: bold;
+    }
+    .info{
+      font-weight:bold;
+      padding:0 15px;
+      padding-top:5px;
+    }
+  }
+  .sec-bg1{
+    background-image: url('../images/wel1.jpg');
+  }
+  .sec-bg2 {
+    background-image: url('../images/wel2.jpg');
+  }
+  .sec-bg3 {
+    background-image: url('../images/wel3.jpg');
+  }
+  .sec-bg4 {
+    background-image: url('../images/wel4.jpg');
   }
   .wel-ul {
     width: 100%;
@@ -43,6 +77,17 @@
         }
       }
     }
+  }
+  .card-body{
+    li{
+      &:nth-child(even) h1{
+        color:red;
+      }
+      width:50%;
+      text-align: center
+
+    }
+
   }
 }
 

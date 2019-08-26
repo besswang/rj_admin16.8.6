@@ -164,18 +164,19 @@ class Add extends Component {
 								<Radio.Group value={ form.riskType } onChange={ this.onChange.bind(this,'riskType') }>
 									<Radio value="RUIJING">{'米融A风控'}</Radio>
 									<Radio value="PAIXU">{'米融B风控'}</Radio>
+									{/* <Radio value="MOXIE">{'米融C风控'}</Radio> */}
 								</Radio.Group>
 							</Form.Item>
 						</Layout.Col>
 						<Layout.Col span="12" xs="24" sm="24" md="12" lg="10">
 						{
-							form.riskType === 'RUIJING' &&
+							form.riskType !== 'PAIXU' &&
 							<Form.Item label="机审分数" prop="machineScore">
 								<Input type="number" value={ form.machineScore } onChange={ this.onChange.bind(this, 'machineScore') } append="分" />
 							</Form.Item>
 						}
 						{
-							form.riskType === 'RUIJING' &&
+							form.riskType !== 'PAIXU' &&
 							<Form.Item label="人工审核分数" prop="userScore">
 								<Input type="number" value={ form.userScore } onChange={ this.onChange.bind(this, 'userScore') } append="分" />
 							</Form.Item>

@@ -151,7 +151,7 @@ class Collection extends Component {
 					}
 				}, {
 					label: '跟单人',
-					prop: 'tracker'
+					prop: 'neicuiCustomerName'
 				}, {
 					label: '催收状态',
 					width: 100,

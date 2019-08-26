@@ -180,8 +180,9 @@ class HighSetting extends Component {
 					</Form.Item>
 					<Form.Item label="风控选择">
 						<Radio.Group value={ form.riskmanagement } onChange={ this.onChange.bind(this,'riskmanagement') }>
-							<Radio value="排序">{'米融A'}</Radio>
-							<Radio value="瑞鲸">{'米融B'}</Radio>
+							<Radio value="RUIJING">{'米融A'}</Radio>
+							<Radio value="PAIXU">{'米融B'}</Radio>
+							{/* <Radio value="MOXIE">{'米融C'}</Radio> */}
 						</Radio.Group>
 					</Form.Item>
 					<div className="flex flex-direction_row">
