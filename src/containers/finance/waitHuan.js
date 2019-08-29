@@ -168,14 +168,14 @@ class WaitHuan extends Component {
 					prop: 'riskType',
 					render:row =>{ // 排序-米融B
 						if(row.riskType){
-							// if (row.riskType === 'RUIJING') {
-							// 	return '米融A'
-							// } else if (row.riskType === 'PAIXU') {
-							// 	return '米融B'
-							// } else {
-							// 	return '米融C'
-							// }
-							return row.riskType === 'RUIJING' ? '米融A' : '米融B'
+							if (row.riskType === 'RUIJING') {
+								return '米融A'
+							} else if (row.riskType === 'PAIXU') {
+								return '米融B'
+							} else {
+								return '米融C'
+							}
+							// return row.riskType === 'RUIJING' ? '米融A' : '米融B'
 						}
 					}
 				}, {

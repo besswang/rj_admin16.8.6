@@ -72,7 +72,7 @@ module.exports = function(webpackEnv) {
     //: isEnvDevelopment && 'https://qqter.chenxianshen.org.cn'
     //: isEnvDevelopment && 'http://h5.huakodai.com'
     // : isEnvDevelopment && 'http://qqter.chenxianshen.org.cn/'
-    //: isEnvDevelopment && 'http://cs.huakodai.com'
+    : isEnvDevelopment && 'http://cs.huakodai.com'
     //: isEnvDevelopment && 'https://hefengqb.qidianshenghuo.com.cn'
     //: isEnvDevelopment && 'https://mxjqingjie.imxiaomang.com.cn'
     //: isEnvDevelopment && 'https://qqter.anwangfei.cn'
@@ -80,9 +80,9 @@ module.exports = function(webpackEnv) {
     //: isEnvDevelopment && 'https://qutorpsqb.qichegongzhuang.cn'
     //: isEnvDevelopment && 'https://beffqbxqj.aventureconsulting.com.cn'
     //: isEnvDevelopment && 'https://nrgquutorr.leadingpharm.com.cn'
-    : isEnvDevelopment && 'https://ygjiayouqb.talentanywhere.com.cn'
+    //: isEnvDevelopment && 'https://ygjiayouqb.talentanywhere.com.cn'
     //: isEnvDevelopment && 'https://ygwlqutotjyz.mulkit.com.cn'
-    // : isEnvDevelopment && 'https://bhfruitjkqb.borneshop.com.cn'
+    //: isEnvDevelopment && 'https://bhfruitjkqb.borneshop.com.cn'
     //: isEnvDevelopment && 'https://fruitlyqdter.jasitlock.com.cn'
 
   // Get environment variables to inject into our app.

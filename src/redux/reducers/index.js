@@ -413,6 +413,17 @@ const payTypeId = (state = null, action) => {
       return state
   }
 }
+const tabActive = (state='',action) => {
+  switch(action.type){
+    case type.TAB_ADD:
+      return action.value
+    case type.CHANGE_TAB_ACTIVE:
+    console.log(action.name)
+      return action.name
+    default:
+      return state
+  }
+}
 export default combineReducers({
-  user, typeId, typeName, searchAll, time, regTime, payTime, list, listInfo, idCardInfo, newClient, selectTime, router, btnLoading, realName, treeData, channelList, channelName, roleList, roleId, adminName, loanType, collList, dayList, neiCuiId, isTheDay, payTypeId, lookInfo, tabObj, isState, areaLoading, loanRole, reportDate
+  user, typeId, typeName, searchAll, time, regTime, payTime, list, listInfo, idCardInfo, newClient, selectTime, router, btnLoading, realName, treeData, channelList, channelName, roleList, roleId, adminName, loanType, collList, dayList, neiCuiId, isTheDay, payTypeId, lookInfo, tabObj, isState, areaLoading, loanRole, reportDate, tabActive
 })

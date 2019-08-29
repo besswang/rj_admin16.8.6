@@ -80,8 +80,14 @@ class HighSetting extends Component {
 		return value.split(',')
 	}
 	onChange(key, value) {
+		let v = null
+		if (value && (typeof value === 'string')) {
+			v = value.trim()
+		} else {
+			v = value
+		}
 		this.setState({
-			form: Object.assign({}, this.state.form, { [key]: value })
+			form: Object.assign({}, this.state.form, { [key]: v })
 		})
 	}
 	configData = async () => {
@@ -118,12 +124,15 @@ class HighSetting extends Component {
 		const { form, rules } = this.state
 		return (
 			<div style={ {width:'60%'} }>
-				<Form labelWidth="120" model={ form } ref={ e => {this.form = e} } rules={ rules }>
+				<Form labelWidth="140" model={ form } ref={ e => {this.form = e} } rules={ rules }>
 					<Form.Item label="服务费申请扣款方式">
 						<Radio.Group value={ form.modetype } onChange={ this.onChange.bind(this,'modetype') }>
 							<Radio value={ 'true' }>{'先扣'}</Radio>
 							<Radio value={ 'false' }>{'后扣'}</Radio>
 						</Radio.Group>
+					</Form.Item>
+					<Form.Item label="审核拒绝推荐链接" prop="recommend_URL">
+						<Input value={ form.recommend_URL } onChange={ this.onChange.bind(this,'recommend_URL') } />
 					</Form.Item>
 					<Form.Item label="官方微信">
 						<Input type="textarea" value={ form.wechat } onChange={ this.onChange.bind(this, 'wechat') } />

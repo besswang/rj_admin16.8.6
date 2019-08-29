@@ -27,6 +27,7 @@ class HighSetting extends Component {
 				// testswitch: 'false', // 测试开关：
 				// pprice: '', // 排序-米融B单价
 				// rprice: '', // 瑞鲸-米融A单价
+				// mprice: '', // 瑞鲸-米融C单价
 			},
 			rules:{
 				downloadlink: [{required: true,message: '请输入下载链接',trigger: 'blur'}],
@@ -34,6 +35,7 @@ class HighSetting extends Component {
 				massageprice: [{required: true, validator: validate.moneyType}],
 				phoneprice: [{required: true, validator: validate.moneyType}],
 				pprice: [{required: true, validator: validate.moneyType}],
+				mprice: [{required: true, validator: validate.moneyType}],
 				rprice: [{required: true, validator: validate.moneyType}]
 			}
 		}
@@ -156,7 +158,7 @@ class HighSetting extends Component {
 	render() {
 		const { form, pay, rules } = this.state
 		return (
-			<div style={ {width:'50%'} }>
+			<div style={ {width:'60%'} }>
 				<Form labelWidth="120" model={ form } ref={ e => {this.form = e} } rules={ rules }>
 					{/* <Form.Item label="银行卡支付通道开关">
 						<Select value={ form.bankpay } placeholder="" onChange={ this.onChange.bind(this, 'bankpay') }>
@@ -182,7 +184,7 @@ class HighSetting extends Component {
 						<Radio.Group value={ form.riskmanagement } onChange={ this.onChange.bind(this,'riskmanagement') }>
 							<Radio value="RUIJING">{'米融A'}</Radio>
 							<Radio value="PAIXU">{'米融B'}</Radio>
-							{/* <Radio value="MOXIE">{'米融C'}</Radio> */}
+							<Radio value="MOXIE">{'米融C'}</Radio>
 						</Radio.Group>
 					</Form.Item>
 					<div className="flex flex-direction_row">
@@ -191,6 +193,9 @@ class HighSetting extends Component {
 						</Form.Item>
 						<Form.Item label="米融B单价" prop="pprice">
 							<Input type="number" value={ form.pprice } onChange={ this.onChange.bind(this,'pprice') } append="元" />
+						</Form.Item>
+						<Form.Item label="米融C单价" prop="mprice">
+							<Input type="number" value={ form.mprice } onChange={ this.onChange.bind(this,'mprice') } append="元" />
 						</Form.Item>
 					</div>
 					<Form.Item label="服务费申请扣款方式">

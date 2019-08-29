@@ -1,31 +1,27 @@
 import * as type from '@redux/actionTypes'
-// const initTab = {
-//   tabs: [{name:'欢迎页',url:'/welcome'}],
-//   tabIndex: 2,
-//   tabActive: '欢迎页'
-// }
 const tabObj = (state = [], action) => {
   switch (action.type) {
     case type.TAB_ADD:{
-      // console.log(action.data)
-      if(state.length>0){
-        const ele = state.map(item =>
-          (item.name !== action.data.name)
-            ? action.data
-            : {}
-        )
-        return [...state, ele]
-      }else{
-        return [...state, action.data]
-      }
-      // return [...state,action.data]
+      let flag = true
+      state.length > 0 && state.map((item, i) => {
+        if (item.name === action.data.name) {
+          flag = false
+        }
+        return state
+      })
+      return flag ? [...state, action.data] : [...state]
     }
     case type.TAB_REMOVE:{
-      state.splice(action.index, 1)
+      state.filter((item,i) => {
+        if (item.name === action.name){
+          state.splice(i,1)
+        }
+        return item
+      })
       return [...state]
     }
     default:
-      return state
+      return [...state]
   }
 }
 export default tabObj

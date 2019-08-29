@@ -2,15 +2,21 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Menu } from 'element-react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
+import { tabAdd } from '@redux/actions'
 // import { SIDE_BAR_TEXT } from '@meta/sidebarText'
 // import { CHILD_ROUTES } from '../routes/childRoutes'
 class Sidebar extends Component{
   static propTypes = {
-		router: PropTypes.object
+    router: PropTypes.object,
+    tabAdd: PropTypes.func.isRequired
 	}
   componentDidMount(){
     // console.log(this.props)
+  }
+  handleClick = v => {
+    this.props.tabAdd(v)
   }
   recursion = arr => {
     const time = +new Date()
@@ -32,7 +38,7 @@ class Sidebar extends Component{
           )
         } else if (!item.hideInMenu) {
           return (
-            <Link to={ item.path+'?'+time } key={ item.name+time }>
+            <Link to={ item.path+'?'+time } key={ item.name+time } onClick={ ()=>this.handleClick(item) }>
               <Menu.Item index={ item.path }>
                 { item.name }
               </Menu.Item>
@@ -59,4 +65,9 @@ const mapStateToProps = state => {
 	const { router } = state
 	return { router }
 }
-export default connect(mapStateToProps)(Sidebar)
+const mapDispatchToProps = dispatch => {
+	return {
+		...bindActionCreators({ tabAdd }, dispatch)
+	}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar)

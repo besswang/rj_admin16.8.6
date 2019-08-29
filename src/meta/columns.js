@@ -319,20 +319,39 @@ export const CONSUME = [
       }
     }]
   }, {
-    label: 'AB分控',
+    label: 'C分控',
     headerAlign: 'center',
     subColumns: [{
       label: '首借人数',
       width: 100,
-      prop: 'newRiskAB'
+      prop: 'newRiskC'
     }, {
       label: '复借人数',
       width: 100,
-      prop: 'fuRiskAB'
+      prop: 'fuRiskC'
     }, {
       label: '风控金额',
       width: 100,
-      prop: 'riskAmountAB'
+      prop: 'riskAmountC',
+      render: row => {
+        return row.riskAmountC === null ? 0 : row.riskAmountC
+      }
+    }]
+  }, {
+    label: 'ABC分控',
+    headerAlign: 'center',
+    subColumns: [{
+      label: '首借人数',
+      width: 100,
+      prop: 'newRiskABC'
+    }, {
+      label: '复借人数',
+      width: 100,
+      prop: 'fuRiskABC'
+    }, {
+      label: '风控金额',
+      width: 100,
+      prop: 'riskAmountABC'
     }]
   }
 ]

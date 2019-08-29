@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import Header from '@components/header'
 import Sidebar from '@components/sidebar'
-// import MyTabs from './myTabs'
+import MyTabs from './myTabs'
 import '@styles/home.less'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import api from '@api/index'
-import { Message } from 'element-react'
-import { MessageBox } from 'element-react'
+import { Message, MessageBox } from 'element-react'
 // import num from '@global/num'
 class Home extends Component {
 	static propTypes = {
@@ -24,7 +23,8 @@ class Home extends Component {
 		}
 	}
 	componentWillMount() {
-
+		console.log('home')
+		console.log(this.props)
   }
 	componentDidMount() {
 		this.selectGlobalValue()
@@ -68,6 +68,7 @@ class Home extends Component {
 						<Sidebar />
 					</li>
 					<li className="main">
+						<MyTabs history={ this.props.history } />
 						<div className="content" key={ time }>
 							{ children }
 						</div>
@@ -75,7 +76,7 @@ class Home extends Component {
 				</ul>
 				<ul className="footer flex flex-direction_row">
 					<li>{ '©2019' }</li>
-					<li>{'系统名称 加油站后台管理系统'}</li>
+					<li>{'系统名称 小赢花花后台管理系统'}</li>
 					<li>{'消费环境开启状态'}</li>
 					<li>{'总充值'}{recharge}{'¥'}</li>
 					<li>{'已消费'}{consume}{'¥'}</li>

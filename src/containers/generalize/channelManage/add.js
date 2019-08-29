@@ -164,7 +164,7 @@ class Add extends Component {
 								<Radio.Group value={ form.riskType } onChange={ this.onChange.bind(this,'riskType') }>
 									<Radio value="RUIJING">{'米融A风控'}</Radio>
 									<Radio value="PAIXU">{'米融B风控'}</Radio>
-									{/* <Radio value="MOXIE">{'米融C风控'}</Radio> */}
+									<Radio value="MOXIE">{'米融C风控'}</Radio>
 								</Radio.Group>
 							</Form.Item>
 						</Layout.Col>

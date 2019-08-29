@@ -136,7 +136,7 @@ class WaitHuan extends Component {
 				}, {
 					label: '约定还款日',
 					width: 180,
-					prop: 'repaymentDate'
+					prop: 'finalDate'
 				}, {
 					label: '打款方式',
 					width: 100,

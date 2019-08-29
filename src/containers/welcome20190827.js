@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Message, Layout,Card } from 'element-react'
+import { Button, Message } from 'element-react'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -84,67 +84,6 @@ class Welcome extends React.Component{
 					</div>
 					<div className="section">
 							<h1 className="title">{'统计'}</h1>
-							<Layout.Row gutter="50">
-							{/* <Layout.Row> */}
-								<Layout.Col xs="24" sm="24" md="12" lg="6">
-									<div className="sec-bg sec-bg1 flex flex-direction_row align-items_center">
-										<i className="icon iconfont icon-Time" />
-										<div className="flex_1">
-											<span className="money">{'59'}</span>
-											<p className="info">{'今日注册'}</p>
-										</div>
-									</div>
-								</Layout.Col>
-								<Layout.Col xs="24" sm="24" md="12" lg="6">
-									<div className="sec-bg sec-bg2 flex flex-direction_row align-items_center">
-										<i className="icon iconfont icon-icon_shakehands" />
-										<div className="flex_1">
-											<span className="money">{'59'}</span>
-											<p className="info">{'今日注册'}</p>
-										</div>
-									</div>
-								</Layout.Col>
-								<Layout.Col xs="24" sm="24" md="12" lg="6">
-									<div className="sec-bg sec-bg3 flex flex-direction_row align-items_center">
-										<i className="icon iconfont icon-icon_roundclose" />
-										<div className="flex_1">
-											<span className="money">{'59'}</span>
-											<p className="info">{'今日注册'}</p>
-										</div>
-									</div>
-								</Layout.Col>
-								<Layout.Col xs="24" sm="24" md="12" lg="6">
-									<div className="sec-bg sec-bg4 flex flex-direction_row align-items_center">
-										<i className="icon iconfont icon-Personal" />
-										<div className="flex_1">
-											<span className="money">{'59'}</span>
-											<p className="info">{'今日注册'}</p>
-										</div>
-									</div>
-								</Layout.Col>
-							</Layout.Row>
-							<Layout.Row gutter="20">
-								<Layout.Col xs="24" sm="24" md="8" lg="8">
-									<Card
-										header={
-											<div className="clearfix">
-												<span>{'今日借款申请'}</span>
-											</div>
-										}
-									>
-										<ul className="card-body flex flex-direction_row flex-wrap">
-											<li>
-												<h1>{'21'}</h1>
-												<p>{'借款申请人数'}</p>
-											</li>
-											<li>
-												<h1>{'21'}</h1>
-												<p>{'借款总金额'}</p>
-											</li>
-										</ul>
-									</Card>
-								</Layout.Col>
-							</Layout.Row>
 							<ul className="flex flex-direction_row wel-ul">
 							{
 								statistics.length>0 &&

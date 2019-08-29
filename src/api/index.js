@@ -158,5 +158,7 @@ export default {
   exportPendingRepayApi: params => FetchDown(jk.exportPendingRepay, {method: 'post', body:params}),
   exportOrderCompletedApi: params => FetchDown(jk.exportOrderCompleted, {method: 'post', body:params}),
   selectAdminByCuiApi: () => Fetch(jk.selectAdminByCui, {method: 'get'}),
+  selectHomePageDateApi: () => Fetch(jk.selectHomePageDate, {method: 'get'}),
+  selectHomePageApi: () => Fetch(jk.selectHomePage, {method: 'get'}),
 }
 

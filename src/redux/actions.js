@@ -282,9 +282,14 @@ export const changePayTypeId = data => ({
 })
 export const tabAdd = data => ({
   type: type.TAB_ADD,
+  value:data.name,
   data
 })
-export const tabRemove = index => ({
+export const tabRemove = name => ({
   type: type.TAB_REMOVE,
-  index
+  name
+})
+export const changeTabActive = name => ({
+  type: type.CHANGE_TAB_ACTIVE,
+  name
 })

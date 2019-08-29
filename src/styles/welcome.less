@@ -78,16 +78,48 @@
       }
     }
   }
+  .clearfix{
+    color:#333;
+  }
+  .card-row{
+    .el-col{
+      margin-bottom:15px;
+      // &:nth-child(odd) .card-body li{
+      //   padding:1.682rem 0;
+      // }
+      // &:nth-child(even) .card-body li {
+      //   padding: 10px 0;
+      // }
+      &:nth-child(even) .card-body {
+        height:342px;
+      }
+      &:nth-child(odd) .card-body {
+        height:342px;
+      }
+    }
+  }
+  .card-row2{
+    .el-col{
+      li{
+        padding:12px 0;
+      }
+      margin-bottom:15px;
+    }
+  }
   .card-body{
     li{
       &:nth-child(even) h1{
-        color:red;
+        color:#f05844;
+      }
+      &:nth-child(odd) h1 {
+        color: #69d972;
       }
       width:50%;
-      text-align: center
-
+      text-align: center;
+      p{
+        color:#333;
+      }
     }
-
   }
 }
 

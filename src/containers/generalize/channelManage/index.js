@@ -120,14 +120,14 @@ class Apply extends Component {
 					prop: 'riskType',
 					render: row => {
 						if (row.riskType){
-							// if (row.riskType === 'RUIJING'){
-							// 	return '米融A'
-							// } else if (row.riskType === 'PAIXU') {
-							// 	return '米融B'
-							// }else{
-							// 	return '米融C'
-							// }
-							return row.riskType === 'RUIJING' ? '米融A' : '米融B'
+							if (row.riskType === 'RUIJING'){
+								return '米融A'
+							} else if (row.riskType === 'PAIXU') {
+								return '米融B'
+							}else{
+								return '米融C'
+							}
+							// return row.riskType === 'RUIJING' ? '米融A' : '米融B'
 						}
 					}
 				}, {
@@ -368,7 +368,7 @@ class Apply extends Component {
 								<Radio.Group value={ form.riskType } onChange={ this.onChange.bind(this,'riskType') }>
 									<Radio value="RUIJING">{'米融A风控'}</Radio>
 									<Radio value="PAIXU">{'米融B风控'}</Radio>
-									{/* <Radio value="MOXIE">{'米融C风控'}</Radio> */}
+									<Radio value="MOXIE">{'米融C风控'}</Radio>
 								</Radio.Group>
 							</Form.Item>
 						</Form>
