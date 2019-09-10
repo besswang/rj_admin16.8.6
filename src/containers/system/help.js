@@ -14,6 +14,8 @@ class HighSetting extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			voucher: '', //支付宝二维码
+			voucher2: '', // 微信二维码
 			form: {
 				// modetype: 'true', // 服务费申请扣款方式 true 先扣  false  后扣
 				// wechat: '1,2,3,4', // 官方微信
@@ -94,7 +96,9 @@ class HighSetting extends Component {
     const res = await api.selectOtherConfigApi()
     if (res.success) {
 			this.setState({
-				form:res.data
+				form:res.data,
+				voucher: res.data.qrcode_ZFB,
+				voucher2: res.data.qrcode_WX
 			})
 		}else{
 			Message.warning(res.msg)
@@ -113,15 +117,95 @@ class HighSetting extends Component {
 		e.preventDefault()
 		this.form.validate((valid) => {
 			if (valid) {
-				this.saveApi(this.state.form)
+				const trans = Object.assign({},this.state.form,{'qrcode_ZFB':this.state.voucher},{'qrcode_WX':this.state.voucher2})
+				this.saveApi(trans)
 			} else {
 				console.log('error submit!!')
 				return false
 			}
 		})
 	}
+	inputfile = ele => {
+		const file1 = document.querySelector(`#${ ele }`).files[0]
+		// const flag = this.beforeAvatarUpload(file1)
+		// if(!flag){
+		// 	return false
+		// }
+		console.log(file1)
+		const that = this
+		if (file1) {
+			var reader = new FileReader()
+			// 图片文件转换为base64
+			reader.readAsDataURL(file1)
+			reader.onload = function () {
+				// 显示图片
+				// document.getElementById('file1_img').src = this.result
+				// that.setState({
+				// 	voucher:this.result
+				// })
+				that.dealImage(this.result, 800, ele, that.printing)
+			}
+		}
+	}
+	printing = (base64,ele) => {
+		// console.log('压缩后', base64.length / 1024)
+		console.log(base64)
+		const b = base64.replace(/^data:image\/\w+;base64,/, '')
+		console.log(b)
+		if(ele === 'input'){
+			this.setState({
+				voucher: b
+			})
+		}else{
+			this.setState({
+				voucher2: b
+			})
+		}
+	}
+	//压缩方法
+	dealImage = (base64, w, ele, callback) => {
+		var newImage = new Image()
+		//压缩系数0-1之间
+		var quality = 0.6
+		newImage.src = base64
+		newImage.setAttribute('crossOrigin', 'Anonymous') //url为外域时需要
+		var imgWidth, imgHeight
+		newImage.onload = function () {
+			imgWidth = this.width
+			imgHeight = this.height
+			var canvas = document.createElement('canvas')
+			var ctx = canvas.getContext('2d')
+			if (Math.max(imgWidth, imgHeight) > w) {
+				if (imgWidth > imgHeight) {
+					canvas.width = w
+					canvas.height = w * imgHeight / imgWidth
+				} else {
+					canvas.height = w
+					canvas.width = w * imgWidth / imgHeight
+				}
+			} else {
+				canvas.width = imgWidth
+				canvas.height = imgHeight
+				quality = 0.6
+			}
+			ctx.clearRect(0, 0, canvas.width, canvas.height)
+			ctx.drawImage(this, 0, 0, canvas.width, canvas.height)
+			var ba = canvas.toDataURL('image/jpeg', quality) //压缩语句
+			// 如想确保图片压缩到自己想要的尺寸,如要求在50-150kb之间，请加以下语句，quality初始值根据情况自定
+			// while (base64.length / 1024 > 150) {
+			// 	quality -= 0.01;
+			// 	base64 = canvas.toDataURL("image/jpeg", quality);
+			// }
+			// 防止最后一次压缩低于最低尺寸，只要quality递减合理，无需考虑
+			// while (base64.length / 1024 < 50) {
+			// 	quality += 0.001;
+			// 	base64 = canvas.toDataURL("image/jpeg", quality);
+			// }
+			callback(ba,ele) //必须通过回调函数返回，否则无法及时拿到该值
+		}
+	}
 	render() {
-		const { form, rules } = this.state
+		const { form, rules, voucher,voucher2 } = this.state
 		return (
 			<div style={ {width:'60%'} }>
 				<Form labelWidth="140" model={ form } ref={ e => {this.form = e} } rules={ rules }>
@@ -186,6 +270,18 @@ class HighSetting extends Component {
 							offValue={ 'false' }
 							onChange={ this.onChange.bind(this, 'fengkongnumber') }
 						/>
+					</Form.Item>
+					<Form.Item label="支付宝收款二维码">
+						<div className="my-upload">
+						<input className="upload-input" type="file" id="input" name="file1" onChange={ () => this.inputfile('input') } />
+						{ voucher ? <img src={ `data:image/jpeg;base64,${ voucher }` } className="avatar" alt="" /> : <i className="el-icon-plus avatar-uploader-icon" /> }
+						</div>
+					</Form.Item>
+					<Form.Item label="微信收款二维码">
+						<div className="my-upload">
+						<input className="upload-input" type="file" id="input2" name="file1" onChange={ () => this.inputfile('input2') } />
+						{ voucher2 ? <img src={ `data:image/jpeg;base64,${ voucher2 }` } className="avatar" alt="" /> : <i className="el-icon-plus avatar-uploader-icon" /> }
+						</div>
 					</Form.Item>
 					<Form.Item>
 						<Button type="primary" onClick={ this.saveContent }>{'确 定'}</Button>

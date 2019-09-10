@@ -86,12 +86,6 @@ class BlackUser extends Component {
 	}
 	saveContent = e => {
 		e.preventDefault()
-		// console.log(this.state.voucher)
-		// Notification({
-		// 	title: '成功',
-		// 	message: '这是一条成功的提示消息',
-		// 	type: 'success'
-		// })
 		this.form.validate((valid) => {
 			if (valid) {
 				if (this.state.voucher === '') {
@@ -130,7 +124,7 @@ class BlackUser extends Component {
 		}
 		return isJPG && isLt2M
 	}
-	inputfile =()=> {
+	inputfile = () => {
 		const file1 = document.querySelector('#input').files[0]
 		// const flag = this.beforeAvatarUpload(file1)
 		// if(!flag){
@@ -141,15 +135,64 @@ class BlackUser extends Component {
     if(file1){
       var reader = new FileReader()
 					// 图片文件转换为base64
-				reader.readAsDataURL(file1)
-				reader.onload = function(){
+			reader.readAsDataURL(file1)
+			reader.onload = function(){
 				// 显示图片
 				// document.getElementById('file1_img').src = this.result
-				that.setState({
-					voucher:this.result
-				})
+				// that.setState({
+				// 	voucher:this.result
+				// })
+				that.dealImage(this.result, 800, that.printing)
 			}
     }
+	}
+	printing = base64 => {
+		// console.log('压缩后', base64.length / 1024)
+		this.setState({
+			voucher: base64
+		})
+	}
+	//压缩方法
+	dealImage = (base64, w, callback) => {
+		var newImage = new Image()
+		//压缩系数0-1之间
+		var quality = 0.6
+		newImage.src = base64
+		newImage.setAttribute('crossOrigin', 'Anonymous')	//url为外域时需要
+		var imgWidth, imgHeight
+		newImage.onload = function () {
+			imgWidth = this.width
+			imgHeight = this.height
+			var canvas = document.createElement('canvas')
+			var ctx = canvas.getContext('2d')
+			if (Math.max(imgWidth, imgHeight) > w) {
+				if (imgWidth > imgHeight) {
+					canvas.width = w
+					canvas.height = w * imgHeight / imgWidth
+				} else {
+					canvas.height = w
+					canvas.width = w * imgWidth / imgHeight
+				}
+			} else {
+				canvas.width = imgWidth
+				canvas.height = imgHeight
+				quality = 0.6
+			}
+			ctx.clearRect(0, 0, canvas.width, canvas.height)
+			ctx.drawImage(this, 0, 0, canvas.width, canvas.height)
+			var ba = canvas.toDataURL('image/jpeg', quality) //压缩语句
+			// 如想确保图片压缩到自己想要的尺寸,如要求在50-150kb之间，请加以下语句，quality初始值根据情况自定
+			// while (base64.length / 1024 > 150) {
+			// 	quality -= 0.01;
+			// 	base64 = canvas.toDataURL("image/jpeg", quality);
+			// }
+			// 防止最后一次压缩低于最低尺寸，只要quality递减合理，无需考虑
+			// while (base64.length / 1024 < 50) {
+			// 	quality += 0.001;
+			// 	base64 = canvas.toDataURL("image/jpeg", quality);
+			// }
+			callback(ba) //必须通过回调函数返回，否则无法及时拿到该值
+		}
 	}
 	openDialog2 = url => {
 		this.setState({
