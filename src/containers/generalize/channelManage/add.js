@@ -92,7 +92,7 @@ class Add extends Component {
 					const pam = {}
 					const { form } = this.state
 					for (const i in form) {
-						if (form['riskType'] === 'PAIXU') {
+						if (form['riskType'] === 'PAIXU' || form['riskType'] === 'QC') {
 							form['machineScore'] = null
 							form['userScore'] = null
 						}
@@ -160,23 +160,16 @@ class Add extends Component {
 									placeholder={ '选择方式' }
 								/>
 							</Form.Item>
-							<Form.Item label="选择风控">
-								<Radio.Group value={ form.riskType } onChange={ this.onChange.bind(this,'riskType') }>
-									<Radio value="RUIJING">{'米融A风控'}</Radio>
-									<Radio value="PAIXU">{'米融B风控'}</Radio>
-									<Radio value="MOXIE">{'米融C风控'}</Radio>
-								</Radio.Group>
-							</Form.Item>
 						</Layout.Col>
 						<Layout.Col span="12" xs="24" sm="24" md="12" lg="10">
 						{
-							form.riskType !== 'PAIXU' &&
+							form.riskType !== 'PAIXU' && form.riskType !== 'QC' &&
 							<Form.Item label="机审分数" prop="machineScore">
 								<Input type="number" value={ form.machineScore } onChange={ this.onChange.bind(this, 'machineScore') } append="分" />
 							</Form.Item>
 						}
 						{
-							form.riskType !== 'PAIXU' &&
+							form.riskType !== 'PAIXU' && form.riskType !== 'QC' &&
 							<Form.Item label="人工审核分数" prop="userScore">
 								<Input type="number" value={ form.userScore } onChange={ this.onChange.bind(this, 'userScore') } append="分" />
 							</Form.Item>
@@ -189,6 +182,14 @@ class Add extends Component {
 							</Form.Item>
 						</Layout.Col>
 					</Layout.Row>
+					<Form.Item label="选择风控">
+						<Radio.Group value={ form.riskType } onChange={ this.onChange.bind(this,'riskType') }>
+							<Radio value="RUIJING">{'米融A风控'}</Radio>
+							<Radio value="PAIXU">{'米融B风控'}</Radio>
+							<Radio value="MOXIE">{'米融C风控'}</Radio>
+							<Radio value="QC">{'米融D风控'}</Radio>
+						</Radio.Group>
+					</Form.Item>
 					{/* <h1 className="channeltitle">{ '额度添加' }</h1>
 					<Layout.Row>
 						<Layout.Col span="12" xs="24" sm="24" md="12" lg="10">

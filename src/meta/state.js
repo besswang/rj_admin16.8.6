@@ -51,8 +51,10 @@ export const FUIOU = 'FUIOU' // 富有
 export const KUAIQIAN = 'KUAIQIAN' // 快线
 
 // 风控类型
-export const PAIXU = 'PAIXU' // ("排序"),
-export const RUIJING = 'RUIJING' // ("瑞鲸")
+export const RUIJING = 'RUIJING' // ("瑞鲸") 米融A
+export const PAIXU = 'PAIXU' // ("排序"),米融B
+export const MOXIE = 'MOXIE' // 米融C
+export const QC = 'QC' //米融D
 
 // 金额类型 // 还款类型
 export const PART_RPM_AMOUNT = 'PART_RPM_AMOUNT' // 部分还款

@@ -481,3 +481,51 @@ export const NOTE = [{
   label: '内容',
   prop: 'strBody'
 }]
+
+//通话记录
+export const DEVICES_LIST = [{
+  label: '#',
+  width: 60,
+  render: (a, b, c) => {
+    return c + 1
+  }
+}, {
+  label: '设备名',
+  prop: 'deviceName'
+}, {
+  label: '设备ID',
+  prop: 'deviceId'
+}, {
+  label: '设备最后使用日期',
+  prop: 'deviceLastUseDate'
+}, {
+  label: '设备关联用户数',
+  prop: 'deviceLinkIdCount'
+}, {
+  label: '是否root',
+  prop: 'isRooted',
+  render: row => {
+    if (row.isRooted) {
+      return row.isRooted === '0' ? '否' : '是'
+    }
+  }
+}, {
+  label: '是否使用代理',
+  prop: 'isUsingProxyPort',
+  render: row => {
+    if (row.isUsingProxyPort) {
+      return row.isUsingProxyPort === '0' ? '否' : '是'
+    }
+  }
+}, {
+  label: '网络类型',
+  prop: 'networkType'
+}, {
+  label: '有无活体攻击行为',
+  prop: 'livingAttack',
+  render: row => {
+    if (row.livingAttack) {
+      return row.livingAttack === '0' ? '未检测到活体攻击' : '存在活体攻击风险'
+    }
+  }
+}]

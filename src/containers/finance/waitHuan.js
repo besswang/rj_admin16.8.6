@@ -166,17 +166,9 @@ class WaitHuan extends Component {
 					label: '风控类型',
 					width: 100,
 					prop: 'riskType',
-					render:row =>{ // 排序-米融B
-						if(row.riskType){
-							if (row.riskType === 'RUIJING') {
-								return '米融A'
-							} else if (row.riskType === 'PAIXU') {
-								return '米融B'
-							} else {
-								return '米融C'
-							}
-							// return row.riskType === 'RUIJING' ? '米融A' : '米融B'
-						}
+					render:row =>{ // 排序
+						const data = filter.riskType(row.riskType)
+						return data
 					}
 				}, {
 					label: '申请期限',

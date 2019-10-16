@@ -160,5 +160,7 @@ export default {
   selectAdminByCuiApi: () => Fetch(jk.selectAdminByCui, {method: 'get'}),
   selectHomePageDateApi: () => Fetch(jk.selectHomePageDate, {method: 'get'}),
   selectHomePageApi: () => Fetch(jk.selectHomePage, {method: 'get'}),
+  selectFaceAuthResultApi: params => Fetch(jk.selectFaceAuthResult, {method: 'get', data:params}),
+  selectFaceAuthResultOtherApi: params => Fetch(jk.selectFaceAuthResultOther, {method: 'get', data:params})
 }
 

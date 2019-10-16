@@ -12,6 +12,7 @@ import SelectPicker from '@components/SelectPicker'
 import { PROMOTION_TYPE } from '@meta/select'
 import DisableBtn from '@components/DisableBtn'
 import validate from '@global/validate'
+import filter from '@global/filter'
 class Apply extends Component {
 	static propTypes = {
 		location: PropTypes.object.isRequired,
@@ -119,16 +120,8 @@ class Apply extends Component {
 					width: 100,
 					prop: 'riskType',
 					render: row => {
-						if (row.riskType){
-							if (row.riskType === 'RUIJING'){
-								return '米融A'
-							} else if (row.riskType === 'PAIXU') {
-								return '米融B'
-							}else{
-								return '米融C'
-							}
-							// return row.riskType === 'RUIJING' ? '米融A' : '米融B'
-						}
+						const data = filter.riskType(row.riskType)
+						return data
 					}
 				}, {
 					label: '备注',
@@ -230,7 +223,7 @@ class Apply extends Component {
 					const pam = {}
 					const { form } = this.state
 					for (const i in form) {
-						if (form['riskType'] === 'PAIXU') {
+						if (form['riskType'] === 'PAIXU' || form['riskType'] === 'QC') {
 							form['machineScore'] = null
 							form['userScore'] = null
 						}
@@ -348,7 +341,7 @@ class Apply extends Component {
 								/>
 							</Form.Item>
 							{
-								form.riskType !== 'PAIXU' &&
+								form.riskType !== 'PAIXU' && form.riskType !== 'QC' &&
 								<div>
 									<Form.Item label="机审分数" prop="machineScore">
 										<Input type="number" value={ form.machineScore } onChange={ this.onChange.bind(this, 'machineScore') } append="分" />
@@ -369,6 +362,7 @@ class Apply extends Component {
 									<Radio value="RUIJING">{'米融A风控'}</Radio>
 									<Radio value="PAIXU">{'米融B风控'}</Radio>
 									<Radio value="MOXIE">{'米融C风控'}</Radio>
+									<Radio value="QC">{'米融D风控'}</Radio>
 								</Radio.Group>
 							</Form.Item>
 						</Form>

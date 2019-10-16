@@ -13,6 +13,48 @@ export default {
         return '空值'
     }
   },
+  classify(x) {
+    switch (x) {
+      case '0':
+        return '复印件'
+      case '1':
+        return 'PS证件'
+      case '2':
+        return '正常证件'
+      case '3':
+        return '屏幕翻拍'
+      case '4':
+        return '临时身份证'
+      default:
+        return '空值'
+    }
+  },
+  authResult(x) {
+    switch (x) {
+      case 'T':
+        return '认证通过'
+      case 'F':
+        return '认证未通过'
+      default:
+        return '空值'
+    }
+  },
+  resultStatus(x) {
+    switch (x) {
+      case '01':
+        return '系统判断为同一人'
+      case '02':
+        return '系统判断为不同人'
+      case '03':
+        return '不能确定是否为同一人'
+      case '04':
+        return '系统无法比对'
+      case '05':
+        return '库中无照片'
+      default:
+        return '空值'
+    }
+  },
   // 还款类型
   // moneyType(x) {
   //   switch (x) {
@@ -168,9 +210,8 @@ export default {
         return '待认证'
       case state.CERTITICATTON:
         return '认证中'
-      case state.COMPLETED:{
+      case state.COMPLETED:
         return '认证完成'
-      }
       default:
         return '空值'
     }
@@ -191,6 +232,21 @@ export default {
         return '待还款'
       case state.COMPLETED:
         return '已完成'
+      default:
+        return '空值'
+    }
+  },
+  // 风控类型
+  riskType(x) {
+    switch (x) {
+      case state.RUIJING:
+        return '米融A'
+      case state.PAIXU:
+        return '米融B'
+      case state.MOXIE:
+        return '米融C'
+      case state.QC:
+        return '米融D'
       default:
         return '空值'
     }

@@ -7,7 +7,6 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import api from '@api/index'
 import { Message, MessageBox } from 'element-react'
-// import num from '@global/num'
 class Home extends Component {
 	static propTypes = {
 		history: PropTypes.object.isRequired,
@@ -32,8 +31,6 @@ class Home extends Component {
 	selectGlobalValue = async () => {
 		const res = await api.selectGlobalValueApi()
 		if(res.success){
-			// const result = parseFloat(res.data.recharge) - parseFloat(res.data.consume)
-			// const result = num.minus(res.data.recharge, res.data.consume)
 			if (parseInt(res.data.balance) <= res.data.consumeLowerLimit) {
 				MessageBox.confirm('余额即将不足', '提示', {
 					type: 'warning'
@@ -56,7 +53,6 @@ class Home extends Component {
 	render() {
 		const time = new Date()
 		const { children } = this.props
-		// const { recharge, consume, consumeLowerLimit, residue } = this.state
 		const { recharge, consume, residue } = this.state
 		return (
 			<div className="flex flex-direction_column">
@@ -76,13 +72,12 @@ class Home extends Component {
 				</ul>
 				<ul className="footer flex flex-direction_row">
 					<li>{ '©2019' }</li>
-					<li>{'系统名称 牛肉干后台管理系统'}</li>
+					<li>{'系统名称 小赢花花后台管理系统'}</li>
 					<li>{'消费环境开启状态'}</li>
 					<li>{'总充值'}{recharge}{'¥'}</li>
 					<li>{'已消费'}{consume}{'¥'}</li>
 					<li>{'剩余'}{residue}{'¥'}</li>
 				</ul>
-				{/* <li>{`提醒${ consumeLowerLimit }¥`}</li> */}
 			</div>
 		)
 	}

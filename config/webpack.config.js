@@ -66,7 +66,8 @@ module.exports = function(webpackEnv) {
   // Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
   const publicUrl = isEnvProduction
     ? publicPath.slice(0, -1)
-
+    : isEnvDevelopment && 'http://47.111.93.109:8082'
+    //: isEnvDevelopment && 'http://47.111.93.109:8083'
     //: isEnvDevelopment && 'http://47.94.142.215:8081'
     // : isEnvDevelopment && 'http://localhost:8081'
     //: isEnvDevelopment && 'https://qqter.chenxianshen.org.cn'
@@ -78,7 +79,7 @@ module.exports = function(webpackEnv) {
     //: isEnvDevelopment && 'https://qqter.anwangfei.cn'
     //: isEnvDevelopment && 'https://pizzaqb.zhengxingmeirong.net.cn'
     //: isEnvDevelopment && 'https://qutorpsqb.qichegongzhuang.cn'
-    : isEnvDevelopment && 'https://beffqbxqj.aventureconsulting.com.cn'
+    //: isEnvDevelopment && 'https://beffqbxqj.aventureconsulting.com.cn'
     //: isEnvDevelopment && 'https://nrgquutorr.leadingpharm.com.cn'
     //: isEnvDevelopment && 'https://ygfightjkadm.tiandingwangluo.cn'
     //: isEnvDevelopment && 'https://ygwlqutotjyz.mulkit.com.cn'

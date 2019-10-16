@@ -169,5 +169,7 @@ export default {
   'exportOrderCompleted': 'order/exportOrderCompleted', // 还款计划-已完成-导出
   'selectAdminByCui': 'admin/selectAdminByCui', //角色id是3和4的催收员列表
   'selectHomePageDate': 'reportForm/selectHomePageDate',
-  'selectHomePage': 'reportForm/selectHomePage'
+  'selectHomePage': 'reportForm/selectHomePage',
+  'selectFaceAuthResult': 'idCard/selectFaceAuthResult', //根据userId查询身份证人脸识别结果
+  'selectFaceAuthResultOther': 'idCard/selectFaceAuthResultOther' //根据userId查询身份证人脸识别结果其他信息
 }

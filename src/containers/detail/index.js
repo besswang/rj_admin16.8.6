@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux'
 import { initSearch } from '@redux/actions'
 import { selectIdCardByUserId, emergency, bankInfo, selectReportMail, selectReport, selectPhoneDateByUserId, selectUserSms,selectPresentationByUserId } from './action'
 import Detailtable from '@components/detailTable'
-import { BANK, ADDRESS, CALL_LOG, NOTE } from '@meta/columns'
+import { BANK, ADDRESS, CALL_LOG, NOTE, DEVICES_LIST } from '@meta/columns'
 import '@styles/detail.less'
 import timeDate from '@global/timeDate'
 import filter from '@global/filter'
@@ -43,7 +43,13 @@ class Detail extends Component{
         activeName: '1',
         mobileData:'',
         phoneInfo:{}, // 手机设备
-        btnLoading: false
+        btnLoading: false,
+        faceInfo:{}, // 人脸识别结果
+        userId:null,
+        devicesListList:[],// 设备信息
+        graphDetail:{}, // 图谱统计值
+        performanceInfo:{}, // 履约信息
+        requestInfo:{} // 申请信息
       }
   }
 	componentWillMount() {
@@ -73,6 +79,7 @@ class Detail extends Component{
 	componentDidMount() {
     console.log(this.state.activeName)
     this.tabChange(this.state.activeName)
+    // this.selectFaceAuthResultOther({userId:this.state.userId})
   }
   selectMobileReport = async (obj) => {
     this.setState({
@@ -84,7 +91,19 @@ class Detail extends Component{
         mobileData:res.data,
         btnLoading: false
       })
-      console.log(res.data)
+    }else{
+      Message.warning(res.msg)
+    }
+  }
+  faceFetch = async (obj) => {
+    this.setState({
+      btnLoading: true
+    })
+    const res = await api.selectFaceAuthResultApi(obj)
+    if (res.success) {
+      this.setState({
+        faceInfo: res.data,
+      })
     }else{
       Message.warning(res.msg)
     }
@@ -109,6 +128,22 @@ class Detail extends Component{
       Message.warning(res.msg)
     }
   }
+  selectFaceAuthResultOther = async (obj) => {
+    this.setState({
+      btnLoading: true
+    })
+    const res = await api.selectFaceAuthResultOtherApi(obj)
+    if (res.success) {
+      this.setState({
+        devicesListList: res.data.devicesListList,
+        graphDetail: res.data.graphDetail,
+        performanceInfo: res.data.performanceInfo,
+        requestInfo: res.data.requestInfo
+      })
+    } else {
+      Message.warning(res.msg)
+    }
+  }
   tabChange = (e) => {
     window.sessionStorage.setItem('activeName',e)
     // this.setState({
@@ -117,11 +152,15 @@ class Detail extends Component{
     // const userId = this.state.listInfo.userId ? this.state.listInfo.userId : this.state.listInfo.id
     const { userId } = this.state
     switch (e) {
+      case '1':{ // 身份证信息
+        return this.selectFaceAuthResultOther({userId: userId})
+      }
       case '2':{ // 身份证信息
+        this.faceFetch({userId: userId})
         return this.props.selectIdCardByUserId({userId: userId})
       }
       case '3':{ // 手机认证
-        this.selectMobileReport({ userId: userId})
+        this.selectMobileReport({userId: userId})
         return this.props.selectPhoneDateByUserId({userId: userId})
       }
       case '4':{ // 紧急联系人
@@ -173,10 +212,10 @@ class Detail extends Component{
 			dialogVisible: true,
 			dialogImageUrl: url
 		})
-	}
+  }
 	render(){
     const { idCardInfo, list } = this.props
-    const { name, title, linkUrl, listInfo, activeName, userId, dialogVisible, dialogImageUrl, btnLoading, phoneInfo } = this.state
+    const { name, title, linkUrl, listInfo, activeName, userId, dialogVisible, dialogImageUrl, btnLoading, phoneInfo,faceInfo, devicesListList, graphDetail, performanceInfo, requestInfo } = this.state
 		return(
 			<div>
 				<Breadcrumb separator="/" className="margin-bottom15">
@@ -275,6 +314,69 @@ class Detail extends Component{
                   <p>{'登陆次数：'}</p>
                 </li>
               </ul>
+              <h4 className="detail-title">{'图谱统计值'}</h4>
+              <ul className="flex flex-direction_row graph-detail">
+                <li>{'使用手机号个数：'}{graphDetail.mobileCount}</li>
+                <li>{'关联用户数：'}{graphDetail.linkUserCount}</li>
+                <li>{'使用设备数：'}{graphDetail.linkDeviceCount}</li>
+              </ul>
+              <h4 className="detail-title">{'设备信息'}</h4>
+              <Table
+                style= { { width: '100%' } }
+                columns= { DEVICES_LIST }
+                data= { devicesListList }
+                border
+                stripe
+              />
+              <h4 className="detail-title">{'统计'}</h4>
+              <ul className="flex flex-direction_row face-ul">
+                <li className="flex flex-direction_column align-items_center">
+                  <p>{''}</p>
+                  <p>{'申请次数'}</p>
+                  <p>{'总申请平台数'}</p>
+                  <p>{'放款次数'}</p>
+                  <p>{'放款平台数'}</p>
+                  <p>{'履约次数'}</p>
+                  <p>{'履约平台数'}</p>
+                </li>
+                <li className="flex flex-direction_column align-items_center">
+                  <p>{'近1天(包含今日和昨日)'}</p>
+                  <p>{ requestInfo.requestCount1d }</p>
+                  <p>{ requestInfo.requestOrgCount1d }</p>
+                  <p>{ performanceInfo.loanCount1d }</p>
+                  <p>{ performanceInfo.loanOrgCount1d }</p>
+                  <p>{ performanceInfo.performanceCount1d }</p>
+                  <p>{ performanceInfo.performanceOrgCount1d }</p>
+                </li>
+                <li className="flex flex-direction_column align-items_center">
+                  <p>{'近7天'}</p>
+                  <p>{ requestInfo.requestCount7d }</p>
+                  <p>{ requestInfo.requestOrgCount7d }</p>
+                  <p>{ performanceInfo.loanCount7d }</p>
+                  <p>{ performanceInfo.loanOrgCount7d }</p>
+                  <p>{ performanceInfo.performanceCount7d }</p>
+                  <p>{ performanceInfo.performanceOrgCount7d }</p>
+                </li>
+                <li className="flex flex-direction_column align-items_center">
+                  <p>{'近15天'}</p>
+                  <p>{ requestInfo.requestCount15d }</p>
+                  <p>{ requestInfo.requestOrgCount15d }</p>
+                  <p>{ performanceInfo.loanCount15d }</p>
+                  <p>{ performanceInfo.loanOrgCount15d }</p>
+                  <p>{ performanceInfo.performanceCount15d }</p>
+                  <p>{ performanceInfo.performanceOrgCount15d }</p>
+                </li>
+                <li className="flex flex-direction_column align-items_center">
+                  <p>{'近30天'}</p>
+                  <p>{ requestInfo.requestCount30d }</p>
+                  <p>{ requestInfo.requestOrgCount30d }</p>
+                  <p>{ performanceInfo.loanCount30d }</p>
+                  <p>{ performanceInfo.loanOrgCount30d }</p>
+                  <p>{ performanceInfo.performanceCount30d }</p>
+                  <p>{ performanceInfo.performanceOrgCount30d }</p>
+                </li>
+              </ul>
+              <p className="per-time">{'最近履约时间:'}{performanceInfo.lastPerformanceTime}</p>
             </Tabs.Pane>
           }
           <Tabs.Pane label="身份证信息" name="2">
@@ -305,26 +407,52 @@ class Detail extends Component{
                       <p>{'人脸照片'}</p>
                     </div>
                   }
+                  {
+                    faceInfo.idcardPortraitPhoto &&
+                    <div className="photo">
+                      <img src={ `data:image/jpeg;base64,${ faceInfo.idcardPortraitPhoto }` } alt="" onClick={ this.openDialog.bind(this,`data:image/jpeg;base64,${ faceInfo.idcardPortraitPhoto }`) } />
+                      <p>{'头像图片'}</p>
+                    </div>
+                  }
                 </li>
                 <li className="flex flex-direction_row info-li">
                   <p>{'姓名：'}{ idCardInfo.realName }</p>
                   <p>{'性别：'}{ idCardInfo.gender }</p>
                 </li>
                 <li className="flex flex-direction_row info-li">
-                  <p>{'身份证号：'}{ idCardInfo.idNumber}</p>
-                  <p>{'家庭住址：'}{ idCardInfo.address }</p>
+                  <p>{'民族：'}{ faceInfo.nation }</p>
+                  <p>{'出生日期：'}{ faceInfo.birthday }</p>
                 </li>
                 <li className="flex flex-direction_row info-li">
+                  <p>{'年龄：'}{ faceInfo.age }</p>
+                  <p>{'身份证号：'}{ idCardInfo.idNumber}</p>
+                </li>
+                <li className="flex flex-direction_row info-li">
+                  <p>{'家庭住址：'}{ idCardInfo.address }</p>
                   <p>{'签发机关：'}{ idCardInfo.issuingAuthority }</p>
+                </li>
+                <li className="flex flex-direction_row info-li">
+                   <p>{'实名认证结果：'}{ filter.verifyStatus(idCardInfo.verifyStatus) }</p>
                   <p>{'有效期：'}{ idCardInfo.validityPeriod }</p>
                 </li>
                 <li className="flex flex-direction_row info-li">
-                  <p>{'实名认证结果：'}{ filter.verifyStatus(idCardInfo.verifyStatus) }</p>
                   <p>{'风险标签：'}{ this.text(idCardInfo.riskTag) }</p>
+                  <p>{'认证日期：'}{ timeDate.time(idCardInfo.gmt, 'yyyy-MM-dd hh:mm:ss') }</p>
                 </li>
                 <li className="flex flex-direction_row info-li">
-                  <p>{'认证日期：'}{ timeDate.time(idCardInfo.gmt, 'yyyy-MM-dd hh:mm:ss') }</p>
                   <p>{'商户唯一订单号：'}{ idCardInfo.partnerOrderId }</p>
+                  <p>{'分类检测：'}{ filter.classify(faceInfo.classify) }</p>
+                </li>
+                <li className="flex flex-direction_row info-li">
+                  <p>{'分类检测置信度(0-1)：'}{ faceInfo.classifyScore }</p>
+                  <p>{'人脸比对相似度(0-1)：'}{ faceInfo.similarity }</p>
+                </li>
+                <li className="flex flex-direction_row info-li">
+                   <p>{'不通过原因：'}{ faceInfo.failReason }</p>
+                  <p>{'比对结果：'}{ filter.authResult(faceInfo.authResult) }</p>
+                </li>
+                <li className="flex flex-direction_row info-li">
+                  <p>{'认证结果：'}{ filter.resultStatus(faceInfo.resultStatus) }</p>
                 </li>
               </ul>
             {/* </Loading> */}

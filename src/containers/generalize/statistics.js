@@ -7,6 +7,7 @@ import { sizeChange, currentChange, initSearch, menuActive } from '@redux/action
 import { selectPromotionStatistics } from './actions'
 import MyPagination from '@components/MyPagination'
 import Search from '@components/Search'
+import num from '@global/num'
 class Apply extends Component {
 	static propTypes = {
 		location: PropTypes.object.isRequired,
@@ -50,7 +51,16 @@ class Apply extends Component {
 				}, {
 					label: '登陆APP比例',
 					width: 130,
-					prop: 'loginRate'
+					render: row => {
+						//登陆APP比例 = 登陆APP人数/注册人数
+						if (row.loginCount && row.userCount) {
+							const n = parseInt(row.loginCount) / parseInt(row.userCount)
+							return (num.toDecimal(n * 100))
+						} else {
+							return ('0.00%')
+						}
+					}
+					// prop: 'loginRate'
 				}, {
 					label: '资料完成人数',
 					width:140,
@@ -62,7 +72,16 @@ class Apply extends Component {
 				}, {
 					label: '申请比例',
 					width: 100,
-					prop: 'applicantsRate'
+					render: row => {
+						//申请比例 = 申请人数/注册人数
+						if (row.applicantsCount && row.userCount) {
+							const n = parseInt(row.applicantsCount) / parseInt(row.userCount)
+							return (num.toDecimal(n * 100))
+						} else {
+							return ('0.00%')
+						}
+					}
+					// prop: 'applicantsRate'
 				}, {
 					label: '放款人数',
 					width: 100,
@@ -70,7 +89,16 @@ class Apply extends Component {
 				}, {
 					label: '放款比例',
 					width: 100,
-					prop: 'orderStateRate'
+					render: row => {
+						//申请比例 = 放款人数/注册人数
+						if (row.orderStateCount && row.userCount) {
+							const n = parseInt(row.orderStateCount) / parseInt(row.userCount)
+							return (num.toDecimal(n * 100))
+						} else {
+							return ('0.00%')
+						}
+					}
+					// prop: 'orderStateRate'
 				}, {
 					label: '获客成本',
 					width: 100,
