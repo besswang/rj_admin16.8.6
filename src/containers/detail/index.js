@@ -315,12 +315,18 @@ class Detail extends Component{
                 </li>
               </ul>
               <h4 className="detail-title">{'图谱统计值'}</h4>
-              <ul className="flex flex-direction_row graph-detail">
-                <li>{'使用手机号个数：'}{graphDetail.mobileCount}</li>
-                <li>{'关联用户数：'}{graphDetail.linkUserCount}</li>
-                <li>{'使用设备数：'}{graphDetail.linkDeviceCount}</li>
-              </ul>
+              {
+                graphDetail !== null &&
+                <ul className="flex flex-direction_row graph-detail">
+                  <li>{'使用手机号个数：'}{graphDetail.mobileCount}</li>
+                  <li>{'关联用户数：'}{graphDetail.linkUserCount}</li>
+                  <li>{'使用设备数：'}{graphDetail.linkDeviceCount}</li>
+                </ul>
+              }
+
               <h4 className="detail-title">{'设备信息'}</h4>
+              {
+                devicesListList !== null &&
               <Table
                 style= { { width: '100%' } }
                 columns= { DEVICES_LIST }
@@ -328,55 +334,63 @@ class Detail extends Component{
                 border
                 stripe
               />
+              }
+
               <h4 className="detail-title">{'统计'}</h4>
-              <ul className="flex flex-direction_row face-ul">
-                <li className="flex flex-direction_column align-items_center">
-                  <p>{''}</p>
-                  <p>{'申请次数'}</p>
-                  <p>{'总申请平台数'}</p>
-                  <p>{'放款次数'}</p>
-                  <p>{'放款平台数'}</p>
-                  <p>{'履约次数'}</p>
-                  <p>{'履约平台数'}</p>
-                </li>
-                <li className="flex flex-direction_column align-items_center">
-                  <p>{'近1天(包含今日和昨日)'}</p>
-                  <p>{ requestInfo.requestCount1d }</p>
-                  <p>{ requestInfo.requestOrgCount1d }</p>
-                  <p>{ performanceInfo.loanCount1d }</p>
-                  <p>{ performanceInfo.loanOrgCount1d }</p>
-                  <p>{ performanceInfo.performanceCount1d }</p>
-                  <p>{ performanceInfo.performanceOrgCount1d }</p>
-                </li>
-                <li className="flex flex-direction_column align-items_center">
-                  <p>{'近7天'}</p>
-                  <p>{ requestInfo.requestCount7d }</p>
-                  <p>{ requestInfo.requestOrgCount7d }</p>
-                  <p>{ performanceInfo.loanCount7d }</p>
-                  <p>{ performanceInfo.loanOrgCount7d }</p>
-                  <p>{ performanceInfo.performanceCount7d }</p>
-                  <p>{ performanceInfo.performanceOrgCount7d }</p>
-                </li>
-                <li className="flex flex-direction_column align-items_center">
-                  <p>{'近15天'}</p>
-                  <p>{ requestInfo.requestCount15d }</p>
-                  <p>{ requestInfo.requestOrgCount15d }</p>
-                  <p>{ performanceInfo.loanCount15d }</p>
-                  <p>{ performanceInfo.loanOrgCount15d }</p>
-                  <p>{ performanceInfo.performanceCount15d }</p>
-                  <p>{ performanceInfo.performanceOrgCount15d }</p>
-                </li>
-                <li className="flex flex-direction_column align-items_center">
-                  <p>{'近30天'}</p>
-                  <p>{ requestInfo.requestCount30d }</p>
-                  <p>{ requestInfo.requestOrgCount30d }</p>
-                  <p>{ performanceInfo.loanCount30d }</p>
-                  <p>{ performanceInfo.loanOrgCount30d }</p>
-                  <p>{ performanceInfo.performanceCount30d }</p>
-                  <p>{ performanceInfo.performanceOrgCount30d }</p>
-                </li>
-              </ul>
-              <p className="per-time">{'最近履约时间:'}{performanceInfo.lastPerformanceTime}</p>
+              {
+                performanceInfo !== null && requestInfo !== null &&
+                 <ul className="flex flex-direction_row face-ul">
+                  <li className="flex flex-direction_column align-items_center">
+                    <p>{''}</p>
+                    <p>{'申请次数'}</p>
+                    <p>{'总申请平台数'}</p>
+                    <p>{'放款次数'}</p>
+                    <p>{'放款平台数'}</p>
+                    <p>{'履约次数'}</p>
+                    <p>{'履约平台数'}</p>
+                  </li>
+                  <li className="flex flex-direction_column align-items_center">
+                    <p>{'近1天(包含今日和昨日)'}</p>
+                    <p>{ requestInfo.requestCount1d }</p>
+                    <p>{ requestInfo.requestOrgCount1d }</p>
+                    <p>{ performanceInfo.loanCount1d }</p>
+                    <p>{ performanceInfo.loanOrgCount1d }</p>
+                    <p>{ performanceInfo.performanceCount1d }</p>
+                    <p>{ performanceInfo.performanceOrgCount1d }</p>
+                  </li>
+                  <li className="flex flex-direction_column align-items_center">
+                    <p>{'近7天'}</p>
+                    <p>{ requestInfo.requestCount7d }</p>
+                    <p>{ requestInfo.requestOrgCount7d }</p>
+                    <p>{ performanceInfo.loanCount7d }</p>
+                    <p>{ performanceInfo.loanOrgCount7d }</p>
+                    <p>{ performanceInfo.performanceCount7d }</p>
+                    <p>{ performanceInfo.performanceOrgCount7d }</p>
+                  </li>
+                  <li className="flex flex-direction_column align-items_center">
+                    <p>{'近15天'}</p>
+                    <p>{ requestInfo.requestCount15d }</p>
+                    <p>{ requestInfo.requestOrgCount15d }</p>
+                    <p>{ performanceInfo.loanCount15d }</p>
+                    <p>{ performanceInfo.loanOrgCount15d }</p>
+                    <p>{ performanceInfo.performanceCount15d }</p>
+                    <p>{ performanceInfo.performanceOrgCount15d }</p>
+                  </li>
+                  <li className="flex flex-direction_column align-items_center">
+                    <p>{'近30天'}</p>
+                    <p>{ requestInfo.requestCount30d }</p>
+                    <p>{ requestInfo.requestOrgCount30d }</p>
+                    <p>{ performanceInfo.loanCount30d }</p>
+                    <p>{ performanceInfo.loanOrgCount30d }</p>
+                    <p>{ performanceInfo.performanceCount30d }</p>
+                    <p>{ performanceInfo.performanceOrgCount30d }</p>
+                  </li>
+                 </ul>
+              }
+             {
+               performanceInfo !== null &&
+               <p className="per-time">{'最近履约时间:'}{performanceInfo.lastPerformanceTime}</p>
+             }
             </Tabs.Pane>
           }
           <Tabs.Pane label="身份证信息" name="2">

@@ -103,6 +103,17 @@ class Apply extends Component {
 					return this.textType(row.mobileType)
 				}
 			}, {
+				label: '支付宝认证',
+				prop: 'alipayType',
+				width: 120,
+				render: row => {
+					return this.textType(row.alipayType)
+				}
+			}, {
+				label: '支付宝认证账号',
+				prop: 'alipayNum',
+				width: 200
+			}, {
 				label: '收款银行',
 				width:140,
 				prop: 'bankName'

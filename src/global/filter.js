@@ -245,7 +245,7 @@ export default {
         return '米融B'
       case state.MOXIE:
         return '米融C'
-      case state.QC:
+      case state.QS:
         return '米融D'
       default:
         return '空值'

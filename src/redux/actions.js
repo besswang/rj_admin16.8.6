@@ -43,7 +43,9 @@ export const initSearch = () => ({
     neiCuiId: 0,
     isTheDay: null,
     isState: null,
-    payTypeId: null
+    payTypeId: null,
+    riskManagement: 0,
+    roleId:null
   }
 })
 // menu选中状态
@@ -70,6 +72,11 @@ export const saveRealName = text => ({
 // select新老客户
 export const changeClient = id => ({
   type: type.SELECT_CLIENT,
+  id
+})
+// select审核状态-通过/拒绝
+export const changePass = id => ({
+  type: type.SELECT_PASS,
   id
 })
 // select借款类型

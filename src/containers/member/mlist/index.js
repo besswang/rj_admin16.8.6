@@ -53,15 +53,38 @@ class Mlist extends Component{
 					label: '真实姓名',
 					prop: 'realName',
 					width:100,
-					fixed: 'left'
+					fixed: 'left',
+					render: row => {
+						if (row.realName) {
+							const reg = row.realName.slice(1)
+							const s = reg.split('')
+							const x = []
+							for (let i = 0; i < s.length; i++) {
+								x.push('*')
+							}
+							const z = x.join('')
+							const y = row.realName.substring(1, 0)
+							return y + z
+						}
+					}
 				},{
 					label: '手机号码',
 					prop: 'phone',
-					width:140
+					width:140,
+					render: row => {
+						if (row.phone) {
+							return row.phone.replace(/^(\d{3})\d{4}(\d+)/, '$1****$2')
+						}
+					}
 				},{
 					label: '身份证号',
 					prop: 'idNumber',
-					width:200
+					width:200,
+					render: row => {
+						if (row.idNumber) {
+							return row.idNumber.replace(/^(\d{3})\d{8}(\d+)/, '$1****$2')
+						}
+					}
 				},{
 					label: '授信额度',
 					width: 100,
@@ -126,6 +149,17 @@ class Mlist extends Component{
 				// 	}
 				// }
 				, {
+					label: '支付宝认证',
+					prop: 'alipayType',
+					width: 120,
+					render: row => {
+						return this.textType(row.alipayType)
+					}
+				}, {
+					label: '支付宝认证账号',
+					prop: 'alipayNum',
+					width: 200
+				}, {
 					label: '借款次数',
 					width: 100,
 					prop: 'loanNum'
@@ -158,10 +192,16 @@ class Mlist extends Component{
 					width: 100,
 					prop: 'toExamine',
 					render: row => {
+						// 2:通过，3:拒绝
 						const y = <span className="theme-blue">{'通过'}</span>
-						const n = <span className="dis-red">{'不通过'}</span>
+						const n = <span className="dis-red">{'拒绝'}</span>
 						if (row.toExamine){
-							return row.toExamine === 'noPass' ? n : y
+							// return row.toExamine === 'noPass' ? n : y
+							if (row.toExamine === '2') {
+								return y
+							} else {
+								return n
+							}
 						}else{
 							return ''
 						}

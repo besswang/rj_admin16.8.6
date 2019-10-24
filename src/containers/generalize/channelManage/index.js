@@ -223,7 +223,7 @@ class Apply extends Component {
 					const pam = {}
 					const { form } = this.state
 					for (const i in form) {
-						if (form['riskType'] === 'PAIXU' || form['riskType'] === 'QC') {
+						if (form['riskType'] === 'PAIXU' || form['riskType'] === 'QS') {
 							form['machineScore'] = null
 							form['userScore'] = null
 						}
@@ -341,7 +341,7 @@ class Apply extends Component {
 								/>
 							</Form.Item>
 							{
-								form.riskType !== 'PAIXU' && form.riskType !== 'QC' &&
+								form.riskType !== 'PAIXU' && form.riskType !== 'QS' &&
 								<div>
 									<Form.Item label="机审分数" prop="machineScore">
 										<Input type="number" value={ form.machineScore } onChange={ this.onChange.bind(this, 'machineScore') } append="分" />
@@ -362,7 +362,7 @@ class Apply extends Component {
 									<Radio value="RUIJING">{'米融A风控'}</Radio>
 									<Radio value="PAIXU">{'米融B风控'}</Radio>
 									<Radio value="MOXIE">{'米融C风控'}</Radio>
-									<Radio value="QC">{'米融D风控'}</Radio>
+									<Radio value="QS">{'米融D风控'}</Radio>
 								</Radio.Group>
 							</Form.Item>
 						</Form>

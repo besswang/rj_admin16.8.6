@@ -1,3 +1,10 @@
+export const PASS_SELECT = [{
+  value: 2,
+  label: '通过'
+}, {
+  value: 3,
+  label: '拒绝'
+}]
 export const MLIST_SELECT = [
   {
     value: 1,

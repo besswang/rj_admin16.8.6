@@ -187,7 +187,16 @@ class HighSetting extends Component {
 							<Radio value="RUIJING">{'米融A'}</Radio>
 							<Radio value="PAIXU">{'米融B'}</Radio>
 							<Radio value="MOXIE">{'米融C'}</Radio>
-							<Radio value="QC">{'米融D'}</Radio>
+							<Radio value="QS">{'米融D'}</Radio>
+						</Radio.Group>
+					</Form.Item>
+					<Form.Item label="支付通道">
+						<Radio.Group value={ form.bankpay } onChange={ this.onChange.bind(this,'bankpay') }>
+							<Radio value="连连">{'连连'}</Radio>
+							<Radio value="富有">{'富有'}</Radio>
+							<Radio value="快钱">{'快钱'}</Radio>
+							<Radio value="合利">{'合利'}</Radio>
+							<Radio value="畅捷">{'畅捷'}</Radio>
 						</Radio.Group>
 					</Form.Item>
 					<div className="flex flex-direction_row">

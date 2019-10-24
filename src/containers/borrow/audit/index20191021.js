@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Table, Loading,Form,Dialog, Message } from 'element-react'
+import { Button, Table, Loading,Form,Dialog, Message,Tabs } from 'element-react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
@@ -35,6 +35,7 @@ class Audit extends Component{
 			contactUrl:'',
 			phoneUrl:'',
 			reportUrl:'',
+			activeName: '1',
 			dialogVisible:false,
 			columns: [{
 						label: '#',
@@ -63,20 +64,7 @@ class Audit extends Component{
 				}, {
 					label: '真实姓名',
 					width: 100,
-					prop: 'realName',
-					render: row => {
-						if (row.realName) {
-							const reg = row.realName.slice(1)
-							const s = reg.split('')
-							const x = []
-							for (let i = 0; i < s.length; i++) {
-								x.push('*')
-							}
-							const z = x.join('')
-							const y = row.realName.substring(1, 0)
-							return y + z
-						}
-					}
+					prop: 'realName'
 				}, {
 					label: '米融分',
 					width:100,
@@ -84,21 +72,11 @@ class Audit extends Component{
 				}, {
 					label: '手机号码',
 					width: 140,
-					prop: 'phone',
-					render: row => {
-						if (row.phone) {
-							return row.phone.replace(/^(\d{3})\d{4}(\d+)/, '$1****$2')
-						}
-					}
+					prop: 'phone'
 				}, {
 					label: '身份证号',
 					width: 200,
-					prop: 'idcardNumber',
-					render: row => {
-						if (row.idcardNumber) {
-							return row.idcardNumber.replace(/^(\d{3})\d{8}(\d+)/, '$1****$2')
-						}
-					}
+					prop: 'idcardNumber'
 				}, {
 					label: '申请金额',
 					width: 100,
@@ -127,16 +105,10 @@ class Audit extends Component{
 					width: 100,
 					prop: 'toExamine',
 					render: row => {
-						// 2:通过，3:拒绝
 						const y = <span className="theme-blue">{'通过'}</span>
-						const n = <span className="dis-red">{'拒绝'}</span>
+						const n = <span className="dis-red">{'不通过'}</span>
 						if (row.toExamine){
-							// return row.toExamine === 'noPass' ? n : y
-							if (row.toExamine === '2'){
-								return y
-							}else{
-								return n
-							}
+							return row.toExamine === 'noPass' ? n : y
 						}else{
 							return ''
 						}
@@ -146,29 +118,29 @@ class Audit extends Component{
 					fixed: 'right',
 					width:180,
 					render: row => {
-						// return (
-						// 	<div className="flex flex-direction_row">
-						// 		<Button className="margin_right10" type="success" size="mini" onClick={ this.openDialog.bind(this,row.id,row.userId) }>
-						// 			{'审核'}
-						// 		</Button>
-						// 		<DetailBtn linkTo={ daudit } row={ row } />
-						// 	</div>
-						// )
 						return (
 							<div className="flex flex-direction_row">
-								<Button className="margin_right10" type="success" size="mini"
-									onClick={ this.handelAudit.bind(this,PENDING_LOAN,row.id) }
-								>
-									{'通过'}
-								</Button>
-								<Button className="margin_right10" type="danger" size="mini"
-									onClick={ this.handelAudit.bind(this,FALSE,row.id) }
-								>
-									{'拒绝'}
+								<Button className="margin_right10" type="success" size="mini" onClick={ this.openDialog.bind(this,row.id) }>
+									{'审核'}
 								</Button>
 								<DetailBtn linkTo={ daudit } row={ row } />
 							</div>
 						)
+						// return (
+						// 	<div className="flex flex-direction_row">
+						// 		<Button className="margin_right10" type="success" size="mini"
+						// 			onClick={ this.handelAudit.bind(this,row.id, PENDING_LOAN) }
+						// 		>
+						// 			{'通过'}
+						// 		</Button>
+						// 		<Button className="margin_right10" type="danger" size="mini"
+						// 			onClick={ this.handelAudit.bind(this,row.id, FALSE) }
+						// 		>
+						// 			{'拒绝'}
+						// 		</Button>
+						// 		<DetailBtn linkTo={ daudit } row={ row } />
+						// 	</div>
+						// )
 					}
       }]
 		}
@@ -179,10 +151,11 @@ class Audit extends Component{
   componentDidMount() {
 		this.props.handelSearch()
 	}
-	openDialog = async (id, userId) => {
-		const res = await api.selectUserInformationByIdApi({id:userId})
+	openDialog = async(id) => {
+		const res = await api.selectUserInformationByIdApi({id:11216})
 		if (res.success) {
 			this.setState({
+				activeName:'1',
 				dialogVisible: true,
 				id: id,
 				contactUrl: res.data.contact_url,
@@ -193,14 +166,14 @@ class Audit extends Component{
 			Message.warning(res.msg)
 		}
 	}
-	handelAudit(state,id) {
+	handelAudit(state) {
 		const obj = JSON.parse(window.sessionStorage.getItem('adminInfo'))
-		const xid = id ? id : this.state.id
 		const trans = {
-			id:xid,
+			id:this.state.id,
 			state:state,
 			adminId: obj.id
 		}
+		console.log(trans)
 		this.setState({
 			dialogVisible:false
 		})
@@ -220,10 +193,10 @@ class Audit extends Component{
 	}
 	render() {
 		const { list } = this.props
-		const { dialogVisible,contactUrl,phoneUrl,reportUrl } = this.state
+		const { dialogVisible,activeName,contactUrl,phoneUrl,reportUrl } = this.state
 		return (
 			<div>
-				<Search showSelect2 showTime showChannel showPass>
+				<Search showSelect2 showTime>
 					<Form.Item>
 						<Button onClick={ this.handleSearch } type="primary">{'搜索'}</Button>
 					</Form.Item>
@@ -243,13 +216,22 @@ class Audit extends Component{
 					onCurrentChange={ this.onCurrentChange }
 				/>
 				<Dialog
+					size="large"
 					visible={ dialogVisible }
 					onCancel={ () => this.setState({ dialogVisible: false }) }
 				>
 					<Dialog.Body>
-						<a className="theme-blue" href={ contactUrl } target="_blank" rel="noopener noreferrer">{'通讯录/短信'}</a>
-						<a className="theme-blue margin_left15" href={ phoneUrl } target="_blank" rel="noopener noreferrer">{'通话明细'}</a>
-						<a className="theme-blue margin_left15" href={ reportUrl } target="_blank" rel="noopener noreferrer">{'报告'}</a>
+						<Tabs activeName={ activeName }>
+							<Tabs.Pane label="联系人" name="1">
+								<iframe src={ contactUrl } frameborder="0" title="联系人" allowtransparency="true" style={ {'backgroundColor':'transparent'} } width="100%" height="400" />
+							</Tabs.Pane>
+							<Tabs.Pane label="通话明细" name="2">
+								<iframe src={ phoneUrl } frameborder="0" title="通话明细" allowtransparency="true" style={ {'backgroundColor':'transparent'} } width="100%" height="400" />
+							</Tabs.Pane>
+							<Tabs.Pane label="报告" name="3">
+								<iframe src={ reportUrl } frameborder="0" title="报告" allowtransparency="true" style={ {'backgroundColor':'transparent'} } width="100%" height="400" />
+							</Tabs.Pane>
+						</Tabs>
 					</Dialog.Body>
 					<Dialog.Footer className="dialog-footer">
 						<Button className="margin_right10" onClick={ () => this.setState({ dialogVisible: false }) }>{'取 消'}</Button>

@@ -83,7 +83,20 @@ class WaitHuan extends Component {
 				}, {
 					label: '真实姓名',
 					width: 120,
-					prop: 'realName'
+					prop: 'realName',
+					render: row => {
+						if (row.realName) {
+							const reg = row.realName.slice(1)
+							const s = reg.split('')
+							const x = []
+							for (let i = 0; i < s.length; i++) {
+								x.push('*')
+							}
+							const z = x.join('')
+							const y = row.realName.substring(1, 0)
+							return y + z
+						}
+					}
 				}, {
 					label: '米融分',
 					width:100,
@@ -91,11 +104,21 @@ class WaitHuan extends Component {
 				}, {
 					label: '手机号码',
 					width: 160,
-					prop: 'phone'
+					prop: 'phone',
+					render: row => {
+						if (row.phone) {
+							return row.phone.replace(/^(\d{3})\d{4}(\d+)/, '$1****$2')
+						}
+					}
 				}, {
 					label: '身份证号',
 					width: 200,
-					prop: 'idcardNumber'
+					prop: 'idcardNumber',
+					render: row => {
+						if (row.idcardNumber) {
+							return row.idcardNumber.replace(/^(\d{3})\d{8}(\d+)/, '$1****$2')
+						}
+					}
 				}, {
 					label: '申请金额',
 					width: 100,

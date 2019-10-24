@@ -22,6 +22,7 @@ class Welcome extends React.Component{
 		}
 	}
 	componentWillMount() {
+
 	}
 	componentDidMount() {
 		const wel = this.props.router.defaultRouter.filter(item => item.text === '欢迎页')

@@ -3,10 +3,10 @@ import { Form, Input, AutoComplete } from 'element-react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
-import { selectSubreddit, selectSearchText,saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType, selectAllChannel,selectChannel, allRoles, changeRole, changeAdminName, changeLoanType, changeColl, changeAllot,changeState, changePayTypeId, selectAdminByCui } from '@redux/actions'
+import { selectSubreddit, selectSearchText,saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType, selectAllChannel,selectChannel, allRoles, changeRole, changeAdminName, changeLoanType, changeColl, changeAllot,changeState, changePayTypeId, selectAdminByCui,changePass } from '@redux/actions'
 import SelectPicker from '@components/SelectPicker'
 import Time from '@components/Settime'
-import { MLIST_SELECT, AUDIT_SELECT, AUDIT_SELECT_LESS, CUSTOMER_SELECT, TIME_SELECT, TIME_SELECT_LESS, LOAN_TYPE, LOAN_MODE,ALLOT_TYPE, STATE_TYPE } from '@meta/select'
+import { MLIST_SELECT, AUDIT_SELECT, AUDIT_SELECT_LESS, CUSTOMER_SELECT, TIME_SELECT, TIME_SELECT_LESS, LOAN_TYPE, LOAN_MODE,ALLOT_TYPE, STATE_TYPE, PASS_SELECT } from '@meta/select'
 class Search extends Component {
   static propTypes = {
     showSomeColl: PropTypes.bool,
@@ -66,6 +66,9 @@ class Search extends Component {
     changePayTypeId: PropTypes.func.isRequired,
     name: PropTypes.string,
     selectAdminByCui: PropTypes.func.isRequired,
+    changePass:PropTypes.func.isRequired,
+    riskManagement: PropTypes.number,
+    showPass: PropTypes.bool
   }
   constructor(props) {
     super(props)
@@ -109,7 +112,7 @@ class Search extends Component {
     this.props.selectChannel('')
   }
   render() {
-    const { typeId, typeName, realName, time, regTime, newClient, selectTime, showSelectClient, showSelectTime, showSelectTime2, showTime, showSelect1, showSelect2, showSelect3, showLoanType, showLoanMode, showBeginTime,showAllotType,showState, showRealName, showChannel, channelName, roleList, showRole, roleId, showAdminName, adminName, loanType,showColl, neiCuiId, collList, isTheDay, payTypeId, isState, showSomeColl } = this.props
+    const { typeId, typeName, realName, time, regTime, newClient, selectTime, showSelectClient, showSelectTime, showSelectTime2, showTime, showSelect1, showSelect2, showSelect3, showLoanType, showLoanMode, showBeginTime,showAllotType,showState, showRealName, showChannel, channelName, roleList, showRole, roleId, showAdminName, adminName, loanType,showColl, neiCuiId, collList, isTheDay, payTypeId, isState, showSomeColl, riskManagement, showPass } = this.props
     return (
       <div>
       <Form inline>
@@ -146,20 +149,6 @@ class Search extends Component {
             />
           </Form.Item>
         } */}
-        {
-          showChannel &&
-          <Form.Item>
-            <AutoComplete
-              placeholder="选择渠道名称"
-              value={ channelName }
-              fetchSuggestions={ this.querySearch.bind(this) }
-              onSelect={ e => this.props.selectChannel(e.channelName) }
-              icon={ 'close' }
-              onIconClick={ this.clearFn }
-            />
-          </Form.Item>
-        }
-
         {
           showLoanMode &&
           <Form.Item>
@@ -328,6 +317,30 @@ class Search extends Component {
             />
           </Form.Item>
         }
+        {
+          showChannel &&
+          <Form.Item>
+            <AutoComplete
+              placeholder="选择渠道名称"
+              value={ channelName }
+              fetchSuggestions={ this.querySearch.bind(this) }
+              onSelect={ e => this.props.selectChannel(e.channelName) }
+              icon={ 'close' }
+              onIconClick={ this.clearFn }
+            />
+          </Form.Item>
+        }
+        {
+          showPass &&
+          <Form.Item>
+            <SelectPicker
+              value={ riskManagement }
+              onChange={ e => this.props.changePass(e) }
+              options={ PASS_SELECT }
+              placeholder={ '审核状态' }
+            />
+          </Form.Item>
+        }
         {/* <Form.Item> */}
           {
             this.props.children
@@ -341,14 +354,14 @@ class Search extends Component {
 const mapStateToProps = state => {
 	const {
 		typeId, typeName, time, regTime, newClient, selectTime, realName, channelList, channelName, roleList, roleId, adminName
-	,loanType, neiCuiId, collList, isTheDay, payTypeId, isState} = state
+	,loanType, neiCuiId, collList, isTheDay, payTypeId, isState, riskManagement } = state
 	return {
-		typeId, typeName, time, regTime, newClient, selectTime, realName, channelList, channelName, roleList, roleId, adminName, loanType, neiCuiId, collList, isTheDay, payTypeId, isState
+		typeId, typeName, time, regTime, newClient, selectTime, realName, channelList, channelName, roleList, roleId, adminName, loanType, neiCuiId, collList, isTheDay, payTypeId, isState, riskManagement
 	}
 }
 const mapDispatchToProps = dispatch => {
 	return {
-		...bindActionCreators({ selectSubreddit, selectSearchText, saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType,selectAllChannel ,selectChannel, allRoles, changeRole, changeAdminName, changeLoanType, changeColl, changeAllot,changeState, changePayTypeId, selectAdminByCui }, dispatch)
+		...bindActionCreators({ selectSubreddit, selectSearchText, saveRealName, saveTime, registerTime, initSearch, changeClient, changeTimeType,selectAllChannel ,selectChannel, allRoles, changeRole, changeAdminName, changeLoanType, changeColl, changeAllot,changeState, changePayTypeId, selectAdminByCui, changePass }, dispatch)
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Search)

@@ -171,5 +171,7 @@ export default {
   'selectHomePageDate': 'reportForm/selectHomePageDate',
   'selectHomePage': 'reportForm/selectHomePage',
   'selectFaceAuthResult': 'idCard/selectFaceAuthResult', //根据userId查询身份证人脸识别结果
-  'selectFaceAuthResultOther': 'idCard/selectFaceAuthResultOther' //根据userId查询身份证人脸识别结果其他信息
+  'selectFaceAuthResultOther': 'idCard/selectFaceAuthResultOther', //根据userId查询身份证人脸识别结果其他信息
+  'selectUserInformationById': 'user/selectUserInformationById', //根据id查询会员风控返回信息
+  'exportPendingLoan': 'order/exportPendingLoan' // 待放款列表导出
 }

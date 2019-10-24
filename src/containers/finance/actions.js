@@ -259,3 +259,10 @@ export const exportOrderCompleted = () => {
     await api.exportOrderCompletedApi(searchAll)
   }
 }
+// 借款管理-待放款-导出
+export const exportPendingLoan = () => {
+  return async (dispatch, getState) => {
+    const searchAll = shouldFetchPosts(getState())
+    await api.exportPendingLoanApi(searchAll)
+  }
+}

@@ -3,8 +3,10 @@
 // Do this as the first thing so that any code reading it knows the right env.
 process.env.BABEL_ENV = 'production'
 process.env.NODE_ENV = 'production'
- process.env.PUBLIC_URL = 'http://47.111.93.109:8082'
+// process.env.PUBLIC_URL = 'http://47.111.93.109:8082'
 //process.env.PUBLIC_URL = 'http://47.111.93.109:8083'
+process.env.PUBLIC_URL = 'https://goladhandadmht.imxiaomang.com.cn'
+//process.env.PUBLIC_URL = 'https://tgjycbbzqutorlj.zhengxingmeirong.net.cn'
  //process.env.PUBLIC_URL = 'http://47.94.142.215:8081'
 //process.env.PUBLIC_URL = 'https://qqter.chenxianshen.org.cn'
 //process.env.PUBLIC_URL = 'http://h5.huakodai.com'

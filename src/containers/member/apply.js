@@ -37,11 +37,29 @@ class Apply extends Component {
 					},
 					{
 						label: '真实姓名',
-						prop: 'realName'
+						prop: 'realName',
+						render: row => {
+							if (row.realName) {
+								const reg = row.realName.slice(1)
+								const s = reg.split('')
+								const x = []
+								for (let i = 0; i < s.length; i++) {
+									x.push('*')
+								}
+								const z = x.join('')
+								const y = row.realName.substring(1, 0)
+								return y + z
+							}
+						}
 					},
 					{
 						label: '手机号码',
-						prop: 'phone'
+						prop: 'phone',
+						render: row => {
+							if (row.phone) {
+								return row.phone.replace(/^(\d{3})\d{4}(\d+)/, '$1****$2')
+							}
+						}
 					},
 					{
 						label: '注册时间',
@@ -79,6 +97,17 @@ class Apply extends Component {
 						render: row => {
 							return this.textType(row.bankType)
 						}
+					}, {
+						label: '支付宝认证',
+						prop: 'alipayType',
+						width: 120,
+						render: row => {
+							return this.textType(row.alipayType)
+						}
+					}, {
+						label: '支付宝认证账号',
+						prop: 'alipayNum',
+						width: 200
 					}
 				]
 			}

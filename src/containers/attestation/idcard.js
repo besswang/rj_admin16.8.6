@@ -30,11 +30,29 @@ class BlackUser extends Component {
 						}
 				}, {
 					label: '真实姓名',
-					prop: 'realName'
+					prop: 'realName',
+					render: row => {
+						if (row.realName) {
+							const reg = row.realName.slice(1)
+							const s = reg.split('')
+							const x = []
+							for (let i = 0; i < s.length; i++) {
+								x.push('*')
+							}
+							const z = x.join('')
+							const y = row.realName.substring(1, 0)
+							return y + z
+						}
+					}
 				}, {
 					label: '身份证号',
 					width:200,
-				  prop: 'idNumber'
+					prop: 'idNumber',
+					render: row => {
+						if (row.idNumber) {
+							return row.idNumber.replace(/^(\d{3})\d{8}(\d+)/, '$1****$2')
+						}
+					}
 				}, {
 					label: '性别',
 					prop: 'gender'

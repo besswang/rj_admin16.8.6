@@ -92,7 +92,7 @@ class Add extends Component {
 					const pam = {}
 					const { form } = this.state
 					for (const i in form) {
-						if (form['riskType'] === 'PAIXU' || form['riskType'] === 'QC') {
+						if (form['riskType'] === 'PAIXU' || form['riskType'] === 'QS') {
 							form['machineScore'] = null
 							form['userScore'] = null
 						}
@@ -163,13 +163,13 @@ class Add extends Component {
 						</Layout.Col>
 						<Layout.Col span="12" xs="24" sm="24" md="12" lg="10">
 						{
-							form.riskType !== 'PAIXU' && form.riskType !== 'QC' &&
+							form.riskType !== 'PAIXU' && form.riskType !== 'QS' &&
 							<Form.Item label="机审分数" prop="machineScore">
 								<Input type="number" value={ form.machineScore } onChange={ this.onChange.bind(this, 'machineScore') } append="分" />
 							</Form.Item>
 						}
 						{
-							form.riskType !== 'PAIXU' && form.riskType !== 'QC' &&
+							form.riskType !== 'PAIXU' && form.riskType !== 'QS' &&
 							<Form.Item label="人工审核分数" prop="userScore">
 								<Input type="number" value={ form.userScore } onChange={ this.onChange.bind(this, 'userScore') } append="分" />
 							</Form.Item>
@@ -187,7 +187,7 @@ class Add extends Component {
 							<Radio value="RUIJING">{'米融A风控'}</Radio>
 							<Radio value="PAIXU">{'米融B风控'}</Radio>
 							<Radio value="MOXIE">{'米融C风控'}</Radio>
-							<Radio value="QC">{'米融D风控'}</Radio>
+							<Radio value="QS">{'米融D风控'}</Radio>
 						</Radio.Group>
 					</Form.Item>
 					{/* <h1 className="channeltitle">{ '额度添加' }</h1>
